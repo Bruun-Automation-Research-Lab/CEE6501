@@ -46,4 +46,4 @@
 # Jupyter notebooks
 # Treat as text but FIX line endings to LF to avoid warnings & noisy diffs
 # -------------------------------------------------------------------------------
-*.ipynb text eol=lf
+# *.ipynb text eol=lf
