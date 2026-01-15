@@ -30,15 +30,14 @@ Introduction to Python, Conda environments, and the computational tools used in 
 - 📄 **Slides (PDF):** [L1_software_VScode.pdf](Lectures/L1/L1_software_VScode.pdf)
 - 📓 **Notebook:** [L1_software_VScode.ipynb](Lectures/L1/L1_software_VScode.ipynb)
 - **Extra Code:** [L1_JupyterTest.ipynb](Code/L1/L1_JupyterTest.ipynb)
-
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L1/L1_JupyterTest.ipynb)
 
 ### 📝 Assignments
 
+- **Assignment Workflow:** [L1_assignments.pdf](Lectures/L1/L1_assignments.pdf)
 - ✍️ **Written Assignment:** [A1_written.md](Assignments/A1_written.md)
-- 💻 **Coding Assignment:** [A1_code.ipynb](Assignments/A1_code.ipynb)
-
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
+- 💻 **Coding Assignment:**
+  [A1_code.ipynb](Assignments/A1_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
 
 ---
 
