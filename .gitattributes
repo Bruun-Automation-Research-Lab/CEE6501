@@ -1,0 +1,2 @@
+# Explicitly mark notebooks (JSON) as text with LF
+*.ipynb text eol=lf

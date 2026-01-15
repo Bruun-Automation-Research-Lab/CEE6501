@@ -44,7 +44,7 @@ PDF_FOOTER_LINE_CSS = r"""
 
   /* ---------- FOOTER ---------- */
 
-  /* horizontal footer line (closer to bottom = smaller footer) */
+  /* horizontal footer line */
   .reveal .pdf-page::after {
     content: "";
     position: absolute;
@@ -81,6 +81,20 @@ PDF_FOOTER_LINE_CSS = r"""
     text-transform: uppercase;
     pointer-events: none;
   }
+
+  /* center footer page number */
+  .pdf-footer-center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: #444;
+    opacity: 0.75;
+    pointer-events: none;
+  }
 }
 """
 
@@ -95,13 +109,20 @@ async def html_to_pdf(html_path: str, pdf_path: str):
 
         await page.goto(url, wait_until="networkidle")
 
-        # Inject PDF-only footer line styling
+        # Inject PDF-only footer/header styling
         await page.add_style_tag(content=PDF_FOOTER_LINE_CSS)
 
+        # Inject header, left footer, and centered page numbers
         await page.evaluate(
             """
             () => {
-              document.querySelectorAll('.reveal .pdf-page').forEach(page => {
+              const pages = Array.from(
+                document.querySelectorAll('.reveal .pdf-page')
+              );
+              const total = pages.length;
+
+
+              pages.forEach((page, i) => {
 
                 /* ---- HEADER (center) ---- */
                 if (!page.querySelector('.pdf-header-center')) {
@@ -119,12 +140,20 @@ async def html_to_pdf(html_path: str, pdf_path: str):
                   page.appendChild(footer);
                 }
 
+                /* ---- FOOTER (center: page number) ---- */
+                if (!page.querySelector('.pdf-footer-center')) {
+                  const num = document.createElement('div');
+                  num.className = 'pdf-footer-center';
+                  num.textContent = `${i + 1} / ${total}`;
+                  page.appendChild(num);
+                }
+
               });
             }
             """
         )
 
-        # (Optional) give reveal a moment to finish layout before printing
+        # Give reveal/layout a moment to settle
         await page.wait_for_timeout(250)
 
         await page.pdf(
@@ -141,8 +170,8 @@ async def html_to_pdf(html_path: str, pdf_path: str):
         )
         await browser.close()
 
-        # ✅ Always remove the final page (no checks)
-        drop_last_pdf_page(pdf_file)
+        # Always remove the final page
+        drop_last_pdf_page(Path(pdf_path))
 
 
 if __name__ == "__main__":
@@ -155,10 +184,7 @@ if __name__ == "__main__":
         print(f"ERROR: File not found: {html_file}")
         sys.exit(1)
 
-    # # L1_software_git.slides.pdf by default
-    # pdf_file = html_file.with_suffix(".pdf")
-
-    # If you prefer L1_software_git.pdf (without .slides), use:
+    # Output PDF name: remove ".slides" from filename
     pdf_file = html_file.with_name(
         html_file.name.replace(".slides.html", ".pdf")
     )

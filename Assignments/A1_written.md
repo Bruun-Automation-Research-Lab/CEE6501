@@ -54,27 +54,28 @@ The goal of this assignment is **not technical difficulty**, but to ensure that 
 
 ### Question 1 — Structural Inspiration
 
-Find a **structure** that you personally find interesting or inspiring.  
-This could be:
+Using the International Database and Gallery of Structures Website (or any other resource):
+<https://structurae.net/en/structures/>
 
-- a bridge
-- a building
-- a tower
-- a roof structure
-- or any other engineered structure
+Find and example of each of the following structure types that you personally find interesting or inspiring:
 
-You may choose something well known or something you have encountered personally.
+- Cable Nets
+- Membranes
+- Lattices and Gridshells
+- Thin Shells
+- Tensegrities
 
 In your submission:
 
-1. Include an image or sketch of the structure
-2. Briefly describe the structure and its purpose
-3. Explain **why you find this structure interesting**, focusing on aspects such as:
+1. Include an image or sketch of each structure.
+2. A link to a website page you found the image (if available).
+3. Briefly describe the structure and its purpose
+4. Explain **why you find this structure interesting**, focusing on aspects such as:
    - structural form
    - load paths
    - material use
    - scale
    - elegance or efficiency
-4. Reflect on what questions this structure raises for you as a student of structural analysis
+5. Reflect on what questions this structure raises for you as a student of structural analysis
 
 There are **no right or wrong answers**. The emphasis is on clarity, thoughtfulness, and clear communication.

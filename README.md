@@ -6,6 +6,14 @@ This week introduces the course structure and establishes the core software tool
 
 ### 📖 Lectures
 
+#### Introduction
+
+Course scope, learning objectives, expectations, and semester structure.
+
+- 🌐 **Slides (HTML):** [L1_intro.slides.html](Lectures/L1/L1_intro.slides.html)
+- 📄 **Slides (PDF):** [L1_intro.pdf](Lectures/L1/L1_intro.pdf)
+- 📓 **Notebook:** [L1_intro.ipynb](Lectures/L1/L1_intro.ipynb)
+
 #### Git & GitHub Fundamentals
 
 Version control, collaboration workflows, and course repository setup.
@@ -16,7 +24,7 @@ Version control, collaboration workflows, and course repository setup.
 
 #### Python & Conda Environment Setup
 
-Introduction to Python, Conda environments, and the computational tools used in the course.
+Setup of Python and Conda environments and introduction to the core computational tools used in the course.
 
 - 🌐 **Slides (HTML):** [L1_software_python.slides.html](Lectures/L1/L1_software_python.slides.html)
 - 📄 **Slides (PDF):** [L1_software_python.pdf](Lectures/L1/L1_software_python.pdf)
@@ -24,21 +32,21 @@ Introduction to Python, Conda environments, and the computational tools used in 
 
 #### VScode Setup
 
-Introduction to Python, Conda environments, and the computational tools used in the course.
+Configuration of VS Code for Python development, Jupyter notebooks, and course workflows.
 
 - 🌐 **Slides (HTML):** [L1_software_VScode.slides.html](Lectures/L1/L1_software_VScode.slides.html)
 - 📄 **Slides (PDF):** [L1_software_VScode.pdf](Lectures/L1/L1_software_VScode.pdf)
 - 📓 **Notebook:** [L1_software_VScode.ipynb](Lectures/L1/L1_software_VScode.ipynb)
 - **Extra Code:** [L1_JupyterTest.ipynb](Code/L1/L1_JupyterTest.ipynb)
-
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L1/L1_JupyterTest.ipynb)
 
 ### 📝 Assignments
 
-- ✍️ **Written Assignment:** [A1_written.md](Assignments/A1_written.md)
-- 💻 **Coding Assignment:** [A1_code.ipynb](Assignments/A1_code.ipynb)
+**How to Complete Assignements:** [L1_assignments.pdf](Lectures/L1/L1_assignments.pdf)
 
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
+- ✍️ **Written Assignment:** [A1_written.md](Assignments/A1_written.md)
+- 💻 **Coding Assignment:**
+  [A1_code.ipynb](Assignments/A1_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
 
 ---
 

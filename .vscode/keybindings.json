@@ -1,4 +1,5 @@
-//This needs to be saved in user settings, not in workspace
+//This needs to be saved in user settings, not in workspace settings
+//so this file doesn't do anything, but copy it into user settings
 [
   {
     "key": "ctrl+alt+1",
@@ -8,6 +9,12 @@
   },
   {
     "key": "ctrl+alt+2",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Slides: Export2PDF (current notebook)",
+    "when": "notebookEditorFocused"
+  },
+  {
+    "key": "ctrl+alt+e",
     "command": "workbench.action.tasks.runTask",
     "args": "Slides: Export2PDF (current notebook)",
     "when": "notebookEditorFocused"

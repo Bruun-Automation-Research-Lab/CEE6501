@@ -24,6 +24,15 @@
       "reveal": "always",
       "panel": "dedicated"
     }
+  },
+  {
+    "label": "Slides: Export HTML + PDF (current notebook)",
+    "dependsOn": [
+      "Slides: Export2HTML (current notebook)",
+      "Slides: Export2PDF (current notebook)"
+    ],
+    "dependsOrder": "sequence",
+    "problemMatcher": []
   }
   ]
 }
