@@ -37,7 +37,7 @@ You may use **any format you prefer**, but your submission \*_must be neat and l
 
 ### 🤝 Collaboration / AI tools
 
-You may discuss concepts with classmates and you may use AI tools to help you learn, but **your submitted code must be
+You may discuss concepts with classmates and you may use AI tools to help you learn, but **your submitted work must be
 written by you and you must understand it**. If you used outside help, add a short note in the final reflection cell.
 
 ---

@@ -52,19 +52,53 @@ Configuration of VS Code for Python development, Jupyter notebooks, and course w
 
 ---
 
-## 📅 Week 2 — Review of Matrix Operations & Linear Systems
+## 📅 Week 2 — Matrix Operations & Linear Systems
 
-(Content to be released)
+This week introduces matrices as fundamental mathematical objects and develops the core tools needed to work with linear
+systems. We focus on matrix notation, operations, and the logic of solving systems of equations, progressing from
+conceptual understanding to practical computational implementation in Python.
+
+Students will learn how matrices represent linear mappings, how matrix properties influence solution strategies, and why
+factorization-based solvers are central to numerical computation.
+
+(work in progress)
 
 ### 📖 Lectures
 
-- Lecture slides (HTML / PDF)
-- Jupyter notebook(s)
+#### Matrix Representation and Operations
+
+Matrix Basics
+
+<!-- - 🌐 **Slides (HTML):** [L1_software_git.slides.html](Lectures/L1/L1_software_git.slides.html) -->
+
+- 📄 **Slides (PDF):** [L2_1_matrices.pdf](Lectures/L2/L2_1_matrices.pdf)
+- 📓 **Notebook:** [L2_1_matrices.ipynb](Lectures/L2/L2_1_matrices.ipynb)
+
+#### Linear System Solution Methods
+
+Ways to solve linear system of equations
+
+<!-- - 🌐 **Slides (HTML):** [L1_software_python.slides.html](Lectures/L1/L1_software_python.slides.html) -->
+
+- 📄 **Slides (PDF):** [L2_2_solvers.pdf](Lectures/L2/L2_2_solvers.pdf)
+- 📓 **Notebook:** [L2_2_solvers.ipynb](Lectures/L2/L2_2_solvers.ipynb)
+
+#### Implementing Matrix Methods in Python
+
+Implementation in Python
+
+<!-- - 🌐 **Slides (HTML):** [L1_software_python.slides.html](Lectures/L1/L1_software_python.slides.html) -->
+
+- 📄 **Slides (PDF):** [L2_3_implementation.pdf](Lectures/L2/L2_3_implementation.pdf)
+- 📓 **Notebook:** [L2_3_implementation.ipynb](Lectures/L2/L2_3_implementation.ipynb)
 
 ### 📝 Assignments
 
+See Lecture 1 for how to complete assignments guide.
+
 - ✍️ **Written Assignment:** [A2_written.md](Assignments/A2_written.md)
-- Coding assignment
+- 💻 **Coding Assignment:**
+  [A2_code.ipynb](Assignments/A2_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A2_code.ipynb)
 
 ---
 
