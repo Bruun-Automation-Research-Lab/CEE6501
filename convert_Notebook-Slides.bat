@@ -28,4 +28,9 @@ if not exist "%PY%" (
 
 @REM "%PY%" -m jupyter nbconvert --to slides "%NB_NAME%.ipynb" --post serve
 "%PY%" -m jupyter nbconvert --to slides "%NB_NAME%.ipynb"
+@REM "%PY%" -m jupyter nbconvert "%NB_NAME%.ipynb" --to slides ^
+@REM   --TagRemovePreprocessor.enabled=True ^
+@REM   --TagRemovePreprocessor.remove_input_tags="hide-input"
+@REM   --TagRemovePreprocessor.remove_cell_tags="remove-cell"
+
 endlocal

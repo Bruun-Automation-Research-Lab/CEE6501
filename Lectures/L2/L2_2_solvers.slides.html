@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>Lecture 2.1 — Matrix Representation and Operations slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>Lecture 2.2 — Solving Linear Systems slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-2.1">CEE6501 — Lecture 2.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-2.1">¶</a></h1><h2 id="Matrix-Representation-and-Operations">Matrix Representation and Operations<a class="anchor-link" href="#Matrix-Representation-and-Operations">¶</a></h2>
+<h1 id="CEE6501-%E2%80%94-Lecture-2.2">CEE6501 — Lecture 2.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-2.2">¶</a></h1><h2 id="Solving-Linear-Systems:-$%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D$">Solving Linear Systems: $\mathbf{A}\mathbf{x}=\mathbf{b}$<a class="anchor-link" href="#Solving-Linear-Systems:-$%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D$">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7452,1497 +7452,2315 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will:</p>
+<h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>Understand matrices as <strong>linear mappings</strong> and as data structures</li>
-<li>Use consistent <strong>notation</strong> for scalars, vectors, and matrices</li>
-<li>Interpret matrix–vector and matrix–matrix products</li>
-<li>Reason about <strong>dimensions, structure, and compatibility</strong></li>
-<li>Connect special matrix structure (symmetric/triangular/diagonal) to efficient solution strategies</li>
+<li>State why <strong>explicit inversion</strong> is usually a bad idea for solving $\mathbf{A}\mathbf{x}=\mathbf{b}$</li>
+<li>Explain and apply <strong>direct elimination</strong> methods (GE, Gauss–Jordan, LU, Cholesky, LDL$^T$, Thomas)</li>
+<li>Apply basic <strong>iterative</strong> solvers (Jacobi, Gauss–Seidel) and interpret convergence</li>
+<li>Connect matrix <strong>structure</strong> (symmetry, positive definiteness, bandedness) to solver choice</li>
 </ul>
 </div>
 </div>
 </div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1-slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1-%E2%80%94-Scalars,-Vectors,-and-Matrices">Part 1 — Scalars, Vectors, and Matrices<a class="anchor-link" href="#Part-1-%E2%80%94-Scalars,-Vectors,-and-Matrices">¶</a></h2><blockquote>
-<p>What mathematical objects are we working with?</p>
-</blockquote>
-</div>
-</div>
-</div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1-scalars">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=context-slide">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scalars">Scalars<a class="anchor-link" href="#Scalars">¶</a></h3><p>A <strong>scalar</strong> is a single numerical value:</p>
+<h3 id="The-Core-Problem">The Core Problem<a class="anchor-link" href="#The-Core-Problem">¶</a></h3><p>In matrix structural analysis, everything reduces to solving:</p>
 <p>$$
-a \in \mathbb{R}
-$$</p>
-<p>Scalars have magnitude but no direction or internal structure.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1-vectors">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Vectors">Vectors<a class="anchor-link" href="#Vectors">¶</a></h3><p>A <strong>vector</strong> is an ordered collection of scalars:</p>
-<p>$$
-\mathbf{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} \in \mathbb{R}^n
-$$</p>
-<p>Vectors are treated as <strong>column objects</strong> by default.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1-matrices">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Matrices">Matrices<a class="anchor-link" href="#Matrices">¶</a></h3><p>A <strong>matrix</strong> is a rectangular array of scalars:</p>
-<p>$$
-\mathbf{A} = \begin{bmatrix}
-a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
-a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
-\end{bmatrix} \in \mathbb{R}^{m \times n}
-$$</p>
-<p>A matrix can be interpreted as a <strong>linear mapping</strong> from one vector space to another.</p>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2-slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-2-%E2%80%94-Notation-Conventions">Part 2 — Notation Conventions<a class="anchor-link" href="#Part-2-%E2%80%94-Notation-Conventions">¶</a></h2><blockquote>
-<p>How do we write linear algebra unambiguously in this class?</p>
-</blockquote>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2-why-notation">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-Notation-Matters">Why Notation Matters<a class="anchor-link" href="#Why-Notation-Matters">¶</a></h3><p>Consistent notation:</p>
-<ul>
-<li>Makes dimensions immediately visible</li>
-<li>Prevents algebraic errors</li>
-<li>Allows equations to be read without ambiguity</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2-scalars">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scalars">Scalars<a class="anchor-link" href="#Scalars">¶</a></h3><p>Scalars are written in <strong>lowercase italic</strong>:</p>
-<p>$$
-a,\; b,\; c \in \mathbb{R}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2-vectors">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Vectors">Vectors<a class="anchor-link" href="#Vectors">¶</a></h3><p>Vectors are written in <strong>bold lowercase</strong>:</p>
-<p>$$
-\mathbf{x} =
-\begin{bmatrix}
-x_1 \\
-x_2 \\
-\vdots \\
-x_n
-\end{bmatrix}
-\in \mathbb{R}^n
-$$</p>
-<p>You may also see:</p>
-<ul>
-<li>$\{x\}$ (brace notation in some textbooks)</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2-matrices">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Matrices">Matrices<a class="anchor-link" href="#Matrices">¶</a></h3><p>Matrices are written in <strong>bold uppercase</strong>:</p>
-<p>$$
-[A] = 
-\mathbf{A} = \begin{bmatrix}
-a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
-a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
-\end{bmatrix} \in \mathbb{R}^{m \times n}
-$$</p>
-<p>You may also see:</p>
-<ul>
-<li>$[A]$ (square-bracket notation in some textbooks)</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3-slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3-%E2%80%94-Matrix-Indexing">Part 3 — Matrix Indexing<a class="anchor-link" href="#Part-3-%E2%80%94-Matrix-Indexing">¶</a></h2><blockquote>
-<p>How do we refer to individual entries precisely?</p>
-</blockquote>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3-order">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Order-(Size)-of-a-Matrix">Order (Size) of a Matrix<a class="anchor-link" href="#Order-(Size)-of-a-Matrix">¶</a></h3><p>A matrix with $m$ rows and $n$ columns has size:</p>
-<p>$$
-\mathbf{A} \in \mathbb{R}^{m \times n}
-$$</p>
-<p>We say $\mathbf{A}$ is of order:</p>
-<p>$$
-m \times n
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3-elements">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Matrix-Elements">Matrix Elements<a class="anchor-link" href="#Matrix-Elements">¶</a></h3><p>Each entry is called an <strong>element</strong>. The element in row $i$, column $j$ is:</p>
-<p>$$
-(\mathbf{A})_{ij} = a_{ij}
-$$</p>
-<ul>
-<li>First subscript $i$ → row</li>
-<li>Second subscript $j$ → column</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3-index-ranges">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Meaning-of-Indices">Meaning of Indices<a class="anchor-link" href="#Meaning-of-Indices">¶</a></h3><p>For $\mathbf{A}\in\mathbb{R}^{m\times n}$:</p>
-<ul>
-<li>$i = 1,2,\dots,m$ (rows)</li>
-<li>$j = 1,2,\dots,n$ (columns)</li>
-</ul>
-<p>So $a_{ij}$ is the element in the $i$-th row and $j$-th column.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3-example-matrix">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example:-A-$4-%5Ctimes-3$-Matrix">Example: A $4 \times 3$ Matrix<a class="anchor-link" href="#Example:-A-$4-%5Ctimes-3$-Matrix">¶</a></h3><p>$$
-\mathbf{D} =
-\begin{bmatrix}
-8 &amp; 26 &amp; 0 \\
-33 &amp; 5 &amp; 37 \\
-12 &amp; 23 &amp; 2 \\
-7 &amp; 29 &amp; 14
-\end{bmatrix}
-$$</p>
-<ul>
-<li>Order: $4 \times 3$</li>
-<li>Rows: $i = 1,\dots,4$</li>
-<li>Columns: $j = 1,\dots,3$</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3-element-examples">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Referring-to-Individual-Elements">Referring to Individual Elements<a class="anchor-link" href="#Referring-to-Individual-Elements">¶</a></h3><p>Elements of $\mathbf{D}$ are $d_{ij}$.</p>
-<p>Examples:</p>
-<ul>
-<li>$d_{13} = 0$</li>
-<li>$d_{31} = 12$</li>
-<li>$d_{42} = 29$</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=section-4-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-4-%E2%80%94-Types-of-Matrices">Part 4 — Types of Matrices<a class="anchor-link" href="#Part-4-%E2%80%94-Types-of-Matrices">¶</a></h2><blockquote>
-<p>Matrix structure is not cosmetic — it reflects physics, modeling choices, and solver strategy.</p>
-</blockquote>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=types-overview">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-Matrix-Types-Matter">Why Matrix Types Matter<a class="anchor-link" href="#Why-Matrix-Types-Matter">¶</a></h3><p>In matrix structural analysis, matrix <em>structure</em> tells us:</p>
-<ul>
-<li>which DOFs are coupled</li>
-<li>which solvers we can use</li>
-<li>how expensive a computation will be</li>
-</ul>
-<p>We will see the same matrix appear in multiple forms:</p>
-<ul>
-<li>stiffness matrices</li>
-<li>mass matrices</li>
-<li>constraint and penalty matrices</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=column-matrix-def">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-Matrix-(Vector)">Column Matrix (Vector)<a class="anchor-link" href="#Column-Matrix-(Vector)">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix with a single column ($n=1$), commonly called a <strong>vector</strong>:</p>
-<p>$$\mathbf{x} \in \mathbb{R}^{m\times 1}$$</p>
-<p>$$
-\mathbf{x}=
-\begin{bmatrix}
-x_1\\x_2\\\vdots\\x_m
-\end{bmatrix}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=column-matrix-why">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-Matrix-%E2%80%94-Structural-Interpretation">Column Matrix — Structural Interpretation<a class="anchor-link" href="#Column-Matrix-%E2%80%94-Structural-Interpretation">¶</a></h3><p>Column matrices (vectors) are the <strong>primary carriers of information</strong> in matrix structural analysis. Inputs and Outputs.</p>
-<p>They represent:</p>
-<ul>
-<li><strong>Displacements</strong> $\mathbf{u}$ — the unknown DOFs we solve for</li>
-<li><strong>Loads</strong> $\mathbf{f}$ — the forces driving the system</li>
-<li><strong>Reactions</strong> — forces at constrained DOFs</li>
-</ul>
-<p>All structural analysis reduces to:
-$$
 \mathbf{K}\mathbf{u}=\mathbf{f}
 $$</p>
-<p>How to read this:</p>
 <ul>
-<li>each entry corresponds to <strong>one degree of freedom</strong></li>
-<li>vectors define <em>what is unknown</em> and <em>what is applied</em></li>
+<li>$\mathbf{K}$: (global) stiffness matrix</li>
+<li>$\mathbf{u}$: unknown displacements (DOFs)</li>
+<li>$\mathbf{f}$: applied nodal loads</li>
 </ul>
+<p>Today: <strong>how</strong> we solve these efficiently and robustly.</p>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=row-matrix-def">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=part1-title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Row-Matrix">Row Matrix<a class="anchor-link" href="#Row-Matrix">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix with a single row ($m=1$):</p>
-<p>$$\mathbf{c} \in \mathbb{R}^{1\times n}$$</p>
-<p>$$
-\mathbf{c}=
-\begin{bmatrix}
-c_1 &amp; c_2 &amp; \cdots &amp; c_n
-\end{bmatrix}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=row-matrix-why">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Row-Matrix-%E2%80%94-Structural-Interpretation">Row Matrix — Structural Interpretation<a class="anchor-link" href="#Row-Matrix-%E2%80%94-Structural-Interpretation">¶</a></h3><p>Row matrices act as <strong>operators on DOF vectors</strong>.</p>
-<p>They take a <strong>column vector input</strong> and return a <strong>scalar quantity</strong>.</p>
-<p>Let the displacement vector be:
-$$
-\mathbf{u}=
-\begin{bmatrix}
-u_1\\
-u_2\\
-u_3\\
-u_4
-\end{bmatrix}
-$$</p>
-<p>Let the selector vector be:
-$\mathbf{s_1} = \begin{bmatrix}
-0 &amp; 1 &amp; 0 &amp; 0
-\end{bmatrix}
-$
-$
-\mathbf{s_2} = \begin{bmatrix}
-1 &amp; -1 &amp; 0 &amp; 0
-\end{bmatrix}
-$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0fb630a4">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>DOF selection, $s_1$</strong>
-$$
-\begin{bmatrix}
-0 &amp; 1 &amp; 0 &amp; 0
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-u_1\\
-u_2\\
-u_3\\
-u_4
-\end{bmatrix}
-= u_2
-$$</p>
-<p><strong>DOF combination, $s_2$</strong>
-$$
-\begin{bmatrix}
-1 &amp; -1 &amp; 0 &amp; 0
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-u_1\\
-u_2\\
-u_3\\
-u_4
-\end{bmatrix}
-=
-u_1 - u_2
-$$</p>
-<p>Interpretation:</p>
-<ul>
-<li>column vectors <strong>store DOF values</strong></li>
-<li>row matrices <strong>query or combine DOFs</strong></li>
-<li>output is a <strong>single scalar condition</strong></li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=square-matrix-def">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Square-Matrix">Square Matrix<a class="anchor-link" href="#Square-Matrix">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix with the same number of rows and columns ($m=n$):</p>
-<p>$$\mathbf{A}\in\mathbb{R}^{n\times n}$$</p>
-<p>The <strong>main diagonal</strong> contains $a_{11},a_{22},\dots,a_{nn}$.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=square-matrix-why">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Square-Matrix-%E2%80%94-Structural-Meaning">Square Matrix — Structural Meaning<a class="anchor-link" href="#Square-Matrix-%E2%80%94-Structural-Meaning">¶</a></h3><p>Square matrices are the <strong>heart of structural analysis</strong>.</p>
-<p>Direct stiffness method:</p>
-<ul>
-<li><strong># equations = # unknown DOFs</strong></li>
-<li>→ <strong>square global system</strong></li>
-</ul>
-<p>$$
-\mathbf{K}\mathbf{u}=\mathbf{f},
-\qquad
-\mathbf{K}\in\mathbb{R}^{n\times n}
-$$</p>
-<p>How to read $\mathbf{K}$:</p>
-<ul>
-<li>rows → equilibrium at DOFs</li>
-<li>columns → DOF influence</li>
-</ul>
-<p>Why it matters:</p>
-<ul>
-<li>only square systems can be <strong>solved</strong></li>
-<li>enable factorization and eigenanalysis</li>
-</ul>
-<blockquote>
-<p>Not square → model is incomplete, over-constrained, or ill-posed.</p>
+<h2 id="Part-1-%E2%80%94-Direct-Inversion">Part 1 — Direct Inversion<a class="anchor-link" href="#Part-1-%E2%80%94-Direct-Inversion">¶</a></h2><blockquote>
+<p>Mathematically valid to solve via $\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}$.  Practically discouraged.</p>
 </blockquote>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=symmetric-matrix-def">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=inverse-why-not">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Symmetric-Matrix">Symmetric Matrix<a class="anchor-link" href="#Symmetric-Matrix">¶</a></h3><p><strong>Definition</strong></p>
-<p>A square matrix where the entries are mirrored about the main diagonal:</p>
-<p>$$a_{ij}=a_{ji} \quad \Leftrightarrow \quad \mathbf{A}^T=\mathbf{A}$$</p>
+<h3 id="Why-Explicit-Inversion-is-(Usually)-a-Bad-Idea">Why Explicit Inversion is (Usually) a Bad Idea<a class="anchor-link" href="#Why-Explicit-Inversion-is-(Usually)-a-Bad-Idea">¶</a></h3><p>Computing $\mathbf{A}^{-1}$ explicitly is typically:</p>
+<ul>
+<li><strong>slower</strong> than factorization + substitution (later in lecture)</li>
+<li><strong>less accurate</strong> (numerically)</li>
+<li><strong>unnecessary</strong> when all you want is $\mathbf{x}$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=41d0b108">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="In-NumPy">In NumPy<a class="anchor-link" href="#In-NumPy">¶</a></h3><p>We will use <strong>NumPy</strong> throughout the course.</p>
+<blockquote>
+<p>Convention: solve $\mathbf{A}\mathbf{x}=\mathbf{b}$ using<br/>
+<code>np.linalg.solve(A, b)</code>, not <code>inv(A) @ b</code>.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>   <span class="c1"># preferred: factorization + substitution</span>
+<span class="c1"># x = np.linalg.inv(A) @ b  # avoid: explicit inversion</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=inv-vs-solve-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Inversion-vs.-Solve-(Same-Math,-Different-Computation)">Inversion vs. Solve (Same Math, Different Computation)<a class="anchor-link" href="#Inversion-vs.-Solve-(Same-Math,-Different-Computation)">¶</a></h3><p>Both compute a solution, but one is usually preferred:</p>
+<p>$$
+\mathbf{x} = \mathbf{A}^{-1}\mathbf{b}
+\quad \text{(explicit inverse)}
+$$</p>
+<p>$$
+\mathbf{x} = \text{solve}(\mathbf{A},\mathbf{b})
+\quad \text{(factorization + substitution)}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=344424b2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [123]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_solve_vs_inverse</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># --- solve ---</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeat</span><span class="p">):</span>
+        <span class="n">x_solve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">t_solve</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">repeat</span>
+
+    <span class="c1"># --- inverse ---</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeat</span><span class="p">):</span>
+        <span class="n">x_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span>
+    <span class="n">t_inv</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">repeat</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="c1"># "x_solve": x_solve,</span>
+        <span class="c1"># "x_inv": x_inv,</span>
+        <span class="s2">"time_solve"</span><span class="p">:</span> <span class="n">t_solve</span><span class="p">,</span>
+        <span class="s2">"time_inv"</span><span class="p">:</span> <span class="n">t_inv</span><span class="p">,</span>
+        <span class="s2">"time_ratio_inv_over_solve"</span><span class="p">:</span> <span class="n">t_inv</span> <span class="o">/</span> <span class="n">t_solve</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ca68011d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [124]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">A_small</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]])</span>
+
+<span class="n">b_small</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">])</span>
+
+<span class="n">result_small</span> <span class="o">=</span> <span class="n">compare_solve_vs_inverse</span><span class="p">(</span><span class="n">A_small</span><span class="p">,</span> <span class="n">b_small</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">result_small</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>time_solve: 3.3636000007390975e-06
+time_inv: 3.6275000020395965e-06
+time_ratio_inv_over_solve: 1.0784576053164796
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=10cd9de0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [125]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Symmetric positive definite matrix</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">A_large</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">M</span> <span class="o">+</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">b_large</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">result_large</span> <span class="o">=</span> <span class="n">compare_solve_vs_inverse</span><span class="p">(</span><span class="n">A_large</span><span class="p">,</span> <span class="n">b_large</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">result_large</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>time_solve: 6.360000164325659e-05
+time_inv: 0.00022713333358600116
+time_ratio_inv_over_solve: 3.5712787376961295
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cramer-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Cramer's-Rule">Cramer's Rule<a class="anchor-link" href="#Cramer's-Rule">¶</a></h2><blockquote>
+<p>Conceptually Useful, Practically Limited</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5abea8df">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>For a <strong>small</strong> system (especially $2\times2$ or $3\times3$), Cramer's rule is a clean closed form:</p>
+<p>$$
+x_i = \frac{\det(\mathbf{A}_i)}{\det(\mathbf{A})}
+$$</p>
+<p>where $\mathbf{A}_i$ is $\mathbf{A}$ with column $i$ replaced by $\mathbf{b}$.</p>
+<p>For large $n$:</p>
+<ul>
+<li>determinant costs scale poorly</li>
+<li>numerically fragile</li>
+</ul>
+<blockquote>
+<p>Cramer's rule is a teaching tool, not a production solver.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cramer-demo">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [126]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">])</span>
+
+<span class="n">detA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">A1</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="n">A1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="n">A2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+
+<span class="n">x_cramer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A1</span><span class="p">)</span><span class="o">/</span><span class="n">detA</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A2</span><span class="p">)</span><span class="o">/</span><span class="n">detA</span><span class="p">])</span>
+<span class="n">x_solve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># print('A=\n', A)</span>
+<span class="c1"># print('b=', b)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'det(A)='</span><span class="p">,</span> <span class="n">detA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'x (Cramer)='</span><span class="p">,</span> <span class="n">x_cramer</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'x (solve)= '</span><span class="p">,</span> <span class="n">x_solve</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'residual ||Ax-b|| ='</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">x_solve</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>det(A)= 5.000000000000001
+x (Cramer)= [ 2.8 -0.6]
+x (solve)=  [ 2.8 -0.6]
+residual ||Ax-b|| = 1.9860273225978185e-15
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=part2-title">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-2-%E2%80%94-Direct-Elimination-Methods">Part 2 — Direct Elimination Methods<a class="anchor-link" href="#Part-2-%E2%80%94-Direct-Elimination-Methods">¶</a></h2><blockquote>
+<p>The idea: transform $\mathbf{A}$ into a form that is easy to solve.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=elim-intro">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Big-Picture:-Elimination">Big Picture: Elimination<a class="anchor-link" href="#Big-Picture:-Elimination">¶</a></h3><p>We use row operations to transform a linear system into a form that can be solved by substitution.</p>
+<p>Two closely related tasks:</p>
+<ul>
+<li><p>Reduction of an augmented system $[\mathbf{A}|\mathbf{b}]$<br/>
+(conceptual, one-off solves)</p>
+<ul>
+<li>Method 1: Gaussian Elimination</li>
+<li>Method 2: Gauss–Jordan Elimination</li>
+</ul>
+</li>
+<li><p>Factorization of $\mathbf{A}$<br/>
+(preferred for repeated solves)</p>
+<ul>
+<li>Method 3: LU Decomposition</li>
+<li>Method 4: Cholesky Factorization</li>
+<li>Method 5: $LDL^T$ Factorization</li>
+<li>Method 6: Thomas Method (special cases)</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cf72fcf9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-1:-Gaussian-Elimination-(GE)">Method 1: Gaussian Elimination (GE)<a class="anchor-link" href="#Method-1:-Gaussian-Elimination-(GE)">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ge-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Goal</p>
+<ul>
+<li>transform the system<br/>
+$$
+\mathbf{A}\mathbf{x}=\mathbf{b}
+\;\longrightarrow\;
+\mathbf{U}\mathbf{x}=\hat{\mathbf{b}}
+$$</li>
+<li>where $\mathbf{U}$ is upper triangular</li>
+</ul>
+<p>Important notes</p>
+<ul>
+<li>GE is an elimination procedure, not a solver (IMPORTANT)</li>
+<li>it systematically applies row operations to expose matrix structure</li>
+<li>it is the foundation of:<ul>
+<li>LU factorization</li>
+<li>pivoted direct solvers</li>
+<li>most practical linear algebra methods</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=291d79ec">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Gaussian-Elimination-%E2%80%94-Procedure">Gaussian Elimination — Procedure<a class="anchor-link" href="#Gaussian-Elimination-%E2%80%94-Procedure">¶</a></h3><ol>
+<li>Choose the current pivot on the diagonal (the active diagonal entry used to eliminate entries below it).</li>
+<li>Eliminate all entries below the pivot using row operations.</li>
+<li>Apply the same row operations to the right-hand side, updating $\mathbf{b}$.</li>
+<li>Move to the next column and repeat until $\mathbf{A}\rightarrow\mathbf{U}$, $\mathbf{b}\rightarrow\hat{\mathbf{b}}$.</li>
+</ol>
+<p>$$
+\mathbf{A}
+=
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; a_{13} &amp; a_{14} \\
+a_{21} &amp; a_{22} &amp; a_{23} &amp; a_{24} \\
+a_{31} &amp; a_{32} &amp; a_{33} &amp; a_{34} \\
+a_{41} &amp; a_{42} &amp; a_{43} &amp; a_{44}
+\end{bmatrix}
+\;\xrightarrow{\text{Gaussian Elimination}}\;
+\mathbf{U}
+=
+\begin{bmatrix}
+u_{11} &amp; u_{12} &amp; u_{13} &amp; u_{14} \\
+0      &amp; u_{22} &amp; u_{23} &amp; u_{24} \\
+0      &amp; 0      &amp; u_{33} &amp; u_{34} \\
+0      &amp; 0      &amp; 0      &amp; u_{44}
+\end{bmatrix}
+$$</p>
+<p>Solving step</p>
+<ul>
+<li>solve $\mathbf{U}\mathbf{x}=\hat{\mathbf{b}}$ by back-substitution</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f83612d3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-2:-Gauss%E2%80%93Jordan-Elimination-(GJ)">Method 2: Gauss–Jordan Elimination (GJ)<a class="anchor-link" href="#Method-2:-Gauss%E2%80%93Jordan-Elimination-(GJ)">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=gj-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Goal</p>
+<ul>
+<li>reduce the augmented system
+$$
+[\mathbf{A}\,|\,\mathbf{b}]
+\;\longrightarrow\;
+[\mathbf{I}\,|\,\mathbf{x}]
+$$</li>
+</ul>
+<p>Important notes</p>
+<ul>
+<li>you operate directly on $\mathbf{b}$ (so $\mathbf{b}$ changes during elimination)</li>
+<li>for repeated solves with different $\mathbf{b}$, this is inefficient</li>
+<li>can also apply GJ to computes the inverse of a matrix (when it exists)
+$$
+[\mathbf{A}\,|\,\mathbf{I}]
+\;\longrightarrow\;
+[\mathbf{I}\,|\,\mathbf{A}^{-1}]
+$$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9af13dd1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Gauss%E2%80%93Jordan-Elimination-%E2%80%94-Procedure">Gauss–Jordan Elimination — Procedure<a class="anchor-link" href="#Gauss%E2%80%93Jordan-Elimination-%E2%80%94-Procedure">¶</a></h3><ol>
+<li>Form the augmented matrix $[\mathbf{A}\,|\,\mathbf{b}]$.</li>
+<li>Choose a pivot and scale the pivot row so the pivot entry becomes 1.</li>
+<li>Eliminate all entries below the pivot (like GE).</li>
+<li>Eliminate all entries above the pivot (this is the “Jordan” part).</li>
+<li>Repeat for the next column until $[\mathbf{A}\,|\,\mathbf{b}] \rightarrow [\mathbf{I}\,|\,\mathbf{x}]$.</li>
+</ol>
+<p>$$
+\left[
+\begin{array}{c|c}
+\mathbf{A} &amp; \mathbf{b}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cccc|c}
+a_{11} &amp; a_{12} &amp; a_{13} &amp; a_{14} &amp; b_1 \\
+a_{21} &amp; a_{22} &amp; a_{23} &amp; a_{24} &amp; b_2 \\
+a_{31} &amp; a_{32} &amp; a_{33} &amp; a_{34} &amp; b_3 \\
+a_{41} &amp; a_{42} &amp; a_{43} &amp; a_{44} &amp; b_4
+\end{array}
+\right]
+\;\xrightarrow{\text{Gauss--Jordan Elimination}}\;
+\left[
+\begin{array}{cccc|c}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; x_1 \\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; x_2 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; x_3 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; x_4
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c|c}
+\mathbf{I} &amp; \mathbf{x}
+\end{array}
+\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=03d8d27d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Gauss%E2%80%93Jordan-%E2%80%94-Worked-Example-(start)">Gauss–Jordan — Worked Example (start)<a class="anchor-link" href="#Gauss%E2%80%93Jordan-%E2%80%94-Worked-Example-(start)">¶</a></h3><p>$$
+\begin{aligned}
+5x_1 + 6x_2 - 3x_3 &amp;= 66 \\
+9x_1 - x_2 + 2x_3 &amp;= 8 \\
+8x_1 - 7x_2 + 4x_3 &amp;= -39
+\end{aligned}
+$$</p>
 <p>$$
 \mathbf{A}=
 \begin{bmatrix}
-a_{11} &amp; a_{12} &amp; a_{13}\\
-a_{12} &amp; a_{22} &amp; a_{23}\\
-a_{13} &amp; a_{23} &amp; a_{33}
-\end{bmatrix}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=symmetric-matrix-why">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Symmetric-Matrix-%E2%80%94-Structural-Meaning">Symmetric Matrix — Structural Meaning<a class="anchor-link" href="#Symmetric-Matrix-%E2%80%94-Structural-Meaning">¶</a></h3><p><em>(special case of square matrices)</em></p>
-<p>Symmetry reflects <strong>reciprocity and energy consistency</strong>:</p>
-<ul>
-<li><p><strong>Reciprocity</strong>: If moving DOF A causes a force at DOF B, then moving DOF B causes the same force at DOF A. The influence between two DOFs goes both ways
-$$k_{ij} = k_{ji}$$</p>
-</li>
-<li><p><strong>Energy consistency</strong>: The structure behaves like a spring that stores energy. The work done does not depend on the order in which displacements are applied — only on the final configuration.</p>
-</li>
-</ul>
-<p>Why symmetry matters:</p>
-<ul>
-<li>store only half the matrix</li>
-<li>faster solvers (Cholesky, LDL$^T$)</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=480ded80">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In this course, stiffness matrices are symmetric for all situations:</p>
-<ul>
-<li>linear elastic analysis</li>
-<li>material nonlinearity (elastic, energy-based)</li>
-<li>geometric nonlinearity (conservative)</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=triangular-matrix-def">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Triangular-Matrices">Triangular Matrices<a class="anchor-link" href="#Triangular-Matrices">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix where all entries on one side of the main diagonal are zero.</p>
-<p><strong>Lower triangular</strong>:
-$$a_{ij}=0 \; (j&gt;i)$$</p>
-<p><strong>Upper triangular</strong>:
-$$a_{ij}=0 \; (j&lt;i)$$</p>
-<p>$$
-\mathbf{L}=
-\begin{bmatrix}
-\ell_{11}&amp;0&amp;0\\
-\ell_{21}&amp;\ell_{22}&amp;0\\
-\ell_{31}&amp;\ell_{32}&amp;\ell_{33}
+5 &amp; 6 &amp; -3 \\
+9 &amp; -1 &amp; 2 \\
+8 &amp; -7 &amp; 4
 \end{bmatrix},
-\quad
-\mathbf{U}=
+\qquad
+\mathbf{b}=
 \begin{bmatrix}
-u_{11}&amp;u_{12}&amp;u_{13}\\
-0&amp;u_{22}&amp;u_{23}\\
-0&amp;0&amp;u_{33}
+66 \\
+8 \\
+-39
 \end{bmatrix}
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=triangular-matrix-why">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=33f91483">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Triangular-Matrices-%E2%80%94-Structural-Meaning">Triangular Matrices — Structural Meaning<a class="anchor-link" href="#Triangular-Matrices-%E2%80%94-Structural-Meaning">¶</a></h3><p>Triangular matrices appear in matrix structural analysis when a large system is <strong>broken into simpler steps</strong>.</p>
-<p>Instead of solving
-$$
-\mathbf{K}\mathbf{u}=\mathbf{f}
-$$
-all at once, we factor the stiffness matrix:
-$$
-\mathbf{K}=\mathbf{L}\mathbf{U}
-\quad \text{or} \quad
-\mathbf{K}=\mathbf{L}\mathbf{D}\mathbf{L}^T
+<h3 id="Step-0:-Form-augmented-matrix">Step 0: Form augmented matrix<a class="anchor-link" href="#Step-0:-Form-augmented-matrix">¶</a></h3><p>$$
+\left[\mathbf{A}\,|\,\mathbf{b}\right]=
+\left[
+\begin{array}{ccc|c}
+5 &amp; 6 &amp; -3 &amp; 66 \\
+9 &amp; -1 &amp; 2 &amp; 8 \\
+8 &amp; -7 &amp; 4 &amp; -39
+\end{array}
+\right]
 $$</p>
-<p>This turns one difficult problem into <strong>two easy ones</strong>.</p>
-<p>How to think about it:</p>
-<ul>
-<li><strong>Forward substitution</strong> → uses the lower triangular matrix $\mathbf{L}$</li>
-<li><strong>Back substitution</strong> → uses the upper triangular matrix $\mathbf{U}$</li>
-</ul>
-<p>We will return to this in detail when we study <strong>matrix solvers</strong> in the next section.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=diagonal-matrix-def">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b729bf35">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Diagonal-Matrix">Diagonal Matrix<a class="anchor-link" href="#Diagonal-Matrix">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix where all off-diagonal entries are zero:</p>
+<h3 id="Step-1:-pivot-in-column-1,-make-the-pivot-1">Step 1: pivot in column 1, make the pivot 1<a class="anchor-link" href="#Step-1:-pivot-in-column-1,-make-the-pivot-1">¶</a></h3><p>Row operation:</p>
+<ul>
+<li>$R_1 \leftarrow \frac{1}{5}R_1$</li>
+</ul>
 <p>$$
-a_{ij} = 0 \quad \text{for } i \neq j
+\left[
+\begin{array}{ccc|c}
+1 &amp; 1.2 &amp; -0.6 &amp; 13.2 \\
+9 &amp; -1 &amp; 2 &amp; 8 \\
+8 &amp; -7 &amp; 4 &amp; -39
+\end{array}
+\right]
 $$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cba037d6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-2:-eliminate-column-1-below-the-pivot">Step 2: eliminate column 1 below the pivot<a class="anchor-link" href="#Step-2:-eliminate-column-1-below-the-pivot">¶</a></h3><p>Row operations:</p>
+<ul>
+<li>$R_2 \leftarrow R_2 - 9R_1$</li>
+<li>$R_3 \leftarrow R_3 - 8R_1$</li>
+</ul>
 <p>$$
-\mathbf{D}=
+\left[
+\begin{array}{ccc|c}
+1 &amp; 1.2 &amp; -0.6 &amp; 13.2 \\
+0 &amp; -11.8 &amp; 7.4 &amp; -110.8 \\
+0 &amp; -16.6 &amp; 8.8 &amp; -144.6
+\end{array}
+\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f0a2011e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-3:-pivot-in-column-2,-make-the-pivot-1">Step 3: pivot in column 2, make the pivot 1<a class="anchor-link" href="#Step-3:-pivot-in-column-2,-make-the-pivot-1">¶</a></h3><p>Row operation:</p>
+<ul>
+<li>$R_2 \leftarrow \frac{1}{-11.8}R_2$</li>
+</ul>
+<p>$$
+\left[
+\begin{array}{ccc|c}
+1 &amp; 1.2 &amp; -0.6 &amp; 13.2 \\
+0 &amp; 1 &amp; -0.6271 &amp; 9.39 \\
+0 &amp; -16.6 &amp; 8.8 &amp; -144.6
+\end{array}
+\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=062e6660">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-4:-Gauss%E2%80%93Jordan-part,-eliminate-column-2-above-and-below-the-pivot">Step 4: Gauss–Jordan part, eliminate column 2 above and below the pivot<a class="anchor-link" href="#Step-4:-Gauss%E2%80%93Jordan-part,-eliminate-column-2-above-and-below-the-pivot">¶</a></h3><p>Row operations:</p>
+<ul>
+<li>$R_1 \leftarrow R_1 - 1.2R_2$</li>
+<li>$R_3 \leftarrow R_3 + 16.6R_2$</li>
+</ul>
+<p>$$
+\left[
+\begin{array}{ccc|c}
+1 &amp; 0 &amp; 0.1525 &amp; 1.932 \\
+0 &amp; 1 &amp; -0.6271 &amp; 9.39 \\
+0 &amp; 0 &amp; -1.61 &amp; 11.27
+\end{array}
+\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0a0a0e90">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-5:-pivot-in-column-3,-make-the-pivot-1">Step 5: pivot in column 3, make the pivot 1<a class="anchor-link" href="#Step-5:-pivot-in-column-3,-make-the-pivot-1">¶</a></h3><p>Row operation:</p>
+<ul>
+<li>$R_3 \leftarrow \frac{1}{-1.61}R_3$</li>
+</ul>
+<p>$$
+\left[
+\begin{array}{ccc|c}
+1 &amp; 0 &amp; 0.1525 &amp; 1.932 \\
+0 &amp; 1 &amp; -0.6271 &amp; 9.39 \\
+0 &amp; 0 &amp; 1 &amp; -7
+\end{array}
+\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d8a2dc0f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-6:-eliminate-column-3-above-the-pivot-to-reach-$%5B%5Cmathbf%7BI%7D%7C%5Cmathbf%7Bx%7D%5D$">Step 6: eliminate column 3 above the pivot to reach $[\mathbf{I}|\mathbf{x}]$<a class="anchor-link" href="#Step-6:-eliminate-column-3-above-the-pivot-to-reach-$%5B%5Cmathbf%7BI%7D%7C%5Cmathbf%7Bx%7D%5D$">¶</a></h3><p>Row operations:</p>
+<ul>
+<li>$R_1 \leftarrow R_1 - 0.1525R_3$</li>
+<li>$R_2 \leftarrow R_2 + 0.6271R_3$</li>
+</ul>
+<p>$$
+\left[
+\begin{array}{ccc|c}
+1 &amp; 0 &amp; 0 &amp; 3 \\
+0 &amp; 1 &amp; 0 &amp; 5 \\
+0 &amp; 0 &amp; 1 &amp; -7
+\end{array}
+\right]
+\;=\;
+\left[
+\begin{array}{c|c}
+\mathbf{I} &amp; \mathbf{x}
+\end{array}
+\right]
+$$</p>
+<p>So,
+$$
+\mathbf{x}=
+\begin{bmatrix}
+3\\
+5\\
+-7
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=57167b82">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Gauss%E2%80%93Jordan-Inverse-(setup-only)">Gauss–Jordan Inverse (setup only)<a class="anchor-link" href="#Gauss%E2%80%93Jordan-Inverse-(setup-only)">¶</a></h3><p>Given
+$$
+\mathbf{A}=
+\begin{bmatrix}
+4 &amp; 1 &amp; 2\\
+1 &amp; 3 &amp; 0\\
+2 &amp; 0 &amp; 5
+\end{bmatrix}
+$$</p>
+<p>Form the augmented matrix $[\mathbf{A}\,|\,\mathbf{I}]$
+$$
+\left[\mathbf{A}\,|\,\mathbf{I}\right]=
+\left[
+\begin{array}{ccc|ccc}
+4 &amp; 1 &amp; 2 &amp; 1 &amp; 0 &amp; 0\\
+1 &amp; 3 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
+2 &amp; 0 &amp; 5 &amp; 0 &amp; 0 &amp; 1
+\end{array}
+\right]
+$$</p>
+<p>Gauss–Jordan goal
+$$
+\left[\mathbf{A}\,|\,\mathbf{I}\right]
+\;\longrightarrow\;
+\left[\mathbf{I}\,|\,\mathbf{A}^{-1}\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2dfd88bc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [128]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]])</span>
+
+<span class="n">invA_gj</span> <span class="o">=</span> <span class="n">gauss_jordan_inverse</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">invA_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'inv(A) via Gauss–Jordan=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">invA_gj</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">inv(A) via NumPy=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">invA_np</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">check ||I - A inv(A)|| ='</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">A</span> <span class="o">@</span> <span class="n">invA_gj</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>inv(A) via Gauss–Jordan=
+ [[ 0.3488 -0.1163 -0.1395]
+ [-0.1163  0.3721  0.0465]
+ [-0.1395  0.0465  0.2558]]
+
+inv(A) via NumPy=
+ [[ 0.3488 -0.1163 -0.1395]
+ [-0.1163  0.3721  0.0465]
+ [-0.1395  0.0465  0.2558]]
+
+check ||I - A inv(A)|| = 2.451306065445149e-16
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=84478eb8">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Decomposition-Theorem">Decomposition Theorem<a class="anchor-link" href="#Decomposition-Theorem">¶</a></h2><blockquote>
+<p>Quick aside before we cover methods 3-6</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=89bc733f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Elimination methods are based on the idea that a general square matrix
+can be factored into triangular (and sometimes diagonal) matrices.</p>
+<p>The decomposition theorem states:
+$$
+\mathbf{A} = \mathbf{L}\mathbf{D}\mathbf{U}
+$$</p>
+<p>where</p>
+<ul>
+<li>$\mathbf{L}$ is unit lower triangular</li>
+<li>$\mathbf{D}$ is diagonal</li>
+<li>$\mathbf{U}$ is unit upper triangular</li>
+</ul>
+<p>Example (3×3 case)
+$$
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; a_{13} \\
+a_{21} &amp; a_{22} &amp; a_{23} \\
+a_{31} &amp; a_{32} &amp; a_{33}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+\ell_{21} &amp; 1 &amp; 0 \\
+\ell_{31} &amp; \ell_{32} &amp; 1
+\end{bmatrix}
 \begin{bmatrix}
 d_1 &amp; 0 &amp; 0 \\
 0 &amp; d_2 &amp; 0 \\
 0 &amp; 0 &amp; d_3
 \end{bmatrix}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=diagonal-matrix-structural">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Diagonal-Matrix-%E2%80%94-Structural-Interpretation">Diagonal Matrix — Structural Interpretation<a class="anchor-link" href="#Diagonal-Matrix-%E2%80%94-Structural-Interpretation">¶</a></h3><p>Diagonal matrices represent <strong>uncoupled degrees of freedom</strong>.</p>
-<p>In matrix structural analysis, diagonal matrices commonly appear as:</p>
-<ul>
-<li><strong>Lumped mass matrices</strong> in dynamics (each DOF has its own inertia)</li>
-<li><strong>Penalty stiffness matrices</strong> for enforcing boundary conditions</li>
-<li><strong>Diagonal preconditioners</strong> in iterative solvers (e.g., Jacobi, CG)</li>
-</ul>
-<p>Interpretation:</p>
-<ul>
-<li>each diagonal term acts on <strong>one DOF only</strong></li>
-<li>no force or displacement coupling between DOFs</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=identity-matrix-def">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Identity-(Unit)-Matrix">Identity (Unit) Matrix<a class="anchor-link" href="#Identity-(Unit)-Matrix">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix where all diagonal entries are 1 and all off-diagonal entries are 0:</p>
-<p>$$
-I_{ij} =
-\begin{cases}
-1 &amp; i=j \\
-0 &amp; i \neq j
-\end{cases}
-$$</p>
-<p>$$
-\mathbf{I}=
 \begin{bmatrix}
-1 &amp; 0 &amp; 0 \\
-0 &amp; 1 &amp; 0 \\
+1 &amp; u_{12} &amp; u_{13} \\
+0 &amp; 1 &amp; u_{23} \\
 0 &amp; 0 &amp; 1
 \end{bmatrix}
 $$</p>
-<p>$$\mathbf{I}\mathbf{x}=\mathbf{x}$$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=identity-matrix-structural">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e7bc7581">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Identity-Matrix-%E2%80%94-Structural-Interpretation">Identity Matrix — Structural Interpretation<a class="anchor-link" href="#Identity-Matrix-%E2%80%94-Structural-Interpretation">¶</a></h3><p>The identity matrix represents a <strong>neutral operation</strong> on a DOF vector.</p>
-<p>In matrix structural analysis, it appears in:</p>
+<h3 id="Variants-of-Matrix-Decomposition">Variants of Matrix Decomposition<a class="anchor-link" href="#Variants-of-Matrix-Decomposition">¶</a></h3><p>The specific elimination method depends on how the diagonal scaling
+is distributed among the triangular factors.</p>
+<p>Starting from
+$$
+\mathbf{A} = \mathbf{L}\mathbf{D}\mathbf{U},
+$$
+the diagonal matrix $\mathbf{D}$ may be:</p>
 <ul>
-<li><strong>Penalty methods</strong>: $\mathbf{K} + \alpha \mathbf{I}$ for constraints</li>
-<li><strong>Regularization</strong> of ill-conditioned stiffness matrices</li>
-<li><strong>Incremental–iterative solvers</strong> (Newton updates)</li>
-<li><strong>Eigenvalue problems</strong> and modal normalization</li>
+<li>associated with $\mathbf{L}$</li>
+<li>associated with $\mathbf{U}$</li>
+<li>split between both</li>
 </ul>
-<p>Interpretation:</p>
-<ul>
-<li>multiplying by $\mathbf{I}$ leaves DOFs unchanged</li>
-<li>adding $\alpha\mathbf{I}$ stiffens DOFs <em>without introducing coupling</em></li>
-</ul>
+<p>As a result, a general square matrix may be factored as (generalization)
+$$
+\mathbf{A} = \mathbf{L}\mathbf{U}.
+$$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=null-matrix-def">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b54fb638">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Null-(Zero)-Matrix">Null (Zero) Matrix<a class="anchor-link" href="#Null-(Zero)-Matrix">¶</a></h3><p><strong>Definition</strong></p>
-<p>A matrix where all entries equal to zero:</p>
+<p>Important observations</p>
+<ul>
+<li>the matrices labeled $\mathbf{L}$ and $\mathbf{U}$ here are <strong>not unique</strong></li>
+<li>they are <strong>not necessarily the same</strong> $\mathbf{L}$ and $\mathbf{U}$ appearing in $\mathbf{A}=\mathbf{L}\mathbf{D}\mathbf{U}$</li>
+<li>their exact form depends on how the diagonal scaling is distributed</li>
+<li>differences among elimination methods are largely differences in
+how this factorization is constructed</li>
+</ul>
+<p>By regrouping factors, common variants are obtained:
+$$
+\mathbf{A} = \mathbf{L}\mathbf{U}
+\qquad
+\mathbf{A} = \mathbf{L}\mathbf{D}\mathbf{L}^T
+\qquad
+\mathbf{A} = \mathbf{L}\mathbf{L}^T
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4315e8d7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Why-is-Matrix-Decomposition-Useful?">Why is Matrix Decomposition Useful?<a class="anchor-link" href="#Why-is-Matrix-Decomposition-Useful?">¶</a></h3><p>Once a matrix has been factorized, solving $\mathbf{A}\mathbf{x}=\mathbf{b}$ becomes a sequence of simple triangular solves.</p>
+<p>Using
+$$
+\mathbf{A}=\mathbf{L}\mathbf{U},
+$$
+we rewrite the system as
+$$
+\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{b}.
+$$</p>
+<p>Introduce an auxiliary vector $\hat{\mathbf{b}}$:
+$$
+\mathbf{U}\mathbf{x}=\hat{\mathbf{b}}
+$$</p>
+<p>Substitute into $\mathbf{L}\mathbf{U}\mathbf{x}=\mathbf{b}$:
+$$
+\mathbf{L}\hat{\mathbf{b}}=\mathbf{b}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3388d183">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Solving:-First-Forward-Substitution">Solving: First Forward Substitution<a class="anchor-link" href="#Solving:-First-Forward-Substitution">¶</a></h3><p>Since $\mathbf{L}$ is a known lower triangular matrix and $\mathbf{b}$ is given,
+the auxiliary vector $\hat{\mathbf{b}}$ can be computed element by element
+using forward substitution.</p>
 <p>$$
-o_{ij}=0
+\mathbf{L}\hat{\mathbf{b}}=\mathbf{b}.
 $$</p>
 <p>$$
-\mathbf{O}=
 \begin{bmatrix}
-0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 0
+\ell_{11} &amp; 0           &amp; 0           &amp; \cdots &amp; 0 \\
+\ell_{21} &amp; \ell_{22}   &amp; 0           &amp; \cdots &amp; 0 \\
+\ell_{31} &amp; \ell_{32}   &amp; \ell_{33}   &amp; \cdots &amp; 0 \\
+\vdots    &amp; \vdots      &amp; \vdots      &amp; \ddots &amp; 0 \\
+\ell_{n1} &amp; \ell_{n2}   &amp; \ell_{n3}   &amp; \cdots &amp; \ell_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+\hat b_1 \\
+\hat b_2 \\
+\hat b_3 \\
+\vdots   \\
+\hat b_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1 \\
+b_2 \\
+b_3 \\
+\vdots \\
+b_n
+\end{bmatrix}
+$$</p>
+<p>Forward substitution
+$$
+\hat b_i
+=
+\frac{
+b_i - \sum_{j=1}^{i-1} \ell_{ij}\,\hat b_j
+}{
+\ell_{ii}
+},
+\qquad
+i = 1,\ldots,n
+$$</p>
+<p>This allows $\hat{\mathbf{b}}$ to be computed sequentially
+from top to bottom.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ff65959f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Solving:-Then-Backward-Substitution">Solving: Then Backward Substitution<a class="anchor-link" href="#Solving:-Then-Backward-Substitution">¶</a></h3><p>Once $\hat{\mathbf{b}}$ is known, and $\mathbf{U}$ is a known upper triangular
+matrix, the solution vector $\mathbf{x}$ is obtained element by element
+using back substitution.</p>
+<p>$$
+\mathbf{U}\mathbf{x}=\hat{\mathbf{b}}.
+$$</p>
+<p>$$
+\begin{bmatrix}
+u_{11} &amp; u_{12} &amp; u_{13} &amp; \cdots &amp; u_{1n} \\
+0      &amp; u_{22} &amp; u_{23} &amp; \cdots &amp; u_{2n} \\
+0      &amp; 0      &amp; u_{33} &amp; \cdots &amp; u_{3n} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0      &amp; 0      &amp; 0      &amp; \cdots &amp; u_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+\vdots \\
+x_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+\hat b_1 \\
+\hat b_2 \\
+\hat b_3 \\
+\vdots \\
+\hat b_n
+\end{bmatrix}
+$$</p>
+<p>Back substitution
+$$
+x_i
+=
+\frac{
+\hat b_i - \sum_{j=i+1}^{n} u_{ij}\,x_j
+}{
+u_{ii}
+},
+\qquad
+i = n,\ldots,1
+$$</p>
+<p>This allows $\mathbf{x}$ to be computed sequentially
+from bottom to top.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ed91ffa3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Why-Factorization-Helps-for-Repeated-Solves">Why Factorization Helps for Repeated Solves<a class="anchor-link" href="#Why-Factorization-Helps-for-Repeated-Solves">¶</a></h3><p>If the right-hand side changes ($\mathbf{b}$ changes), we do not need to refactor $\mathbf{A}$.</p>
+<ul>
+<li>$\mathbf{A}$ is factorized once</li>
+<li>each new $\mathbf{b}$ only requires:<ul>
+<li>forward substitution</li>
+<li>back substitution</li>
+</ul>
+</li>
+</ul>
+<p>In contrast, Gauss–Jordan operates on the augmented system $[\mathbf{A}\,|\,\mathbf{b}]$,
+so a new $\mathbf{b}$ requires repeating the full elimination.</p>
+<p>Example (operation counts from the code)</p>
+<ul>
+<li>$n=30$, number of right-hand sides = 30</li>
+<li>LU total work (factor once + 30 solves): 74,215 ops</li>
+<li>Gauss–Jordan total work (redo elimination 30 times): 876,150 ops</li>
+<li>ratio: Gauss–Jordan / LU $\approx 11.81\times$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a7acad6a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="A-Unified-View">A Unified View<a class="anchor-link" href="#A-Unified-View">¶</a></h3><p>All of the following methods share the same structure:</p>
+<ul>
+<li>factorize the matrix once  $\mathcal{O}(n^3)$</li>
+<li>for each new $\mathbf{b}$:<ul>
+<li>forward substitution  $\mathcal{O}(n^2)$</li>
+<li>back substitution  $\mathcal{O}(n^2)$</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=83562717">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-3:-LU-Decomposition">Method 3: LU Decomposition<a class="anchor-link" href="#Method-3:-LU-Decomposition">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6a83c32">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>If $\mathbf{A}$ is square:
+$$
+\mathbf{A}=\mathbf{L}\mathbf{U}
+$$</p>
+<p>Important notes</p>
+<ul>
+<li>$\mathbf{L}$ and $\mathbf{U}$ are <strong>not unique</strong></li>
+</ul>
+<p>What “not unique” means</p>
+<ul>
+<li>there are <strong>many valid pairs</strong> $(\mathbf{L},\mathbf{U})$ whose product equals $\mathbf{A}$</li>
+<li>different elimination choices (scaling, ordering, pivoting) produce different factors</li>
+<li>the matrices labeled $\mathbf{L}$ and $\mathbf{U}$ represent <strong>roles</strong>, not a single fixed decomposition</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=82f0c799">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Consider the matrix
+$$
+\mathbf{A}=
+\begin{bmatrix}
+2 &amp; 2 &amp; 0\\
+2 &amp; 4 &amp; 2\\
+0 &amp; 2 &amp; 2
+\end{bmatrix}
+$$</p>
+<p>One valid LU factorization:
+$$
+\mathbf{A}=\mathbf{L}_1\mathbf{U}_1,
+\qquad
+\mathbf{L}_1=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+1 &amp; 1 &amp; 0\\
+0 &amp; 1 &amp; 1
+\end{bmatrix},
+\quad
+\mathbf{U}_1=
+\begin{bmatrix}
+2 &amp; 2 &amp; 0\\
+0 &amp; 2 &amp; 2\\
+0 &amp; 0 &amp; 2
+\end{bmatrix}
+$$</p>
+<p>Another valid LU factorization (rescaling the diagonal):
+$$
+\mathbf{A}=\mathbf{L}_2\mathbf{U}_2,
+\qquad
+\mathbf{L}_2=
+\begin{bmatrix}
+2 &amp; 0 &amp; 0\\
+2 &amp; 2 &amp; 0\\
+0 &amp; 2 &amp; 2
+\end{bmatrix},
+\quad
+\mathbf{U}_2=
+\begin{bmatrix}
+1 &amp; 1 &amp; 0\\
+0 &amp; 1 &amp; 1\\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+$$</p>
+<p>Both satisfy
+$$
+\mathbf{L}_1\mathbf{U}_1
+=
+\mathbf{L}_2\mathbf{U}_2
+=
+\mathbf{A}.
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9d79bbd1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="LU-Decomposition-%E2%80%94-Example-Factorization">LU Decomposition — Example Factorization<a class="anchor-link" href="#LU-Decomposition-%E2%80%94-Example-Factorization">¶</a></h3><p>Start with a simple 3×3 matrix
+$$
+\mathbf{A}=
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; a_{13}\\
+a_{21} &amp; a_{22} &amp; a_{23}\\
+a_{31} &amp; a_{32} &amp; a_{33}
+\end{bmatrix}
+$$</p>
+<p>Goal
+$$
+\mathbf{A}=\mathbf{L}\mathbf{U}
+$$</p>
+<p>We create $\mathbf{U}$ by doing Gaussian Elimination on $\mathbf{A}$, and we build $\mathbf{L}$ by recording the elimination multipliers needed to form $\mathbf{U}$.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a4ea6f74">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Why this works</p>
+<ul>
+<li>each elimination step subtracts a multiple of one row from another</li>
+<li>these row operations can be written as multiplication by a lower triangular matrix</li>
+<li>the multipliers used to eliminate entries below the diagonal are exactly the
+subdiagonal entries of $\mathbf{L}$</li>
+</ul>
+<p>As a result</p>
+<ul>
+<li>Gaussian Elimination transforms $\mathbf{A}$ into $\mathbf{U}$</li>
+<li>the accumulated elimination operations form $\mathbf{L}$</li>
+<li>together, they satisfy
+$$
+\mathbf{A}=\mathbf{L}\mathbf{U}
+$$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=36bd8510">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-1:-Eliminate-below-the-first-pivot">Step 1: Eliminate below the first pivot<a class="anchor-link" href="#Step-1:-Eliminate-below-the-first-pivot">¶</a></h3><p>Pivot
+$$
+a_{11}
+$$</p>
+<p>Elimination multipliers (what gets stored in $\mathbf{L}$)
+$$
+\ell_{21}=\frac{a_{21}}{a_{11}},
+\qquad
+\ell_{31}=\frac{a_{31}}{a_{11}}
+$$</p>
+<p>Row operations (update the matrix to start forming $\mathbf{U}$)
+$$
+R_2 \leftarrow R_2-\ell_{21}R_1,
+\qquad
+R_3 \leftarrow R_3-\ell_{31}R_1
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=de01e6e9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-1:-What-$%5Cmathbf%7BL%7D$-records">Step 1: What $\mathbf{L}$ records<a class="anchor-link" href="#Step-1:-What-$%5Cmathbf%7BL%7D$-records">¶</a></h3><p>The multipliers used to eliminate entries become entries in $\mathbf{L}$.</p>
+<p>After the first elimination stage:
+$$
+\mathbf{L}=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+\ell_{21} &amp; 1 &amp; 0\\
+\ell_{31} &amp; 0 &amp; 1
+\end{bmatrix}
+$$</p>
+<p>At this point, $\mathbf{U}$ is the partially eliminated matrix:
+$$
+\mathbf{U}=
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; a_{13}\\
+0      &amp; a'_{22}&amp; a'_{23}\\
+0      &amp; a'_{32}&amp; a'_{33}
 \end{bmatrix}
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=null-matrix-structural">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=07d071bd">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Null-Matrix-%E2%80%94-Structural-Interpretation">Null Matrix — Structural Interpretation<a class="anchor-link" href="#Null-Matrix-%E2%80%94-Structural-Interpretation">¶</a></h3><p>Zero matrices encode <strong>absence of coupling</strong> between DOF sets.</p>
-<p>In matrix structural analysis, they arise in:</p>
+<h3 id="Step-2:-Eliminate-below-the-second-pivot">Step 2: Eliminate below the second pivot<a class="anchor-link" href="#Step-2:-Eliminate-below-the-second-pivot">¶</a></h3><p>Second pivot
+$$
+u_{22}=a'_{22}
+$$</p>
+<p>Multiplier for the entry below it (store in $\mathbf{L}$)
+$$
+\ell_{32}=\frac{a'_{32}}{a'_{22}}
+$$</p>
+<p>Row operation (finish forming $\mathbf{U}$)
+$$
+R_3 \leftarrow R_3-\ell_{32}R_2
+$$</p>
+<p>Now the matrix is upper triangular:
+$$
+\mathbf{U}=
+\begin{bmatrix}
+u_{11} &amp; u_{12} &amp; u_{13}\\
+0      &amp; u_{22} &amp; u_{23}\\
+0      &amp; 0      &amp; u_{33}
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4caa0fbe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-2:-Final-$%5Cmathbf%7BL%7D$-and-$%5Cmathbf%7BU%7D$">Step 2: Final $\mathbf{L}$ and $\mathbf{U}$<a class="anchor-link" href="#Step-2:-Final-$%5Cmathbf%7BL%7D$-and-$%5Cmathbf%7BU%7D$">¶</a></h3><p>Collect all stored multipliers:
+$$
+\mathbf{L}=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+\ell_{21} &amp; 1 &amp; 0\\
+\ell_{31} &amp; \ell_{32} &amp; 1
+\end{bmatrix}
+$$</p>
+<p>And the eliminated matrix is $\mathbf{U}$:
+$$
+\mathbf{U}=
+\begin{bmatrix}
+u_{11} &amp; u_{12} &amp; u_{13}\\
+0      &amp; u_{22} &amp; u_{23}\\
+0      &amp; 0      &amp; u_{33}
+\end{bmatrix}
+$$</p>
+<p>Interpretation</p>
 <ul>
-<li><strong>Partitioned stiffness matrices</strong>:
+<li>$\mathbf{U}$ is what you get after Gaussian Elimination</li>
+<li>$\mathbf{L}$ stores the multipliers that created the zeros</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f6ee0c07">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-4:-Cholesky-Factorization">Method 4: Cholesky Factorization<a class="anchor-link" href="#Method-4:-Cholesky-Factorization">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5f227d71">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>If $\mathbf{A}$ is <strong>symmetric positive definite (SPD)</strong>:
+$$
+\mathbf{A}=\mathbf{L}\mathbf{U}=\mathbf{L}\mathbf{L}^T
+$$</p>
+<p>Important notes</p>
+<ul>
+<li>symmetry implies the same elimination occurs above and below the diagonal</li>
+<li>the upper triangular factor satisfies
+$$
+\mathbf{U}=\mathbf{L}^T
+$$</li>
+<li>minimal storage and fastest solves</li>
+<li>This is the fastest standard dense factorization for SPD systems.</li>
+</ul>
+<p>In structural analysis:</p>
+<ul>
+<li>many stiffness matrices are SPD after applying boundary conditions (for typical linear elastic problems)</li>
+</ul>
+<!-- A symmetric matrix $\mathbf{A}$ is **positive definite** if
+$$
+\mathbf{x}^T \mathbf{A} \mathbf{x} > 0
+\quad
+\text{for all nonzero } \mathbf{x}.
+$$ -->
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e27025ce">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Constructing-$L$">Constructing $L$<a class="anchor-link" href="#Constructing-$L$">¶</a></h3><p>For an SPD matrix $\mathbf{A}$,
+the Cholesky factorization
+can be constructed column by column using the following recurrence relation</p>
+<p>Diagonal entries
+$$
+\ell_{ii}
+=
+\sqrt{
+a_{ii}
+-
+\sum_{k=1}^{i-1}
+\ell_{ik}^2
+}
+$$</p>
+<p>Off-diagonal entries
+$$
+\ell_{ji}
+=
+\frac{
+a_{ji}
+-
+\sum_{k=1}^{i-1}
+\ell_{jk}\,\ell_{ik}
+}{
+\ell_{ii}
+},
+\qquad
+j=i+1,\ldots,n
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ef346755">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="But-what-if-negative-number-in-the-root?">But what if negative number in the root?<a class="anchor-link" href="#But-what-if-negative-number-in-the-root?">¶</a></h3><ul>
+<li>this implies $\mathbf{A}$ is <strong>not positive definite</strong></li>
+<li>the Cholesky factorization <strong>fails</strong></li>
+<li>mathematically: $\mathbf{A}$ is indefinite</li>
+</ul>
+<p>Structural interpretation</p>
+<ul>
+<li>in structural analysis, $\mathbf{A}=\mathbf{K}_{ff}$ (stiffness matrix)</li>
+<li>a negative value under the square root indicates <strong>instability</strong></li>
+<li>the structure cannot resist certain deformation modes</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=579c0976">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Cholesky-Example-(Setup)">Cholesky Example (Setup)<a class="anchor-link" href="#Cholesky-Example-(Setup)">¶</a></h3><p>Compute the Cholesky factorization
+$$
+\mathbf{A}=\mathbf{L}\mathbf{L}^T
+$$
+for
+$$
+\mathbf{A}=
+\begin{bmatrix}
+100 &amp; 30 &amp; 20 &amp; 10 \\
+30 &amp; 178 &amp; 201 &amp; -36 \\
+20 &amp; 201 &amp; 485 &amp; 21 \\
+10 &amp; -36 &amp; 21 &amp; 350
+\end{bmatrix}
+$$</p>
+<p>We compute $\mathbf{L}$ column by column.</p>
+<p>Recall: $\mathbf{L}$ stores the elimination coefficients used to zero entries below the diagonal in calculating $\mathbf{U}$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0ed25261">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Column-1">Column 1<a class="anchor-link" href="#Column-1">¶</a></h3><p>Diagonal entry
+$$
+\ell_{11}=\sqrt{a_{11}}=\sqrt{100}=10
+$$</p>
+<p>Below-diagonal entries
+$$
+\ell_{21}=\frac{a_{21}}{\ell_{11}}=\frac{30}{10}=3,
+\qquad
+\ell_{31}=\frac{a_{31}}{\ell_{11}}=\frac{20}{10}=2,
+\qquad
+\ell_{41}=\frac{a_{41}}{\ell_{11}}=\frac{10}{10}=1
+$$</p>
+<p>After column 1
+$$
+\mathbf{L}=
+\begin{bmatrix}
+10 &amp; 0 &amp; 0 &amp; 0\\
+3  &amp; 0 &amp; 0 &amp; 0\\
+2  &amp; 0 &amp; 0 &amp; 0\\
+1  &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a2052ddb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Column-2">Column 2<a class="anchor-link" href="#Column-2">¶</a></h3><p>Diagonal entry
+$$
+\ell_{22}=\sqrt{a_{22}-\ell_{21}^2}
+=\sqrt{178-3^2}
+=\sqrt{169}=13
+$$</p>
+<p>Below-diagonal entries
+$$
+\ell_{32}=\frac{a_{32}-\ell_{31}\ell_{21}}{\ell_{22}}
+=\frac{201-(2\cdot 3)}{13}
+=\frac{195}{13}=15
+$$
+$$
+\ell_{42}=\frac{a_{42}-\ell_{41}\ell_{21}}{\ell_{22}}
+=\frac{-36-(1\cdot 3)}{13}
+=\frac{-39}{13}=-3
+$$</p>
+<p>After column 2
+$$
+\mathbf{L}=
+\begin{bmatrix}
+10 &amp; 0  &amp; 0 &amp; 0\\
+3  &amp; 13 &amp; 0 &amp; 0\\
+2  &amp; 15 &amp; 0 &amp; 0\\
+1  &amp; -3 &amp; 0 &amp; 0
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d67eac13">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Column-3">Column 3<a class="anchor-link" href="#Column-3">¶</a></h3><p>Diagonal entry
+$$
+\ell_{33}=\sqrt{a_{33}-\ell_{31}^2-\ell_{32}^2}
+=\sqrt{485-2^2-15^2}
+=\sqrt{485-4-225}
+=\sqrt{256}=16
+$$</p>
+<p>Below-diagonal entry
+$$
+\ell_{43}=\frac{a_{43}-\ell_{41}\ell_{31}-\ell_{42}\ell_{32}}{\ell_{33}}
+=\frac{21-(1\cdot 2)-((-3)\cdot 15)}{16}
+=\frac{21-2+45}{16}
+=\frac{64}{16}=4
+$$</p>
+<p>After column 3
+$$
+\mathbf{L}=
+\begin{bmatrix}
+10 &amp; 0  &amp; 0  &amp; 0\\
+3  &amp; 13 &amp; 0  &amp; 0\\
+2  &amp; 15 &amp; 16 &amp; 0\\
+1  &amp; -3 &amp; 4  &amp; 0
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=44e5778f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Column-4">Column 4<a class="anchor-link" href="#Column-4">¶</a></h3><p>Diagonal entry
+$$
+\ell_{44}=\sqrt{a_{44}-\ell_{41}^2-\ell_{42}^2-\ell_{43}^2}
+=\sqrt{350-1^2-(-3)^2-4^2}
+=\sqrt{350-1-9-16}
+=\sqrt{324}=18
+$$</p>
+<p>Final factor
+$$
+\mathbf{L}=
+\begin{bmatrix}
+10 &amp; 0  &amp; 0  &amp; 0\\
+3  &amp; 13 &amp; 0  &amp; 0\\
+2  &amp; 15 &amp; 16 &amp; 0\\
+1  &amp; -3 &amp; 4  &amp; 18
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4dd351d5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Check">Check<a class="anchor-link" href="#Check">¶</a></h3><p>Compute
+$$
+\mathbf{L}\mathbf{L}^T
+=
+\begin{bmatrix}
+10 &amp; 0  &amp; 0  &amp; 0\\
+3  &amp; 13 &amp; 0  &amp; 0\\
+2  &amp; 15 &amp; 16 &amp; 0\\
+1  &amp; -3 &amp; 4  &amp; 18
+\end{bmatrix}
+\begin{bmatrix}
+10 &amp; 3  &amp; 2  &amp; 1\\
+0  &amp; 13 &amp; 15 &amp; -3\\
+0  &amp; 0  &amp; 16 &amp; 4\\
+0  &amp; 0  &amp; 0  &amp; 18
+\end{bmatrix}
+=
+\begin{bmatrix}
+100 &amp; 30 &amp; 20 &amp; 10 \\
+30 &amp; 178 &amp; 201 &amp; -36 \\
+20 &amp; 201 &amp; 485 &amp; 21 \\
+10 &amp; -36 &amp; 21 &amp; 350
+\end{bmatrix}
+=\mathbf{A}
+$$</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1e33c376">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-5:-LDL$%5ET$-Factorization">Method 5: LDL$^T$ Factorization<a class="anchor-link" href="#Method-5:-LDL$%5ET$-Factorization">¶</a></h2><blockquote>
+<p>Also known as root-free Cholesky</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8d4e8970">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>If $\mathbf{A}$ is symmetric (does not need to be definite):
+$$
+\mathbf{A}=\mathbf{L}\mathbf{D}\mathbf{U}=\mathbf{L}\mathbf{D}\mathbf{L}^T
+$$</p>
+<p>Important notes</p>
+<ul>
+<li>symmetry implies the same elimination occurs above and below the diagonal</li>
+<li>the upper triangular factor satisfies
+$$
+\mathbf{U}=\mathbf{L}^T
+$$</li>
+<li>$\mathbf{L}$ is unit lower triangular</li>
+<li>$\mathbf{D}$ is diagonal and retains the scaling</li>
+<li>improved numberical stability</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=chol-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Constructing-$L$-and-$D$">Constructing $L$ and $D$<a class="anchor-link" href="#Constructing-$L$-and-$D$">¶</a></h3><p>For a symmetric matrix $\mathbf{A}$, the $LDL^T$ factorization
+$$
+\mathbf{A}=\mathbf{L}\mathbf{D}\mathbf{L}^T
+$$
+can be constructed column by column using the following recurrence relations.</p>
+<p>Diagonal entries of $\mathbf{D}$ (no square root required!)
+$$
+d_{ii}
+=
+a_{ii}
+-
+\sum_{k=1}^{i-1}
+d_{kk}\,\ell_{ik}^2
+$$</p>
+<p>Diagonal entries of $\mathbf{L}$
+$$
+\ell_{ii}=1
+$$</p>
+<p>Off-diagonal entries of $\mathbf{L}$
+$$
+\ell_{ji}
+=
+\frac{
+a_{ji}
+-
+\sum_{k=1}^{i-1}
+d_{kk}\,\ell_{jk}\,\ell_{ik}
+}{
+d_{ii}
+},
+\qquad
+j=i+1,\ldots,n
+$$</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a9f23d37">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-6:-Thomas-Method">Method 6: Thomas Method<a class="anchor-link" href="#Method-6:-Thomas-Method">¶</a></h2><blockquote>
+<p>Only in very special case, Tridiagonal Matrices</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=thomas-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>If $\mathbf{A}$ is <strong>tridiagonal</strong> (bandwidth = 3):</p>
+<ul>
+<li>only $a_{i,i-1}$, $a_{i,i}$, $a_{i,i+1}$ are nonzero</li>
+</ul>
+<p>$$
+\mathbf{A}=
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; 0      &amp; 0      &amp; \cdots &amp; 0 \\
+a_{21} &amp; a_{22} &amp; a_{23} &amp; 0      &amp; \cdots &amp; 0 \\
+0      &amp; a_{32} &amp; a_{33} &amp; a_{34} &amp; \cdots &amp; 0 \\
+\vdots &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ddots &amp; \vdots \\
+0      &amp; \cdots &amp; 0      &amp; a_{n,n-1} &amp; a_{nn-1} &amp; a_{nn} \\
+0      &amp; \cdots &amp; 0      &amp; 0      &amp; a_{n,n-1} &amp; a_{nn}
+\end{bmatrix}
+$$</p>
+<p>Thomas algorithm is a specialized LU that runs in <strong>$\mathcal{O}(n)$</strong> time.</p>
+<p>This appears often in:</p>
+<ul>
+<li>1D finite difference / finite element problems</li>
+<li>beam/rod discretizations with local coupling (each DOF interacts only with its neighbors)</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=55fef267">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Final-Remark-(All-Direct-Methods)">Final Remark (All Direct Methods)<a class="anchor-link" href="#Final-Remark-(All-Direct-Methods)">¶</a></h3><p>Once the matrix is factorized, the factors do not change; only $\mathbf{b}$ does.</p>
+<p><strong>LU</strong></p>
+<ul>
+<li>$\mathbf{L} \hat{\mathbf{b}}=\mathbf{b}$</li>
+<li>$\mathbf{U} \mathbf{x}=\hat{\mathbf{b}}$</li>
+</ul>
+<p><strong>Cholesky</strong></p>
+<ul>
+<li>$\mathbf{L}\hat{\mathbf{b}}=\mathbf{b}$</li>
+<li>$\mathbf{L}^T\mathbf{x}=\hat{\mathbf{b}}$</li>
+</ul>
+<p><strong>LDL$^T$</strong></p>
+<ul>
+<li>$\mathbf{L}\hat{\mathbf{b}}=\mathbf{b}$</li>
+<li>$\mathbf{D}\mathbf{L}^T\mathbf{x}=\hat{\mathbf{b}}$</li>
+</ul>
+<p>Same forward/backward substitution structure for all methods.</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=part3-title">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-3-%E2%80%94-Iterative-Methods">Part 3 — Iterative Methods<a class="anchor-link" href="#Part-3-%E2%80%94-Iterative-Methods">¶</a></h2><blockquote>
+<p>Replace one big solve with a sequence of cheap updates: $\mathbf{x}^{(k)} \to \mathbf{x}^{(k+1)}$.</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=iter-why">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Why-Iterative-Solvers?">Why Iterative Solvers?<a class="anchor-link" href="#Why-Iterative-Solvers?">¶</a></h3><p>Iterative methods become attractive when:</p>
+<ul>
+<li>$\mathbf{A}$ is <strong>very large</strong> and sparse</li>
+<li>you only need an approximate solution (within tolerance)</li>
+<li>factorization would cause too much fill-in (memory)</li>
+</ul>
+<p>But:</p>
+<ul>
+<li>convergence is not guaranteed for all matrices</li>
+<li>performance depends strongly on conditioning and preconditioning</li>
+<li>can take longer</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=04b46695">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-1:-Point-Jacobi">Method 1: Point Jacobi<a class="anchor-link" href="#Method-1:-Point-Jacobi">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=jacobi-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The Point Jacobi method solves
+$$
+\mathbf{A}\mathbf{x}=\mathbf{b}
+$$
+by starting with an initial guess $\mathbf{x}^{(0)}$ and repeatedly updating each
+unknown using values from the <strong>previous</strong> iteration.</p>
+<p>Key idea</p>
+<ul>
+<li>compute a new vector $\mathbf{x}^{(m)}$ using only $\mathbf{x}^{(m-1)}$</li>
+<li>all components are updated “in parallel” (no immediate reuse)</li>
+</ul>
+<p>Requirement</p>
+<ul>
+<li>diagonal entries must be nonzero: $a_{ii}\neq 0$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=587015a1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Component-Form-(3%C3%973-Example)">Component Form (3×3 Example)<a class="anchor-link" href="#Component-Form-(3%C3%973-Example)">¶</a></h3><p>System
 $$
 \begin{bmatrix}
-\mathbf{K}_{ff} &amp; \mathbf{0} \\
-\mathbf{0} &amp; \mathbf{K}_{cc}
+a_{11} &amp; a_{12} &amp; a_{13}\\
+a_{21} &amp; a_{22} &amp; a_{23}\\
+a_{31} &amp; a_{32} &amp; a_{33}
 \end{bmatrix}
-$$</li>
-<li>Free vs constrained DOF separation</li>
-<li>Multi-component or multi-physics models before coupling</li>
-</ul>
-<p>Interpretation:</p>
+\begin{bmatrix}
+x_1\\x_2\\x_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}
+$$</p>
+<p>Update formula (component form)
+$$
+x_i^{(m)}
+=
+\frac{
+b_i-\sum_{j\ne i} a_{ij}\,x_j^{(m-1)}
+}{
+a_{ii}
+},
+\qquad
+i=1,\ldots,n
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=730f5568">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Equation-Form-(3%C3%973-Example)">Equation Form (3×3 Example)<a class="anchor-link" href="#Equation-Form-(3%C3%973-Example)">¶</a></h3><p>Start from the linear system at iteration $m$:
+$$
+\begin{aligned}
+a_{11}x_1^{(m-1)} + a_{12}x_2^{(m-1)} + a_{13}x_3^{(m-1)} &amp;= b_1 \\
+a_{21}x_1^{(m-1)} + a_{22}x_2^{(m-1)} + a_{23}x_3^{(m-1)} &amp;= b_2 \\
+a_{31}x_1^{(m-1)} + a_{32}x_2^{(m-1)} + a_{33}x_3^{(m-1)} &amp;= b_3
+\end{aligned}
+$$</p>
+<p>Jacobi updates (use only previous iteration values)
+$$
+\boxed{
+x_1^{(m)}
+}
+=
+\frac{b_1-a_{12}x_2^{(m-1)}-a_{13}x_3^{(m-1)}}{a_{11}}
+$$
+$$
+\boxed{
+x_2^{(m)}
+}
+=
+\frac{b_2-a_{21}x_1^{(m-1)}-a_{23}x_3^{(m-1)}}{a_{22}}
+$$
+$$
+\boxed{
+x_3^{(m)}
+}
+=
+\frac{b_3-a_{31}x_1^{(m-1)}-a_{32}x_2^{(m-1)}}{a_{33}}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c937059a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>One iteration step</p>
 <ul>
-<li>no force transfer between DOF groups</li>
-<li>modeling assumption of independent subsystems</li>
+<li>start with $\mathbf{x}^{(m-1)}$</li>
+<li>compute $x_1^{(m)},x_2^{(m)},x_3^{(m)}$</li>
+<li>collect into the new vector $\mathbf{x}^{(m)}$</li>
+<li>repeat iteration</li>
 </ul>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5-slide">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fbc5699c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5-%E2%80%94-Matrix-Compatibility-for-Operations">Part 5 — Matrix Compatibility for Operations<a class="anchor-link" href="#Part-5-%E2%80%94-Matrix-Compatibility-for-Operations">¶</a></h2><blockquote>
-<p>When do operations make sense?</p>
+<h2 id="Method-2:-Point-Gauss%E2%80%93Seidel">Method 2: Point Gauss–Seidel<a class="anchor-link" href="#Method-2:-Point-Gauss%E2%80%93Seidel">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=gs-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The Point Gauss–Seidel method solves
+$$
+\mathbf{A}\mathbf{x}=\mathbf{b}
+$$
+by starting with an initial guess $\mathbf{x}^{(0)}$ and repeatedly updating each
+unknown using the <strong>newest available values</strong>.</p>
+<p>Key idea</p>
+<ul>
+<li>compute $\mathbf{x}^{(m)}$ by immediately reusing updated components</li>
+<li>values $x_1^{(m)},\ldots,x_{i-1}^{(m)}$ are reused when computing $x_i^{(m)}$</li>
+<li>updates are <strong>sequential</strong>, not parallel</li>
+</ul>
+<p>Requirement</p>
+<ul>
+<li>diagonal entries must be nonzero: $a_{ii}\neq 0$</li>
+</ul>
+<p>Notes</p>
+<ul>
+<li>often converges faster than Point Jacobi</li>
+<li>less parallel, but more efficient per iteration</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dccf3c5c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Component-Form-(3%C3%973-Example)">Component Form (3×3 Example)<a class="anchor-link" href="#Component-Form-(3%C3%973-Example)">¶</a></h3><p>System
+$$
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; a_{13}\\
+a_{21} &amp; a_{22} &amp; a_{23}\\
+a_{31} &amp; a_{32} &amp; a_{33}
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\x_2\\x_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}
+$$</p>
+<p>Update formula (component form)
+$$
+x_i^{(m)}
+=
+\frac{
+b_i
+-
+\sum_{j&lt;i} a_{ij}\,x_j^{(m)}
+-
+\sum_{j&gt;i} a_{ij}\,x_j^{(m-1)}
+}{
+a_{ii}
+},
+\qquad
+i=1,\ldots,n
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cd3caa60">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Equation-Form-(3%C3%973-Example)">Equation Form (3×3 Example)<a class="anchor-link" href="#Equation-Form-(3%C3%973-Example)">¶</a></h3><p>Start from the linear system at iteration $m$:
+$$
+\begin{aligned}
+a_{11}x_1^{(m)} + a_{12}x_2^{(m-1)} + a_{13}x_3^{(m-1)} &amp;= b_1 \\
+a_{21}x_1^{(m)} + a_{22}x_2^{(m)} + a_{23}x_3^{(m-1)} &amp;= b_2 \\
+a_{31}x_1^{(m)} + a_{32}x_2^{(m)} + a_{33}x_3^{(m)} &amp;= b_3
+\end{aligned}
+$$</p>
+<p>Gauss–Seidel updates<br/>
+(reuse newest available values immediately)</p>
+<p>$$
+\boxed{x_1^{(m)}}
+=
+\frac{b_1-a_{12}x_2^{(m-1)}-a_{13}x_3^{(m-1)}}{a_{11}}
+$$</p>
+<p>$$
+\boxed{x_2^{(m)}}
+=
+\frac{b_2-a_{21}\boxed{x_1^{(m)}}-a_{23}x_3^{(m-1)}}{a_{22}}
+$$</p>
+<p>$$
+\boxed{x_3^{(m)}}
+=
+\frac{b_3-a_{31}\boxed{x_1^{(m)}}-a_{32}\boxed{x_2^{(m)}}}{a_{33}}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8a30a676">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>One iteration step</p>
+<ul>
+<li>start with $\mathbf{x}^{(m-1)}$</li>
+<li>compute $x_1^{(m)}$ and reuse it immediately</li>
+<li>compute $x_2^{(m)}$ using updated $x_1^{(m)}$</li>
+<li>compute $x_3^{(m)}$ using updated $x_1^{(m)},x_2^{(m)}$</li>
+<li>collect into the new vector $\mathbf{x}^{(m)}$</li>
+<li>repeat iteration</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5d290db9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Jacobi-vs.-Gauss%E2%80%93Seidel-(Same-Equations,-Different-Reuse)">Jacobi vs. Gauss–Seidel (Same Equations, Different Reuse)<a class="anchor-link" href="#Jacobi-vs.-Gauss%E2%80%93Seidel-(Same-Equations,-Different-Reuse)">¶</a></h3><p>$$
+\begin{array}{c c}
+\textbf{Point Jacobi (parallel update)} &amp; \textbf{Point Gauss-Seidel (sequential reuse)} \\[6pt]
+
+\boxed{x_1^{(m)}}=
+\frac{b_1-a_{12}x_2^{(m-1)}-a_{13}x_3^{(m-1)}}{a_{11}}
+&amp;
+\boxed{x_1^{(m)}}=
+\frac{b_1-a_{12}x_2^{(m-1)}-a_{13}x_3^{(m-1)}}{a_{11}}
+\\[10pt]
+
+\boxed{x_2^{(m)}}=
+\frac{b_2-a_{21}x_1^{(m-1)}-a_{23}x_3^{(m-1)}}{a_{22}}
+&amp;
+\boxed{x_2^{(m)}}=
+\frac{b_2-a_{21}\boxed{x_1^{(m)}}-a_{23}x_3^{(m-1)}}{a_{22}}
+\\[10pt]
+
+\boxed{x_3^{(m)}}=
+\frac{b_3-a_{31}x_1^{(m-1)}-a_{32}x_2^{(m-1)}}{a_{33}}
+&amp;
+\boxed{x_3^{(m)}}=
+\frac{b_3-a_{31}\boxed{x_1^{(m)}}-a_{32}\boxed{x_2^{(m)}}}{a_{33}}
+\end{array}
+$$</p>
+<p>Key difference</p>
+<ul>
+<li>Jacobi uses only $\mathbf{x}^{(m-1)}$</li>
+<li>Gauss–Seidel reuses the newest values immediately</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6d82dc17">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Method-3:-Conjugate-Gradient-(CG)">Method 3: Conjugate Gradient (CG)<a class="anchor-link" href="#Method-3:-Conjugate-Gradient-(CG)">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cg-mention-slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>For <strong>large, sparse, SPD</strong> systems, CG is a standard choice:</p>
+<ul>
+<li>can converge in far fewer iterations than Jacobi/GS</li>
+<li>performance depends heavily on <strong>preconditioning</strong></li>
+</ul>
+<blockquote>
+<p>We will not cover this method in detail. Section 11.3.2 of McGuire text</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f962af8f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Choosing-Convergence-Criteria">Choosing Convergence Criteria<a class="anchor-link" href="#Choosing-Convergence-Criteria">¶</a></h2><blockquote>
+<p>Iterative methods are repeated until the solution is “close enough” to the true solution.</p>
 </blockquote>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5-addition">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aa56dc25">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Addition">Addition<a class="anchor-link" href="#Addition">¶</a></h3><p>Addition requires identical dimensions:</p>
-<p>$$
-\mathbf{A},\mathbf{B}\in\mathbb{R}^{m\times n}
+<p>A commonly used convergence criterion is
+$$
+\varepsilon_a &lt; \zeta
 $$</p>
-<p>$$
-\mathbf{A}+\mathbf{B}=[a_{ij}+b_{ij}]
+<p>where the approximate relative error is defined as
+$$
+\varepsilon_a
+=
+\max_{i=1,\ldots,n}
+\left|
+\frac{x_i^{(m)} - x_i^{(m-1)}}{x_i^{(m)}}
+\right|
+\times 100\%.
 $$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5-addition-demo-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example:-Matrix-Addition-(Numerical)">Example: Matrix Addition (Numerical)<a class="anchor-link" href="#Example:-Matrix-Addition-(Numerical)">¶</a></h3><p>We can add matrices <strong>only if</strong> they have the same shape. The result is elementwise:</p>
-<p>$$\mathbf{A}+\mathbf{B}=[a_{ij}+b_{ij}]$$</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5-addition-demo-code">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">'A =</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'B =</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'A + B =</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'shape(A), shape(B) ='</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>A =
- [[1 2]
- [3 4]]
-B =
- [[10 20]
- [30 40]]
-A + B =
- [[11 22]
- [33 44]]
-shape(A), shape(B) = (2, 2) (2, 2)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5-multiplication">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Multiplication-Compatibility">Multiplication Compatibility<a class="anchor-link" href="#Multiplication-Compatibility">¶</a></h3><p>Matrix multiplication requires inner dimensions to match:</p>
-<p>$$
-\mathbf{A}\in\mathbb{R}^{m\times n},\quad \mathbf{B}\in\mathbb{R}^{n\times p}
+<p>Tolerance
+$$
+\zeta = 0.5 \times 10^{\,2-q}\ \%
 $$</p>
-<p>$$
-\mathbf{C}=\mathbf{A}\mathbf{B}\in\mathbb{R}^{m\times p}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5-shapes-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example:-Multiplication-Compatibility-(Shapes)">Example: Multiplication Compatibility (Shapes)<a class="anchor-link" href="#Example:-Multiplication-Compatibility-(Shapes)">¶</a></h3><p>If $\mathbf{A}\in\mathbb{R}^{m\times n}$ and $\mathbf{B}\in\mathbb{R}^{n\times p}$, then $\mathbf{A}\mathbf{B}$ is defined and is in $\mathbb{R}^{m\times p}$.</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5-shapes-code">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># 2x3</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1"># 3x4</span>
-
-<span class="n">C</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">B</span>  <span class="c1"># 2x4</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">'shape(A), shape(B), shape(C) ='</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">A=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">B=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">A @ B=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>shape(A), shape(B), shape(C) = (2, 3) (3, 4) (2, 4)
-
-A=
- [[2 1 7]
- [3 2 4]]
-
-B=
- [[9 6 9 5]
- [6 5 1 5]
- [6 2 1 5]]
-
-A @ B=
- [[66 31 26 50]
- [63 36 33 45]]
-</pre>
-</div>
+<p>where $q$ is the desired number of correct significant figures.</p>
+<p>Notes</p>
+<ul>
+<li>convergence depends on the initial guess</li>
+<li>tighter tolerances require more iterations</li>
+<li>for positive definite matrices, convergence is guaranteed</li>
+</ul>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-slide">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cbd55c76">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-6-%E2%80%94-Matrix%E2%80%93Vector-Multiplication">Part 6 — Matrix–Vector Multiplication<a class="anchor-link" href="#Part-6-%E2%80%94-Matrix%E2%80%93Vector-Multiplication">¶</a></h2><blockquote>
-<p>What does a matrix do to a vector?</p>
+<h2 id="Relaxation-and-Over-Relaxation">Relaxation and Over-Relaxation<a class="anchor-link" href="#Relaxation-and-Over-Relaxation">¶</a></h2><blockquote>
+<p>To improve convergence behavior, relaxation schemes may be applied.</p>
 </blockquote>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-linear-map">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6248c0b6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Linear-Mapping">Linear Mapping<a class="anchor-link" href="#Linear-Mapping">¶</a></h3><p>A matrix defines a linear transformation:</p>
-<p>$$
-\mathbf{y}=\mathbf{A}\mathbf{x}
+<p>After computing a new iterate $x_i^{(m)}$, the value is modified (weighted average)
+$$
+x_i^{(m)}
+\leftarrow
+\beta\,x_i^{(m)} + (1-\beta)\,x_i^{(m-1)}
 $$</p>
-<p><strong>Forward problem:</strong> given $\mathbf{A}$ and $\mathbf{x}$, compute $\mathbf{y}$.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-component-form">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Component-Form-=-Row-Dot-Product">Component Form = Row Dot Product<a class="anchor-link" href="#Component-Form-=-Row-Dot-Product">¶</a></h3><p>Each output component is:</p>
-<p>$$
-y_i = \sum_{j=1}^n a_{ij} x_j
-$$</p>
-<p>This is the <strong>dot product</strong> between row $i$ of $\mathbf{A}$ and the vector $\mathbf{x}$:</p>
-<p>$$
-y_i = \big(\text{row}_i(\mathbf{A})\big)\cdot \mathbf{x}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-annotated-row-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Annotated-Figure-(TO-DO):-Computing-One-Component-$y_i$">Annotated Figure (TO DO): Computing One Component $y_i$<a class="anchor-link" href="#Annotated-Figure-(TO-DO):-Computing-One-Component-$y_i$">¶</a></h3><p>For a fixed row index $i$, the formula</p>
-<p>$$y_i = \sum_{j=1}^n a_{ij}x_j$$</p>
-<p>means: <strong>take row $i$ of $\mathbf{A}$</strong>, multiply elementwise by $\mathbf{x}$, then sum.</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=39238fdf">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="c1"># Example sizes</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">2</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-<span class="c1"># Choose which component y_i to illustrate</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># second row (0-index)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span>
-
-<span class="n">row_i</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'A =</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'x ='</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Row i ='</span><span class="p">,</span> <span class="n">row_i</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Elementwise product row_i * x ='</span><span class="p">,</span> <span class="n">row_i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'y = A @ x ='</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'y_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> (1-indexed) = sum_j a_</span><span class="se">{{</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">j</span><span class="se">}}</span><span class="s1"> x_j ='</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>A =
- [[ 2.  1. -1.]
- [ 0.  3.  2.]
- [ 4. -2.  1.]]
-x = [ 1.  2. -1.]
-Row i = [0. 3. 2.]
-Elementwise product row_i * x = [ 0.  6. -2.]
-y = A @ x = [ 5.  4. -1.]
-y_2 (1-indexed) = sum_j a_{2j} x_j = 4.0
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-weighted-sum">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Same-Product,-Column-Interpretation">Same Product, Column Interpretation<a class="anchor-link" href="#Same-Product,-Column-Interpretation">¶</a></h3><p>Let $\mathbf{A}=[\mathbf{a}_1\ \mathbf{a}_2\ \cdots\ \mathbf{a}_n]$ (columns). Then:</p>
-<p>$$
-\mathbf{A}\mathbf{x} = x_1\mathbf{a}_1 + x_2\mathbf{a}_2 + \cdots + x_n\mathbf{a}_n
-$$</p>
-<p>So $\mathbf{A}\mathbf{x}$ is a <strong>linear combination of the columns of $\mathbf{A}$</strong>.</p>
+<p>Relaxation parameter $\beta$</p>
+<ul>
+<li>$0 &lt; \beta &lt; 1$  → <strong>under-relaxation</strong><br/>
+(damps oscillations, stabilizes convergence)</li>
+<li>$\beta = 1$      → no relaxation (standard method)</li>
+<li>$1 &lt; \beta &lt; 2$  → <strong>over-relaxation</strong><br/>
+(can significantly accelerate convergence)</li>
+</ul>
+<p>Notes</p>
+<ul>
+<li>over-relaxation is widely used in structural analysis</li>
+<li>optimal $\beta$ is problem-dependent</li>
+<li>improper choice of $\beta$ may cause divergence</li>
+</ul>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-column-interpretation-example-slide">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=wrap-up-slide">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-Interpretation-%E2%80%94-Numerical-Example">Column Interpretation — Numerical Example<a class="anchor-link" href="#Column-Interpretation-%E2%80%94-Numerical-Example">¶</a></h3><p>We will compute $\mathbf{y}=\mathbf{A}\mathbf{x}$ two equivalent ways:</p>
+<h2 id="Wrap-Up:-Choosing-a-Solver">Wrap-Up: Choosing a Solver<a class="anchor-link" href="#Wrap-Up:-Choosing-a-Solver">¶</a></h2><p>Given $\mathbf{A}\mathbf{x}=\mathbf{b}$, ask:</p>
 <ol>
-<li>as a matrix–vector product, and</li>
-<li>as a <strong>linear combination of the columns</strong> of $\mathbf{A}$.</li>
+<li><p><strong>Is $\mathbf{A}$ symmetric?</strong></p>
+<ul>
+<li>Yes → consider LDL$^T$ or Cholesky</li>
+</ul>
+</li>
+<li><p><strong>Is $\mathbf{A}$ symmetric positive definite (SPD)?</strong></p>
+<ul>
+<li>Yes → Cholesky (direct), Conjugate Gradient (iterative)</li>
+</ul>
+</li>
+<li><p><strong>Is $\mathbf{A}$ tridiagonal, banded, or sparse?</strong></p>
+<ul>
+<li>Yes → specialized solvers<br/>
+(Thomas algorithm, banded solvers, frontal methods)</li>
+</ul>
+</li>
+<li><p><strong>Do I have many right-hand sides $\mathbf{b}$?</strong></p>
+<ul>
+<li>Yes → factorize once (LU / LDL$^T$ / Cholesky) and reuse substitutions</li>
+</ul>
+</li>
 </ol>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-column-interpretation-example-setup">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Step-1-%E2%80%94-Choose-$%5Cmathbf%7BA%7D$-and-$%5Cmathbf%7Bx%7D$">Step 1 — Choose $\mathbf{A}$ and $\mathbf{x}$<a class="anchor-link" href="#Step-1-%E2%80%94-Choose-$%5Cmathbf%7BA%7D$-and-$%5Cmathbf%7Bx%7D$">¶</a></h4><p>$$
-\mathbf{A}=
-\begin{bmatrix}
-2 &amp; 1 \\
--1 &amp; 3
-\end{bmatrix},
-\qquad
-\mathbf{x}=
-\begin{bmatrix}
-4 \\
--2
-\end{bmatrix}
-$$</p>
-<p>Our goal is to compute:</p>
-<p>$$\mathbf{y}=\mathbf{A}\mathbf{x}$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-column-interpretation-example-columns">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Step-2-%E2%80%94-Write-$%5Cmathbf%7BA%7D$-by-its-columns">Step 2 — Write $\mathbf{A}$ by its columns<a class="anchor-link" href="#Step-2-%E2%80%94-Write-$%5Cmathbf%7BA%7D$-by-its-columns">¶</a></h4><p>Let $\mathbf{A}=[\mathbf{a}_1\ \mathbf{a}_2]$, where:</p>
-<p>$$
-\mathbf{a}_1=
-\begin{bmatrix}
-2 \\
--1
-\end{bmatrix},
-\qquad
-\mathbf{a}_2=
-\begin{bmatrix}
-1 \\
-3
-\end{bmatrix}
-$$</p>
-<p>The weights come from $\mathbf{x}$:</p>
-<p>$$x_1=4,\quad x_2=-2$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-column-interpretation-example-linear-combination">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Step-3-%E2%80%94-Form-the-linear-combination">Step 3 — Form the linear combination<a class="anchor-link" href="#Step-3-%E2%80%94-Form-the-linear-combination">¶</a></h4><p>$$
-\mathbf{A}\mathbf{x}
-=x_1\mathbf{a}_1+x_2\mathbf{a}_2
-=4\begin{bmatrix}2\\-1\end{bmatrix}
-+(-2)\begin{bmatrix}1\\3\end{bmatrix}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-column-interpretation-example-compute">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Step-4-%E2%80%94-Compute-the-weighted-columns-and-sum">Step 4 — Compute the weighted columns and sum<a class="anchor-link" href="#Step-4-%E2%80%94-Compute-the-weighted-columns-and-sum">¶</a></h4><p>$$
-4\begin{bmatrix}2\\-1\end{bmatrix}
-=\begin{bmatrix}8\\-4\end{bmatrix},
-\qquad
-(-2)\begin{bmatrix}1\\3\end{bmatrix}
-=\begin{bmatrix}-2\\-6\end{bmatrix}
-$$</p>
-<p>Add them:</p>
-<p>$$
-\mathbf{y}=\mathbf{A}\mathbf{x}
-=\begin{bmatrix}8\\-4\end{bmatrix}
-+\begin{bmatrix}-2\\-6\end{bmatrix}
-=\begin{bmatrix}6\\-10\end{bmatrix}
-$$</p>
-<p><strong>Conclusion:</strong> $\mathbf{A}\mathbf{x}$ is a weighted sum of the columns of $\mathbf{A}$.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-visual-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Visual:-Linear-Mapping-of-a-Single-Vector-in-$%5Cmathbb%7BR%7D%5E2$">Visual: Linear Mapping of a Single Vector in $\mathbb{R}^2$<a class="anchor-link" href="#Visual:-Linear-Mapping-of-a-Single-Vector-in-$%5Cmathbb%7BR%7D%5E2$">¶</a></h3><p>We choose a matrix $\mathbf{A}$ and a vector $\mathbf{x}$, then plot:</p>
-<p>$$\mathbf{y}=\mathbf{A}\mathbf{x}$$</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec6-visual-code">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">2</span><span class="p">,</span>  <span class="mi">1</span><span class="p">],</span>
-              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">3</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-<span class="c1"># single input vector</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Use quiver for labeled vectors</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">'xy'</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">'xy'</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">'$\mathbf</span><span class="si">{x}</span><span class="s1">$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">'xy'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">'xy'</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">'$\mathbf</span><span class="si">{y}</span><span class="s1">=\mathbf</span><span class="si">{A}</span><span class="s1">\mathbf</span><span class="si">{x}</span><span class="s1">$'</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">'box'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Linear Mapping (Single Vector): $\mathbf</span><span class="si">{y}</span><span class="s1">=\mathbf</span><span class="si">{A}</span><span class="s1">\mathbf</span><span class="si">{x}</span><span class="s1">$'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">'A =</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'x ='</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'y = A @ x ='</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
-<img alt="No description has been provided for this image" class="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGzCAYAAAB6o4OYAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjgsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvwVt1zgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAKV9JREFUeJzt3Ql0VOX5x/EnLAl7EFlkCYhCUWSRrTYIgqD4RwtC3VEEFSzgQoS2iragFAwqBTkoCC6gBZQiRUCBwqEEsIgCQkFoxShWsEIENGwlYbn/87w4wySZJDOT3Jl3Zr6fc+YkM3Mz9+bOnfnd533fe2+C4ziOAABgmTKRXgAAAPwhoAAAViKgAABWIqAAAFYioAAAViKgAABWIqAAAFYioAAAViKgAABWIqAAAFYioAAAVor7gJo9e7YkJCTI5s2bi53m66+/lmjkWX69ZWRkFHheT8fYpEkT83zXrl3FBjas87Fjx0rz5s3l7NmzeR7/+OOPpW/fvtKwYUNJSkqSOnXqSGpqqowcOTLsy1+a89H/qWLFivLjjz8WOs3dd98t5cuXlwMHDkhp27Bhgzz99NNFzr8kXn/9dalfv74cP35cYsEDDzzg/Vzr7ZlnnpFYE/cBFYibbrpJPvroI6lbt65Es6pVq5oPaX5r166VL7/80jxvi0iv8//+97/y/PPPm5AqU+b8x+SDDz6Qjh07ypEjR8zzK1eulClTpsjVV18t8+fPt2b5Q/3CO3nypMybN8/v89nZ2bJo0SL55S9/aULZjYDSL1m3AmrAgAFSuXJl875FuxMnTsiCBQvyPPbmm2+anc2Y4sS5WbNm6TvqbNq0yYlWx48fD+h/HDRokFOxYkUnOzs7z/P33HOPk5qa6lxxxRVOly5dXF7a6PC73/3OqV+/vnPmzJk8j19zzTXOpZde6pw6darA3+SfNhw87+2ePXtK/FqnT5926tWr57Rr187v89OnTzfzWrp0qeOGF154odT+l8I+HxMnTnSSk5OL/czY7q233jLrSm8JCQne3zMyMpxYQgUVQjOKNkPo/Z07d8pdd90lycnJZo/y/vvvN3uZ+X3xxRfSr18/qV27tmkSuvzyy+Xll1/OM01mZqbcd9990rRpU6lUqZJpiujVq5fs2LEjz3SeeX/66ady6623ygUXXCCXXnppQDsjuqzq7bff9j6my7tw4UKz7PkFu0xbt26VX/3qV1KtWjWzTu655x75/vvvQ5rWX9NVsOt98eLF0qpVK7POL7nkElPpeF6jKLm5uabS1PfMt3pShw4dkpo1a0q5cuUK/J3vtJFc/kC3ufzKli1rqowtW7YUeI/VrFmzTEXYs2fPkOb173//2/zf+j/rdNpEeu+990pOTo75v37729+a6Ro3buy3SfrDDz+U7t27m0pft0etZLWiDebzoU2UWv2+8847Eix9nzzLtXz58jzPPfroo97n9H1z2+zZs72/DxkyxO/jWsFrc6wuU+vWrc16Vrt375YqVaqYxxs1aiSHDx8WWxFQJXDLLbfIz372M/MF/8QTT5imkcceeyzPNLt27ZIOHTrIZ599Jn/605/k/fffN80/ukH7thlrk9KFF14oEyZMkBUrVpgPuH4JXnXVVfL5558XmLd+uWu/kZb5r7zySkDLq2GgH9o33njD+5iGlX6x3nHHHQWmD3aZtA9Dl+ndd981XxTvvfee3HDDDXLq1KkSTRvKetfl1XWky69Nb9qso/+rNoMUR/uYNIiuvfbaAs9pX5M+r++f/gxkecO9/IFuc0V9CftuI57X/OSTT0yAaZAFO69//vOfZrqNGzeaZlP9gk9PTzdfmrpDMGjQIHnkkUfMtH/961/Nl6ve2rZt622G7tatmwly3XnQdaFBpTtMvk2rxX0+LrroIrnssssKBFsg/a+/+c1vvDsHU6dO9T5++vRp7zI0aNDANIHmp01vOl0gt+J888033uCuV6+ePPfcc6bvUOnnydPHptvqs88+a37fvn27/P73vzevrzuDOo2Gly53jRo1xFpOnAukiS9/M8qYMWPM/eeffz7PdMOGDXMqVKjgnD171vvYDTfc4DRo0KBAs9rDDz9spj18+HChzS25ublO06ZNnccee8z7uGfeo0ePDul/XLNmjfn9s88+M8916NDBGThwoPm9uCa+4pbJ9zE1d+5c8/icOXOCntZf01Uw613/r5SUFCcnJ8f72NGjR50LL7zQvEZRnnvuOTPN/v37Czx38OBBp1OnTt4mlfLlyzsdO3Z00tPTzet7hGv5/c0n1G3OQ7eBmjVrmvfaY+TIkWY+u3fvzjNtoPPq1q2bU716dScrKyukJr5f/OIXTu3atfOsY90eW7RoYebvWXeBfD7uvvtup06dOnkeK1u2rFnG4tx0003e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hpPnfShNBBSAqKYVU926dc3ZtvXyEAgvbdYr7crJg4ACEBP0S9KtL0pEBoMkAABWIqAAAFYioAAAViKgAABWIqAAAFYioAAAViKgAABWIqAAAFYioAAAViKgAABWIqAAAPEXUNOnT5dWrVpJtWrVzC01NVWWL1/u5iwBADHC1YBq0KCBTJgwQTZv3mxu3bp1k5tvvll27tzp5mwBADHA1bOZ9+rVK8/98ePHm6pq48aNcsUVV7g5awBAlAvb5TbOnDkjCxYskOPHj5umPn9ycnLMzePIkSPhWjwAQLwNktixY4dUqVJFkpKSZMiQIbJo0SJp3ry532nT09MlOTnZe0tJSXF78QAA8RpQzZo1k23btplmvaFDh8qAAQNk165dfqcdNWqUZGdne2979+51e/EAAPHaxJeYmChNmjQxv7dv3142bdokU6ZMkRkzZhSYVqssvQEAEPbjoBzHydPPBABA2CuoJ598Unr27Gn6ko4ePSrvvPOOZGRkyIoVK9ycLQAgBrgaUAcOHJD+/fvLd999ZwY96EG7Gk7XX3+9m7MFAMQAVwPq9ddfd/PlAQAxjHPxAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEArERAAQCsREABAKxEQAEA4i+g0tPTpUOHDlK1alWpXbu29OnTRz7//HM3ZwkAiBGuBtTatWvloYceko0bN8qqVavk9OnT0qNHDzl+/LibswUAxIBybr74ihUr8tyfNWuWqaS2bNki11xzjZuzBgBEOVcDKr/s7Gzzs0aNGn6fz8nJMTePI0eOhG3ZACBghw+LfPGFyFVXsdJiYZCE4zgyYsQI6dSpk7Ro0aLQPqvk5GTvLSUlJVyLBwBFy8wUmTRJpGtXkZ/9TCQ5mTUWKxXUww8/LNu3b5cPP/yw0GlGjRplQsy3giKkAETEmTMin3wismSJyOLFIv/617nHy5QRWbZM5LLLeGNiIaAeeeQRWbJkiaxbt04aNGhQ6HRJSUnmBgARceKEyKpV50Lp/fdFsrIKTqNV1A03RGLp4k45t5v1NJwWLVokGRkZ0rhxYzdnBwCh+etfRWbPPhdOJ08WPt2gQSKPPspajoWA0iHm8+bNk8WLF5tjofbv328e1/6lihUrujlrAAic9iutXSty6lTh03TuLPLyyyIJCazZWBgkMX36dDNyr2vXrlK3bl3vbf78+W7OFgCCoyOLJ0wQ6dvX//MXXyyycKFIYiJrNpaa+ADAehs2iNx3n8ju3QWfq1LlXJ9UrVqRWLK4xrn4AMSv//1PZORIkU6dzodThQoideue+12b8+bOFWnZMqKLGa8IKADxWzVdeeW5UXme1p7UVJFt20R69Tp3Pz1dpHfviC5mPCOgAMSXwqqmiRNF1q8XadbsXJ/TPfeI/O53kV7auBbWUx0BgHV9TVo1zZp1Lpg8brxR5LHHGLEXYVRQAGJfIFWTr9atzz2PiKKCAhDbAq2aYB0qKACxKdiqCdahggIQe6iaYgIVFIDYQdUUU6igAMQGqqaYQwUFILpRNcUsKigA0YuqKaZRQQGIPlRNcYEKCkB0oWqKG1RQAKIDVVPcoYICYD+qprhEBQXAXlRNcY0KCoCdqJriHhUUALtQNeEnVFAA7EHVBB9UUAAij6oJflBBAYgsqiYUggoKQGRQNaEYVFAAwo+qCQGgggIQPlRNCAIVFIDwoGpCkKigALiLqgkhooIC4B6qJpQAFRSA0kfVhFJABQWgdFE1oZRQQQEoHVRNKGVUUABKjqoJLqCCAhA6qia4iAoKQGiomuAyKigAwaFqQphQQQEIHFUTwogKCkDxqJoQAVRQAIpG1YQIoYIC4B9VEyKMCgpAQVRNsAAVFIDzqJpgESooAOdQNcEyVFBAvKNqgqWooIB4RtUEi1FBAfGIqglRgAoKiDdUTYgSVFBAvKBqQpShggLiAVUTohAVFBDLqJoQxaiggFhF1YQoRwUFxBqqJsQIKiggllA1IYZQQQGxgKoJMYgKCoh2VE2IUVRQQLSiakKMo4ICohFVE+IAFRQQTaiaEEeooIBoQdWEOEMFBdiOqglxigoKsBlVE+IYFRRgI6omgAoKsA5VE2BQQQG2oGoCwhdQ69atk169ekm9evUkISFB3nvvPTdnB0R31XTllSKTJok4zrnHUlNFtm0TGTlSpGzZSC8hEFsBdfz4cWndurW89NJLbs4GiF5UTUBkRvH17NnT3AKVk5Njbh5HjhxxackAC9DXBERPH1R6erokJyd7bykpKZFeJMSQTz75RBxP81kkUTUB0RdQo0aNkuzsbO9t7969kV4kxIBPP/1UevToIX/7299MX2hE0dcERGdAJSUlSbVq1fLcgFB99dVX0q9fP2nXrp1s375dHnvsscitTKomIGicSQIxJysrS8aNGyevvPKKnDp1yjw2evRoqVKlSmQWiL4mICQEFGLG0aNHZdKkSTJx4kQ5duyY9/EmTZrI4MGDI1M1/f73IpMnnx86XqGCyLhxImlpDB0HIhlQ+iWRmZnpvb9nzx7Ztm2b1KhRQxo2bOjmrBFHcnNz5dVXX5WxY8ea6im/8ePHS/ny5cO7UFRNgN0BtXnzZrn22mu990eMGGF+DhgwQGbPnu3mrBEHzp49KwsWLJCnnnpKvvzyS7/TtG/fXm699dbwLRRVExAdAdW1a1c7hvUiJm3dulXmzZtX5GjP5557TsqUCdNYIKomIHZH8QHB0NF5ixcvNs3GlSpVKvC8Di3v1q2b+yuVEXqAKxgkgai2b98+6d27t5w4caLAcxMmTHB/AaiaANdQQSGqw0n7OD0DcXS0XqdOnczvevxTmzZt3Js5VRPgOiooxEw4ZWRkyJo1a+Tjjz+WP/7xj+7NnKoJCAsqKMRMONWvX99c3iUtLU0uueSS0p8xVRMQVlRQiJlwUnqS4Weffbb0Z0zVBIQdFRRiJpw8ypUrxf0uqiYgYqigEFPhVKqomoCIooKC9cIeTlRNgBWooGC1sIcTVRNgDSooWCus4UTVBFiHCgpWCms4UTUBVqKCQvyGE1UTYDUqKMRnOFE1AdajgkJ8hRNVExA1qKAQP+FE1QREFSooxH44UTUBUYkKCrEdTlRNQNSigkJshhNVExD1qKAQe+FE1QTEBCooxE44UTUBMYUKCrERTlRNQMyhgkJ0hxNVExCzqKAQveFE1QTENCooRF84UTUBcYEKCtEVTlRNQNyggkJ0hBNVExB3qKBgfzhRNQFxiQoK9oYTVRMQ16igYGc4UTUBcY8KCnaFE1UTgJ9QQcGecKJqAuCDCgqRDyeqJgB+UEEhsuFE1QSgEFRQiEw4UTUBKAYVFMIfTlRNAAJABYXwhRNVE4AgUEEhPOFE1QQgSFRQcDecqJoAhIgKCu6FE1UTgBKggkLphxNVE4BSQAWF0g0nqiYApYQKCqUTTlRNAEoZFRRKHk5UTQBcQAWF0MOJqgmAi6igEFo4UTUBcBkVFIILJ6omAGFCBYXAw4mqCUAYUUGh+HCiagIQAVRQca7YcKJqAhAhVFBxrMhwomoCEGFUUHGqyHCiagJgASqoOFRoONWoITJypEinTiK7d5+buEIFkYkTRdavF2nWLLILDiCuUEHFmULD6T//EenW7XwwqdRUkVmzCCYAEUEFFe/htHy51J80iaoJgHWooOI4nDZMnCi1brqJqgmAlQioOAynKy65RD7q1k2q9u0r4jjn+5rGjRNJSxMpWzayCwwABFT8hdNt9evLXBEpP3Pm+YnoawJgISqoOAmnCiLyUvXqcv9//ysJVE0AogABFQfhlCoic8qXl0t+/PH8BFRNACzHKL4YDqd9mZkyUUQ+FJFLTp069yTHNQGIElRQMRpOtTIz5X0RyXNoLVUTgChCBRVDvv32W/m/Ll1kSGamqZq84UTVBCAKhSWgpk2bJo0bN5YKFSpIu3btZL2eNgel7omu18rCr76Skb5vrFZN27adO4URw8cBRBHXm/jmz58vaWlpJqSuvvpqmTFjhvTs2VN27dolDRs2DOg1TuSelnK5p91e1Kik68Zj+veHpEr5JDkhIk5ikiQ8PUbkoYfOBRPrD0CEv6OCleA4njHH7rjqqqukbdu2Mn36dO9jl19+ufTp00fS09PzTJuTk2NuHkeOHJGUlBRJSfuLlEmq5OZiAgBccDbnhOx98XbJzs6WatWq2dPEl5ubK1u2bJEePXrkeVzvb9BLOuSjgZWcnOy9aTgBAOKTq018Bw8elDNnzkidOnXyPK739+/fX2D6UaNGyYgRIwpUUJ881T3o5I2n8rn9uNXm95XXV5MGnfWoJwCwg36P133R4mHmCQkJee5rq2L+x1RSUpK55VcpsZy5oWgaTqwnADY5XYLvbleb+GrWrClly5YtUC1lZWUVqKoAAAhbQCUmJpph5atWrcrzuN7v2LGjm7MGAEQ519vNtE+pf//+0r59e0lNTZWZM2fKN998I0OGDHF71gCAKOZ6QN1xxx1y6NAhGTt2rHz33XfSokULWbZsmTRq1MjtWQMAolhYRh4MGzbM3AAACBTn4gMAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgBYiYACAFiJgAIAWImAAgDEX0CNHz9eOnbsKJUqVZLq1au7OSsAQIxxNaByc3Pltttuk6FDh7o5GwBADCrn5os/88wz5ufs2bPdnA0AIAa5GlDBysnJMTeP7Oxs8/PIkSMRXCq7ncg9LWdzTnjX0+lEq95SAHHuyE/f347jBP23Vn2bpaene6suXykpKRFZnmhT98VILwEA+Hfo0CFJTk4WVwPq6aef9hsivjZt2iTt27cP9qVl1KhRMmLECO/9H3/8URo1aiTffPNN0P9YvO2haIjv3btXqlWrFunFsRbrifXE9hR+2hLWsGFDqVGjRtB/G3RAPfzww3LnnXcWOc3FF18soUhKSjK3/DSc+OItnq4j1hPrqbSwPbGeSlOZMmXcD6iaNWuaGwAAbnK1D0qb5g4fPmx+njlzRrZt22Yeb9KkiVSpUsXNWQMAopyrATV69Gh58803vffbtGljfq5Zs0a6du1a7N9rc9+YMWP8NvuB9RQstifWU2lie3J/PSU4oYz9AwDAZZyLDwBgJQIKAGAlAgoAYCUCCgBgJQIKAGClqAkori1VuGnTpknjxo2lQoUK0q5dO1m/fn0Y3xn7rVu3Tnr16iX16tWThIQEee+99yK9SFbSc2F26NBBqlatKrVr15Y+ffrI559/HunFss706dOlVatW3jNtpKamyvLlyyO9WNZvW/rZS0tLi82A4tpS/s2fP9+86U899ZRs3bpVOnfuLD179jQHR+Oc48ePS+vWreWll15ilRRh7dq18tBDD8nGjRtl1apVcvr0aenRo4dZfzivQYMGMmHCBNm8ebO5devWTW6++WbZuXMnq6mQc7POnDnThHrQnCgza9YsJzk5OdKLYY2f//znzpAhQ/I8dtlllzlPPPFExJbJZrrJL1q0KNKLERWysrLM+lq7dm2kF8V6F1xwgfPaa69FejGsc/ToUadp06bOqlWrnC5dujjDhw8P6u+jpoKC/6pyy5YtZi/Xl97fsGEDqwwl4rkeWyhnoY4Xegq3d955x1SZ2tSHvLQiv+mmm+S6666TUFh1PSgE5+DBg+YDUqdOnTyP6/39+/ezOhEyLTb10jedOnWSFi1asCbz2bFjhwmkkydPmvOKLlq0SJo3b8568qHB/emnn5omvlBFtILSa0tpx1lRN23jRdF0PeX/csn/GBDsZXW2b98ub7/9NivOj2bNmpmTX2t/3dChQ2XAgAGya9cu1tVP9Np0w4cPlzlz5pjBW6GKaAXl5rWl4oFe9qRs2bIFqqWsrKwCVRUQqEceeUSWLFliRj/qgAAUlJiYaK7KoPTirFolTJkyRWbMmMHqEjFdD/o9pKOKPbS1R7cpHayUk5NjvrusDiiuLVXyD4luADriqm/fvt7H9b6OKgKCoZW3hpM2V2VkZJhDFxD4utMvXZzTvXt30wzq67777pPLLrtMHn/88YDCKar6oLi2lH/aT9C/f3+zF6dt4jqcU9fVkCFDwvwO2evYsWOSmZnpvb9nzx7TPKOd/3opapzv0J43b54sXrzYHAvlqcz1itYVK1ZkNf3kySefNIdypKSkyNGjR01fiwb6ihUrWEc/0e0nf99l5cqV5cILLwyuT9OJEgMGDDBDXvPf1qxZ48S7l19+2WnUqJGTmJjotG3blmHB+eg24m/b0W0K5/lbR3rTQztw3v333+/9vNWqVcvp3r27s3LlSlZRMUIZZs71oAAAVuI4KACAlQgoAICVCCgAgJUIKACAlQgoAICVCCgAgJUIKACAlQgoAICVCCgAgJUIKACAlQgoAIDY6P8BRRDSxPouvFYAAAAASUVORK5CYII="/>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>A =
- [[ 2.  1.]
- [-1.  3.]]
-x = [1. 1.]
-y = A @ x = [3. 2.]
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-forward-inverse">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Same-Equation,-Different-Questions">Same Equation, Different Questions<a class="anchor-link" href="#Same-Equation,-Different-Questions">¶</a></h3><p>$$
-\mathbf{y}=\mathbf{A}\mathbf{x}
-\quad \Longleftrightarrow \quad
-\mathbf{A}\mathbf{x}=\mathbf{b}
-$$</p>
-<ul>
-<li><strong>Forward problem:</strong> given $\mathbf{A}$ and $\mathbf{x}$, compute $\mathbf{y}$</li>
-<li><strong>Inverse problem:</strong> given $\mathbf{A}$ and $\mathbf{b}$, solve for $\mathbf{x}$</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6-axeqb-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example:-From-Linear-Equations-to-$%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D$">Example: From Linear Equations to $\mathbf{A}\mathbf{x}=\mathbf{b}$<a class="anchor-link" href="#Example:-From-Linear-Equations-to-$%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D$">¶</a></h3><p>Start with a system in unknowns $x_1, x_2$:</p>
-<p>$$\begin{aligned}
-2x_1 + 1x_2 &amp;= 5 \\
--1x_1 + 3x_2 &amp;= 4
-\end{aligned}$$</p>
-<p>Group coefficients, unknowns, and constants:</p>
-<p>$$\underbrace{\begin{bmatrix} 2 &amp; 1 \\ -1 &amp; 3 \end{bmatrix}}_{\mathbf{A}}
-\underbrace{\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}}_{\mathbf{x}}
-=\underbrace{\begin{bmatrix} 5 \\ 4 \end{bmatrix}}_{\mathbf{b}}$$</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec6-axeqb-solve">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-<span class="c1"># Solve A x = b (preferred over explicit inversion)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">'A=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'b=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'x=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Check: A @ x ='</span><span class="p">,</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Residual ||A x - b|| ='</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>A=
- [[ 2.  1.]
- [-1.  3.]]
-b=
- [5. 4.]
-x=
- [1.57142857 1.85714286]
-
-Check: A @ x = [5. 4.]
-Residual ||A x - b|| = 4.440892098500626e-16
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec7-slide">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ba4b8d3b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-7-%E2%80%94-Matrix%E2%80%93Matrix-Multiplication">Part 7 — Matrix–Matrix Multiplication<a class="anchor-link" href="#Part-7-%E2%80%94-Matrix%E2%80%93Matrix-Multiplication">¶</a></h2><blockquote>
-<p>Multiplication composes linear transformations</p>
-</blockquote>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec7-mm-formula">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Component-Definition-(Row%E2%80%93Column-Dot-Product)">Component Definition (Row–Column Dot Product)<a class="anchor-link" href="#Component-Definition-(Row%E2%80%93Column-Dot-Product)">¶</a></h3><p>$$
-(\mathbf{A}\mathbf{B})_{ij} = \sum_{k} a_{ik} b_{kj}
-$$</p>
-<p>Interpretation:</p>
-<ul>
-<li>Fix $i$ (a row of $\mathbf{A}$)</li>
-<li>Fix $j$ (a column of $\mathbf{B}$)</li>
-<li>Take a dot product over $k$</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec7-annotated-rc-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Annotated-Figure-(TO-DO):-Row-$i$-of-$%5Cmathbf%7BA%7D$-with-Column-$j$-of-$%5Cmathbf%7BB%7D$">Annotated Figure (TO DO): Row $i$ of $\mathbf{A}$ with Column $j$ of $\mathbf{B}$<a class="anchor-link" href="#Annotated-Figure-(TO-DO):-Row-$i$-of-$%5Cmathbf%7BA%7D$-with-Column-$j$-of-$%5Cmathbf%7BB%7D$">¶</a></h3><p>To compute a single entry $(\mathbf{A}\mathbf{B})_{ij}$, you combine:</p>
-<ul>
-<li><strong>row $i$</strong> from $\mathbf{A}$</li>
-<li><strong>column $j$</strong> from $\mathbf{B}$</li>
-</ul>
-<p>USE THE KASSIMALI FIGURE FOR THIS</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec7-noncomm-title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example:-Non-Commutativity">Example: Non-Commutativity<a class="anchor-link" href="#Example:-Non-Commutativity">¶</a></h3><p>In general:</p>
-<p>$$\mathbf{A}\mathbf{B} \neq \mathbf{B}\mathbf{A}$$</p>
-<p>Even when both products are defined, they can produce different results.</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec7-noncomm-code">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-<span class="n">AB</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">B</span>
-<span class="n">BA</span> <span class="o">=</span> <span class="n">B</span> <span class="o">@</span> <span class="n">A</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">'A=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'B=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">A @ B=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">AB</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">B @ A=</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">BA</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">AB equals BA?'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">AB</span><span class="p">,</span> <span class="n">BA</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>A=
- [[1. 2.]
- [0. 1.]]
-B=
- [[2. 0.]
- [3. 1.]]
-
-A @ B=
- [[8. 2.]
- [3. 1.]]
-
-B @ A=
- [[2. 4.]
- [3. 7.]]
-
-AB equals BA? False
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec8-slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-8-%E2%80%94-Special-Matrix-Operations">Part 8 — Special Matrix Operations<a class="anchor-link" href="#Part-8-%E2%80%94-Special-Matrix-Operations">¶</a></h2><blockquote>
-<p>Useful transformations and special matrices</p>
-</blockquote>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec8-transpose">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Transpose">Transpose<a class="anchor-link" href="#Transpose">¶</a></h3><p>Transpose swaps rows and columns:</p>
-<p>$$
-(\mathbf{A}^T)_{ij} = a_{ji}
-$$</p>
-<p>If $\mathbf{A}\in\mathbb{R}^{m\times n}$, then $\mathbf{A}^T\in\mathbb{R}^{n\times m}$.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8eb9f58d">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Inverse">Inverse<a class="anchor-link" href="#Inverse">¶</a></h3><p>Need a lot here</p>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=transition-slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="From-Representation-to-Solution">From Representation to Solution<a class="anchor-link" href="#From-Representation-to-Solution">¶</a></h2><blockquote>
-<p>Next: solving systems efficiently (LU, Cholesky, LDL$^T$)</p>
-</blockquote>
+<h2 id="Looking-Ahead">Looking Ahead<a class="anchor-link" href="#Looking-Ahead">¶</a></h2><p>Next week, we begin assembling <strong>stiffness matrices</strong> for structural systems<br/>
+and applying these linear solvers to real structural workflows.</p>
 </div>
 </div>
 </div>
