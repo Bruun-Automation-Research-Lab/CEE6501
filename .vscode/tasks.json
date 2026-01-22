@@ -4,35 +4,45 @@
     {
       "label": "Slides: Export2HTML (current notebook)",
       "type": "shell",
-      "command": "C:\\Users\\ebruun3\\Documents\\GitHub\\CEE6501\\convert_Notebook-Slides.bat",
-      "args": [
-        "${file}"
-      ],
+      "windows": {
+        "command": "C:\\Users\\ebruun3\\Documents\\GitHub\\CEE6501\\convert_Notebook-Slides.bat",
+        "args": ["${file}"]
+      },
+      "osx": {
+        "command": "${workspaceFolder}/convert_Notebook-Slides.sh",
+        "args": ["${file}"]
+      },
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
         "panel": "dedicated"
       }
     },
-  {
-    "label": "Slides: Export2PDF (current notebook)",
-    "type": "shell",
-    "command": "C:\\Users\\ebruun3\\Documents\\GitHub\\CEE6501\\convert_Slides-PDF.bat",
-    "args": ["${file}"],
-    "problemMatcher": [],
-    "presentation": {
-      "reveal": "always",
-      "panel": "dedicated"
+    {
+      "label": "Slides: Export2PDF (current notebook)",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\Users\\ebruun3\\Documents\\GitHub\\CEE6501\\convert_Slides-PDF.bat",
+        "args": ["${file}"]
+      },
+      "osx": {
+        "command": "${workspaceFolder}/convert_Slides-PDF.sh",
+        "args": ["${file}"]
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Slides: Export HTML + PDF (current notebook)",
+      "dependsOn": [
+        "Slides: Export2HTML (current notebook)",
+        "Slides: Export2PDF (current notebook)"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
     }
-  },
-  {
-    "label": "Slides: Export HTML + PDF (current notebook)",
-    "dependsOn": [
-      "Slides: Export2HTML (current notebook)",
-      "Slides: Export2PDF (current notebook)"
-    ],
-    "dependsOrder": "sequence",
-    "problemMatcher": []
-  }
   ]
 }
