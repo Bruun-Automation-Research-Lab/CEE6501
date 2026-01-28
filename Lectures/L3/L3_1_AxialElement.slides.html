@@ -8923,7 +8923,7 @@ $$F_2=0$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Axial 2×2 stiffness: one editable scenario</span>
@@ -9889,10 +9889,10 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="In-Class-Exercise-%E2%80%94-Local-Truss-Stiffness-(Python)">In-Class Exercise — Local Truss Stiffness (Python)<a class="anchor-link" href="#In-Class-Exercise-%E2%80%94-Local-Truss-Stiffness-(Python)">¶</a></h2><p>Work in pairs. Goal: <strong>compute</strong> the local nodal force vector and verify the key properties of the <strong>local 4×4</strong> stiffness matrix.</p>
+<h2 id="In-Class-Exercise-%E2%80%94-Local-Truss-Stiffness">In-Class Exercise — Local Truss Stiffness<a class="anchor-link" href="#In-Class-Exercise-%E2%80%94-Local-Truss-Stiffness">¶</a></h2><p>Work in pairs. Goal: <strong>compute</strong> the local nodal force vector and verify the key properties of the <strong>local 4×4</strong> stiffness matrix.</p>
 <h3 id="Given">Given<a class="anchor-link" href="#Given">¶</a></h3><p>Use:</p>
 <ul>
-<li>$E = 200\,\text{GPa}$</li>
+<li>$E = 200000,\text{MPa}$</li>
 <li>$A = 4{,}000\,\text{mm}^2$</li>
 <li>$L = 2.0\,\text{m}$</li>
 </ul>
@@ -9919,7 +9919,7 @@ $$</p>
 </div>
 </div>
 </div>
-</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=da9da945">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -9927,69 +9927,23 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Tasks">Tasks<a class="anchor-link" href="#Tasks">¶</a></h3><ol>
-<li><strong>Build</strong> $\boldsymbol{k}_e$ in Python (careful with units).</li>
-<li>For each displacement case below, compute:<ul>
-<li>$\boldsymbol{Q}_e = \boldsymbol{k}_e \boldsymbol{u}_e$</li>
-<li>the axial deformation $\delta = u_2 - u_1$</li>
+<li><strong>Build</strong> the local stiffness matrix $\boldsymbol{k}$ in Python (print the matrix).</li>
+<li>For each displacement case below, compute: $\boldsymbol{f} = \boldsymbol{k}\boldsymbol{u}$</li>
+<li><strong>For each displacement case</strong>, print the following:<ul>
+<li>Displacement vector (mm)</li>
+<li>Nodal force vector (N)</li>
+<li>Axial deformation (mm)</li>
+<li>Axial state (compression,tension, rigid body)</li>
 </ul>
 </li>
-<li>Check:<ul>
-<li>which entries of $\boldsymbol{Q}_e$ are always zero</li>
-<li>whether $\boldsymbol{k}_e$ is symmetric</li>
-<li>whether $\det(\boldsymbol{k}_e)=0$</li>
-</ul>
-</li>
+<li><strong>Plot</strong> the original and displaced element shape for each case.</li>
 </ol>
-<h3 id="Displacement-cases-(local)">Displacement cases (local)<a class="anchor-link" href="#Displacement-cases-(local)">¶</a></h3><ul>
-<li><strong>Case A (axial extension):</strong> $u_1=0,\;u_2=1\,\text{mm}$, all $v=0$</li>
-<li><strong>Case B (rigid translation):</strong> $u_1=u_2=3\,\text{mm}$, all $v=0$</li>
-<li><strong>Case C (transverse motion):</strong> $v_1=1\,\text{mm}$, all $u=0$, $v_2=0$</li>
+<h3 id="Displacement-cases-(local)">Displacement cases (local)<a class="anchor-link" href="#Displacement-cases-(local)">¶</a></h3><p>Use <strong>mm</strong> for all displacements. Each case uses <strong>all four DOFs</strong>.</p>
+<ul>
+<li><strong>Case A - Axial extension + transverse offset</strong>:$u_1=0,\quad u_2=200,\quad u_3=100,\quad u_4=200$</li>
+<li><strong>Case B — Mixed axial translation + transverse skew</strong>: $u_1=300,\quad u_2=0,\quad u_3=300,\quad u_4=100$</li>
+<li><strong>Case C — Axial shortening + opposite transverse motion</strong>: $u_1=200,\quad u_2=100,\quad u_3=0,\quad u_4=-100$</li>
 </ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d72e85ca">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Python-starter-(edit-values-only)">Python starter (edit values only)<a class="anchor-link" href="#Python-starter-(edit-values-only)">¶</a></h3><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="c1"># --- material + geometry (use consistent units!) ---</span>
-<span class="n">E</span> <span class="o">=</span> <span class="mf">200e9</span>          <span class="c1"># Pa = N/m^2</span>
-<span class="n">A</span> <span class="o">=</span> <span class="mf">4000e-6</span>        <span class="c1"># mm^2 -&gt; m^2</span>
-<span class="n">L</span> <span class="o">=</span> <span class="mf">2.0</span>            <span class="c1"># m</span>
-
-<span class="n">k0</span> <span class="o">=</span> <span class="n">E</span><span class="o">*</span><span class="n">A</span><span class="o">/</span><span class="n">L</span>
-
-<span class="n">k</span> <span class="o">=</span> <span class="n">k0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">run_case</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">u1</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">v1</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">u2</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u1</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">v2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># meters</span>
-    <span class="n">Q</span> <span class="o">=</span> <span class="n">k</span> <span class="o">@</span> <span class="n">u</span>
-    <span class="n">delta</span> <span class="o">=</span> <span class="n">u2</span> <span class="o">-</span> <span class="n">u1</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"u  ="</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Q  ="</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"δ  ="</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
-
-<span class="c1"># --- cases (mm -&gt; m) ---</span>
-<span class="n">mm</span> <span class="o">=</span> <span class="mf">1e-3</span>
-<span class="n">run_case</span><span class="p">(</span><span class="s2">"Case A: axial extension"</span><span class="p">,</span> <span class="n">u1</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span> <span class="n">v1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">u2</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">run_case</span><span class="p">(</span><span class="s2">"Case B: rigid translation"</span><span class="p">,</span> <span class="n">u1</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span> <span class="n">v1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">u2</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">run_case</span><span class="p">(</span><span class="s2">"Case C: transverse motion"</span><span class="p">,</span> <span class="n">u1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">v1</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">mm</span><span class="p">,</span> <span class="n">u2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">v2</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Checks"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"k symmetric? "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"det(k) ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
-</pre></div>
 </div>
 </div>
 </div>
