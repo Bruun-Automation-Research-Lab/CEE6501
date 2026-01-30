@@ -7601,7 +7601,7 @@ $\rightarrow$ compute <strong>member forces / stresses</strong></p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Notation:-Local-vs-Global">Notation: Local vs Global<a class="anchor-link" href="#Notation:-Local-vs-Global">¶</a></h3><h3 id="Notation:-Global-vs-Local">Notation: Global vs Local<a class="anchor-link" href="#Notation:-Global-vs-Local">¶</a></h3><p>We use notation to distinguish viewpoints:</p>
+<h3 id="Notation:-Global-vs-Local">Notation: Global vs Local<a class="anchor-link" href="#Notation:-Global-vs-Local">¶</a></h3><p>We use notation to distinguish viewpoints:</p>
 <ul>
 <li><strong>Global (structure):</strong> $\mathbf{u}$, $\mathbf{f}$, $\mathbf{K}$</li>
 <li><strong>Local (element):</strong> $\mathbf{u}'$, $\mathbf{f}'$, $\mathbf{k}'$</li>
@@ -8541,8 +8541,7 @@ stiffness-based formulations resolve redundancy automatically by enforcing <stro
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>TO-DO</p>
-<p>Note that in the following section it is assumed we are only talking about local level behavior, hence the $'$ notation will not be used to distinguish between local and global matrices</p>
+<p><strong>Note</strong>: In the following section it is assumed we are only talking about local level behavior, hence the $'$ notation will not be used to distinguish between local and global matrices</p>
 </div>
 </div>
 </div>
@@ -8679,13 +8678,13 @@ $$F =\frac{EA}{L}(u_2-u_1)$$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="End-forces-in-terms-of-$u_1,-u_2$">End forces in terms of $u_1, u_2$<a class="anchor-link" href="#End-forces-in-terms-of-$u_1,-u_2$">¶</a></h3><p>Using the same sign convention (positive to the right):</p>
-<p>$$F_1 = \frac{EA}{L}(u_1-u_2)$$</p>
 <ul>
-<li>If $u_1&gt;u_2$ (compression), then $F_1&gt;0$ ($F_2&lt;0)$</li>
-</ul>
-<p>$$F_2 = \frac{EA}{L}(u_2-u_1)$$</p>
-<ul>
-<li>If $u_2&gt;u_1$ (tension), then $F_2&gt;0$ ($F_1&lt;0)$</li>
+<li><p>If $u_1&gt;u_2$ (compression), then $F_1&gt;0$ ($F_2&lt;0)$
+$$F_1 = \frac{EA}{L}(u_1-u_2)$$</p>
+</li>
+<li><p>If $u_2&gt;u_1$ (tension), then $F_2&gt;0$ ($F_1&lt;0)$
+$$F_2 = \frac{EA}{L}(u_2-u_1)$$</p>
+</li>
 </ul>
 </div>
 </div>
@@ -8920,7 +8919,7 @@ $$F_2=0$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Axial 2×2 stiffness: one editable scenario</span>
