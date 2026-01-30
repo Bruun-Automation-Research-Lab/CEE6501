@@ -131,10 +131,10 @@ displacements and reactions, and recovery of member axial forces in local coordi
 
 ### Extra In-Class Code
 
-- [L3_1_Exercise_BLANK.ipynb](Code/L3/L3_1_Exercise_BLANK.ipynb)
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_Exercise_BLANK.ipynb)
-- [L3_1_Exercise_SOLVED.ipynb](Code/L3/L3_1_Exercise_SOLVED.ipynb)
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_Exercise_SOLVED.ipynb)
+- [L3_1_exercise_BLANK.ipynb](Code/L3/L3_1_exercise_BLANK.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_BLANK.ipynb)
+- [L3_1_exercise_SOLVED.ipynb](Code/L3/L3_1_exercise_SOLVED.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_SOLVED.ipynb)
 
 ### 📝 Assignments
 
