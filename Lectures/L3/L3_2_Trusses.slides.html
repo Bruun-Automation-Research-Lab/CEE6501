@@ -7478,7 +7478,7 @@ $$</li>
 <li>Local-to-global transformation using direction cosines</li>
 <li>Member stiffness relations in the global coordinate system</li>
 <li>Assembly of the global stiffness matrix $\boldsymbol{K}$  (manual)</li>
-<li>3Assembly of the global stiffness matrix $\boldsymbol{K}$  (DSM)</li>
+<li>Assembly of the global stiffness matrix $\boldsymbol{K}$  (DSM)</li>
 <li>Constraints and supports (boundary conditions)</li>
 <li>Partitioning into free and restrained DOFs</li>
 <li>Solving for global displacements and reactions</li>
@@ -7522,7 +7522,7 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Truss-Element-in-a-Structure">Truss Element in a Structure<a class="anchor-link" href="#Truss-Element-in-a-Structure">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
+<h3 id="Generic-Truss-Element-in-a-Structure">Generic Truss Element in a Structure<a class="anchor-link" href="#Generic-Truss-Element-in-a-Structure">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
 <div style="flex:0.55;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L2_TrussGlobal.png" style="width:100%; height:auto;"/>
@@ -7547,7 +7547,7 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Transformation-Perspectives">Transformation Perspectives<a class="anchor-link" href="#Transformation-Perspectives">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
+<h3 id="Local/Global-Perspective">Local/Global Perspective<a class="anchor-link" href="#Local/Global-Perspective">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
 <div style="flex:0.95;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L2_Local2Global.png" style="width:80%; height:auto;"/>
@@ -7571,7 +7571,7 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Global-%E2%86%92-Local-Forces-(Trigonometry)">Global → Local Forces (Trigonometry)<a class="anchor-link" href="#Global-%E2%86%92-Local-Forces-(Trigonometry)">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
+<h3 id="Global-($%5Cboldsymbol%7BF%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7BQ%7D$)-Force-Transformation:-Trigonometry">Global ($\boldsymbol{F}$) → Local ($\boldsymbol{Q}$) Force Transformation: Trigonometry<a class="anchor-link" href="#Global-($%5Cboldsymbol%7BF%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7BQ%7D$)-Force-Transformation:-Trigonometry">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
 <!-- Figures (left, stacked) -->
 <div style="flex:0.45; display:flex; flex-direction:column; gap:0.15rem;">
 <figure style="margin:0; text-align:center;">
@@ -7607,7 +7607,7 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Global-%E2%86%92-Local-Force-Transformation-(Matrix-Form)">Global → Local Force Transformation (Matrix Form)<a class="anchor-link" href="#Global-%E2%86%92-Local-Force-Transformation-(Matrix-Form)">¶</a></h3><ul>
+<h3 id="Global-($%5Cboldsymbol%7BF%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7BQ%7D$)-Force-Transformation:-Matrix-Form">Global ($\boldsymbol{F}$) → Local ($\boldsymbol{Q}$) Force Transformation: Matrix Form<a class="anchor-link" href="#Global-($%5Cboldsymbol%7BF%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7BQ%7D$)-Force-Transformation:-Matrix-Form">¶</a></h3><ul>
 <li>Local member forces $\boldsymbol{Q}$ are obtained by <strong>rotating</strong> global nodal forces $\boldsymbol{F}$ into the member’s local coordinate system</li>
 <li>Each $2\times2$ block applies a <strong>rotation by $\theta$</strong> at a node</li>
 <li>The transformation changes <strong>direction only</strong>, not force magnitude</li>
@@ -7637,7 +7637,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Direction-Cosines-(Rotation-Terms)">Direction Cosines (Rotation Terms)<a class="anchor-link" href="#Direction-Cosines-(Rotation-Terms)">¶</a></h3><ul>
+<h3 id="Direction-Cosines:-Rotation-Terms">Direction Cosines: Rotation Terms<a class="anchor-link" href="#Direction-Cosines:-Rotation-Terms">¶</a></h3><ul>
 <li>Direction cosines define the <strong>orientation of a truss member</strong> in the global $(X,Y)$ coordinate system</li>
 <li>The angle $\theta$ is measured <strong>counterclockwise</strong> from the global $X$ axis to the local $x$ axis</li>
 <li>Computed directly from the <strong>nodal coordinates</strong> of the element (b = start node, e = end node)</li>
@@ -7661,7 +7661,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Global-%E2%86%92-Local-Displacements">Global → Local Displacements<a class="anchor-link" href="#Global-%E2%86%92-Local-Displacements">¶</a></h3><ul>
+<h3 id="Global-($%5Cboldsymbol%7Bv%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7Bu%7D$)-Displacements">Global ($\boldsymbol{v}$) → Local ($\boldsymbol{u}$) Displacements<a class="anchor-link" href="#Global-($%5Cboldsymbol%7Bv%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7Bu%7D$)-Displacements">¶</a></h3><ul>
 <li>Nodal displacements are transformed using the <strong>same rotation matrix</strong> as forces</li>
 <li>Displacements and forces transform identically because they are defined along the <strong>same directions</strong></li>
 <li>This is a <strong>pure coordinate rotation</strong>, not a change in deformation</li>
@@ -7683,7 +7683,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-%E2%86%92-Global-Force-Transformation">Local → Global Force Transformation<a class="anchor-link" href="#Local-%E2%86%92-Global-Force-Transformation">¶</a></h3><ul>
+<h3 id="Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)-Force:-Transformation-Equations">Local ($\boldsymbol{Q}$) → Global ($\boldsymbol{F}$) Force: Transformation Equations<a class="anchor-link" href="#Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)-Force:-Transformation-Equations">¶</a></h3><ul>
 <li>This is the <strong>reverse of the global → local process</strong></li>
 <li>Local member forces are <strong>rotated back</strong> into the global $(X,Y)$ directions</li>
 </ul>
@@ -7709,7 +7709,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-%E2%86%92-Global-Force-Transformation-(Matrix-Form)">Local → Global Force Transformation (Matrix Form)<a class="anchor-link" href="#Local-%E2%86%92-Global-Force-Transformation-(Matrix-Form)">¶</a></h3><ul>
+<h3 id="Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)-Force:-Matrix-Form">Local ($\boldsymbol{Q}$) → Global ($\boldsymbol{F}$) Force: Matrix Form<a class="anchor-link" href="#Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)-Force:-Matrix-Form">¶</a></h3><ul>
 <li>Local member forces are mapped to global nodal forces using the <strong>transpose</strong> of the global→local transformation</li>
 </ul>
 <p>$$
@@ -7784,6 +7784,7 @@ $$
 \boldsymbol{v} = \boldsymbol{T}^{\mathsf{T}}\boldsymbol{u}
 $$</p>
 <p>$$
+\small{
 \boldsymbol{T}
 =
 \begin{bmatrix}
@@ -7792,6 +7793,7 @@ $$</p>
 0 &amp; 0 &amp; \cos\theta &amp; \sin\theta\\
 0 &amp; 0 &amp; -\sin\theta &amp; \cos\theta
 \end{bmatrix}
+}
 $$</p>
 <ul>
 <li>$\boldsymbol{T}$ is a <strong>pure rotation matrix</strong> (no translation)</li>
@@ -8315,7 +8317,7 @@ P_1 &amp;= F_3^{(1)} + F_1^{(2)} + F_3^{(3)} \\
 P_2 &amp;= F_4^{(1)} + F_2^{(2)} + F_4^{(3)}
 \end{aligned}
 $$</p>
-<p>Substituting element-level force expressions into the node 1 force equilibrium gives:
+<p>Substituting element-level force expressions (from last 3 slides) into the node 1 force equilibrium gives:
 $$
 \begin{aligned}
 P_1 &amp;=
@@ -8682,7 +8684,7 @@ This is why the proper and robust approach is always to apply supports explicitl
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>

@@ -8016,7 +8016,7 @@ $$</p>
   \qquad
   \boldsymbol{f} = 
   \begin{Bmatrix}
-  r_1 \\ r_2 \\ r_3 \\ r_4 \\ 60 \\ 0 \\ r_7 \\ 0 \\ 60 \\ 0 \\ 0 \\ -105 \\ 30 \\ 60
+  r_1 \\ r_2 \\ r_3 \\ r_4 \\ 60 \\ 0 \\ r_7 \\ 0 \\ 60 \\ 0 \\ 0 \\ -105 \\ 30 \\ -60
   \end{Bmatrix}
   $$</p>
 </div>
@@ -8939,7 +8939,7 @@ $$F_2=0$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Axial 2×2 stiffness: one editable scenario</span>
@@ -8951,8 +8951,8 @@ $$F_2=0$$</p>
                           <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
 
 <span class="c1"># --- Edit these ---</span>
-<span class="n">u1</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">u2</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">u1</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="n">u2</span> <span class="o">=</span> <span class="mf">5.0</span>
 
 <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">])</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">k</span> <span class="o">@</span> <span class="n">u</span>
@@ -8976,9 +8976,9 @@ $$F_2=0$$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>u = [u1, u2] = [1. 0.]
-delta = u2 - u1 = -1.0  -&gt;  compression
-f = [F1, F2] = [ 1. -1.]
+<pre>u = [u1, u2] = [3. 5.]
+delta = u2 - u1 = 2.0  -&gt;  tension
+f = [F1, F2] = [-2.  2.]
 </pre>
 </div>
 </div>
@@ -9426,9 +9426,9 @@ k_{41} &amp; k_{42} &amp; k_{43} &amp; k_{44}
 \end{bmatrix}
 \begin{Bmatrix}
 u_1\\
-v_1\\
 u_2\\
-v_2
+u_3\\
+u_4
 \end{Bmatrix}
 $$</p>
 </div>
