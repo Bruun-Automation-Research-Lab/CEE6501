@@ -100,7 +100,7 @@ See Lecture 1 for how to complete assignments guide.
 
 ---
 
-## 📅 Week 3 — Direct Stiffness Method (Trusses)
+## 📅 Week 3 — Direct Stiffness Method I (Trusses)
 
 This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by developing the **local
 behavior** of a single axial member and then extend those ideas to **global truss analysis**, including coordinate
@@ -120,10 +120,9 @@ the local $4 \times 4$ element stiffness form (local-only; not yet transformed).
 
 #### Part 2 — The Direct Stiffness Method (DSM) for Trusses
 
-This lecture develops the full DSM workflow for trusses: local-to-global transformations using direction cosines, global
-element stiffness $[k]_g = [T]^T [k'] [T]$, nodal equilibrium and why assembly works, global stiffness assembly by
-scatter-add, why unsupported structures yield singular $[K]$, application of supports via partitioning, solving for
-displacements and reactions, and recovery of member axial forces in local coordinates.
+This lecture begins to develop the full DSM workflow for trusses: local-to-global transformations using direction
+cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assemblying the global stiffness
+matrix of the structure to solve the unknown joint displacements.
 
 - 🌐 **Slides (HTML):** [L3_2_Trusses.slides.html](Lectures/L3/L3_2_Trusses.slides.html)
 - 📄 **Slides (PDF):** [L3_2_Trusses.pdf](Lectures/L3/L3_2_Trusses.pdf)
@@ -148,6 +147,50 @@ See Lecture 1 for how to complete assignments guide.
 
 ---
 
+## 📅 Week 4 — Direct Stiffness Method II (Trusses)
+
+This week continues the **Direct Stiffness Method (DSM)** for planar trusses. TEXT
+
+### 📖 Lectures
+
+#### Part 1 — TEXT
+
+global stiffness assembly by scatter-add, why unsupported structures yield singular $[K]$, application of supports via
+partitioning, solving for displacements and reactions, and recovery of member axial forces in local coordinates.
+
+- 🌐 **Slides (HTML):** [L4_1.slides.html](Lectures/L4/L4_1.slides.html)
+- 📄 **Slides (PDF):** [L4_1.pdf](Lectures/L4/L4_1.pdf)
+- 📓 **Notebook:** [L4_1.ipynb](Lectures/L4/L4_1.ipynb)
+
+#### Part 2 — TEXT
+
+text
+
+- 🌐 **Slides (HTML):** [L4_2.slides.html](Lectures/L4/L4_2.slides.html)
+- 📄 **Slides (PDF):** [L4_2.pdf](Lectures/L4/L4_2.pdf)
+- 📓 **Notebook:** [L4_2.ipynb](Lectures/L4/L4_2.ipynb)
+
+### Extra In-Class Code
+
+TBD
+
+<!-- - [L3_1_exercise_BLANK.ipynb](Code/L3/L3_1_exercise_BLANK.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_BLANK.ipynb)
+- [L3_1_exercise_SOLVED.ipynb](Code/L3/L3_1_exercise_SOLVED.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_SOLVED.ipynb) -->
+
+### 📝 Assignments
+
+See Lecture 1 for how to complete assignments guide.
+
+- ✍️ **Written Assignment:** [A4_written.md](Assignments/A4_written.md)
+- 💻 **Coding Assignment:**
+  [A4_code.ipynb](Assignments/A4_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
+
+---
+
+---
+
 ## Creating Slides from Notebook
 
 ### command to convert notebook to presentation with hidden code
@@ -166,8 +209,12 @@ For html file to automatically open
 jupyter nbconvert --to slides presentation.ipynb --post serve
 ```
 
-## Create HTML and PDF slides from notebook
+## Generate HTML and PDF Slides from the Notebook
 
-ctrl+alt+1 when cursor in notebook to trigger task
+Before proceeding, ensure that the required **VS Code tasks and keybindings** are configured in the `.vscode/` folder.
 
-ctrl+alt+2 when HTML generated to trigger 2nd task
+To run the full slide export pipeline  
+(**`ipynb → HTML → PDF`**, using the third task), use the following shortcuts:
+
+- **macOS:** `Cmd + Shift + R`
+- **Windows:** `Ctrl + Alt + R`
