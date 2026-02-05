@@ -61,6 +61,10 @@ conceptual understanding to practical computational implementation in Python.
 Students will learn how matrices represent linear mappings, how matrix properties influence solution strategies, and why
 factorization-based solvers are central to numerical computation.
 
+Kassimali - Chapter 2, More on Cholesky in 9.9 (but not used for the lecture)
+
+McGuire - Chapter 11, 11.1 - 11.3
+
 ### 📖 Lectures
 
 #### Matrix Representation and Operations
@@ -100,11 +104,15 @@ See Lecture 1 for how to complete assignments guide.
 
 ---
 
-## 📅 Week 3 — Direct Stiffness Method I (Trusses)
+## 📅 Week 3 — Direct Stiffness Method (Trusses)
 
 This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by developing the **local
 behavior** of a single axial member and then extend those ideas to **global truss analysis**, including coordinate
 transformations, stiffness assembly, boundary conditions, and recovery of member forces.
+
+Kassimali - Chapter 3, 3.1 - 3.7 More on Cholesky in 9.9 (but not used for the lecture)
+
+McGuire - Chapter 2, 2.3 - 2.4
 
 ### 📖 Lectures
 
@@ -118,7 +126,7 @@ the local $4 \times 4$ element stiffness form (local-only; not yet transformed).
 - 📄 **Slides (PDF):** [L3_1_AxialElement.pdf](Lectures/L3/L3_1_AxialElement.pdf)
 - 📓 **Notebook:** [L3_1_AxialElement.ipynb](Lectures/L3/L3_1_AxialElement.ipynb)
 
-#### Part 2 — The Direct Stiffness Method (DSM) for Trusses
+#### Part 2 — The Direct Stiffness Method (DSM) for Trusses (Part 1)
 
 This lecture begins to develop the full DSM workflow for trusses: local-to-global transformations using direction
 cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assemblying the global stiffness
@@ -147,37 +155,44 @@ See Lecture 1 for how to complete assignments guide.
 
 ---
 
-## 📅 Week 4 — Direct Stiffness Method II (Trusses)
+## 📅 Week 4 — Direct Stiffness Method (Trusses)
 
-This week continues the **Direct Stiffness Method (DSM)** for planar trusses. TEXT
+This week continues the **Direct Stiffness Method (DSM)** for planar trusses, completing the full analysis workflow
+introduced in Week 3. We move from element-level formulations to **system-level solution**, focusing on efficient
+assembly of the global stiffness matrix, the mathematical implications of supports and constraints, and the
+post-processing steps required to recover member forces and reactions.
+
+Kassimali – Chapter 3, §3.7; additional discussion of bandedness in §9.9  
+McGuire – Chapter 3, §3.2–3.4 and §11.4 (sparseness)
 
 ### 📖 Lectures
 
-#### Part 1 — TEXT
+#### Part 1 — The Direct Stiffness Method (DSM) for Trusses (Part 2)
 
-global stiffness assembly by scatter-add, why unsupported structures yield singular $[K]$, application of supports via
-partitioning, solving for displacements and reactions, and recovery of member axial forces in local coordinates.
+This lecture completes the DSM truss workflow introduced in Week 3. We briefly review the manual construction of the
+global stiffness matrix based on compatibility and force equilibrium, and then formalize the Direct Stiffness Method:
+scatter–add assembly of the global stiffness matrix, enforcement of boundary conditions, solution for unknown joint
+displacements and support reactions, and recovery of member axial forces.
 
-- 🌐 **Slides (HTML):** [L4_1.slides.html](Lectures/L4/L4_1.slides.html)
-- 📄 **Slides (PDF):** [L4_1.pdf](Lectures/L4/L4_1.pdf)
-- 📓 **Notebook:** [L4_1.ipynb](Lectures/L4/L4_1.ipynb)
+- 🌐 **Slides (HTML):** [L4_1_Trusses.slides.html](Lectures/L4/L4_1_Trusses.slides.html)
+- 📄 **Slides (PDF):** [L4_1_Trusses.pdf](Lectures/L4/L4_1_Trusses.pdf)
+- 📓 **Notebook:** [L4_1-Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
 
-#### Part 2 — TEXT
+#### Part 2 — Implementing the DSM for Planar Trusses in Python
 
-text
+This lecture implements the full DSM workflow in Python. We translate the manual procedure into a clear, reusable
+software structure: data definitions (nodes, elements, DOF maps), element stiffness computation, scatter–add assembly
+into global arrays, application of boundary conditions via partitioning, solution for displacements and reactions, and
+post-processing for element force recovery. The emphasis is on building a larger, readable piece of analysis software by
+implementing each DSM step explicitly and validating intermediate results along the way.
 
-- 🌐 **Slides (HTML):** [L4_2.slides.html](Lectures/L4/L4_2.slides.html)
-- 📄 **Slides (PDF):** [L4_2.pdf](Lectures/L4/L4_2.pdf)
-- 📓 **Notebook:** [L4_2.ipynb](Lectures/L4/L4_2.ipynb)
+- 🌐 **Slides (HTML):** [L4_2_Implementation.slides.html](Lectures/L4/L4_2_Implementation.slides.html)
+- 📄 **Slides (PDF):** [L4_2_Implementation.pdf](Lectures/L4/L4_2_Implementation.pdf)
+- 📓 **Notebook:** [L4_2_Implementation.ipynb](Lectures/L4/L4_2_Implementation.ipynb)
 
 ### Extra In-Class Code
 
-TBD
-
-<!-- - [L3_1_exercise_BLANK.ipynb](Code/L3/L3_1_exercise_BLANK.ipynb)
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_BLANK.ipynb)
-- [L3_1_exercise_SOLVED.ipynb](Code/L3/L3_1_exercise_SOLVED.ipynb)
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_SOLVED.ipynb) -->
+None
 
 ### 📝 Assignments
 
