@@ -54,16 +54,16 @@ Configuration of VS Code for Python development, Jupyter notebooks, and course w
 
 ## 📅 Week 2 — Matrix Operations & Linear Systems
 
-This week introduces matrices as fundamental mathematical objects and develops the core tools needed to work with linear
-systems. We focus on matrix notation, operations, and the logic of solving systems of equations, progressing from
-conceptual understanding to practical computational implementation in Python.
+This week introduces matrices as fundamental mathematical objects and develops the core tools required to work with
+linear systems of equations. We focus on matrix notation and operations, the interpretation of matrices as linear
+mappings, and the logical structure of solving linear systems, progressing from conceptual understanding to practical
+computational implementation in Python.
 
-Students will learn how matrices represent linear mappings, how matrix properties influence solution strategies, and why
-factorization-based solvers are central to numerical computation.
+Emphasis is placed on how matrix properties influence solution strategies and why factorization-based solvers form the
+foundation of efficient numerical computation.
 
-Kassimali - Chapter 2, More on Cholesky in 9.9 (but not used for the lecture)
-
-McGuire - Chapter 11, 11.1 - 11.3
+Kassimali – Chapter 2; additional discussion of Cholesky factorization in §9.9 (not used for the lecture)  
+McGuire – Chapter 11, §11.1–11.3
 
 ### 📖 Lectures
 
@@ -106,13 +106,13 @@ See Lecture 1 for how to complete assignments guide.
 
 ## 📅 Week 3 — Direct Stiffness Method (Trusses)
 
-This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by developing the **local
-behavior** of a single axial member and then extend those ideas to **global truss analysis**, including coordinate
-transformations, stiffness assembly, boundary conditions, and recovery of member forces.
+This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by deriving the **local
+behavior** of an axial truss member from first principles and then extend these concepts to **global truss analysis**.
+Topics include coordinate transformations between local and global systems, manual assembly of the global stiffness
+matrix for the free nodes of the structure based on equilibrium and compatibility-based formulation.
 
-Kassimali - Chapter 3, 3.1 - 3.7 More on Cholesky in 9.9 (but not used for the lecture)
-
-McGuire - Chapter 2, 2.3 - 2.4
+Kassimali – Chapter 3, §3.1–3.7; additional discussion of Cholesky factorization in §9.9 (not used in the lecture)  
+McGuire – Chapter 2, §2.3–2.4
 
 ### 📖 Lectures
 

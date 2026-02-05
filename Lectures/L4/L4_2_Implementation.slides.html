@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-4.2">CEE6501 — Lecture 4.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-4.2">¶</a></h1><h2 id="Implementing-the-Direct-Stiffness-Method-(DSM)-for-Trusses-in-Python">Implementing the Direct Stiffness Method (DSM) for Trusses in Python<a class="anchor-link" href="#Implementing-the-Direct-Stiffness-Method-(DSM)-for-Trusses-in-Python">¶</a></h2><p>From hand assembly → reusable computational workflow</p>
+<h1 id="CEE6501-%E2%80%94-Lecture-4.2">CEE6501 — Lecture 4.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-4.2">¶</a></h1><h2 id="Implementing-the-DSM-for-Planar-Trusses-in-Python">Implementing the DSM for Planar Trusses in Python<a class="anchor-link" href="#Implementing-the-DSM-for-Planar-Trusses-in-Python">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7505,8 +7505,8 @@ main {
 <li><p><strong>Inputs and setup</strong><br/>
 Geometry, connectivity, material properties (problem-specific)</p>
 </li>
-<li><p><strong>Parsing and bookkeeping</strong><br/>
-DOF numbering, element lengths, direction cosines</p>
+<li><p><strong>Parsing / Pre-processing</strong><br/>
+Turn user inputs into useable form for the analysis</p>
 </li>
 <li><p><strong>Analysis / computation</strong><br/>
 Element stiffness → global assembly → solution</p>
@@ -7603,7 +7603,7 @@ $2i-1$ (for $u_x$) and $2i$ (for $u_y$)</li>
 <p><strong>Nodal coordinates</strong></p>
 <ul>
 <li><strong>Node 1:</strong> (0, 0) → (0, 0) mm</li>
-<li><strong>Node 2:</strong> (0, 10) → (0, 10,000) mm</li>
+<li><strong>Node 2:</strong> (10, 0) → (10,000, 0) mm</li>
 <li><strong>Node 3:</strong> (0, 8) → (0, 8,000) mm</li>
 <li><strong>Node 4:</strong> (6, 8) → (6,000, 8 000) mm</li>
 </ul>
@@ -7629,7 +7629,7 @@ When we assemble $\mathbf{K}$ and $\mathbf{f}$ later, we will convert these DOF 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [548]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [38]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Node coordinates (global)</span>
@@ -7662,7 +7662,7 @@ When we assemble $\mathbf{K}$ and $\mathbf{f}$ later, we will convert these DOF 
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[548]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[38]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{1: [1, 2], 2: [3, 4], 3: [5, 6], 4: [7, 8]}</pre>
 </div>
@@ -7701,7 +7701,7 @@ When we assemble $\mathbf{K}$ and $\mathbf{f}$ later, we will convert these DOF 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [549]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Material and section properties</span>
@@ -7730,7 +7730,7 @@ When we assemble $\mathbf{K}$ and $\mathbf{f}$ later, we will convert these DOF 
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[549]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{1: (1, 3, 70.0, 4000.0),
  2: (3, 4, 70.0, 4000.0),
@@ -7776,7 +7776,7 @@ When we assemble $\mathbf{K}$ and $\mathbf{f}$ later, we will convert these DOF 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [550]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Node-level description of restraints</span>
@@ -7806,7 +7806,7 @@ When we assemble $\mathbf{K}$ and $\mathbf{f}$ later, we will convert these DOF 
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[550]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[40]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>({1: ['ux', 'uy'], 2: ['ux', 'uy'], 3: ['ux']},
  {3: (0.0, -400.0), 4: (800.0, -400.0)})</pre>
@@ -7848,7 +7848,7 @@ so the rest of the implementation stays consistent and easy to debug.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [551]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Convert node-level into DOF-level quantities (still 1-based)</span>
@@ -7884,7 +7884,7 @@ so the rest of the implementation stays consistent and easy to debug.</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[551]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[41]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>([1, 2, 3, 4, 5], {6: -400.0, 7: 800.0, 8: -400.0})</pre>
 </div>
@@ -7969,7 +7969,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [552]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8017,7 +8017,7 @@ c = 0.0 , s = 1.0 , L = 8000.0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [553]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Build a dictionary of element geometry values: element_id -&gt; (c, s, L)</span>
@@ -8039,7 +8039,7 @@ c = 0.0 , s = 1.0 , L = 8000.0
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[553]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[43]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{1: (0.0, 1.0, 8000.0),
  2: (1.0, 0.0, 6000.0),
@@ -8103,7 +8103,7 @@ Later, for large systems, you would switch to sparse storage.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [554]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [44]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Initialize global stiffness matrix</span>
@@ -8175,7 +8175,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [555]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">truss_element_kg</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
@@ -8206,7 +8206,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [556]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">print_matrix_scaled</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
@@ -8229,7 +8229,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [557]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [47]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Quick check on one element</span>
@@ -8290,7 +8290,7 @@ into the global stiffness matrix.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [558]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">element_dof_map_1based</span><span class="p">(</span><span class="n">i_node</span><span class="p">,</span> <span class="n">j_node</span><span class="p">):</span>
@@ -8317,7 +8317,7 @@ into the global stiffness matrix.</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[558]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[48]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>[1, 2, 5, 6]</pre>
 </div>
@@ -8351,7 +8351,7 @@ into the global stiffness matrix.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [559]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">assemble_global_stiffness</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">elements_csl</span><span class="p">):</span>
@@ -8506,7 +8506,7 @@ that can be used in the linear system solver.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [560]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [50]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Assemble global force vector f (using 1-based DOF numbering)</span>
@@ -8531,7 +8531,7 @@ that can be used in the linear system solver.</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[560]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[50]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>array([   0.,    0.,    0.,    0.,    0., -400.,  800., -400.])</pre>
 </div>
@@ -8603,7 +8603,7 @@ manually swapped, the DOFs were <strong>not in ascending order</strong>.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [561]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [51]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">partition_system</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">DOF_restrained_1based</span><span class="p">):</span>
@@ -8636,7 +8636,7 @@ manually swapped, the DOFs were <strong>not in ascending order</strong>.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [562]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [52]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Block structure of the partitioned system:</span>
@@ -8671,7 +8671,7 @@ manually swapped, the DOFs were <strong>not in ascending order</strong>.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [563]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [53]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">print_matrix_scaled</span><span class="p">(</span><span class="n">K_ff</span><span class="p">)</span>
@@ -8748,7 +8748,7 @@ If imposed displacements are present, they must be specified explicitly.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [564]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [54]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8820,7 +8820,7 @@ If imposed displacements are present, they must be specified explicitly.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [565]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [55]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8875,20 +8875,16 @@ If imposed displacements are present, they must be specified explicitly.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [566]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [56]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Basic equilibrium check (forces)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Equilibrium check (forces in x and y)</span>
 
-<span class="c1"># Sum of applied forces</span>
-<span class="n">F_applied_total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f_global</span><span class="p">)</span>
+<span class="n">Fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f_global</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F_r</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">Fy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f_global</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F_r</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
 
-<span class="c1"># Sum of reaction forces</span>
-<span class="n">F_reaction_total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F_r</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Sum of applied forces:"</span><span class="p">,</span> <span class="n">F_applied_total</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Sum of reaction forces:"</span><span class="p">,</span> <span class="n">F_reaction_total</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Total (should be ~0):"</span><span class="p">,</span> <span class="n">F_applied_total</span> <span class="o">+</span> <span class="n">F_reaction_total</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Fx equilibrium (should be ~0):"</span><span class="p">,</span> <span class="n">Fx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Fy equilibrium (should be ~0):"</span><span class="p">,</span> <span class="n">Fy</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8901,9 +8897,8 @@ If imposed displacements are present, they must be specified explicitly.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Sum of applied forces: 0.0
-Sum of reaction forces: 1.1368683772161603e-13
-Total (should be ~0): 1.1368683772161603e-13
+<pre>Fx equilibrium (should be ~0): 0.0
+Fy equilibrium (should be ~0): 1.1368683772161603e-13
 </pre>
 </div>
 </div>
@@ -8939,7 +8934,7 @@ we place these values back into vectors of length $2n$ using the global DOF indi
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [567]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [57]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8985,7 +8980,7 @@ we place these values back into vectors of length $2n$ using the global DOF indi
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [568]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [58]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">assemble_global_forces</span><span class="p">(</span><span class="n">f_f</span><span class="p">,</span> <span class="n">F_r</span><span class="p">,</span> <span class="n">free_dofs</span><span class="p">,</span> <span class="n">restrained_dofs</span><span class="p">):</span>
@@ -9040,7 +9035,7 @@ grab the 4 DOFs for each element, transform, then compute forces/stress.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [569]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [59]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Choose one element to test (consistent debugging)</span>
@@ -9069,7 +9064,7 @@ This maps the <strong>global solution back to the element</strong>, enabling loc
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [570]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [60]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">extract_element_displacements</span><span class="p">(</span><span class="n">u_global</span><span class="p">,</span> <span class="n">i_node</span><span class="p">,</span> <span class="n">j_node</span><span class="p">):</span>
@@ -9124,7 +9119,7 @@ This maps the displacements from <strong>global coordinates to element-local coo
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [571]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [61]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">truss_transformation_matrix</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
@@ -9184,7 +9179,7 @@ yielding the <strong>internal forces</strong> carried by the element.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [572]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [62]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">truss_local_stiffness</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
@@ -9247,7 +9242,7 @@ cross-sectional area.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [573]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [63]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_axial_force_and_stress</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">u_local</span><span class="p">):</span>
@@ -9306,7 +9301,7 @@ transform them back using the transpose of the transformation matrix:</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [574]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [64]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">local_to_global_forces</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">f_local</span><span class="p">):</span>
@@ -9365,7 +9360,7 @@ transform them back using the transpose of the transformation matrix:</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [575]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [65]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -9408,7 +9403,7 @@ transform them back using the transpose of the transformation matrix:</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [576]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [66]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_truss_deformation</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -9451,7 +9446,7 @@ transform them back using the transpose of the transformation matrix:</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [577]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [67]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">recover_element_results</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">elements_csl</span><span class="p">,</span> <span class="n">u_global</span><span class="p">):</span>
@@ -9498,7 +9493,7 @@ For reporting, we convert stress from GPa → MPa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [578]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [68]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -9537,7 +9532,7 @@ For reporting, we convert stress from GPa → MPa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [579]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [69]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">display_compact</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -9568,147 +9563,147 @@ For reporting, we convert stress from GPa → MPa.</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[579]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[69]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_d2517 th {
+#T_99af9 th {
   font-size: 9pt;
 }
-#T_d2517_row0_col0, #T_d2517_row0_col1, #T_d2517_row0_col2, #T_d2517_row0_col3, #T_d2517_row0_col4, #T_d2517_row0_col5, #T_d2517_row0_col6, #T_d2517_row0_col7, #T_d2517_row0_col8, #T_d2517_row0_col9, #T_d2517_row0_col10, #T_d2517_row0_col11, #T_d2517_row0_col12, #T_d2517_row0_col13, #T_d2517_row0_col14, #T_d2517_row0_col15, #T_d2517_row0_col16, #T_d2517_row0_col17, #T_d2517_row1_col0, #T_d2517_row1_col1, #T_d2517_row1_col2, #T_d2517_row1_col3, #T_d2517_row1_col4, #T_d2517_row1_col5, #T_d2517_row1_col6, #T_d2517_row1_col7, #T_d2517_row1_col8, #T_d2517_row1_col9, #T_d2517_row1_col10, #T_d2517_row1_col11, #T_d2517_row1_col12, #T_d2517_row1_col13, #T_d2517_row1_col14, #T_d2517_row1_col15, #T_d2517_row1_col16, #T_d2517_row1_col17, #T_d2517_row2_col0, #T_d2517_row2_col1, #T_d2517_row2_col2, #T_d2517_row2_col3, #T_d2517_row2_col4, #T_d2517_row2_col5, #T_d2517_row2_col6, #T_d2517_row2_col7, #T_d2517_row2_col8, #T_d2517_row2_col9, #T_d2517_row2_col10, #T_d2517_row2_col11, #T_d2517_row2_col12, #T_d2517_row2_col13, #T_d2517_row2_col14, #T_d2517_row2_col15, #T_d2517_row2_col16, #T_d2517_row2_col17, #T_d2517_row3_col0, #T_d2517_row3_col1, #T_d2517_row3_col2, #T_d2517_row3_col3, #T_d2517_row3_col4, #T_d2517_row3_col5, #T_d2517_row3_col6, #T_d2517_row3_col7, #T_d2517_row3_col8, #T_d2517_row3_col9, #T_d2517_row3_col10, #T_d2517_row3_col11, #T_d2517_row3_col12, #T_d2517_row3_col13, #T_d2517_row3_col14, #T_d2517_row3_col15, #T_d2517_row3_col16, #T_d2517_row3_col17, #T_d2517_row4_col0, #T_d2517_row4_col1, #T_d2517_row4_col2, #T_d2517_row4_col3, #T_d2517_row4_col4, #T_d2517_row4_col5, #T_d2517_row4_col6, #T_d2517_row4_col7, #T_d2517_row4_col8, #T_d2517_row4_col9, #T_d2517_row4_col10, #T_d2517_row4_col11, #T_d2517_row4_col12, #T_d2517_row4_col13, #T_d2517_row4_col14, #T_d2517_row4_col15, #T_d2517_row4_col16, #T_d2517_row4_col17 {
+#T_99af9_row0_col0, #T_99af9_row0_col1, #T_99af9_row0_col2, #T_99af9_row0_col3, #T_99af9_row0_col4, #T_99af9_row0_col5, #T_99af9_row0_col6, #T_99af9_row0_col7, #T_99af9_row0_col8, #T_99af9_row0_col9, #T_99af9_row0_col10, #T_99af9_row0_col11, #T_99af9_row0_col12, #T_99af9_row0_col13, #T_99af9_row0_col14, #T_99af9_row0_col15, #T_99af9_row0_col16, #T_99af9_row0_col17, #T_99af9_row1_col0, #T_99af9_row1_col1, #T_99af9_row1_col2, #T_99af9_row1_col3, #T_99af9_row1_col4, #T_99af9_row1_col5, #T_99af9_row1_col6, #T_99af9_row1_col7, #T_99af9_row1_col8, #T_99af9_row1_col9, #T_99af9_row1_col10, #T_99af9_row1_col11, #T_99af9_row1_col12, #T_99af9_row1_col13, #T_99af9_row1_col14, #T_99af9_row1_col15, #T_99af9_row1_col16, #T_99af9_row1_col17, #T_99af9_row2_col0, #T_99af9_row2_col1, #T_99af9_row2_col2, #T_99af9_row2_col3, #T_99af9_row2_col4, #T_99af9_row2_col5, #T_99af9_row2_col6, #T_99af9_row2_col7, #T_99af9_row2_col8, #T_99af9_row2_col9, #T_99af9_row2_col10, #T_99af9_row2_col11, #T_99af9_row2_col12, #T_99af9_row2_col13, #T_99af9_row2_col14, #T_99af9_row2_col15, #T_99af9_row2_col16, #T_99af9_row2_col17, #T_99af9_row3_col0, #T_99af9_row3_col1, #T_99af9_row3_col2, #T_99af9_row3_col3, #T_99af9_row3_col4, #T_99af9_row3_col5, #T_99af9_row3_col6, #T_99af9_row3_col7, #T_99af9_row3_col8, #T_99af9_row3_col9, #T_99af9_row3_col10, #T_99af9_row3_col11, #T_99af9_row3_col12, #T_99af9_row3_col13, #T_99af9_row3_col14, #T_99af9_row3_col15, #T_99af9_row3_col16, #T_99af9_row3_col17, #T_99af9_row4_col0, #T_99af9_row4_col1, #T_99af9_row4_col2, #T_99af9_row4_col3, #T_99af9_row4_col4, #T_99af9_row4_col5, #T_99af9_row4_col6, #T_99af9_row4_col7, #T_99af9_row4_col8, #T_99af9_row4_col9, #T_99af9_row4_col10, #T_99af9_row4_col11, #T_99af9_row4_col12, #T_99af9_row4_col13, #T_99af9_row4_col14, #T_99af9_row4_col15, #T_99af9_row4_col16, #T_99af9_row4_col17 {
   font-size: 9pt;
   padding: 2px;
   white-space: nowrap;
 }
 </style>
-<table id="T_d2517">
+<table id="T_99af9">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_d2517_level0_col0">ele</th>
-<th class="col_heading level0 col1" id="T_d2517_level0_col1">i</th>
-<th class="col_heading level0 col2" id="T_d2517_level0_col2">j</th>
-<th class="col_heading level0 col3" id="T_d2517_level0_col3">L (mm)</th>
-<th class="col_heading level0 col4" id="T_d2517_level0_col4">N (kN)</th>
-<th class="col_heading level0 col5" id="T_d2517_level0_col5">sigma (MPa)</th>
-<th class="col_heading level0 col6" id="T_d2517_level0_col6">u_1 (mm)</th>
-<th class="col_heading level0 col7" id="T_d2517_level0_col7">u_2 (mm)</th>
-<th class="col_heading level0 col8" id="T_d2517_level0_col8">u_3 (mm)</th>
-<th class="col_heading level0 col9" id="T_d2517_level0_col9">u_4 (mm)</th>
-<th class="col_heading level0 col10" id="T_d2517_level0_col10">u_1' (mm)</th>
-<th class="col_heading level0 col11" id="T_d2517_level0_col11">u_2' (mm)</th>
-<th class="col_heading level0 col12" id="T_d2517_level0_col12">u_3' (mm)</th>
-<th class="col_heading level0 col13" id="T_d2517_level0_col13">u_4' (mm)</th>
-<th class="col_heading level0 col14" id="T_d2517_level0_col14">f_1' (kN)</th>
-<th class="col_heading level0 col15" id="T_d2517_level0_col15">f_2' (kN)</th>
-<th class="col_heading level0 col16" id="T_d2517_level0_col16">f_3' (kN)</th>
-<th class="col_heading level0 col17" id="T_d2517_level0_col17">f_4' (kN)</th>
+<th class="col_heading level0 col0" id="T_99af9_level0_col0">ele</th>
+<th class="col_heading level0 col1" id="T_99af9_level0_col1">i</th>
+<th class="col_heading level0 col2" id="T_99af9_level0_col2">j</th>
+<th class="col_heading level0 col3" id="T_99af9_level0_col3">L (mm)</th>
+<th class="col_heading level0 col4" id="T_99af9_level0_col4">N (kN)</th>
+<th class="col_heading level0 col5" id="T_99af9_level0_col5">sigma (MPa)</th>
+<th class="col_heading level0 col6" id="T_99af9_level0_col6">u_1 (mm)</th>
+<th class="col_heading level0 col7" id="T_99af9_level0_col7">u_2 (mm)</th>
+<th class="col_heading level0 col8" id="T_99af9_level0_col8">u_3 (mm)</th>
+<th class="col_heading level0 col9" id="T_99af9_level0_col9">u_4 (mm)</th>
+<th class="col_heading level0 col10" id="T_99af9_level0_col10">u_1' (mm)</th>
+<th class="col_heading level0 col11" id="T_99af9_level0_col11">u_2' (mm)</th>
+<th class="col_heading level0 col12" id="T_99af9_level0_col12">u_3' (mm)</th>
+<th class="col_heading level0 col13" id="T_99af9_level0_col13">u_4' (mm)</th>
+<th class="col_heading level0 col14" id="T_99af9_level0_col14">f_1' (kN)</th>
+<th class="col_heading level0 col15" id="T_99af9_level0_col15">f_2' (kN)</th>
+<th class="col_heading level0 col16" id="T_99af9_level0_col16">f_3' (kN)</th>
+<th class="col_heading level0 col17" id="T_99af9_level0_col17">f_4' (kN)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_d2517_level0_row0">0</th>
-<td class="data row0 col0" id="T_d2517_row0_col0">1</td>
-<td class="data row0 col1" id="T_d2517_row0_col1">1</td>
-<td class="data row0 col2" id="T_d2517_row0_col2">3</td>
-<td class="data row0 col3" id="T_d2517_row0_col3">8000.0</td>
-<td class="data row0 col4" id="T_d2517_row0_col4">-321.6</td>
-<td class="data row0 col5" id="T_d2517_row0_col5">-80.4</td>
-<td class="data row0 col6" id="T_d2517_row0_col6">0.0</td>
-<td class="data row0 col7" id="T_d2517_row0_col7">0.0</td>
-<td class="data row0 col8" id="T_d2517_row0_col8">0.0</td>
-<td class="data row0 col9" id="T_d2517_row0_col9">-9.2</td>
-<td class="data row0 col10" id="T_d2517_row0_col10">0.0</td>
-<td class="data row0 col11" id="T_d2517_row0_col11">0.0</td>
-<td class="data row0 col12" id="T_d2517_row0_col12">-9.2</td>
-<td class="data row0 col13" id="T_d2517_row0_col13">0.0</td>
-<td class="data row0 col14" id="T_d2517_row0_col14">321.6</td>
-<td class="data row0 col15" id="T_d2517_row0_col15">0.0</td>
-<td class="data row0 col16" id="T_d2517_row0_col16">-321.6</td>
-<td class="data row0 col17" id="T_d2517_row0_col17">0.0</td>
+<th class="row_heading level0 row0" id="T_99af9_level0_row0">0</th>
+<td class="data row0 col0" id="T_99af9_row0_col0">1</td>
+<td class="data row0 col1" id="T_99af9_row0_col1">1</td>
+<td class="data row0 col2" id="T_99af9_row0_col2">3</td>
+<td class="data row0 col3" id="T_99af9_row0_col3">8000.0</td>
+<td class="data row0 col4" id="T_99af9_row0_col4">-321.6</td>
+<td class="data row0 col5" id="T_99af9_row0_col5">-80.4</td>
+<td class="data row0 col6" id="T_99af9_row0_col6">0.0</td>
+<td class="data row0 col7" id="T_99af9_row0_col7">0.0</td>
+<td class="data row0 col8" id="T_99af9_row0_col8">0.0</td>
+<td class="data row0 col9" id="T_99af9_row0_col9">-9.2</td>
+<td class="data row0 col10" id="T_99af9_row0_col10">0.0</td>
+<td class="data row0 col11" id="T_99af9_row0_col11">0.0</td>
+<td class="data row0 col12" id="T_99af9_row0_col12">-9.2</td>
+<td class="data row0 col13" id="T_99af9_row0_col13">0.0</td>
+<td class="data row0 col14" id="T_99af9_row0_col14">321.6</td>
+<td class="data row0 col15" id="T_99af9_row0_col15">0.0</td>
+<td class="data row0 col16" id="T_99af9_row0_col16">-321.6</td>
+<td class="data row0 col17" id="T_99af9_row0_col17">0.0</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_d2517_level0_row1">1</th>
-<td class="data row1 col0" id="T_d2517_row1_col0">2</td>
-<td class="data row1 col1" id="T_d2517_row1_col1">3</td>
-<td class="data row1 col2" id="T_d2517_row1_col2">4</td>
-<td class="data row1 col3" id="T_d2517_row1_col3">6000.0</td>
-<td class="data row1 col4" id="T_d2517_row1_col4">599.0</td>
-<td class="data row1 col5" id="T_d2517_row1_col5">149.8</td>
-<td class="data row1 col6" id="T_d2517_row1_col6">0.0</td>
-<td class="data row1 col7" id="T_d2517_row1_col7">-9.2</td>
-<td class="data row1 col8" id="T_d2517_row1_col8">12.8</td>
-<td class="data row1 col9" id="T_d2517_row1_col9">-9.6</td>
-<td class="data row1 col10" id="T_d2517_row1_col10">0.0</td>
-<td class="data row1 col11" id="T_d2517_row1_col11">-9.2</td>
-<td class="data row1 col12" id="T_d2517_row1_col12">12.8</td>
-<td class="data row1 col13" id="T_d2517_row1_col13">-9.6</td>
-<td class="data row1 col14" id="T_d2517_row1_col14">-599.0</td>
-<td class="data row1 col15" id="T_d2517_row1_col15">0.0</td>
-<td class="data row1 col16" id="T_d2517_row1_col16">599.0</td>
-<td class="data row1 col17" id="T_d2517_row1_col17">0.0</td>
+<th class="row_heading level0 row1" id="T_99af9_level0_row1">1</th>
+<td class="data row1 col0" id="T_99af9_row1_col0">2</td>
+<td class="data row1 col1" id="T_99af9_row1_col1">3</td>
+<td class="data row1 col2" id="T_99af9_row1_col2">4</td>
+<td class="data row1 col3" id="T_99af9_row1_col3">6000.0</td>
+<td class="data row1 col4" id="T_99af9_row1_col4">599.0</td>
+<td class="data row1 col5" id="T_99af9_row1_col5">149.8</td>
+<td class="data row1 col6" id="T_99af9_row1_col6">0.0</td>
+<td class="data row1 col7" id="T_99af9_row1_col7">-9.2</td>
+<td class="data row1 col8" id="T_99af9_row1_col8">12.8</td>
+<td class="data row1 col9" id="T_99af9_row1_col9">-9.6</td>
+<td class="data row1 col10" id="T_99af9_row1_col10">0.0</td>
+<td class="data row1 col11" id="T_99af9_row1_col11">-9.2</td>
+<td class="data row1 col12" id="T_99af9_row1_col12">12.8</td>
+<td class="data row1 col13" id="T_99af9_row1_col13">-9.6</td>
+<td class="data row1 col14" id="T_99af9_row1_col14">-599.0</td>
+<td class="data row1 col15" id="T_99af9_row1_col15">0.0</td>
+<td class="data row1 col16" id="T_99af9_row1_col16">599.0</td>
+<td class="data row1 col17" id="T_99af9_row1_col17">0.0</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_d2517_level0_row2">2</th>
-<td class="data row2 col0" id="T_d2517_row2_col0">3</td>
-<td class="data row2 col1" id="T_d2517_row2_col1">1</td>
-<td class="data row2 col2" id="T_d2517_row2_col2">4</td>
-<td class="data row2 col3" id="T_d2517_row2_col3">10000.0</td>
-<td class="data row2 col4" id="T_d2517_row2_col4">1.0</td>
-<td class="data row2 col5" id="T_d2517_row2_col5">0.2</td>
-<td class="data row2 col6" id="T_d2517_row2_col6">0.0</td>
-<td class="data row2 col7" id="T_d2517_row2_col7">0.0</td>
-<td class="data row2 col8" id="T_d2517_row2_col8">12.8</td>
-<td class="data row2 col9" id="T_d2517_row2_col9">-9.6</td>
-<td class="data row2 col10" id="T_d2517_row2_col10">0.0</td>
-<td class="data row2 col11" id="T_d2517_row2_col11">0.0</td>
-<td class="data row2 col12" id="T_d2517_row2_col12">0.0</td>
-<td class="data row2 col13" id="T_d2517_row2_col13">-16.0</td>
-<td class="data row2 col14" id="T_d2517_row2_col14">-1.0</td>
-<td class="data row2 col15" id="T_d2517_row2_col15">0.0</td>
-<td class="data row2 col16" id="T_d2517_row2_col16">1.0</td>
-<td class="data row2 col17" id="T_d2517_row2_col17">0.0</td>
+<th class="row_heading level0 row2" id="T_99af9_level0_row2">2</th>
+<td class="data row2 col0" id="T_99af9_row2_col0">3</td>
+<td class="data row2 col1" id="T_99af9_row2_col1">1</td>
+<td class="data row2 col2" id="T_99af9_row2_col2">4</td>
+<td class="data row2 col3" id="T_99af9_row2_col3">10000.0</td>
+<td class="data row2 col4" id="T_99af9_row2_col4">1.0</td>
+<td class="data row2 col5" id="T_99af9_row2_col5">0.2</td>
+<td class="data row2 col6" id="T_99af9_row2_col6">0.0</td>
+<td class="data row2 col7" id="T_99af9_row2_col7">0.0</td>
+<td class="data row2 col8" id="T_99af9_row2_col8">12.8</td>
+<td class="data row2 col9" id="T_99af9_row2_col9">-9.6</td>
+<td class="data row2 col10" id="T_99af9_row2_col10">0.0</td>
+<td class="data row2 col11" id="T_99af9_row2_col11">0.0</td>
+<td class="data row2 col12" id="T_99af9_row2_col12">0.0</td>
+<td class="data row2 col13" id="T_99af9_row2_col13">-16.0</td>
+<td class="data row2 col14" id="T_99af9_row2_col14">-1.0</td>
+<td class="data row2 col15" id="T_99af9_row2_col15">0.0</td>
+<td class="data row2 col16" id="T_99af9_row2_col16">1.0</td>
+<td class="data row2 col17" id="T_99af9_row2_col17">0.0</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_d2517_level0_row3">3</th>
-<td class="data row3 col0" id="T_d2517_row3_col0">4</td>
-<td class="data row3 col1" id="T_d2517_row3_col1">2</td>
-<td class="data row3 col2" id="T_d2517_row3_col2">3</td>
-<td class="data row3 col3" id="T_d2517_row3_col3">12806.2</td>
-<td class="data row3 col4" id="T_d2517_row3_col4">-125.5</td>
-<td class="data row3 col5" id="T_d2517_row3_col5">-31.4</td>
-<td class="data row3 col6" id="T_d2517_row3_col6">0.0</td>
-<td class="data row3 col7" id="T_d2517_row3_col7">0.0</td>
-<td class="data row3 col8" id="T_d2517_row3_col8">0.0</td>
-<td class="data row3 col9" id="T_d2517_row3_col9">-9.2</td>
-<td class="data row3 col10" id="T_d2517_row3_col10">0.0</td>
-<td class="data row3 col11" id="T_d2517_row3_col11">0.0</td>
-<td class="data row3 col12" id="T_d2517_row3_col12">-5.7</td>
-<td class="data row3 col13" id="T_d2517_row3_col13">7.2</td>
-<td class="data row3 col14" id="T_d2517_row3_col14">125.5</td>
-<td class="data row3 col15" id="T_d2517_row3_col15">0.0</td>
-<td class="data row3 col16" id="T_d2517_row3_col16">-125.5</td>
-<td class="data row3 col17" id="T_d2517_row3_col17">0.0</td>
+<th class="row_heading level0 row3" id="T_99af9_level0_row3">3</th>
+<td class="data row3 col0" id="T_99af9_row3_col0">4</td>
+<td class="data row3 col1" id="T_99af9_row3_col1">2</td>
+<td class="data row3 col2" id="T_99af9_row3_col2">3</td>
+<td class="data row3 col3" id="T_99af9_row3_col3">12806.2</td>
+<td class="data row3 col4" id="T_99af9_row3_col4">-125.5</td>
+<td class="data row3 col5" id="T_99af9_row3_col5">-31.4</td>
+<td class="data row3 col6" id="T_99af9_row3_col6">0.0</td>
+<td class="data row3 col7" id="T_99af9_row3_col7">0.0</td>
+<td class="data row3 col8" id="T_99af9_row3_col8">0.0</td>
+<td class="data row3 col9" id="T_99af9_row3_col9">-9.2</td>
+<td class="data row3 col10" id="T_99af9_row3_col10">0.0</td>
+<td class="data row3 col11" id="T_99af9_row3_col11">0.0</td>
+<td class="data row3 col12" id="T_99af9_row3_col12">-5.7</td>
+<td class="data row3 col13" id="T_99af9_row3_col13">7.2</td>
+<td class="data row3 col14" id="T_99af9_row3_col14">125.5</td>
+<td class="data row3 col15" id="T_99af9_row3_col15">0.0</td>
+<td class="data row3 col16" id="T_99af9_row3_col16">-125.5</td>
+<td class="data row3 col17" id="T_99af9_row3_col17">0.0</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_d2517_level0_row4">4</th>
-<td class="data row4 col0" id="T_d2517_row4_col0">5</td>
-<td class="data row4 col1" id="T_d2517_row4_col1">2</td>
-<td class="data row4 col2" id="T_d2517_row4_col2">4</td>
-<td class="data row4 col3" id="T_d2517_row4_col3">8944.3</td>
-<td class="data row4 col4" id="T_d2517_row4_col4">-448.1</td>
-<td class="data row4 col5" id="T_d2517_row4_col5">-112.0</td>
-<td class="data row4 col6" id="T_d2517_row4_col6">0.0</td>
-<td class="data row4 col7" id="T_d2517_row4_col7">0.0</td>
-<td class="data row4 col8" id="T_d2517_row4_col8">12.8</td>
-<td class="data row4 col9" id="T_d2517_row4_col9">-9.6</td>
-<td class="data row4 col10" id="T_d2517_row4_col10">0.0</td>
-<td class="data row4 col11" id="T_d2517_row4_col11">0.0</td>
-<td class="data row4 col12" id="T_d2517_row4_col12">-14.3</td>
-<td class="data row4 col13" id="T_d2517_row4_col13">-7.2</td>
-<td class="data row4 col14" id="T_d2517_row4_col14">448.1</td>
-<td class="data row4 col15" id="T_d2517_row4_col15">0.0</td>
-<td class="data row4 col16" id="T_d2517_row4_col16">-448.1</td>
-<td class="data row4 col17" id="T_d2517_row4_col17">0.0</td>
+<th class="row_heading level0 row4" id="T_99af9_level0_row4">4</th>
+<td class="data row4 col0" id="T_99af9_row4_col0">5</td>
+<td class="data row4 col1" id="T_99af9_row4_col1">2</td>
+<td class="data row4 col2" id="T_99af9_row4_col2">4</td>
+<td class="data row4 col3" id="T_99af9_row4_col3">8944.3</td>
+<td class="data row4 col4" id="T_99af9_row4_col4">-448.1</td>
+<td class="data row4 col5" id="T_99af9_row4_col5">-112.0</td>
+<td class="data row4 col6" id="T_99af9_row4_col6">0.0</td>
+<td class="data row4 col7" id="T_99af9_row4_col7">0.0</td>
+<td class="data row4 col8" id="T_99af9_row4_col8">12.8</td>
+<td class="data row4 col9" id="T_99af9_row4_col9">-9.6</td>
+<td class="data row4 col10" id="T_99af9_row4_col10">0.0</td>
+<td class="data row4 col11" id="T_99af9_row4_col11">0.0</td>
+<td class="data row4 col12" id="T_99af9_row4_col12">-14.3</td>
+<td class="data row4 col13" id="T_99af9_row4_col13">-7.2</td>
+<td class="data row4 col14" id="T_99af9_row4_col14">448.1</td>
+<td class="data row4 col15" id="T_99af9_row4_col15">0.0</td>
+<td class="data row4 col16" id="T_99af9_row4_col16">-448.1</td>
+<td class="data row4 col17" id="T_99af9_row4_col17">0.0</td>
 </tr>
 </tbody>
 </table>
@@ -9721,13 +9716,84 @@ For reporting, we convert stress from GPa → MPa.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [580]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [70]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Export DataFrame to Excel</span>
 <span class="n">df_members</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">"member_results.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d895dc4e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-9---In-Class-Truss-Assignments">Part 9 - In Class Truss Assignments<a class="anchor-link" href="#Part-9---In-Class-Truss-Assignments">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a78d4345">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Solve-this-Truss-Using-the-Code-in-this-Lecture">Solve this Truss Using the Code in this Lecture<a class="anchor-link" href="#Solve-this-Truss-Using-the-Code-in-this-Lecture">¶</a></h3><p>Example 3.4 in Kassimali (not fully worked out)</p>
+<div style="display:flex; gap:1.5rem; align-items:center;">
+<div style="flex:0.5;">
+<img alt="No description has been provided for this image" src="assets/L2_ClassProblem1.png" style="width:100%; margin-bottom:0.75rem;"/>
+</div>
+<div style="flex:0.5; font-size:0.95em;">
+<p><strong>Node numbering (different than textbook):</strong></p>
+<ul>
+<li>Node 1: bottom-left</li>
+<li>Node 2: top left</li>
+<li>Node 3: top right</li>
+<li>Node 4: bottom right</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=96f2d7fc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Solve-this-Truss-Using-the-Code-in-this-Lecture">Solve this Truss Using the Code in this Lecture<a class="anchor-link" href="#Solve-this-Truss-Using-the-Code-in-this-Lecture">¶</a></h3><p>Example 3.8 in Kassimali</p>
+<div style="display:flex; gap:1.5rem; align-items:center;">
+<div style="flex:0.5;">
+<img alt="No description has been provided for this image" src="assets/L2_ClassProblem3.png" style="width:100%; margin-bottom:0.75rem;"/>
+</div>
+<div style="flex:0.5; font-size:0.95em;">
+<p><strong>Node numbering (different than textbook):</strong></p>
+<ul>
+<li>Node 1: bottom-left support</li>
+<li>Node 2: middle support</li>
+<li>Node 3: top node</li>
+<li>Node 4: right support</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d3911095">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 </div>
 </div>
 </div>
