@@ -54,12 +54,16 @@ Configuration of VS Code for Python development, Jupyter notebooks, and course w
 
 ## 📅 Week 2 — Matrix Operations & Linear Systems
 
-This week introduces matrices as fundamental mathematical objects and develops the core tools needed to work with linear
-systems. We focus on matrix notation, operations, and the logic of solving systems of equations, progressing from
-conceptual understanding to practical computational implementation in Python.
+This week introduces matrices as fundamental mathematical objects and develops the core tools required to work with
+linear systems of equations. We focus on matrix notation and operations, the interpretation of matrices as linear
+mappings, and the logical structure of solving linear systems, progressing from conceptual understanding to practical
+computational implementation in Python.
 
-Students will learn how matrices represent linear mappings, how matrix properties influence solution strategies, and why
-factorization-based solvers are central to numerical computation.
+Emphasis is placed on how matrix properties influence solution strategies and why factorization-based solvers form the
+foundation of efficient numerical computation.
+
+Kassimali – Chapter 2; additional discussion of Cholesky factorization in §9.9 (not used for the lecture)  
+McGuire – Chapter 11, §11.1–11.3
 
 ### 📖 Lectures
 
@@ -102,9 +106,13 @@ See Lecture 1 for how to complete assignments guide.
 
 ## 📅 Week 3 — Direct Stiffness Method (Trusses)
 
-This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by developing the **local
-behavior** of a single axial member and then extend those ideas to **global truss analysis**, including coordinate
-transformations, stiffness assembly, boundary conditions, and recovery of member forces.
+This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by deriving the **local
+behavior** of an axial truss member from first principles and then extend these concepts to **global truss analysis**.
+Topics include coordinate transformations between local and global systems, manual assembly of the global stiffness
+matrix for the free nodes of the structure based on equilibrium and compatibility-based formulation.
+
+Kassimali – Chapter 3, §3.1–3.7; additional discussion of Cholesky factorization in §9.9 (not used in the lecture)  
+McGuire – Chapter 2, §2.3–2.4
 
 ### 📖 Lectures
 
@@ -118,12 +126,11 @@ the local $4 \times 4$ element stiffness form (local-only; not yet transformed).
 - 📄 **Slides (PDF):** [L3_1_AxialElement.pdf](Lectures/L3/L3_1_AxialElement.pdf)
 - 📓 **Notebook:** [L3_1_AxialElement.ipynb](Lectures/L3/L3_1_AxialElement.ipynb)
 
-#### Part 2 — The Direct Stiffness Method (DSM) for Trusses
+#### Part 2 — The Direct Stiffness Method (DSM) for Trusses (Part 1)
 
-This lecture develops the full DSM workflow for trusses: local-to-global transformations using direction cosines, global
-element stiffness $[k]_g = [T]^T [k'] [T]$, nodal equilibrium and why assembly works, global stiffness assembly by
-scatter-add, why unsupported structures yield singular $[K]$, application of supports via partitioning, solving for
-displacements and reactions, and recovery of member axial forces in local coordinates.
+This lecture begins to develop the full DSM workflow for trusses: local-to-global transformations using direction
+cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assemblying the global stiffness
+matrix of the structure to solve the unknown joint displacements.
 
 - 🌐 **Slides (HTML):** [L3_2_Trusses.slides.html](Lectures/L3/L3_2_Trusses.slides.html)
 - 📄 **Slides (PDF):** [L3_2_Trusses.pdf](Lectures/L3/L3_2_Trusses.pdf)
@@ -148,6 +155,66 @@ See Lecture 1 for how to complete assignments guide.
 
 ---
 
+## 📅 Week 4 — Direct Stiffness Method (Trusses)
+
+This week continues the **Direct Stiffness Method (DSM)** for planar trusses, completing the full analysis workflow
+introduced in Week 3. We move from element-level formulations to **system-level solution**, focusing on efficient
+assembly of the global stiffness matrix, the mathematical implications of supports and constraints, and the
+post-processing steps required to recover member forces and reactions.
+
+Kassimali – Chapter 3, §3.7; additional discussion of bandedness in §9.9  
+McGuire – Chapter 3, §3.2–3.4 and §11.4 (sparseness)
+
+### 📖 Lectures
+
+#### Part 1 — The Direct Stiffness Method (DSM) for Trusses (Part 2)
+
+This lecture completes the DSM truss workflow introduced in Week 3. We briefly review the manual construction of the
+global stiffness matrix based on compatibility and force equilibrium, and then formalize the Direct Stiffness Method:
+scatter–add assembly of the global stiffness matrix, enforcement of boundary conditions, solution for unknown joint
+displacements and support reactions, and recovery of member axial forces.
+
+- 🌐 **Slides (HTML):** [L4_1_Trusses.slides.html](Lectures/L4/L4_1_Trusses.slides.html)
+- 📄 **Slides (PDF):** [L4_1_Trusses.pdf](Lectures/L4/L4_1_Trusses.pdf)
+- 📓 **Notebook:** [L4_1-Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
+
+#### Part 2 — Implementing the DSM for Planar Trusses in Python
+
+This lecture implements the full DSM workflow in Python. We translate the manual procedure into a clear, reusable
+software structure: data definitions (nodes, elements, DOF maps), element stiffness computation, scatter–add assembly
+into global arrays, application of boundary conditions via partitioning, solution for displacements and reactions, and
+post-processing for element force recovery. The emphasis is on building a larger, readable piece of analysis software by
+implementing each DSM step explicitly and validating intermediate results along the way.
+
+- 🌐 **Slides (HTML):** [L4_2_Implementation.slides.html](Lectures/L4/L4_2_Implementation.slides.html)
+- 📄 **Slides (PDF):** [L4_2_Implementation.pdf](Lectures/L4/L4_2_Implementation.pdf)
+- 📓 **Notebook:** [L4_2_Implementation.ipynb](Lectures/L4/L4_2_Implementation.ipynb)
+
+#### Part 3 — Extra Topics for the DSM for Planar Trusses in Python
+
+This lecture explores computational and modeling extensions to the DSM, including **sparsity and bandwidth of the
+stiffness matrix**, the impact of DOF ordering on solver performance, and a brief outlook on extending the DSM framework
+to **3D truss systems**.
+
+- 🌐 **Slides (HTML):** [L4_3_ExtraTopics.slides.html](Lectures/L4/L4_3_ExtraTopics.slides.html)
+- 📄 **Slides (PDF):** [L4_3_ExtraTopics.pdf](Lectures/L4/L4_3_ExtraTopics.pdf)
+- 📓 **Notebook:** [L4_3_ExtraTopics.ipynb](Lectures/L4/L4_3_ExtraTopics.ipynb)
+
+### Extra In-Class Code
+
+- [banded_demo.ipynb](Code/L4/banded_demo.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L4/banded_demo.ipynb)
+
+### 📝 Assignments
+
+- ✍️ **Written Assignment:** [A4_written.md](Assignments/A4_written.md)
+- 💻 **Coding Assignment:**
+  [A4_code.ipynb](Assignments/A4_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
+
+---
+
+---
+
 ## Creating Slides from Notebook
 
 ### command to convert notebook to presentation with hidden code
@@ -166,8 +233,12 @@ For html file to automatically open
 jupyter nbconvert --to slides presentation.ipynb --post serve
 ```
 
-## Create HTML and PDF slides from notebook
+## Generate HTML and PDF Slides from the Notebook
 
-ctrl+alt+1 when cursor in notebook to trigger task
+Before proceeding, ensure that the required **VS Code tasks and keybindings** are configured in the `.vscode/` folder.
 
-ctrl+alt+2 when HTML generated to trigger 2nd task
+To run the full slide export pipeline  
+(**`ipynb → HTML → PDF`**, using the third task), use the following shortcuts:
+
+- **macOS:** `Cmd + Shift + R`
+- **Windows:** `Ctrl + Alt + R`
