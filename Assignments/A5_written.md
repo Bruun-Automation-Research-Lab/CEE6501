@@ -43,7 +43,7 @@ written by you and you must understand it**. If you used outside help, add a sho
 
 ---
 
-## Question 1 — Planar Truss (Hand Analysis + Code Verification)
+## Question 1 — Determinate Planar Truss Analysis
 
 Find (or design) a **simple, statically determinate planar truss** that can be solved using standard undergraduate
 analysis techniques (e.g., **Method of Joints** and/or **Method of Sections**).
