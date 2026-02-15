@@ -1,10 +1,10 @@
-# CEE6501 — Written Assignment, Week 5
+# CEE6501 — Written Assignment, Week 6
 
-**Assigned:** 02/13/2026 (Week 5)
+**Assigned:** 02/20/2026 (Week 6)
 
-**Due:** 02/23/2026
+**Due:** 03/02/2026
 
-**Canvas Submission Link:** <https://gatech.instructure.com/courses/517856/assignments/2320538>
+**Canvas Submission Link:** <https://gatech.instructure.com/courses/517856/assignments/2320752>
 
 ## Logistics
 
@@ -44,26 +44,3 @@ written by you and you must understand it**. If you used outside help, add a sho
 ---
 
 ## Question 1 — Determinate Planar Truss Analysis
-
-Find (or design) a **simple, statically determinate planar truss** that can be solved using standard undergraduate
-analysis techniques (e.g., **Method of Joints** and/or **Method of Sections**).
-
-The truss may have any reasonable and stable geometry, but it should contain approximately **6–10 members**.
-
-In your written submission:
-
-- Clearly define:
-  - Node numbering
-  - Element numbering
-  - Node coordinates
-  - Support conditions
-  - Applied loads
-- Show all analytical steps.
-- Compute and report:
-  - All **support reactions**
-  - The **axial force in every member**
-  - Indicate whether each member is in **tension (+)** or **compression (−)**
-
-In the coding assignment, you will solve this same structure using the computational framework developed in class.
-
-The analytical results from your written solution will serve as a **verification benchmark** for your implementation.

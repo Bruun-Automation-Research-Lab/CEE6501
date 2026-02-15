@@ -48,14 +48,14 @@ Configuration of VS Code for Python development, Jupyter notebooks, and course w
 
 Please use the following naming formats:
 
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
 
 #### Assignment Files
 
 - ✍️ **Written Assignment:** [A1_written.md](Assignments/A1_written.md)
-- 💻 **Coding Assignment:**
-  [A1_code.ipynb](Assignments/A1_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
+- 💻 **Coding Assignment:** [A1_code.ipynb](Assignments/A1_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
 
 ---
 
@@ -107,14 +107,14 @@ and solver efficiency for large-scale engineering problems.
 
 Please use the following naming formats:
 
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
 
 #### Assignment Files
 
 - ✍️ **Written Component:** [A2_written.md](Assignments/A2_written.md)
-- 💻 **Coding Component:**
-  [A2_code.ipynb](Assignments/A2_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A2_code.ipynb)
+- 💻 **Coding Component:** [A2_code.ipynb](Assignments/A2_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A2_code.ipynb)
 
 ---
 
@@ -165,14 +165,14 @@ matrix of the structure to solve the unknown joint displacements.
 
 Please use the following naming formats:
 
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
 
 #### Assignment Files
 
 - ✍️ **Written Component:** [A3_written.md](Assignments/A3_written.md)
-- 💻 **Coding Component:**
-  [A3_code.ipynb](Assignments/A3_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A3_code.ipynb)
+- 💻 **Coding Component:** [A3_code.ipynb](Assignments/A3_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A3_code.ipynb)
 
 ---
 
@@ -234,14 +234,14 @@ to **3D truss systems**.
 
 Please use the following naming formats:
 
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
 
 #### Assignment Files
 
 - ✍️ **Written Component:** [A4_written.md](Assignments/A4_written.md)
-- 💻 **Coding Component:**
-  [A4_code.ipynb](Assignments/A4_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
+- 💻 **Coding Component:** [A4_code.ipynb](Assignments/A4_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
 
 ---
 
@@ -251,7 +251,7 @@ Please use the following naming formats:
 
 ### 📖 Lectures
 
-In Class Midterm today (1.5 - 2.0 hours)
+In Class Midterm today (~2.0 hours)
 
 #### Part 1 — Space Trusses
 
@@ -272,17 +272,72 @@ N/A
 
 Please use the following naming formats:
 
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
 
 #### Assignment Files
 
 - ✍️ **Written Component:** [A4_written.md](Assignments/A5_written.md)
 - 💻 **Coding Component:**
 
-  [A5_code_2D.ipynb](Assignments/A5_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_2D.ipynb)
+  [A5_code_2D.ipynb](Assignments/A5_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_2D.ipynb)
 
-  [A4_code_3D.ipynb](Assignments/A5_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_3D.ipynb)
+  [A5_code_3D.ipynb](Assignments/A5_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_3D.ipynb)
+
+---
+
+---
+
+## 📅 Week 6 — Direct Stiffness Method (Beams and Plane Frames)
+
+### 📖 Lectures
+
+Text...
+
+#### Part 1 — Beams
+
+Text...
+
+- 🌐 **Slides (HTML):** [L6_1_Beams.slides.html](Lectures/L6/L6_1_Beams.slides.html)
+- 📄 **Slides (PDF):** [L6_1_Beams.pdf](Lectures/L6/L6_1_Beams.pdf)
+- 📓 **Notebook:** [L6_1_Beams.ipynb](Lectures/L6/L6_1_Beams.ipynb)
+
+#### Part 2 — Fixed End Forces
+
+Text...
+
+- 🌐 **Slides (HTML):** [L6_2_FEFs.slides.html](Lectures/L6/L6_2_FEFs.slides.html)
+- 📄 **Slides (PDF):** [L6_2_FEFs.pdf](Lectures/L6/L6_2_FEFs.pdf)
+- 📓 **Notebook:** [L6_2_FEFs.ipynb](Lectures/L6/L6_2_FEFs.ipynb)
+
+#### Part 3 — Frames
+
+Text...
+
+- 🌐 **Slides (HTML):** [L6_3_Frames.slides.html](Lectures/L6/L6_3_Framess.slides.html)
+- 📄 **Slides (PDF):** [L6_3_Frames.pdf](Lectures/L6/L6_3_Framess.pdf)
+- 📓 **Notebook:** [L6_3_Frames.ipynb](Lectures/L6/L6_3_Frames.ipynb)
+
+### Extra In-Class Code
+
+N/A
+
+### 📝 Assignments
+
+#### Submission File Naming
+
+Please use the following naming formats:
+
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
+
+#### Assignment Files
+
+- ✍️ **Written Component:** [A6_written.md](Assignments/A6_written.md)
+- 💻 **Coding Component:** [A6_code.ipynb](Assignments/A6_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A6_code.ipynb)
 
 ---
 
