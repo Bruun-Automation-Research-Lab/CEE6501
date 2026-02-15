@@ -30,19 +30,22 @@ Setup of Python and Conda environments and introduction to the core computationa
 - 📄 **Slides (PDF):** [L1_software_python.pdf](Lectures/L1/L1_software_python.pdf)
 - 📓 **Notebook:** [L1_software_python.ipynb](Lectures/L1/L1_software_python.ipynb)
 
-#### VScode Setup
+#### VS Code Setup
 
 Configuration of VS Code for Python development, Jupyter notebooks, and course workflows.
 
 - 🌐 **Slides (HTML):** [L1_software_VScode.slides.html](Lectures/L1/L1_software_VScode.slides.html)
 - 📄 **Slides (PDF):** [L1_software_VScode.pdf](Lectures/L1/L1_software_VScode.pdf)
 - 📓 **Notebook:** [L1_software_VScode.ipynb](Lectures/L1/L1_software_VScode.ipynb)
-- **Extra Code:** [L1_JupyterTest.ipynb](Code/L1/L1_JupyterTest.ipynb)
+
+### Extra In-Class Code
+
+- [L1_JupyterTest.ipynb](Code/L1/L1_JupyterTest.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L1/L1_JupyterTest.ipynb)
 
 ### 📝 Assignments
 
-**How to Complete Assignements:** [L1_assignments.pdf](Lectures/L1/L1_assignments.pdf)
+**How to Complete Assignments:** [L1_assignments.pdf](Lectures/L1/L1_assignments.pdf)
 
 #### Submission File Naming
 
@@ -103,17 +106,12 @@ and solver efficiency for large-scale engineering problems.
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentName_A#_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A2_written.md](Assignments/A2_written.md)
-- 💻 **Coding Component:** [A2_code.ipynb](Assignments/A2_code.ipynb)
+- ✍️ **Written Assignment:** [A2_written.md](Assignments/A2_written.md)
+- 💻 **Coding Assignment:** [A2_code.ipynb](Assignments/A2_code.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A2_code.ipynb)
 
 ---
@@ -145,7 +143,7 @@ the local $4 \times 4$ element stiffness form (local-only; not yet transformed).
 #### Part 2 — The Direct Stiffness Method (DSM) for Trusses I
 
 This lecture begins to develop the full DSM workflow for trusses: local-to-global transformations using direction
-cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assemblying the global stiffness
+cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assembling the global stiffness
 matrix of the structure to solve the unknown joint displacements.
 
 - 🌐 **Slides (HTML):** [L3_2_Trusses.slides.html](Lectures/L3/L3_2_Trusses.slides.html)
@@ -161,17 +159,12 @@ matrix of the structure to solve the unknown joint displacements.
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentName_A#_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A3_written.md](Assignments/A3_written.md)
-- 💻 **Coding Component:** [A3_code.ipynb](Assignments/A3_code.ipynb)
+- ✍️ **Written Assignment:** [A3_written.md](Assignments/A3_written.md)
+- 💻 **Coding Assignment:** [A3_code.ipynb](Assignments/A3_code.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A3_code.ipynb)
 
 ---
@@ -199,7 +192,7 @@ displacements and support reactions, and recovery of member axial forces.
 
 - 🌐 **Slides (HTML):** [L4_1_Trusses.slides.html](Lectures/L4/L4_1_Trusses.slides.html)
 - 📄 **Slides (PDF):** [L4_1_Trusses.pdf](Lectures/L4/L4_1_Trusses.pdf)
-- 📓 **Notebook:** [L4_1-Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
+- 📓 **Notebook:** [L4_1_Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
 
 #### Part 2 — Implementing the DSM for Plane Trusses in Python
 
@@ -231,15 +224,12 @@ stiffness matrix**, the impact of DOF ordering on solver performance
 
 #### Submission File Naming
 
-Please use the following naming formats:
-
-- **Written:** `StudentName_A#_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A4_written.md](Assignments/A4_written.md)
-- 💻 **Coding Component:** [A4_code.ipynb](Assignments/A4_code.ipynb)
+- ✍️ **Written Assignment:** [A4_written.md](Assignments/A4_written.md)
+- 💻 **Coding Assignment:** [A4_code.ipynb](Assignments/A4_code.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
 
 ---
@@ -252,7 +242,7 @@ Chapter 5, §5.1 (3D coordinate transform)
 
 ### 📖 Lectures
 
-In Class Midterm today (~2.0 hours)
+This week includes an in-class midterm examination (~2.0 hours).
 
 #### Part 1 — The DSM for Space Trusses
 
@@ -269,22 +259,17 @@ N/A
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentName_A#_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A4_written.md](Assignments/A5_written.md)
-- 💻 **Coding Component:**
+- ✍️ **Written Assignment:** [A5_written.md](Assignments/A5_written.md)
+- 💻 **Coding Assignment:**
 
-  [A5_code_2D.ipynb](Assignments/A5_code.ipynb)
+  [A5_code_2D.ipynb](Assignments/A5_code_2D.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_2D.ipynb)
 
-  [A5_code_3D.ipynb](Assignments/A5_code.ipynb)
+  [A5_code_3D.ipynb](Assignments/A5_code_3D.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_3D.ipynb)
 
 ---
@@ -336,17 +321,12 @@ N/A
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentName_A#_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A6_written.md](Assignments/A6_written.md)
-- 💻 **Coding Component:** [A6_code.ipynb](Assignments/A6_code.ipynb)
+- ✍️ **Written Assignment:** [A6_written.md](Assignments/A6_written.md)
+- 💻 **Coding Assignment:** [A6_code.ipynb](Assignments/A6_code.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A6_code.ipynb)
 
 ---
