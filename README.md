@@ -122,7 +122,7 @@ Please use the following naming formats:
 
 ## 📅 Week 3 — Direct Stiffness Method (Trusses)
 
-This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by deriving the **local
+This week introduces the **Direct Stiffness Method (DSM)** for plane trusses. We begin by deriving the **local
 behavior** of an axial truss member from first principles and then extend these concepts to **global truss analysis**.
 Topics include coordinate transformations between local and global systems, manual assembly of the global stiffness
 matrix for the free nodes of the structure based on equilibrium and compatibility-based formulation.
@@ -180,7 +180,7 @@ Please use the following naming formats:
 
 ## 📅 Week 4 — Direct Stiffness Method (Trusses)
 
-This week continues the **Direct Stiffness Method (DSM)** for planar trusses, completing the full analysis workflow
+This week continues the **Direct Stiffness Method (DSM)** for plane trusses, completing the full analysis workflow
 introduced in Week 3. We move from element-level formulations to **system-level solution**, focusing on efficient
 assembly of the global stiffness matrix, the mathematical implications of supports and constraints, and the
 post-processing steps required to recover member forces and reactions.
@@ -201,7 +201,7 @@ displacements and support reactions, and recovery of member axial forces.
 - 📄 **Slides (PDF):** [L4_1_Trusses.pdf](Lectures/L4/L4_1_Trusses.pdf)
 - 📓 **Notebook:** [L4_1-Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
 
-#### Part 2 — Implementing the DSM for Planar Trusses in Python
+#### Part 2 — Implementing the DSM for Plane Trusses in Python
 
 This lecture implements the full DSM workflow in Python. We translate the manual procedure into a clear, reusable
 software structure: data definitions (nodes, elements, DOF maps), element stiffness computation, scatter–add assembly
@@ -213,15 +213,14 @@ implementing each DSM step explicitly and validating intermediate results along 
 - 📄 **Slides (PDF):** [L4_2_Implementation.pdf](Lectures/L4/L4_2_Implementation.pdf)
 - 📓 **Notebook:** [L4_2_Implementation.ipynb](Lectures/L4/L4_2_Implementation.ipynb)
 
-#### Part 3 — Extra Topics for the DSM for Planar Trusses
+#### Part 3 — Matrix Sparsity and Bandwidth (Extra Topic)
 
 This lecture explores computational and modeling extensions to the DSM, including **sparsity and bandwidth of the
-stiffness matrix**, the impact of DOF ordering on solver performance, and a brief outlook on extending the DSM framework
-to **3D truss systems**.
+stiffness matrix**, the impact of DOF ordering on solver performance
 
-- 🌐 **Slides (HTML):** [L4_3_ExtraTopics.slides.html](Lectures/L4/L4_3_ExtraTopics.slides.html)
-- 📄 **Slides (PDF):** [L4_3_ExtraTopics.pdf](Lectures/L4/L4_3_ExtraTopics.pdf)
-- 📓 **Notebook:** [L4_3_ExtraTopics.ipynb](Lectures/L4/L4_3_ExtraTopics.ipynb)
+- 🌐 **Slides (HTML):** [L4_3_SparsityBandwidth.slides.html](Lectures/L4/L4_3_SparsityBandwidth.slides.html)
+- 📄 **Slides (PDF):** [L4_3_SparsityBandwidth.pdf](Lectures/L4/L4_3_SparsityBandwidth.pdf)
+- 📓 **Notebook:** [L4_3_SparsityBandwidth.ipynb](Lectures/L4/L4_3_SparsityBandwidth.ipynb)
 
 ### Extra In-Class Code
 
@@ -249,18 +248,20 @@ Please use the following naming formats:
 
 ## 📅 Week 5 — Direct Stiffness Method (Space Trusses)
 
+Chapter 5, §5.1 (3D coordinate transform)
+
 ### 📖 Lectures
 
 In Class Midterm today (~2.0 hours)
 
-#### Part 1 — Space Trusses
+#### Part 1 — The DSM for Space Trusses
 
 A brief preview of extending the Direct Stiffness Method (DSM) framework to 3D truss systems, in preparation for the
 upcoming assignment where this extension will be implemented computationally.
 
-- 🌐 **Slides (HTML):** [L5_1_SpaceFrames.slides.html](Lectures/L5/L5_1_SpaceFrames.slides.html)
-- 📄 **Slides (PDF):** [L5_1_SpaceFrames.pdf](Lectures/L5/L5_1_SpaceFrames.pdf)
-- 📓 **Notebook:** [L5_1_SpaceFrames.ipynb](Lectures/L5/L5_1_SpaceFrames.ipynb)
+- 🌐 **Slides (HTML):** [L5_1_SpaceTrusses.slides.html](Lectures/L5/L5_1_SpaceTrusses.slides.html)
+- 📄 **Slides (PDF):** [L5_1_SpaceTrusses.pdf](Lectures/L5/L5_1_SpaceTrusses.pdf)
+- 📓 **Notebook:** [L5_1_SpaceTrusses.ipynb](Lectures/L5/L5_1_SpaceTrusses.ipynb)
 
 ### Extra In-Class Code
 
@@ -292,13 +293,20 @@ Please use the following naming formats:
 
 ## 📅 Week 6 — Direct Stiffness Method (Beams and Plane Frames)
 
+This week extends the **Direct Stiffness Method (DSM)** to **beam and frame elements**, introducing bending, rotational
+degrees of freedom, and distributed loading. We develop beam formulations, incorporate **fixed-end forces**, and
+assemble full **plane frame systems** within a unified DSM framework.
+
+Kassimali – Chapter 5, §5.1-5.2, 5.4-5.7 ; Chapter 6 (Plane Frames)
+
+McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs)
+
 ### 📖 Lectures
 
-Text...
+#### Part 1 — The DSM for Beams
 
-#### Part 1 — Beams
-
-Text...
+This lecture introduces the DSM formulation for **beam elements**, including stiffness matrices with rotational DOFs and
+interpretation of bending response.
 
 - 🌐 **Slides (HTML):** [L6_1_Beams.slides.html](Lectures/L6/L6_1_Beams.slides.html)
 - 📄 **Slides (PDF):** [L6_1_Beams.pdf](Lectures/L6/L6_1_Beams.pdf)
@@ -306,19 +314,21 @@ Text...
 
 #### Part 2 — Fixed End Forces
 
-Text...
+This lecture introduces **fixed-end forces (FEFs)** for member loading and shows how they are incorporated into the
+global DSM equations.
 
 - 🌐 **Slides (HTML):** [L6_2_FEFs.slides.html](Lectures/L6/L6_2_FEFs.slides.html)
 - 📄 **Slides (PDF):** [L6_2_FEFs.pdf](Lectures/L6/L6_2_FEFs.pdf)
 - 📓 **Notebook:** [L6_2_FEFs.ipynb](Lectures/L6/L6_2_FEFs.ipynb)
 
-#### Part 3 — Frames
+#### Part 3 — The DSM for Plane Frames
 
-Text...
+This lecture assembles **plane frame systems** by combining axial and bending behavior, completing the DSM workflow for
+plane frame analysis.
 
-- 🌐 **Slides (HTML):** [L6_3_Frames.slides.html](Lectures/L6/L6_3_Framess.slides.html)
-- 📄 **Slides (PDF):** [L6_3_Frames.pdf](Lectures/L6/L6_3_Framess.pdf)
-- 📓 **Notebook:** [L6_3_Frames.ipynb](Lectures/L6/L6_3_Frames.ipynb)
+- 🌐 **Slides (HTML):** [L6_3_PlaneFrames.slides.html](Lectures/L6/L6_3_PlaneFrames.slides.html)
+- 📄 **Slides (PDF):** [L6_3_PlaneFrames.pdf](Lectures/L6/L6_3_PlaneFrames.pdf)
+- 📓 **Notebook:** [L6_3_PlaneFrames.ipynb](Lectures/L6/L6_3_PlaneFrames.ipynb)
 
 ### Extra In-Class Code
 
