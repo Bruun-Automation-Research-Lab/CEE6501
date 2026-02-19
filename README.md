@@ -291,7 +291,7 @@ McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs)
 #### Part 1 — Introduction to 2D Beam Analysis
 
 Introduces the Euler–Bernoulli beam model within the DSM framework. We define beam DOFs, establish sign conventions,
-distinguish joint vs member loads, and set up the global system $\mathbf{K}\mathbf{u}=\mathbf{F}$.
+distinguish joint vs member loads, and set up the global system $\mathbf{K}\mathbf{u}=\mathbf{f}$.
 
 - 🌐 **Slides (HTML):** [L6_1_Beams.slides.html](Lectures/L6/L6_1_Beams.slides.html)
 - 📄 **Slides (PDF):** [L6_1_Beams.pdf](Lectures/L6/L6_1_Beams.pdf)
