@@ -7454,10 +7454,13 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>Distinguish between <strong>joint loads</strong> and <strong>member loads</strong></li>
-<li>Define and interpret <strong>fixed-end forces (FEFs)</strong></li>
-<li>Explain why $\boldsymbol{Q}=\boldsymbol{k}\boldsymbol{u}$ is insufficient for member loading</li>
-<li>Incorporate FEFs into the beam element formulation</li>
+<li>Distinguish between joint loads and member loads in beam systems</li>
+<li>Define fixed-end forces (FEFs) and interpret their physical meaning</li>
+<li>Explain why member loading requires modification of $\mathbf{Q} = \mathbf{k}\mathbf{u}$</li>
+<li>Conceptually decompose indeterminate beam problems using FEFs and superposition</li>
+<li>Convert member loads into equivalent nodal forces for DSM analysis</li>
+<li>Incorporate FEFs into the global system of equations and solve for displacements and reactions</li>
+<li>Apply the full DSM workflow including FEFs for beam analysis</li>
 </ul>
 </div>
 </div>
@@ -7469,11 +7472,11 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ol>
-<li>Part 1 — What are Fixed End Forces</li>
-<li>Part 2 — Why Do We Need FEFs</li>
-<li>Part 3 — Incorporating FEFs into DSM</li>
-</ol>
+<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><p>Part 1 - What are fixed-end forces (FEFs)<br/>
+Part 2 - Why member loading requires FEFs<br/>
+Part 3 - Indeterminate beam solution using FEFs and superposition<br/>
+Part 4 - Incorporating FEFs into the DSM formulation<br/>
+Part 5 - Full DSM workflow with FEFs</p>
 </div>
 </div>
 </div>
@@ -7484,7 +7487,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1-%E2%80%94-What-are-Fixed-End-Forces">Part 1 — What are Fixed End Forces<a class="anchor-link" href="#Part-1-%E2%80%94-What-are-Fixed-End-Forces">¶</a></h2>
+<h2 id="Part-1-%E2%80%94-What-are-Fixed-End-Forces?">Part 1 — What are Fixed End Forces?<a class="anchor-link" href="#Part-1-%E2%80%94-What-are-Fixed-End-Forces?">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7495,8 +7498,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Definition">Definition<a class="anchor-link" href="#Definition">¶</a></h3><p><strong>Fixed-end forces (FEFs)</strong> are:</p>
-<p>The forces and moments that develop at the ends of a member due to external loading, assuming both ends are <strong>fully fixed</strong> (no translation or rotation).</p>
+<p>Forces and moments that develop at the ends of a member due to external loading, assuming both ends are <strong>fully fixed</strong> (no translation or rotation).</p>
 </div>
 </div>
 </div>
@@ -7521,7 +7523,7 @@ main {
 <li>loads act only at nodes</li>
 <li>no loading within the element</li>
 </ul>
-<p>➡️ Now we relax this assumption.</p>
+<p>Now we relax this assumption.</p>
 </div>
 </div>
 </div>
@@ -8278,7 +8280,18 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><h3 id="Next-Lecture">Next Lecture<a class="anchor-link" href="#Next-Lecture">¶</a></h3>
+<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><ul>
+<li>Member loads cannot be handled using $\mathbf{Q} = \mathbf{k}\mathbf{u}$ alone</li>
+<li>Fixed-end forces capture the effect of loads within elements</li>
+<li>FEFs allow us to convert member loads into equivalent nodal forces</li>
+<li>The problem is solved by:<ul>
+<li>computing FEFs (fixed system)</li>
+<li>solving for deformations (DSM system)</li>
+<li>superimposing results</li>
+</ul>
+</li>
+<li>The standard DSM workflow extends naturally by including the FEF vector</li>
+</ul>
 </div>
 </div>
 </div>

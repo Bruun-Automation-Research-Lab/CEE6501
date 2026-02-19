@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-6.1">CEE6501 — Lecture 6.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-6.1">¶</a></h1><h2 id="Introduction-to-Beams-(2D-Bending)">Introduction to Beams (2D Bending)<a class="anchor-link" href="#Introduction-to-Beams-(2D-Bending)">¶</a></h2><p><strong>Goal:</strong> extend DSM thinking from trusses (axial) to beams (bending).</p>
+<h1 id="CEE6501-%E2%80%94-Lecture-6.1">CEE6501 — Lecture 6.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-6.1">¶</a></h1><h2 id="Introduction-to-2D-Beam-Analysis">Introduction to 2D Beam Analysis<a class="anchor-link" href="#Introduction-to-2D-Beam-Analysis">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7454,11 +7454,11 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>Define the <strong>beam idealization</strong> used in matrix structural analysis (2D bending)</li>
-<li>Identify beam <strong>DOFs</strong> (vertical displacement and rotation) and their sign convention</li>
-<li>Distinguish <strong>joint loads</strong> vs <strong>member loads</strong>, and how they enter the stiffness method</li>
-<li>Set up a beam <strong>line diagram</strong> with DOF numbering and restrained coordinates</li>
-<li>Write the <strong>global system</strong> in partitioned form: $\mathbf{F}=\mathbf{K}\mathbf{u}$</li>
+<li>Define the 2D Euler–Bernoulli beam idealization used in DSM</li>
+<li>Identify beam joint DOFs $(u,\theta)$ and apply the sign convention</li>
+<li>Distinguish joint loads vs member loads, and where each enters the stiffness method</li>
+<li>Create a beam line diagram with joint numbering, DOF numbering, and restrained coordinates</li>
+<li>Write and interpret the global system $\mathbf{K}\mathbf{u}=\mathbf{F}$</li>
 </ul>
 </div>
 </div>
@@ -7470,15 +7470,14 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ol>
-<li>Where beams fit in the 3D frame element roadmap</li>
-<li>Beam analytical model (members + joints)</li>
-<li>Global vs local coordinate systems (and why beams are simpler)</li>
-<li>Degrees of freedom (DOFs) and sign conventions</li>
-<li>DOF counting and DOF numbering on a line diagram</li>
-<li>Joint loads, member loads, and support reactions</li>
-<li>Putting it all together: $\mathbf{F}=\mathbf{K}\mathbf{u}$ (partitioning preview)</li>
-</ol>
+<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><p>Part 1 — Roadmap: truss → beam → 3D frame<br/>
+Part 2 — Beam analytical model (members + joints)<br/>
+Part 3 — Global vs local coordinate systems<br/>
+Part 4 — Degrees of freedom (DOFs) and sign conventions<br/>
+Part 5 — DOF counting and numbering<br/>
+Part 6 — Joint loads, member loads, and reactions<br/>
+Part 7 — Global system: $\mathbf{K}\mathbf{u} = \mathbf{F}$<br/>
+Part 8 — Relating moment to rotation (beam–truss analogy)</p>
 </div>
 </div>
 </div>
@@ -7490,7 +7489,7 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Part-1-%E2%80%94-Roadmap:-From-Trusses-to-Beams-to-3D-Frames">Part 1 — Roadmap: From Trusses to Beams to 3D Frames<a class="anchor-link" href="#Part-1-%E2%80%94-Roadmap:-From-Trusses-to-Beams-to-3D-Frames">¶</a></h2><blockquote>
-<p>We are expanding our element library: axial-only → bending → full 3D frame.</p>
+<p>Expanding our element library: axial-only → bending → full 3D frame.</p>
 </blockquote>
 </div>
 </div>
@@ -7657,9 +7656,10 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Analytical-Model:">Analytical Model:<a class="anchor-link" href="#Analytical-Model:">¶</a></h3><p>For the matrix stiffness method, a continuous beam is modeled as:</p>
 <ul>
-<li><strong>straight prismatic members</strong></li>
-<li>connected at <strong>joints</strong> (nodes)</li>
+<li>straight prismatic (constant cross-section) members</li>
+<li>connected at joints (nodes)</li>
 <li>with unknown reactions assumed to act <strong>only at joints</strong></li>
+<li>applied loads <strong>anywhere</strong> along beam</li>
 </ul>
 </div>
 </div>
@@ -7688,7 +7688,7 @@ main {
 <ul>
 <li><strong>support reactions</strong> occur at joints (not mid-member)</li>
 <li>each member has <strong>constant properties</strong> (e.g., constant $EI$)</li>
-<li>all <strong>member loads</strong> can be treated as known inputs for each member</li>
+<li><strong>member loads</strong> can be easily turned into Fixed-End Forces (more in Lecture 6.3)</li>
 </ul>
 </div>
 </div>
@@ -7758,7 +7758,7 @@ main {
 <p><strong>Practical note:</strong> It’s convenient to place the origin at the leftmost joint.</p>
 <p>Why this simplifies programming:</p>
 <ul>
-<li>In a straight beam model, all joints lie on the $X$ axis in the undeformed configuration</li>
+<li>all joints lie on the $X$ axis in the undeformed configuration</li>
 <li>So each joint location can be specified by <strong>one coordinate</strong>: $X_i$</li>
 <li>Geometry is essentially 1D (along the beam), even though bending is 2D</li>
 </ul>
@@ -7905,8 +7905,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5-%E2%80%94-DOF-Counting-and-DOF-Numbering">Part 5 — DOF Counting and DOF Numbering<a class="anchor-link" href="#Part-5-%E2%80%94-DOF-Counting-and-DOF-Numbering">¶</a></h2><blockquote>
-<p>Before you build $\mathbf{K}$, you must define the coordinate bookkeeping.</p>
+<h2 id="Part-5-%E2%80%94-DOF-Counting-and-Numbering">Part 5 — DOF Counting and Numbering<a class="anchor-link" href="#Part-5-%E2%80%94-DOF-Counting-and-Numbering">¶</a></h2><blockquote>
+<p>Before you build $\mathbf{K}$, DOF bookkeeping.</p>
 </blockquote>
 </div>
 </div>
@@ -7938,7 +7938,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>For a planar beam, each free joint has one trandlational and one rotational DOFs:</p>
+<p>For a planar beam, each free joint has one translational and one rotational DOFs:</p>
 <p>$$
 N_{\text{CJT}} = 2 \quad (u_y, \theta)
 $$</p>
@@ -7992,14 +7992,27 @@ $$</p>
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=70089339">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Textbook-Numbering">Textbook Numbering<a class="anchor-link" href="#Textbook-Numbering">¶</a></h3><div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_BeamModel5_original.png" style="width:90%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9a6da858">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel5.png" style="width:92%;"/>
+<h3 id="Our-Numbering">Our Numbering<a class="anchor-link" href="#Our-Numbering">¶</a></h3><div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_BeamModel5.png" style="width:90%;"/>
 </div>
 </div>
 </div>
@@ -8343,28 +8356,19 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>established the beam analytical framework:</p>
+<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
 <ul>
-<li>discretization into <strong>members + joints</strong></li>
-<li>coordinate systems (and why beams often avoid transformations)</li>
-<li>beam DOFs: <strong>$v$ and $\theta$</strong></li>
-<li>DOF counting, restrained coordinates, and DOF numbering on a line diagram</li>
-<li>loads/reactions and the global equation $\mathbf{F}=\mathbf{K}\mathbf{u}$</li>
+<li>discretized a beam into members + joints</li>
+<li>defined global/local coordinate systems (and when transformations are unnecessary)</li>
+<li>introduced beam DOFs $(u,\theta)$ and sign conventions</li>
+<li>counted and numbered DOFs, identifying restrained coordinates</li>
+<li>connected loads/reactions to DOFs and formed $\mathbf{K}\mathbf{u}=\mathbf{F}$</li>
+<li>related moment ↔ rotation using the truss–beam analogy</li>
 </ul>
 <p>Next lecture:</p>
 <ul>
-<li>derive the <strong>beam member stiffness relationship</strong> and start assembling beam systems.</li>
+<li>derive the beam element stiffness matrix and begin assembling beam systems</li>
 </ul>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=15747613">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 </div>
 </div>
 </div>

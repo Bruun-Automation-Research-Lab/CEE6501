@@ -276,44 +276,45 @@ Use standard submission naming from Week 1.
 
 ---
 
-## 📅 Week 6 — Direct Stiffness Method (Beams and Plane Frames)
+## 📅 Week 6 — Direct Stiffness Method (Beams)
 
-This week extends the **Direct Stiffness Method (DSM)** to **beam and frame elements**, introducing bending, rotational
-degrees of freedom, and distributed loading. We develop beam formulations, incorporate **fixed-end forces**, and
-assemble full **plane frame systems** within a unified DSM framework.
+This week extends the Direct Stiffness Method to beam elements, introducing bending behavior, rotational degrees of
+freedom, and member loading. We move from the beam idealization and DOF definitions, to deriving the element stiffness
+matrix, and finally to handling distributed loads using fixed-end forces within the global system.
 
-Kassimali – Chapter 5, §5.1-5.2, 5.4-5.7 ; Chapter 6 (Plane Frames)
+Kassimali – Chapter 5, §5.1-5.2, 5.4-5.7
 
 McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs)
 
 ### 📖 Lectures
 
-#### Part 1 — The DSM for Beams
+#### Part 1 — Introduction to 2D Beam Analysis
 
-This lecture introduces the DSM formulation for **beam elements**, including stiffness matrices with rotational DOFs and
-interpretation of bending response.
+Introduces the Euler–Bernoulli beam model within the DSM framework. We define beam DOFs, establish sign conventions,
+distinguish joint vs member loads, and set up the global system $\mathbf{K}\mathbf{u}=\mathbf{F}$.
 
 - 🌐 **Slides (HTML):** [L6_1_Beams.slides.html](Lectures/L6/L6_1_Beams.slides.html)
 - 📄 **Slides (PDF):** [L6_1_Beams.pdf](Lectures/L6/L6_1_Beams.pdf)
 - 📓 **Notebook:** [L6_1_Beams.ipynb](Lectures/L6/L6_1_Beams.ipynb)
 
-#### Part 2 — Fixed End Forces
+#### Part 2 — 2D Beam Element Stiffness Matrix
 
-This lecture introduces **fixed-end forces (FEFs)** for member loading and shows how they are incorporated into the
-global DSM equations.
+Develops the 4×4 beam element stiffness matrix using the unit displacement method. The lecture builds physical intuition
+for the stiffness coefficients and shows how beam elements are assembled into the global system.
 
-- 🌐 **Slides (HTML):** [L6_2_FEFs.slides.html](Lectures/L6/L6_2_FEFs.slides.html)
-- 📄 **Slides (PDF):** [L6_2_FEFs.pdf](Lectures/L6/L6_2_FEFs.pdf)
-- 📓 **Notebook:** [L6_2_FEFs.ipynb](Lectures/L6/L6_2_FEFs.ipynb)
+- 🌐 **Slides (HTML):** [L6_2_PlaneFrames.slides.html](Lectures/L6/L6_2_Beams_Stiffness.slides.html)
+- 📄 **Slides (PDF):** [L6_2_PlaneFrames.pdf](Lectures/L6/L6_2_Beams_Stiffness.pdf)
+- 📓 **Notebook:** [L6_2_PlaneFrames.ipynb](Lectures/L6/L6_2_Beams_Stiffness.ipynb)
 
-#### Part 3 — The DSM for Plane Frames
+#### Part 3 — Fixed End Forces (FEFs)
 
-This lecture assembles **plane frame systems** by combining axial and bending behavior, completing the DSM workflow for
-plane frame analysis.
+Introduces fixed-end forces for handling member loading. We show how beam problems can be decomposed using
+superposition, convert distributed loads into equivalent nodal forces, and incorporate FEFs into the global DSM
+equations.
 
-- 🌐 **Slides (HTML):** [L6_3_PlaneFrames.slides.html](Lectures/L6/L6_3_PlaneFrames.slides.html)
-- 📄 **Slides (PDF):** [L6_3_PlaneFrames.pdf](Lectures/L6/L6_3_PlaneFrames.pdf)
-- 📓 **Notebook:** [L6_3_PlaneFrames.ipynb](Lectures/L6/L6_3_PlaneFrames.ipynb)
+- 🌐 **Slides (HTML):** [L6_3_FEFs.slides.html](Lectures/L6/L6_3_FEFs.slides.html)
+- 📄 **Slides (PDF):** [L6_3_FEFs.pdf](Lectures/L6/L6_3_FEFs.pdf)
+- 📓 **Notebook:** [L6_3_FEFs.ipynb](Lectures/L6/L6_3_FEFs.ipynb)
 
 ### Extra In-Class Code
 
@@ -325,9 +326,7 @@ Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Assignment:** [A6_written.md](Assignments/A6_written.md)
-- 💻 **Coding Assignment:** [A6_code.ipynb](Assignments/A6_code.ipynb)
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A6_code.ipynb)
+N/A, 3D Truss Coding Assignment to be completed this week
 
 ---
 

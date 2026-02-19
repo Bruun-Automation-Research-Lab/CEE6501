@@ -7454,11 +7454,12 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>Define the <strong>local DOFs</strong>, ordering, and sign conventions for a 2D Euler–Bernoulli beam element</li>
-<li>Write the <strong>local displacement and force vectors</strong> and interpret the relation $\boldsymbol{Q}=\boldsymbol{k}\boldsymbol{u}$</li>
-<li>Use the <strong>unit displacement method</strong> to compute stiffness coefficients (and interpret each column physically)</li>
-<li>Assemble and recognize the <strong>standard closed-form 4×4 beam stiffness matrix</strong></li>
-<li>Use <strong>beam shape functions</strong> to evaluate and plot a <strong>continuous deformed shape</strong> from nodal DOFs</li>
+<li>Define the local DOFs and sign conventions for a 2D Euler–Bernoulli beam element</li>
+<li>Interpret the member stiffness relation $\mathbf{Q} = \mathbf{k}\mathbf{u}$ in a physical sense</li>
+<li>Compute stiffness coefficients using the unit displacement method and understand their meaning</li>
+<li>Recognize and use the standard 4×4 beam element stiffness matrix</li>
+<li>Evaluate and visualize beam deformation using shape functions and nodal DOFs</li>
+<li>Understand how beam elements are assembled into a global DSM system</li>
 </ul>
 </div>
 </div>
@@ -7470,12 +7471,11 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ol>
-<li><strong>Part 1</strong> — Beam Element Stiffness Relations</li>
-<li><strong>Part 2</strong> — Derive Column 1 of the Beam Element Stiffness Matrix</li>
-<li><strong>Part 3</strong> — Complete 4×4 Beam Stiffness Matrix</li>
-<li><strong>Part 4</strong> — Beam Deformation Patterns</li>
-</ol>
+<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><p>Part 1 — Beam element stiffness relations and local DOFs<br/>
+Part 2 — Derive Column 1 (unit displacement method)<br/>
+Part 3 — Complete the 4×4 beam stiffness matrix<br/>
+Part 4 — Beam deformation patterns and shape functions<br/>
+Part 5 — DSM setup and element-to-global mapping</p>
 </div>
 </div>
 </div>
@@ -7870,27 +7870,33 @@ M(x) = -k_{21} + k_{11} x
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Right-hand side (term-by-term):
+<p>Right-hand side (term-by-term):</p>
+<p>$$
 \begin{equation}
 \int \frac{1}{EI}\left(-k_{21} + k_{11}x\right)\,dx
 =
 \frac{1}{EI}\left(\int -k_{21}\,dx + \int k_{11}x\,dx\right)
 \tag{4c}
-\end{equation}</p>
-<p>Compute:
+\end{equation}
+$$</p>
+<p>Compute:</p>
+<p>$$
 \begin{equation}
 \int -k_{21}\,dx = -k_{21}x
 \qquad
 \int k_{11}x\,dx = \frac{k_{11}}{2}x^2
 \tag{4d}
-\end{equation}</p>
-<p>Include integration constant $C_1$:
+\end{equation}
+$$</p>
+<p>Include integration constant $C_1$:</p>
+<p>$$
 \begin{equation}
 \theta(x)=\frac{du}{dx}
 =
 \frac{1}{EI}\left(-k_{21}x+\frac{k_{11}}{2}x^2\right)+C_1
 \tag{4}
-\end{equation}</p>
+\end{equation}
+$$</p>
 </div>
 </div>
 </div>
@@ -7902,12 +7908,15 @@ M(x) = -k_{21} + k_{11} x
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Step-4-%E2%80%94-Integrate-to-Obtain-Displacement-$u(x)$">Step 4 — Integrate to Obtain Displacement $u(x)$<a class="anchor-link" href="#Step-4-%E2%80%94-Integrate-to-Obtain-Displacement-$u(x)$">¶</a></h3><p>Start from Eq. (4):
+$$
 \begin{equation}
 \frac{du}{dx} =
 \frac{1}{EI}\left(-k_{21}x+\frac{k_{11}}{2}x^2\right)+C_1
 \tag{4}
-\end{equation}</p>
+\end{equation}
+$$</p>
 <p>Integrate both sides with respect to $x$:
+$$
 \begin{equation}
 \int \frac{du}{dx}\,dx
 =
@@ -7915,12 +7924,15 @@ M(x) = -k_{21} + k_{11} x
 \frac{1}{EI}\left(-k_{21}x+\frac{k_{11}}{2}x^2\right)+C_1
 \right] dx
 \tag{5a}
-\end{equation}</p>
+\end{equation}
+$$</p>
 <p>Left-hand side:
+$$
 \begin{equation}
 \int \frac{du}{dx}\,dx = u(x)
 \tag{5b}
-\end{equation}</p>
+\end{equation}
+$$</p>
 </div>
 </div>
 </div>
@@ -7931,14 +7943,17 @@ M(x) = -k_{21} + k_{11} x
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Right-hand side (compact form):
+<p>Right-hand side (compact form):</p>
+<p>$$
 \begin{equation}
 u(x)=
 \frac{1}{EI}\left(\int -k_{21}x\,dx + \int \frac{k_{11}}{2}x^2\,dx\right)
 + \int C_1\,dx
 \tag{5c}
-\end{equation}</p>
+\end{equation}
+$$</p>
 <p>Compute:
+$$
 \begin{equation}
 \int -k_{21}x\,dx = -\frac{k_{21}}{2}x^2
 \qquad
@@ -7946,14 +7961,17 @@ u(x)=
 \qquad
 \int C_1\,dx = C_1 x
 \tag{5d}
-\end{equation}</p>
+\end{equation}
+$$</p>
 <p>Include integration constant $C_2$:
+$$
 \begin{equation}
 u(x)=
 \frac{1}{EI}\left(-\frac{k_{21}}{2}x^2+\frac{k_{11}}{6}x^3\right)
 + C_1 x + C_2
 \tag{5}
-\end{equation}</p>
+\end{equation}
+$$</p>
 </div>
 </div>
 </div>
@@ -8017,7 +8035,7 @@ u(x) =
 <p>Cancel $EI$ and solve:
 \begin{equation*}
 k_{21} = \frac{k_{11}L}{2}
-\tag{9}
+\tag{8}
 \end{equation*}</p>
 </div>
 </div>
@@ -8179,10 +8197,10 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-3:-impose-$u_3-=-1$-($u_1-=-u_2-=-u_4-=-0$)">Column 3: impose $u_3 = 1$ ($u_1 = u_2 = u_4 = 0$)<a class="anchor-link" href="#Column-3:-impose-$u_3-=-1$-($u_1-=-u_2-=-u_4-=-0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
+<h3 id="Column-4:-impose-$u_4-=-1$-($u_1-=-u_2-=-u_3-=-0$)">Column 4: impose $u_4 = 1$ ($u_1 = u_2 = u_3 = 0$)<a class="anchor-link" href="#Column-4:-impose-$u_4-=-1$-($u_1-=-u_2-=-u_3-=-0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.75;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L2_DOFs_3.png" style="width:100%; height:auto;"/>
+<img alt="No description has been provided for this image" src="assets/L2_DOFs_4.png" style="width:100%; height:auto;"/>
 <figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
 </figure>
 </div>
@@ -8342,7 +8360,7 @@ at many points along $x \in [0, L]$ to obtain a smooth deformation curve.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8377,7 +8395,7 @@ at many points along $x \in [0, L]$ to obtain a smooth deformation curve.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_beam</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">,</span> <span class="n">u4</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
@@ -8412,7 +8430,7 @@ at many points along $x \in [0, L]$ to obtain a smooth deformation curve.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="mf">4.0</span>  <span class="c1"># element length</span>
@@ -8556,7 +8574,7 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Example-Structure-2">Example Structure 2<a class="anchor-link" href="#Example-Structure-2">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L2_Example2.png" style="width:80%;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Example2.png" style="width:70%;"/>
 </div>
 </div>
 </div>
@@ -8703,13 +8721,20 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>Today you:</p>
+<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
 <ul>
-<li>Defined local DOFs and the member stiffness relation for a 2D beam element</li>
-<li>Derived <strong>Column 1</strong> of the 4×4 beam stiffness matrix using the unit displacement method</li>
-<li>Stated the final closed-form 4×4 beam element stiffness matrix</li>
+<li>Defined the local beam DOFs and the local displacement and force vectors</li>
+<li>Built stiffness coefficients using the unit displacement method (column-by-column)</li>
+<li>Arrived at the standard 4×4 Euler–Bernoulli beam element stiffness matrix</li>
+<li>Introduced shape functions to reconstruct a smooth deflected shape u(x) from nodal DOFs</li>
+<li>Reviewed DSM system setup and partitioning into free and restrained DOFs</li>
 </ul>
-<p><strong>Next:</strong> use this beam element inside <strong>plane frames</strong>, and introduce fixed-end forces for member loading.</p>
+<p>Next lecture:</p>
+<ul>
+<li>Assemble multi-element beam systems into the global stiffness matrix</li>
+<li>Introduce member loads and convert them to equivalent nodal loads</li>
+<li>Solve for nodal displacements, then compute reactions and internal member forces</li>
+</ul>
 </div>
 </div>
 </div>
