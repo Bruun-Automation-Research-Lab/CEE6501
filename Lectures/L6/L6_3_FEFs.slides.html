@@ -7670,13 +7670,243 @@ $$</p>
 </div>
 </div>
 </div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7ece02e4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-3---Indeterminate-Beam-Structural-Analysis">Part 3 - Indeterminate Beam Structural Analysis<a class="anchor-link" href="#Part-3---Indeterminate-Beam-Structural-Analysis">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=16bcb63e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Solving-Indeterminate-Beams-(Role-of-FEFs)">Solving Indeterminate Beams (Role of FEFs)<a class="anchor-link" href="#Solving-Indeterminate-Beams-(Role-of-FEFs)">¶</a></h3><p>Recall from structural analysis:</p>
+<ul>
+<li><p>Indeterminate structures are solved by enforcing:</p>
+<ul>
+<li><strong>equilibrium</strong></li>
+<li><strong>compatibility</strong></li>
+</ul>
+</li>
+<li><p>For beams with <strong>member loads</strong>, we conceptually:</p>
+<ul>
+<li>split the problem into <strong>simpler systems</strong><ul>
+<li>one with <strong>fixed-end forces (FEFs)</strong> (all DOFs restrained)</li>
+<li>one with <strong>equivalent nodal loads</strong> (to restore deformation)</li>
+</ul>
+</li>
+<li>solve each system separately</li>
+<li><strong>superimpose the results</strong> to obtain the final response</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=072481a1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Indeterminate-Beam">Indeterminate Beam<a class="anchor-link" href="#Indeterminate-Beam">¶</a></h3><p>Same beam as in Lecture 6.2, only loaded with distributed load</p>
+<div style="display:flex; gap:1rem; align-items:flex-end;">
+<div style="flex:0.85;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage0.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+<p>We analyze the beam by splitting it into <strong>two systems</strong>, then summing the results.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d0f4f287">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stage-1-%E2%80%94-Clamp-the-Beam-(Zero-DOFs)">Stage 1 — Clamp the Beam (Zero DOFs)<a class="anchor-link" href="#Stage-1-%E2%80%94-Clamp-the-Beam-(Zero-DOFs)">¶</a></h3><p>isolate effect of <strong>member loading only</strong></p>
+<ul>
+<li>Add <strong>fictitious constraints</strong> at element ends</li>
+<li>Beam becomes <strong>fully fixed</strong></li>
+</ul>
+<div style="display:flex; gap:1rem; align-items:flex-end;">
+<div style="flex:0.85;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage1.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b5820fb6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stage-2-%E2%80%94-Compute-Fixed-End-Forces">Stage 2 — Compute Fixed-End Forces<a class="anchor-link" href="#Stage-2-%E2%80%94-Compute-Fixed-End-Forces">¶</a></h3><ul>
+<li>Solve the <strong>fully fixed beam</strong> under loading</li>
+<li>Use known closed-form solutions</li>
+</ul>
+<div style="display:flex; gap:1.5rem; align-items:center;">
+<!-- Right: figure -->
+<div style="flex:0.50;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage2.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+<!-- Left: equations -->
+<div style="flex:0.50; font-size:0.95em;">
+<p>Example (uniform load):</p>
+<p>$$
+F^F_{yb} = \frac{qL}{2}, \quad
+F^F_{mb} = \frac{qL^2}{12}
+$$</p>
+<p>$$
+F^F_{yc} = \frac{qL}{2}, \quad
+F^F_{mc} = -\frac{qL^2}{12}
+$$</p>
+<p>These are the <strong>fixed-end forces</strong>, $\boldsymbol{F}^F$.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7affcc5c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stage-3-%E2%80%94-Remove-Constraints-(Equivalent-Loads)">Stage 3 — Remove Constraints (Equivalent Loads)<a class="anchor-link" href="#Stage-3-%E2%80%94-Remove-Constraints-(Equivalent-Loads)">¶</a></h3><ul>
+<li>Remove fictitious constraints</li>
+<li>Apply <strong>equal and opposite forces</strong> at nodes:</li>
+</ul>
+<p>$$
+\boldsymbol{F}^E = -\boldsymbol{F}^F
+$$</p>
+<ul>
+<li>These are called <strong>equivalent nodal loads</strong></li>
+<li>converts member loading → nodal loading</li>
+</ul>
+<div style="display:flex; gap:1rem; align-items:flex-end;">
+<div style="flex:0.85;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage3.png" style="width:80%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a5b9659f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stage-4-%E2%80%94-Solve-for-Deformations-Under-Equivalent-Nodal-Loads">Stage 4 — Solve for Deformations Under Equivalent Nodal Loads<a class="anchor-link" href="#Stage-4-%E2%80%94-Solve-for-Deformations-Under-Equivalent-Nodal-Loads">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
+<!-- Left: equation -->
+<div style="flex:0.45; font-size:1.05em; text-align:center;">
+<p>Now solve:
+$$
+\boldsymbol{K}\boldsymbol{u} = \boldsymbol{F}^E
+$$</p>
+<p>Standard DSM solution</p>
+</div>
+<!-- Right: figure -->
+<div style="flex:0.55;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage4.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=731240b1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stage-5-%E2%80%94-Superimpose-and-Recover-the-Real-System">Stage 5 — Superimpose and Recover the Real System<a class="anchor-link" href="#Stage-5-%E2%80%94-Superimpose-and-Recover-the-Real-System">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
+<!-- Left: bullets -->
+<div style="flex:0.30; font-size:0.95em;">
+<p>Superimpose:</p>
+<ul>
+<li><strong>Stage 1:</strong> fixed-end solution</li>
+<li><strong>Stage 4:</strong> deformation solution</li>
+</ul>
+<p>The <strong>fictitious forces cancel</strong> in the sum</p>
+<p>Final system satisfies:</p>
+<ul>
+<li><strong>equilibrium</strong></li>
+<li><strong>compatibility</strong></li>
+</ul>
+</div>
+<!-- Right: figure -->
+<div style="flex:0.70;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage5.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ac70dd97">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="List-of-Typical-FEFs">List of Typical FEFs<a class="anchor-link" href="#List-of-Typical-FEFs">¶</a></h3><p>the internal forces and displacements of the fixed-end part of the problem must be obtained by some means</p>
+<p>You don't need to calculate each time. There are typical cases</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aa6a25ae">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="flex:0.70;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_list.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=part3-title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3-%E2%80%94-Incorporating-FEFs-into-DSM">Part 3 — Incorporating FEFs into DSM<a class="anchor-link" href="#Part-3-%E2%80%94-Incorporating-FEFs-into-DSM">¶</a></h2>
+<h2 id="Part-4-%E2%80%94-DSM-Setup-Incorporating-FEFs">Part 4 — DSM Setup Incorporating FEFs<a class="anchor-link" href="#Part-4-%E2%80%94-DSM-Setup-Incorporating-FEFs">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7687,12 +7917,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Interpretation">Interpretation<a class="anchor-link" href="#Interpretation">¶</a></h3><p>$$
+<h3 id="Local-Element-System">Local Element System<a class="anchor-link" href="#Local-Element-System">¶</a></h3><p>As we already mentioned:</p>
+<p>$$
 \boldsymbol{Q} = \boldsymbol{k}\boldsymbol{u} + \boldsymbol{Q}_f
 $$</p>
 <ul>
-<li>$\boldsymbol{k}\boldsymbol{u}$ → response due to deformation</li>
-<li>$\boldsymbol{Q}_f$ → response due to member loading</li>
+<li>$\boldsymbol{k}\boldsymbol{u}$ → local response due to deformation</li>
+<li>$\boldsymbol{Q}_f$ → local fixed end forces due to member loading</li>
 </ul>
 <p>Total response = deformation + load effects</p>
 </div>
@@ -7705,32 +7936,338 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Role-in-Global-System">Role in Global System<a class="anchor-link" href="#Role-in-Global-System">¶</a></h3><ul>
+<h3 id="Global-Structure">Global Structure<a class="anchor-link" href="#Global-Structure">¶</a></h3><p>The FEFs formulation allows standard DSM procedure, but with an additional FEF vector</p>
+<ul>
 <li>FEFs act as <strong>equivalent nodal forces</strong></li>
 <li>Added to global force vector during assembly</li>
 </ul>
-<p>This formulation allows standard DSM procedure, but with an additional FEF vector</p>
+<p>switching to this notation in Global analysis (consistent with Truss Notation from Lecture 4), to not confuse with partitioned notation</p>
+<p>$$
+\boldsymbol{F} = \boldsymbol{K}\boldsymbol{u} + \boldsymbol{F}^F
+$$</p>
+<ul>
+<li>$\boldsymbol{K}\boldsymbol{u}$ → global response due to deformation, assembled stiffness matrix</li>
+<li>$\boldsymbol{F}^F$ → global fixed end forces due to member loading</li>
+</ul>
 </div>
 </div>
 </div>
-</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=54bd138d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Partitioned-Matrix-Form">Partitioned Matrix Form<a class="anchor-link" href="#Partitioned-Matrix-Form">¶</a></h3><p>Bring $F^F$ to the other side of the equation</p>
+<p>$$
+
+\left[
+\begin{array}{c:c}
+\boldsymbol{K}_{ff} &amp; \boldsymbol{K}_{fr}\\ \hdashline
+\boldsymbol{K}_{rf} &amp; \boldsymbol{K}_{rr}
+\end{array}
+\right]
+\left\{
+\begin{array}{c}
+\boldsymbol{u}_f\\ \hdashline
+\boldsymbol{u}_r
+\end{array}
+\right\}
+=
+\left\{
+\begin{array}{c}
+\boldsymbol{F}_f\\ \hdashline
+\boldsymbol{F}_r
+\end{array}
+\right\}
+-
+\left\{
+\begin{array}{c}
+\boldsymbol{F}^F_f\\ \hdashline
+\boldsymbol{F}^F_r
+\end{array}
+\right\}
+$$</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=96e75e3c">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9a7a1436">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="List-of-Typical-FEFs">List of Typical FEFs<a class="anchor-link" href="#List-of-Typical-FEFs">¶</a></h3>
+<h3 id="Solving-for-$u_f$-with-FEFs">Solving for $u_f$ with FEFs<a class="anchor-link" href="#Solving-for-$u_f$-with-FEFs">¶</a></h3><p>We are interested in solving for the <strong>unknown displacements</strong> at the free DOFs, $\boldsymbol{u}_f$.</p>
+<p>Starting from:</p>
+<p>$$
+\boldsymbol{K}_{ff}\boldsymbol{u}_f+\boldsymbol{K}_{fr}\boldsymbol{u}_r=\boldsymbol{F}_f - \boldsymbol{F}^F_f 
+$$</p>
+<p>Rearrange to isolate the unknowns:
+$$
+\boldsymbol{K}_{ff}\boldsymbol{u}_f
+=
+\boldsymbol{F}_f
+-
+\boldsymbol{F}^F_f 
+-
+\boldsymbol{K}_{fr}\boldsymbol{u}_r
+$$</p>
+<p>Provided that $\boldsymbol{K}_{ff}$ is invertible, the solution is:
+$$
+\boxed{
+\boldsymbol{u}_f
+=
+\boldsymbol{K}_{ff}^{-1}
+\Bigl(
+\boldsymbol{F}_f
+-
+\boldsymbol{F}^F_f 
+-
+\boldsymbol{K}_{fr}\boldsymbol{u}_r
+\Bigr)
+}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=afa68f8d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Solving-for-$F_r$-with-FEFs">Solving for $F_r$ with FEFs<a class="anchor-link" href="#Solving-for-$F_r$-with-FEFs">¶</a></h3><p>Once the free displacements $\boldsymbol{u}_f$ have been computed, we can determine the
+<strong>forces at the restrained DOFs</strong> (support reactions).</p>
+<p>Starting from:</p>
+<p>$\boldsymbol{K}_{rf}\boldsymbol{u}_f + \boldsymbol{K}_{rr}\boldsymbol{u}_r = \boldsymbol{F}_r - \boldsymbol{F}^F_r $</p>
+<p>At the restrained DOFs, the displacements $\boldsymbol{u}_r$ are <strong>known</strong> from the boundary
+conditions (often $\boldsymbol{u}_r=\boldsymbol{0}$). Substituting these known values gives
+a direct expression for the reaction forces:
+$$
+\boxed{
+\boldsymbol{F}_r
+=
+\boldsymbol{K}_{rf}\boldsymbol{u}_f
++
+\boldsymbol{K}_{rr}\boldsymbol{u}_r
++
+\boldsymbol{F}^F_r
+}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a4cdcdd1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Example-Structure">Example Structure<a class="anchor-link" href="#Example-Structure">¶</a></h3><p>Same beam as in Lecture 6.2, only loaded with distributed load</p>
+<div style="display:flex; gap:1rem; align-items:flex-end;">
+<div style="flex:0.85;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage0.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ebc1f206">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="FEFs-for-Middle-Span">FEFs for Middle Span<a class="anchor-link" href="#FEFs-for-Middle-Span">¶</a></h3><p>$$
+F^F_{yb} = \frac{qL}{2}, \quad
+F^F_{mb} = \frac{qL^2}{12}
+$$</p>
+<p>$$
+F^F_{yc} = \frac{qL}{2}, \quad
+F^F_{mc} = -\frac{qL^2}{12}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4e0c224d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="DSM-Setup-for-Example-Structure">DSM Setup for Example Structure<a class="anchor-link" href="#DSM-Setup-for-Example-Structure">¶</a></h3><br/>
+<p>$$
+\small{
+\left[
+\begin{array}{c:c}
+\boldsymbol{K}_{ff} &amp; \boldsymbol{K}_{fr}\\ \hdashline
+\boldsymbol{K}_{rf} &amp; \boldsymbol{K}_{rr}
+\end{array}
+\right]
+\left\{
+\begin{array}{c}
+u_a\\
+\theta_a\\
+\theta_b\\
+\theta_c\\ \hdashline
+0\\
+0\\
+0\\
+0
+\end{array}
+\right\}
+=
+\left\{
+\begin{array}{c}
+0\\
+0\\
+0\\
+0\\ \hdashline
+R_{yb}\\
+R_{yc}\\
+R_{yd}\\
+R_{md}
+\end{array}
+\right\}
+-
+\left\{
+\begin{array}{c}
+0\\
+0\\
+\frac{qL^2}{12}\\
+-\frac{qL^2}{12}\\ \hdashline
+\frac{qL}{2}\\
+\frac{qL}{2}\\
+0\\
+0
+\end{array}
+\right\}
+}
+$$</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bd5edbbc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-5-%E2%80%94-DSM-Full-Procedure">Part 5 — DSM Full Procedure<a class="anchor-link" href="#Part-5-%E2%80%94-DSM-Full-Procedure">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0ffd8553">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Forward-Pass-%E2%80%94-Structural-Analysis">Forward Pass — Structural Analysis<a class="anchor-link" href="#Forward-Pass-%E2%80%94-Structural-Analysis">¶</a></h3><ol>
+<li><p><strong>Defining Structure</strong></p>
+<ul>
+<li>Node numbering and coordinates</li>
+<li>Global DOF numbering</li>
+<li>Element connectivity</li>
+<li>Restraints and Applied Forces</li>
+</ul>
+</li>
+<li><p><strong>Assemble global stiffness matrix and force vector</strong></p>
+<ul>
+<li>Scatter-add element contributions into $\boldsymbol{K}$</li>
+<li>This assumes beam element is aligned with global axis (no transformation)</li>
+</ul>
+</li>
+<li><p><strong>Generate applied force and FEF vectors</strong></p>
+<ul>
+<li>Scatter-add force and moment contributions into $\boldsymbol{F}$</li>
+<li>Fix all beam segments</li>
+<li>identify what case, calculate closed form FEFs</li>
+<li>Scatter-add FEFs into $\boldsymbol{F^F}$</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6144a54c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Forward-Pass-%E2%80%94-Structural-Analysis,-cont...">Forward Pass — Structural Analysis, cont...<a class="anchor-link" href="#Forward-Pass-%E2%80%94-Structural-Analysis,-cont...">¶</a></h3><ol start="5">
+<li><p><strong>Apply boundary conditions</strong></p>
+<ul>
+<li>Partition DOFs into free $(f)$ and restrained $(r)$</li>
+</ul>
+</li>
+<li><p><strong>Solve for unknown displacements</strong>
+$$
+\boldsymbol{u}_f = \boldsymbol{K}_{ff}^{-1}
+\bigl(\boldsymbol{F}_f - \boldsymbol{F}^F_f - \boldsymbol{K}_{fr}\boldsymbol{u}_r\bigr)
+$$</p>
+</li>
+<li><p><strong>Recover support reactions</strong>
+$$
+\boldsymbol{F}_r = \boldsymbol{K}_{rf}\boldsymbol{u}_f + \boldsymbol{K}_{rr}\boldsymbol{u}_r + \boldsymbol{F}^F_r 
+$$</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=705abd5d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Backward-Pass-%E2%80%94-Element-Recovery-and-Design">Backward Pass — Element Recovery and Design<a class="anchor-link" href="#Backward-Pass-%E2%80%94-Element-Recovery-and-Design">¶</a></h3><ol start="7">
+<li><p><strong>Extract element global displacement vectors</strong></p>
+<ul>
+<li>For each member, collect the relevant entries from $\boldsymbol{u}$ to form $\boldsymbol{u}'$</li>
+<li>This assumes beam element is aligned with global axis (no transformation)</li>
+</ul>
+</li>
+<li><p><strong>Extract element FEF vectors</strong></p>
+<ul>
+<li>For each member, collect the relevant entries from $\boldsymbol{F^F}$ to form $\boldsymbol{Q}_f$</li>
+<li>This assumes beam element is aligned with global axis (no transformation)</li>
+</ul>
+</li>
+</ol>
+<!-- 8. **Transform displacements to local coordinates**
+   $$
+   \boldsymbol{u}' = \boldsymbol{T}\,\boldsymbol{u}_e
+   $$ -->
+<ol start="9">
+<li><p><strong>Compute local element end forces and moments</strong>
+$$
+\boldsymbol{f}' = \boldsymbol{k}'\,\boldsymbol{u}' + \boldsymbol{Q}_f
+$$</p>
+</li>
+<li><p><strong>Compute axial stress and bending stress (design quantities)</strong>
+$$
+\begin{aligned}
+\sigma_{\text{axial}}   &amp;= \frac{N}{A} \\
+\sigma_{\text{bending}} &amp;= \pm \frac{M y}{I}
+\end{aligned}
+$$</p>
+</li>
+</ol>
 </div>
 </div>
 </div>

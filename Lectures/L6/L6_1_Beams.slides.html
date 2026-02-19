@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-6.1">CEE6501 — Lecture 6.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-6.1">¶</a></h1><h2 id="Beams-(2D-Bending)">Beams (2D Bending)<a class="anchor-link" href="#Beams-(2D-Bending)">¶</a></h2><p><strong>Goal:</strong> extend DSM thinking from trusses (axial) to beams (bending).</p>
+<h1 id="CEE6501-%E2%80%94-Lecture-6.1">CEE6501 — Lecture 6.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-6.1">¶</a></h1><h2 id="Introduction-to-Beams-(2D-Bending)">Introduction to Beams (2D Bending)<a class="anchor-link" href="#Introduction-to-Beams-(2D-Bending)">¶</a></h2><p><strong>Goal:</strong> extend DSM thinking from trusses (axial) to beams (bending).</p>
 </div>
 </div>
 </div>
@@ -7614,8 +7614,17 @@ main {
 <h3 id="Beam-Definition-(2D-Bending-Idealization)">Beam Definition (2D Bending Idealization)<a class="anchor-link" href="#Beam-Definition-(2D-Bending-Idealization)">¶</a></h3><p>A <strong>beam</strong> is modeled as:</p>
 <ul>
 <li>a long, straight member</li>
-<li>loaded so that actions lie in a single plane of symmetry (e.g., $XY$-plane)</li>
-<li><strong>axial deformation is neglected</strong> (so $u_x \approx 0$ at joints)</li>
+<li>loaded in a single plane (e.g., $XY$-plane)</li>
+<li>deformation dominated by <strong>bending</strong></li>
+</ul>
+<p>We adopt the <strong>Euler–Bernoulli beam assumption</strong>:</p>
+<ul>
+<li>cross-sections remain <strong>plane and perpendicular</strong> to the centerline</li>
+<li><strong>shear deformation is neglected</strong></li>
+</ul>
+<p>Additionally (for this formulation):</p>
+<ul>
+<li><strong>axial deformation is neglected</strong> ($u_x \approx 0$)</li>
 </ul>
 </div>
 </div>
@@ -7792,11 +7801,23 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Special-convenience-for-beams">Special convenience for beams<a class="anchor-link" href="#Special-convenience-for-beams">¶</a></h3><p>Makes things easier if local axes are chosen to match global directions.</p>
-<p>If each member’s local axes are aligned with global axes, then:</p>
+<h3 id="Bending-Only-Beam-Elements-(This-Week)">Bending-Only Beam Elements (This Week)<a class="anchor-link" href="#Bending-Only-Beam-Elements-(This-Week)">¶</a></h3><ul>
+<li>We use a <strong>4-DOF beam formulation</strong>: $\{u_y,\ \theta\}$ at each node</li>
+<li>Assumes <strong>pure bending</strong> (no axial deformation)</li>
+</ul>
+<p><strong>Key requirement:</strong></p>
 <ul>
-<li>no rotation matrix is needed for forces/displacements</li>
-<li>member stiffness can be assembled directly into global $\mathbf{K}$</li>
+<li>Each element must be <strong>aligned with the global axis</strong></li>
+<li>⇒ local and global coordinate systems <strong>coincide</strong></li>
+</ul>
+<p><strong>Implication for DSM:</strong></p>
+<ul>
+<li>No coordinate transformation is required<br/>
+$$
+\mathbf{k} = \mathbf{k}^{'}
+$$</li>
+<li>Forces and displacements are already expressed in the global system</li>
+<li>Element stiffness matrices can be <strong>assembled directly into the global system</strong></li>
 </ul>
 </div>
 </div>
@@ -7891,21 +7912,41 @@ $$</p>
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3524e441">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Counting-Degrees-of-Freedom">Counting Degrees of Freedom<a class="anchor-link" href="#Counting-Degrees-of-Freedom">¶</a></h3><p>Let:</p>
+<ul>
+<li>$j$ = number of joints</li>
+<li>$r$ = number of restrained joint displacement components</li>
+<li>$N_{\text{CJT}}$ = DOFs per free joint</li>
+</ul>
+<p>Then the number of structural degrees of freedom is:</p>
+<p>$$
+N_{\text{DOF}} = N_{\text{CJT}}\,j - r
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_dof_counting_formula">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Counting-DOFs">Counting DOFs<a class="anchor-link" href="#Counting-DOFs">¶</a></h3><p>For a beam model with $N_{\mathrm{CJT}} = 2$ DOFs per joint:
-$$
-\boxed{\;N_{\text{DOF}} = 2N_J - N_R\;}
-$$
-where:</p>
-<ul>
-<li>$N_J$ = number of joints</li>
-<li>$N_R$ = number of <strong>restrained coordinates</strong> (prescribed joint displacements)</li>
-</ul>
+<p>For a planar beam, each free joint has one trandlational and one rotational DOFs:</p>
+<p>$$
+N_{\text{CJT}} = 2 \quad (u_y, \theta)
+$$</p>
+<p>So:</p>
+<p>$$
+\boxed{\;N_{\text{DOF}} = 2j - r\;}
+$$</p>
+<p>This is the number of <strong>independent joint displacements</strong> that must be solved for.</p>
 </div>
 </div>
 </div>
