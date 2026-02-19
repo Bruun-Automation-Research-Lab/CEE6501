@@ -30,32 +30,35 @@ Setup of Python and Conda environments and introduction to the core computationa
 - 📄 **Slides (PDF):** [L1_software_python.pdf](Lectures/L1/L1_software_python.pdf)
 - 📓 **Notebook:** [L1_software_python.ipynb](Lectures/L1/L1_software_python.ipynb)
 
-#### VScode Setup
+#### VS Code Setup
 
 Configuration of VS Code for Python development, Jupyter notebooks, and course workflows.
 
 - 🌐 **Slides (HTML):** [L1_software_VScode.slides.html](Lectures/L1/L1_software_VScode.slides.html)
 - 📄 **Slides (PDF):** [L1_software_VScode.pdf](Lectures/L1/L1_software_VScode.pdf)
 - 📓 **Notebook:** [L1_software_VScode.ipynb](Lectures/L1/L1_software_VScode.ipynb)
-- **Extra Code:** [L1_JupyterTest.ipynb](Code/L1/L1_JupyterTest.ipynb)
+
+### Extra In-Class Code
+
+- [L1_JupyterTest.ipynb](Code/L1/L1_JupyterTest.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L1/L1_JupyterTest.ipynb)
 
 ### 📝 Assignments
 
-**How to Complete Assignements:** [L1_assignments.pdf](Lectures/L1/L1_assignments.pdf)
+**How to Complete Assignments:** [L1_assignments.pdf](Lectures/L1/L1_assignments.pdf)
 
 #### Submission File Naming
 
 Please use the following naming formats:
 
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+- **Written:** `StudentName_A#_written.pdf`
+- **Coding (Colab / Jupyter):** `StudentName_A#_code.ipynb`
 
 #### Assignment Files
 
 - ✍️ **Written Assignment:** [A1_written.md](Assignments/A1_written.md)
-- 💻 **Coding Assignment:**
-  [A1_code.ipynb](Assignments/A1_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
+- 💻 **Coding Assignment:** [A1_code.ipynb](Assignments/A1_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A1_code.ipynb)
 
 ---
 
@@ -103,18 +106,13 @@ and solver efficiency for large-scale engineering problems.
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A2_written.md](Assignments/A2_written.md)
-- 💻 **Coding Component:**
-  [A2_code.ipynb](Assignments/A2_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A2_code.ipynb)
+- ✍️ **Written Assignment:** [A2_written.md](Assignments/A2_written.md)
+- 💻 **Coding Assignment:** [A2_code.ipynb](Assignments/A2_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A2_code.ipynb)
 
 ---
 
@@ -122,7 +120,7 @@ Please use the following naming formats:
 
 ## 📅 Week 3 — Direct Stiffness Method (Trusses)
 
-This week introduces the **Direct Stiffness Method (DSM)** for planar trusses. We begin by deriving the **local
+This week introduces the **Direct Stiffness Method (DSM)** for plane trusses. We begin by deriving the **local
 behavior** of an axial truss member from first principles and then extend these concepts to **global truss analysis**.
 Topics include coordinate transformations between local and global systems, manual assembly of the global stiffness
 matrix for the free nodes of the structure based on equilibrium and compatibility-based formulation.
@@ -145,7 +143,7 @@ the local $4 \times 4$ element stiffness form (local-only; not yet transformed).
 #### Part 2 — The Direct Stiffness Method (DSM) for Trusses I
 
 This lecture begins to develop the full DSM workflow for trusses: local-to-global transformations using direction
-cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assemblying the global stiffness
+cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assembling the global stiffness
 matrix of the structure to solve the unknown joint displacements.
 
 - 🌐 **Slides (HTML):** [L3_2_Trusses.slides.html](Lectures/L3/L3_2_Trusses.slides.html)
@@ -161,18 +159,13 @@ matrix of the structure to solve the unknown joint displacements.
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A3_written.md](Assignments/A3_written.md)
-- 💻 **Coding Component:**
-  [A3_code.ipynb](Assignments/A3_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A3_code.ipynb)
+- ✍️ **Written Assignment:** [A3_written.md](Assignments/A3_written.md)
+- 💻 **Coding Assignment:** [A3_code.ipynb](Assignments/A3_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A3_code.ipynb)
 
 ---
 
@@ -180,7 +173,7 @@ Please use the following naming formats:
 
 ## 📅 Week 4 — Direct Stiffness Method (Trusses)
 
-This week continues the **Direct Stiffness Method (DSM)** for planar trusses, completing the full analysis workflow
+This week continues the **Direct Stiffness Method (DSM)** for plane trusses, completing the full analysis workflow
 introduced in Week 3. We move from element-level formulations to **system-level solution**, focusing on efficient
 assembly of the global stiffness matrix, the mathematical implications of supports and constraints, and the
 post-processing steps required to recover member forces and reactions.
@@ -199,9 +192,9 @@ displacements and support reactions, and recovery of member axial forces.
 
 - 🌐 **Slides (HTML):** [L4_1_Trusses.slides.html](Lectures/L4/L4_1_Trusses.slides.html)
 - 📄 **Slides (PDF):** [L4_1_Trusses.pdf](Lectures/L4/L4_1_Trusses.pdf)
-- 📓 **Notebook:** [L4_1-Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
+- 📓 **Notebook:** [L4_1_Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
 
-#### Part 2 — Implementing the DSM for Planar Trusses in Python
+#### Part 2 — Implementing the DSM for Plane Trusses in Python
 
 This lecture implements the full DSM workflow in Python. We translate the manual procedure into a clear, reusable
 software structure: data definitions (nodes, elements, DOF maps), element stiffness computation, scatter–add assembly
@@ -213,15 +206,14 @@ implementing each DSM step explicitly and validating intermediate results along 
 - 📄 **Slides (PDF):** [L4_2_Implementation.pdf](Lectures/L4/L4_2_Implementation.pdf)
 - 📓 **Notebook:** [L4_2_Implementation.ipynb](Lectures/L4/L4_2_Implementation.ipynb)
 
-#### Part 3 — Extra Topics for the DSM for Planar Trusses
+#### Part 3 — Matrix Sparsity and Bandwidth (Extra Topic)
 
 This lecture explores computational and modeling extensions to the DSM, including **sparsity and bandwidth of the
-stiffness matrix**, the impact of DOF ordering on solver performance, and a brief outlook on extending the DSM framework
-to **3D truss systems**.
+stiffness matrix**, the impact of DOF ordering on solver performance
 
-- 🌐 **Slides (HTML):** [L4_3_ExtraTopics.slides.html](Lectures/L4/L4_3_ExtraTopics.slides.html)
-- 📄 **Slides (PDF):** [L4_3_ExtraTopics.pdf](Lectures/L4/L4_3_ExtraTopics.pdf)
-- 📓 **Notebook:** [L4_3_ExtraTopics.ipynb](Lectures/L4/L4_3_ExtraTopics.ipynb)
+- 🌐 **Slides (HTML):** [L4_3_SparsityBandwidth.slides.html](Lectures/L4/L4_3_SparsityBandwidth.slides.html)
+- 📄 **Slides (PDF):** [L4_3_SparsityBandwidth.pdf](Lectures/L4/L4_3_SparsityBandwidth.pdf)
+- 📓 **Notebook:** [L4_3_SparsityBandwidth.ipynb](Lectures/L4/L4_3_SparsityBandwidth.ipynb)
 
 ### Extra In-Class Code
 
@@ -232,16 +224,13 @@ to **3D truss systems**.
 
 #### Submission File Naming
 
-Please use the following naming formats:
-
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A4_written.md](Assignments/A4_written.md)
-- 💻 **Coding Component:**
-  [A4_code.ipynb](Assignments/A4_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
+- ✍️ **Written Assignment:** [A4_written.md](Assignments/A4_written.md)
+- 💻 **Coding Assignment:** [A4_code.ipynb](Assignments/A4_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A4_code.ipynb)
 
 ---
 
@@ -249,18 +238,20 @@ Please use the following naming formats:
 
 ## 📅 Week 5 — Direct Stiffness Method (Space Trusses)
 
+Chapter 5, §5.1 (3D coordinate transform)
+
 ### 📖 Lectures
 
-In Class Midterm today (1.5 - 2.0 hours)
+This week includes an in-class midterm examination (~2.0 hours).
 
-#### Part 1 — Space Trusses
+#### Part 1 — The DSM for Space Trusses
 
 A brief preview of extending the Direct Stiffness Method (DSM) framework to 3D truss systems, in preparation for the
 upcoming assignment where this extension will be implemented computationally.
 
-- 🌐 **Slides (HTML):** [L5_1_SpaceFrames.slides.html](Lectures/L5/L5_1_SpaceFrames.slides.html)
-- 📄 **Slides (PDF):** [L5_1_SpaceFrames.pdf](Lectures/L5/L5_1_SpaceFrames.pdf)
-- 📓 **Notebook:** [L5_1_SpaceFrames.ipynb](Lectures/L5/L5_1_SpaceFrames.ipynb)
+- 🌐 **Slides (HTML):** [L5_1_SpaceTrusses.slides.html](Lectures/L5/L5_1_SpaceTrusses.slides.html)
+- 📄 **Slides (PDF):** [L5_1_SpaceTrusses.pdf](Lectures/L5/L5_1_SpaceTrusses.pdf)
+- 📓 **Notebook:** [L5_1_SpaceTrusses.ipynb](Lectures/L5/L5_1_SpaceTrusses.ipynb)
 
 ### Extra In-Class Code
 
@@ -268,21 +259,74 @@ N/A
 
 ### 📝 Assignments
 
-#### Submission File Naming
-
-Please use the following naming formats:
-
-- **Written:** `StudentLastName_A4_written.pdf`
-- **Coding (Colab / Jupyter):** `StudentLastName_A4_code.ipynb`
+Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-- ✍️ **Written Component:** [A4_written.md](Assignments/A5_written.md)
-- 💻 **Coding Component:**
+- ✍️ **Written Assignment:** [A5_written.md](Assignments/A5_written.md)
+- 💻 **Coding Assignment:**
 
-  [A5_code_2D.ipynb](Assignments/A5_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_2D.ipynb)
+  [A5_code_2D.ipynb](Assignments/A5_code_2D.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_2D.ipynb)
 
-  [A4_code_3D.ipynb](Assignments/A5_code.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_3D.ipynb)
+  [A5_code_3D.ipynb](Assignments/A5_code_3D.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A5_code_3D.ipynb)
+
+---
+
+---
+
+## 📅 Week 6 — Direct Stiffness Method (Beams)
+
+This week extends the Direct Stiffness Method to beam elements, introducing bending behavior, rotational degrees of
+freedom, and member loading. We move from the beam idealization and DOF definitions, to deriving the element stiffness
+matrix, and finally to handling distributed loads using fixed-end forces within the global system.
+
+Kassimali – Chapter 5, §5.1-5.2, 5.4-5.7
+
+McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs)
+
+### 📖 Lectures
+
+#### Part 1 — Introduction to 2D Beam Analysis
+
+Introduces the Euler–Bernoulli beam model within the DSM framework. We define beam DOFs, establish sign conventions,
+distinguish joint vs member loads, and set up the global system $\mathbf{K}\mathbf{u}=\mathbf{f}$.
+
+- 🌐 **Slides (HTML):** [L6_1_Beams.slides.html](Lectures/L6/L6_1_Beams.slides.html)
+- 📄 **Slides (PDF):** [L6_1_Beams.pdf](Lectures/L6/L6_1_Beams.pdf)
+- 📓 **Notebook:** [L6_1_Beams.ipynb](Lectures/L6/L6_1_Beams.ipynb)
+
+#### Part 2 — 2D Beam Element Stiffness Matrix
+
+Develops the 4×4 beam element stiffness matrix using the unit displacement method. The lecture builds physical intuition
+for the stiffness coefficients and shows how beam elements are assembled into the global system.
+
+- 🌐 **Slides (HTML):** [L6_2_PlaneFrames.slides.html](Lectures/L6/L6_2_Beams_Stiffness.slides.html)
+- 📄 **Slides (PDF):** [L6_2_PlaneFrames.pdf](Lectures/L6/L6_2_Beams_Stiffness.pdf)
+- 📓 **Notebook:** [L6_2_PlaneFrames.ipynb](Lectures/L6/L6_2_Beams_Stiffness.ipynb)
+
+#### Part 3 — Fixed End Forces (FEFs)
+
+Introduces fixed-end forces for handling member loading. We show how beam problems can be decomposed using
+superposition, convert distributed loads into equivalent nodal forces, and incorporate FEFs into the global DSM
+equations.
+
+- 🌐 **Slides (HTML):** [L6_3_FEFs.slides.html](Lectures/L6/L6_3_FEFs.slides.html)
+- 📄 **Slides (PDF):** [L6_3_FEFs.pdf](Lectures/L6/L6_3_FEFs.pdf)
+- 📓 **Notebook:** [L6_3_FEFs.ipynb](Lectures/L6/L6_3_FEFs.ipynb)
+
+### Extra In-Class Code
+
+N/A
+
+### 📝 Assignments
+
+Use standard submission naming from Week 1.
+
+#### Assignment Files
+
+N/A, 3D Truss Coding Assignment to be completed this week
 
 ---
 
