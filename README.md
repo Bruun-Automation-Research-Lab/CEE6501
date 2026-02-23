@@ -284,7 +284,7 @@ matrix, and finally to handling distributed loads using fixed-end forces within 
 
 Kassimali – Chapter 5, §5.1-5.2, 5.4-5.7
 
-McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs)
+McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs), 5.3 (Self-Straining, next year)
 
 ### 📖 Lectures
 
@@ -315,6 +315,44 @@ equations.
 - 🌐 **Slides (HTML):** [L6_3_FEFs.slides.html](Lectures/L6/L6_3_FEFs.slides.html)
 - 📄 **Slides (PDF):** [L6_3_FEFs.pdf](Lectures/L6/L6_3_FEFs.pdf)
 - 📓 **Notebook:** [L6_3_FEFs.ipynb](Lectures/L6/L6_3_FEFs.ipynb)
+
+### Extra In-Class Code
+
+N/A
+
+### 📝 Assignments
+
+Use standard submission naming from Week 1.
+
+#### Assignment Files
+
+N/A, 3D Truss Coding Assignment to be completed this week
+
+---
+
+---
+
+## 📅 Week 7 — Direct Stiffness Method (Frames)
+
+This week extends the Direct Stiffness Method...
+
+Kassimali – Chapter 6, §6.1...
+
+McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.1 (3D Coordinate transformations)
+
+### 📖 Lectures
+
+#### Part 1 — Introduction to 2D Beam Analysis
+
+Introduces the
+
+- 🌐 **Slides (HTML):** [L7_1_Frames.slides.html](Lectures/L7/L7_1_Frames.slides.html)
+- 📄 **Slides (PDF):** [L7_1_Frames.pdf](Lectures/L7/L7_1_Frames.pdf)
+- 📓 **Notebook:** [L7_1_Frames.ipynb](Lectures/L7/L7_1_Frames.ipynb)
+
+#### Part 2 —
+
+#### Part 3 —
 
 ### Extra In-Class Code
 
