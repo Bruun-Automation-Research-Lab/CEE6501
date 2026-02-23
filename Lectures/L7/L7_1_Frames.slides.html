@@ -7732,7 +7732,7 @@ Part 2 —</p>
 <p><strong>Joints</strong></p>
 <ul>
 <li><strong>Joint 1:</strong> Fixed support</li>
-<li><strong>Joint 2:</strong> Free, $\Delta$ in EI</li>
+<li><strong>Joint 2:</strong> Free, $\Delta$ in $EI$</li>
 <li><strong>Joint 3:</strong> Free</li>
 <li><strong>Joint 4:</strong> Free</li>
 <li><strong>Joint 5:</strong> Pin</li>
@@ -7742,7 +7742,7 @@ Part 2 —</p>
 <li><strong>Element 1:</strong> Joint 1 → Joint 2</li>
 <li><strong>Element 2:</strong> Joint 2 → Joint 3</li>
 <li><strong>Element 3:</strong> Joint 3 → Joint 4</li>
-<li><strong>Element 3:</strong> Joint 5 → Joint 4</li>
+<li><strong>Element 4:</strong> Joint 5 → Joint 4</li>
 </ul>
 </div>
 </div>
@@ -7892,7 +7892,7 @@ $$</p>
 <li>Number joints sequentially</li>
 <li>At each joint:<ol>
 <li>number horizontal displacement $u_x$ first</li>
-<li>number horizontal displacement $u_y$ first</li>
+<li>number vertical displacement $u_y$ next</li>
 <li>then number rotation $\theta$</li>
 </ol>
 </li>
@@ -8036,14 +8036,13 @@ $$</p>
 \begin{Bmatrix}
 R_1\\R_2\\R_3\\0\\R_5\\0\\100\\0\\0\\0\\0\\-75\\50\\-57.5\\0\\0\\-57.5\\0
 \end{Bmatrix}
-+
+-
 \begin{Bmatrix}
 0\\0\\0\\0\\0\\0\\0\\F^{F}_{8}\\F^{F}_{9}\\0\\F^{F}_{11}\\F^{F}_{12}\\0\\F^{F}_{14}\\F^{F}_{15}\\0\\F^{F}_{17}\\F^{F}_{18}
 \end{Bmatrix}
 $$</p>
 </div>
 </div>
-<br/>
 </div>
 </div>
 </div>
@@ -8119,7 +8118,7 @@ $$</p>
 <li><strong>DOF 1:</strong> $u_1$ — node $b$, local $x$</li>
 <li><strong>DOF 2:</strong> $u_2$ — node $b$, local $y$</li>
 <li><strong>DOF 3:</strong> $u_3$ — node $b$, $\theta$</li>
-<li><strong>DOF 4:</strong> $u_4$ — node $b$, local $x$</li>
+<li><strong>DOF 4:</strong> $u_4$ — node $e$, local $x$</li>
 <li><strong>DOF 5:</strong> $u_5$ — node $e$, local $y$</li>
 <li><strong>DOF 6:</strong> $u_6$ — node $e$, $\theta$</li>
 </ul>
@@ -8264,8 +8263,8 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Combination-of-Truss-and-Beam-Stiffnesses">Combination of Truss and Beam Stiffnesses<a class="anchor-link" href="#Combination-of-Truss-and-Beam-Stiffnesses">¶</a></h3><p>We have already derived the <strong>axial (truss)</strong> and <strong>bending (beam)</strong> stiffness matrices.</p>
-<p>For a 2D frame element (local DOF ordering<br>
-$(u_1,\, v_1,\, \theta_1,\, u_2,\, v_2,\, \theta_2)$):</br></p>
+<p>For a 2D frame element (local DOF ordering<br/>
+$(u_1,\, v_1,\, \theta_1,\, u_2,\, v_2,\, \theta_2)$):</p>
 <ul>
 <li>Axial effects act in <strong>DOFs 1 and 4</strong></li>
 <li>Bending effects act in <strong>DOFs 2, 3, 5, 6</strong></li>
