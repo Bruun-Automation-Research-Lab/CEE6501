@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-7.1">CEE6501 — Lecture 7.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-7.1">¶</a></h1><h2 id="Introduction-to-2D-Beam-Analysis">Introduction to 2D Beam Analysis<a class="anchor-link" href="#Introduction-to-2D-Beam-Analysis">¶</a></h2>
+<h1 id="CEE6501-%E2%80%94-Lecture-7.1">CEE6501 — Lecture 7.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-7.1">¶</a></h1><h2 id="Introduction-to-2D-Frame-Analysis">Introduction to 2D Frame Analysis<a class="anchor-link" href="#Introduction-to-2D-Frame-Analysis">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7478,8 +7478,8 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1-%E2%80%94-Roadmap:-From-Trusses-to-Beams-to-Frames">Part 1 — Roadmap: From Trusses to Beams to Frames<a class="anchor-link" href="#Part-1-%E2%80%94-Roadmap:-From-Trusses-to-Beams-to-Frames">¶</a></h2><blockquote>
-<p>Expanding our element library: axial-only → bending only → axial + bending.</p>
+<h2 id="Part-1-%E2%80%94-DSM-Element-Roadmap">Part 1 — DSM Element Roadmap<a class="anchor-link" href="#Part-1-%E2%80%94-DSM-Element-Roadmap">¶</a></h2><blockquote>
+<p>From Trusses to 2D Beams to 2D Frames to 3D Frames</p>
 </blockquote>
 </div>
 </div>
@@ -7563,6 +7563,16 @@ Part 2 —</p>
 <li>The <strong>2D beam element</strong> governing planar bending behavior, case (3) and (4)</li>
 <li>Once derived for one principal axis, the formulation extends directly to the other (identical mathematics, different axis)</li>
 </ul>
+<div style="display:flex; gap:1.25rem; align-items:flex-start; margin-top:0.75rem;">
+<div style="flex:0.5; text-align:center;">
+<strong>(3) Bending about Z-axis</strong><br/>
+<img alt="No description has been provided for this image" src="assets/L1_4Behaviors_My.png" style="width:95%;"/>
+</div>
+<div style="flex:0.5; text-align:center;">
+<strong>(4) Bending about Y-axis</strong><br/>
+<img alt="No description has been provided for this image" src="assets/L1_4Behaviors_Mz.png" style="width:95%;"/>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -7573,9 +7583,13 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Today we start by developing the DSM formulation for a beam <strong>bending about the $Z$-axis</strong></p>
+<h3 id="What-We-Will-Derive-Today">What We Will Derive Today<a class="anchor-link" href="#What-We-Will-Derive-Today">¶</a></h3><ul>
+<li>The DSM formulation for the <strong>2D frame element</strong></li>
+<li>A combination of bending + axial behaviour  <strong>bending about the $Z$-axis</strong>, case (1) + (3)</li>
+<li>Once derived for one principal axis, the formulation extends directly to the other (identical mathematics, different axis)</li>
+</ul>
 <div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_4Behaviors_My.png" style="width:80%;"/>
+<img alt="No description has been provided for this image" src="assets/L1_4Behaviors_My_AXIAL.png" style="width:80%;"/>
 </div>
 </div>
 </div>
@@ -7587,9 +7601,27 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-2-%E2%80%94-2D-Beam-Analytical-Model">Part 2 — 2D Beam Analytical Model<a class="anchor-link" href="#Part-2-%E2%80%94-2D-Beam-Analytical-Model">¶</a></h2><blockquote>
-<p>How we represent a continuous beam as members + joints for stiffness analysis.</p>
+<h2 id="Part-2-%E2%80%94-2D-Frame-Analytical-Model">Part 2 — 2D Frame Analytical Model<a class="anchor-link" href="#Part-2-%E2%80%94-2D-Frame-Analytical-Model">¶</a></h2><blockquote>
+<p>Representing a frame structure as <strong>members + joints</strong> for stiffness-based analysis.</p>
 </blockquote>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b2453445">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Key-Conceptual-Shift-(Beam-%E2%86%92-Frame)">Key Conceptual Shift (Beam → Frame)<a class="anchor-link" href="#Key-Conceptual-Shift-(Beam-%E2%86%92-Frame)">¶</a></h3><p>The major difference from the pure beam formulation:</p>
+<ul>
+<li>We now include <strong>axial deformation</strong> in addition to bending.</li>
+<li>Because axial effects are included, a <strong>frame element may be inclined</strong> at any angle.</li>
+<li>A beam element (in its simplest form) was required to align with the <strong>global X-axis</strong>.</li>
+<li>A frame element therefore requires a <strong>local coordinate system</strong> and transformation to global coordinates.</li>
+</ul>
+<p>The 2D frame element is a true generalization of the beam element.</p>
 </div>
 </div>
 </div>
@@ -7600,20 +7632,20 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Beam-Definition-(2D-Bending-Idealization)">Beam Definition (2D Bending Idealization)<a class="anchor-link" href="#Beam-Definition-(2D-Bending-Idealization)">¶</a></h3><p>A <strong>beam</strong> is modeled as:</p>
+<h3 id="Frame-Definition-(2D-Idealization)">Frame Definition (2D Idealization)<a class="anchor-link" href="#Frame-Definition-(2D-Idealization)">¶</a></h3><p>A 2D frame member is modeled as:</p>
 <ul>
-<li>a long, straight member</li>
-<li>loaded in a single plane (e.g., $XY$-plane)</li>
-<li>deformation dominated by <strong>bending</strong></li>
+<li>A long, straight prismatic member</li>
+<li>Loaded in a single plane (e.g., the $XY$-plane)</li>
 </ul>
-<p>We adopt the <strong>Euler–Bernoulli beam assumption</strong>:</p>
+<p>We adopt the <strong>Euler–Bernoulli beam assumptions</strong>:</p>
 <ul>
-<li>cross-sections remain <strong>plane and perpendicular</strong> to the centerline</li>
-<li><strong>shear deformation is neglected</strong></li>
+<li>Cross-sections remain <strong>plane</strong></li>
+<li>Cross-sections remain <strong>perpendicular to the centerline</strong></li>
+<li><strong>Shear deformation is neglected</strong></li>
 </ul>
-<p>Additionally (for this formulation):</p>
+<p>Additionally (for the frame formulation):</p>
 <ul>
-<li><strong>axial deformation is neglected</strong> ($u_x \approx 0$)</li>
+<li><strong>Axial deformation is included</strong></li>
 </ul>
 </div>
 </div>
@@ -7625,14 +7657,14 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Consequence (for this model):</strong></p>
+<h3 id="Consequences-of-This-Idealization">Consequences of This Idealization<a class="anchor-link" href="#Consequences-of-This-Idealization">¶</a></h3><p>Each member can develop:</p>
 <ul>
-<li>primary internal actions are <strong>shear</strong> and <strong>bending moment</strong></li>
-<li>only forces <strong>perpendicular</strong> to the centroidal axis of the member (shear)</li>
-<li>moments in XY-plane, or about Z-axis (into the page)</li>
+<li>Axial force $N$: <strong>Parallel</strong> to the centroidal axis (axial)</li>
+<li>Shear force $V$: <strong>Perpendicular</strong> to the centroidal axis (shear)</li>
+<li>Bending moment $M$: In the $XY$-plane (about the $Z$-axis, into the page)</li>
 </ul>
 <div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_Beam_2D.png" style="width:80%;"/>
+<img alt="No description has been provided for this image" src="assets/L1_Frame_2D.png" style="width:80%;"/>
 </div>
 </div>
 </div>
@@ -7644,13 +7676,15 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Analytical-Model:">Analytical Model:<a class="anchor-link" href="#Analytical-Model:">¶</a></h3><p>For the matrix stiffness method, a continuous beam is modeled as:</p>
+<h3 id="Analytical-Model-for-the-DSM">Analytical Model for the DSM<a class="anchor-link" href="#Analytical-Model-for-the-DSM">¶</a></h3><p>To apply the DSM, we idealize the structure as:</p>
 <ul>
-<li>straight prismatic (constant cross-section) members</li>
-<li>connected at joints (nodes)</li>
-<li>with unknown reactions assumed to act <strong>only at joints</strong></li>
-<li>applied loads <strong>anywhere</strong> along beam</li>
+<li>Straight, prismatic members (constant $A$, $E$, $I$)</li>
+<li>Connected at discrete <strong>joints (nodes)</strong></li>
+<li>Rigid joint connections (for now)</li>
+<li>Unknown reactions acting <strong>only at joints</strong></li>
+<li>External loads applied anywhere along members (converted to FEFs)</li>
 </ul>
+<p>This converts a continuous structural system into a <strong>finite system of degrees of freedom</strong> suitable for matrix analysis.</p>
 </div>
 </div>
 </div>
@@ -7661,8 +7695,8 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example-Beam-Structure">Example Beam Structure<a class="anchor-link" href="#Example-Beam-Structure">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel1.png" style="width:85%;"/>
+<h3 id="Example-Frame-Structure">Example Frame Structure<a class="anchor-link" href="#Example-Frame-Structure">¶</a></h3><div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_FrameModel1.png" style="width:70%;"/>
 </div>
 </div>
 </div>
@@ -7690,22 +7724,28 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel2.png" style="width:92%;"/>
+<h3 id="Example-Frame-Discretization">Example Frame Discretization<a class="anchor-link" href="#Example-Frame-Discretization">¶</a></h3><div style="display:flex; align-items:flex-start; gap:2rem;">
+<div style="flex:1.2; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_FrameModel2.png" style="width:100%;"/>
 </div>
+<div style="flex:1;">
 <p><strong>Joints</strong></p>
 <ul>
 <li><strong>Joint 1:</strong> Fixed support</li>
-<li><strong>Joint 2:</strong> Pin support</li>
-<li><strong>Joint 3:</strong> Change in cross-section (flexural rigidity transitions from $I$ to $2I$)</li>
-<li><strong>Joint 4:</strong> Fixed support</li>
+<li><strong>Joint 2:</strong> Free, $\Delta$ in EI</li>
+<li><strong>Joint 3:</strong> Free</li>
+<li><strong>Joint 4:</strong> Free</li>
+<li><strong>Joint 5:</strong> Pin</li>
 </ul>
 <p><strong>Elements</strong></p>
 <ul>
 <li><strong>Element 1:</strong> Joint 1 → Joint 2</li>
 <li><strong>Element 2:</strong> Joint 2 → Joint 3</li>
 <li><strong>Element 3:</strong> Joint 3 → Joint 4</li>
+<li><strong>Element 3:</strong> Joint 5 → Joint 4</li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -7716,9 +7756,7 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3-%E2%80%94-Coordinate-Systems">Part 3 — Coordinate Systems<a class="anchor-link" href="#Part-3-%E2%80%94-Coordinate-Systems">¶</a></h2><blockquote>
-<p>Global vs local</p>
-</blockquote>
+<h2 id="Part-3-%E2%80%94-Coordinate-Systems">Part 3 — Coordinate Systems<a class="anchor-link" href="#Part-3-%E2%80%94-Coordinate-Systems">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7729,86 +7767,25 @@ Part 2 —</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Global-Coordinate-System-(Beams)">Global Coordinate System (Beams)<a class="anchor-link" href="#Global-Coordinate-System-(Beams)">¶</a></h3><p>Use a right-handed $XYZ$ system:</p>
+<h3 id="Global-and-Local-Coordinate-Systems">Global and Local Coordinate Systems<a class="anchor-link" href="#Global-and-Local-Coordinate-Systems">¶</a></h3><div style="display:flex; align-items:flex-start; gap:2rem;">
+<div style="flex:1.2; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_FrameModel3.png" style="width:100%;"/>
+</div>
+<div style="flex:1;">
+<p><strong>Global</strong></p>
 <ul>
 <li>$X$ axis along the beam (positive to the right)</li>
 <li>$Y$ axis vertical (positive upward)</li>
 <li>loads and reactions lie in the $X$–$Y$ plane</li>
 </ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_why_global_is_simple">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Practical note:</strong> It’s convenient to place the origin at the leftmost joint.</p>
-<p>Why this simplifies programming:</p>
-<ul>
-<li>all joints lie on the $X$ axis in the undeformed configuration</li>
-<li>So each joint location can be specified by <strong>one coordinate</strong>: $X_i$</li>
-<li>Geometry is essentially 1D (along the beam), even though bending is 2D</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_local_coordinate_system">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-Coordinate-System-(Per-Member)">Local Coordinate System (Per Member)<a class="anchor-link" href="#Local-Coordinate-System-(Per-Member)">¶</a></h3><p>Define a right-handed local system $xyz$ for each member:</p>
+<p><strong>Local</strong></p>
 <ul>
 <li>origin at the <strong>left end</strong> of the member</li>
 <li>$x$ axis along the member centroidal axis</li>
-<li>$y$ axis vertical (positive upward)</li>
-</ul>
+<li>$y$ axis vertical (positive upward)</li></ul></div>
+
+
 </div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ff9eeb31">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel3.png" style="width:92%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_no_transform_needed">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Bending-Only-Beam-Elements-(This-Week)">Bending-Only Beam Elements (This Week)<a class="anchor-link" href="#Bending-Only-Beam-Elements-(This-Week)">¶</a></h3><ul>
-<li>We use a <strong>4-DOF beam formulation</strong>: $\{u_y,\ \theta\}$ at each node</li>
-<li>Assumes <strong>pure bending</strong> (no axial deformation)</li>
-</ul>
-<p><strong>Key requirement:</strong></p>
-<ul>
-<li>Each element must be <strong>aligned with the global axis</strong></li>
-<li>⇒ local and global coordinate systems <strong>coincide</strong></li>
-</ul>
-<p><strong>Implication for DSM:</strong></p>
-<ul>
-<li>No coordinate transformation is required<br/>
-$$
-\mathbf{k} = \mathbf{k}^{'}
-$$</li>
-<li>Forces and displacements are already expressed in the global system</li>
-<li>Element stiffness matrices can be <strong>assembled directly into the global system</strong></li>
-</ul>
 </div>
 </div>
 </div>
@@ -7819,9 +7796,7 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-4-%E2%80%94-Degrees-of-Freedom-(DOFs)">Part 4 — Degrees of Freedom (DOFs)<a class="anchor-link" href="#Part-4-%E2%80%94-Degrees-of-Freedom-(DOFs)">¶</a></h2><blockquote>
-<p>Beams introduce rotations as unknowns.</p>
-</blockquote>
+<h2 id="Part-4-%E2%80%94-Numbering-DOFs,-Loads,-Reactions">Part 4 — Numbering DOFs, Loads, Reactions<a class="anchor-link" href="#Part-4-%E2%80%94-Numbering-DOFs,-Loads,-Reactions">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7832,37 +7807,30 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="DOFs-per-Joint-(2D-Beam-Model)">DOFs per Joint (2D Beam Model)<a class="anchor-link" href="#DOFs-per-Joint-(2D-Beam-Model)">¶</a></h3><p>Axial deformation is neglected, translations in the global $X$ direction are taken as <strong>zero</strong></p>
-<p>So each joint can have up to <strong>two</strong> types of deformations:</p>
+<h3 id="DOFs-per-Joint-(2D-Frame-Model)">DOFs per Joint (2D Frame Model)<a class="anchor-link" href="#DOFs-per-Joint-(2D-Frame-Model)">¶</a></h3><p>So each joint can have up to <strong>three</strong> types of deformations:</p>
 <ol>
+<li>horizontal translation: $u$ (along global $X$)</li>
 <li>vertical translation: $u$ (along global $Y$)</li>
 <li>rotation: $\theta$ (about global $Z$)</li>
 </ol>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_dof_vector_and_signs">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="DOF-Vector-and-Sign-Conventions">DOF Vector and Sign Conventions<a class="anchor-link" href="#DOF-Vector-and-Sign-Conventions">¶</a></h3><p>At a joint $i$, we collect beam DOFs as:
+<p>At a joint, $i$, we collect beam DOFs as:
 $$
-\mathbf{u}_i =
+\mathbf{u_i} =
 \begin{Bmatrix}
-u_i \\
+u_{x,i} \\
+u_{y,i} \\
 \theta_i
 \end{Bmatrix} =
 \begin{Bmatrix}
-u_{i,1} \\
-u_{i,2}
+u_{1,i} \\
+u_{2,i} \\
+u_{3,i}
 \end{Bmatrix}
 $$</p>
 <p>Sign conventions:</p>
 <ul>
-<li>$u$ is positive <strong>upward</strong></li>
+<li>$u_x$ is positive <strong>right</strong></li>
+<li>$u_y$ is positive <strong>up</strong></li>
 <li>$\theta$ is positive <strong>counterclockwise</strong></li>
 </ul>
 </div>
@@ -7875,29 +7843,21 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example:-Deformed-Shape,-Showing-$u$-and-$%5Ctheta$">Example: Deformed Shape, Showing $u$ and $\theta$<a class="anchor-link" href="#Example:-Deformed-Shape,-Showing-$u$-and-$%5Ctheta$">¶</a></h3><p>From the support types:</p>
+<h3 id="Example:-Deformed-Shape,-Showing-$u$-and-$%5Ctheta$">Example: Deformed Shape, Showing $u$ and $\theta$<a class="anchor-link" href="#Example:-Deformed-Shape,-Showing-$u$-and-$%5Ctheta$">¶</a></h3><div style="display:flex; align-items:flex-start; gap:2rem;">
+<div style="flex:2.0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_FrameModel4.png" style="width:70%;"/>
+</div>
+<div style="flex:1;">
+<p>From the support types:</p>
 <ul>
-<li>node 1: (fixed support): $u=0$ and $\theta=0$ (no free DOFs)</li>
-<li>node 2: roller support (vertical restraint): $u=0$ but $\theta$ is free</li>
-<li>node 3: free joint: both $u$ and $\theta$ are free</li>
-<li>node 4: (fixed support): $u=0$ and $\theta=0$ (no free DOFs)</li>
+<li>node 1: fixed support</li>
+<li>node 2: free</li>
+<li>node 3: free</li>
+<li>node 4: free</li>
+<li>node 5: pin</li>
 </ul>
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel4.png" style="width:92%;"/>
 </div>
 </div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_dof_counting_title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5-%E2%80%94-DOF-Counting-and-Numbering">Part 5 — DOF Counting and Numbering<a class="anchor-link" href="#Part-5-%E2%80%94-DOF-Counting-and-Numbering">¶</a></h2><blockquote>
-<p>Before you build $\mathbf{K}$, DOF bookkeeping.</p>
-</blockquote>
 </div>
 </div>
 </div>
@@ -7908,33 +7868,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Counting-Degrees-of-Freedom">Counting Degrees of Freedom<a class="anchor-link" href="#Counting-Degrees-of-Freedom">¶</a></h3><p>Let:</p>
-<ul>
-<li>$j$ = number of joints</li>
-<li>$r$ = number of restrained joint displacement components</li>
-<li>$N_{\text{CJT}}$ = DOFs per free joint</li>
-</ul>
-<p>Then the number of structural degrees of freedom is:</p>
+<h3 id="Counting-Degrees-of-Freedom">Counting Degrees of Freedom<a class="anchor-link" href="#Counting-Degrees-of-Freedom">¶</a></h3><p>For a frame, each free joint has two translational and one rotational DOFs:</p>
 <p>$$
-N_{\text{DOF}} = N_{\text{CJT}}\,j - r
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_dof_counting_formula">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>For a planar beam, each free joint has one translational and one rotational DOFs:</p>
-<p>$$
-N_{\text{CJT}} = 2 \quad (u_y, \theta)
+N_{\text{CJT}} = 3 \quad (u_x, u_y, \theta)
 $$</p>
 <p>So:</p>
 <p>$$
-\boxed{\;N_{\text{DOF}} = 2j - r\;}
+\boxed{\;N_{\text{DOF}} = 3j - r\;}
 $$</p>
 <p>This is the number of <strong>independent joint displacements</strong> that must be solved for.</p>
 </div>
@@ -7949,9 +7889,10 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="DOF-Numbering-Convention-(Recommended)">DOF Numbering Convention (Recommended)<a class="anchor-link" href="#DOF-Numbering-Convention-(Recommended)">¶</a></h3><p>We adopt a <strong>systematic, equation-based numbering scheme</strong>:</p>
 <ul>
-<li>Number joints sequentially (e.g., left → right)</li>
+<li>Number joints sequentially</li>
 <li>At each joint:<ol>
-<li>number vertical displacement $u$ first</li>
+<li>number horizontal displacement $u_x$ first</li>
+<li>number horizontal displacement $u_y$ first</li>
 <li>then number rotation $\theta$</li>
 </ol>
 </li>
@@ -7959,25 +7900,15 @@ $$</p>
 </ul>
 <p>With this convention (1-based indexing):</p>
 <p>$$
-\text{DOF}(j,u) = 2j - 1
+\text{DOF}(j,u_x) = 3j - 2
 $$</p>
 <p>$$
-\text{DOF}(j,\theta) = 2j
+\text{DOF}(j,u_y) = 3j - 1
+$$</p>
+<p>$$
+\text{DOF}(j,\theta) = 3j
 $$</p>
 <p>This produces a fully predictable mapping between joint index and DOF number.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fb4b56c0">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<blockquote>
-<p><strong>Note:</strong> Some textbooks (e.g., Kassimali) recommend numbering all free DOFs first and restrained DOFs afterward. While mathematically equivalent, the above convention is often easier to implement and debug, because DOF numbers follow a direct formula rather than a bookkeeping pass.</p>
-</blockquote>
 </div>
 </div>
 </div>
@@ -7988,35 +7919,14 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Textbook-Numbering">Textbook Numbering<a class="anchor-link" href="#Textbook-Numbering">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel5_original.png" style="width:90%;"/>
+<h3 id="Textbook-vs.-Our-Numbering">Textbook vs. Our Numbering<a class="anchor-link" href="#Textbook-vs.-Our-Numbering">¶</a></h3><div style="display:flex; align-items:flex-start; gap:2rem;">
+<div style="flex:1.0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_FrameModel5_original.png" style="width:100%;"/>
+</div>
+<div style="flex:1.0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_FrameModel5.png" style="width:100%;"/>
 </div>
 </div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9a6da858">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Our-Numbering">Our Numbering<a class="anchor-link" href="#Our-Numbering">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel5.png" style="width:90%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_loads_reactions_title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-6-%E2%80%94-Loads-and-Reactions">Part 6 — Loads and Reactions<a class="anchor-link" href="#Part-6-%E2%80%94-Loads-and-Reactions">¶</a></h2><blockquote>
-<p>Beams can have loads at joints and along members.</p>
-</blockquote>
 </div>
 </div>
 </div>
@@ -8031,8 +7941,7 @@ $$</p>
 <li><strong>Joint loads</strong>: forces/moments applied at joints</li>
 <li><strong>Member loads</strong>: loads applied between joints (distributed loads, point loads on a span, a couple, etc.)</li>
 </ul>
-<p>In beam analysis, both occur.</p>
-<p>For now, we will <strong>start with joint loads only</strong> to mirror our truss workflow.</p>
+<p>Here, the term <strong>load</strong> is used in a broad sense to mean either a <strong>force</strong> or a <strong>moment</strong>, applied in the direction of a DOF.</p>
 </div>
 </div>
 </div>
@@ -8043,43 +7952,18 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Loads-that-Correspond-to-Beam-DOFs">Loads that Correspond to Beam DOFs<a class="anchor-link" href="#Loads-that-Correspond-to-Beam-DOFs">¶</a></h3><p>Each beam joint has up to two DOFs $(u,\theta)$, and each DOF has a corresponding <strong>generalized load</strong>:</p>
+<h3 id="Loads-and-Reactions-Correspond-to-Global-Beam-DOF-Numbering">Loads and Reactions Correspond to Global Beam DOF Numbering<a class="anchor-link" href="#Loads-and-Reactions-Correspond-to-Global-Beam-DOF-Numbering">¶</a></h3><p>Each beam joint has up to three DOFs $(u_x, u_y, \theta)$.</p>
+<p>To every DOF, there corresponds a <strong>generalized load</strong>.</p>
 <ul>
-<li>For vertical translation $u$ → a <strong>vertical force</strong> in the $Y$ direction</li>
-<li>For rotation $\theta$ → a <strong>nodal moment</strong> about the $Z$ axis</li>
+<li>If the DOF is <strong>free</strong> → an external load may be applied</li>
+<li>If the DOF is <strong>restrained</strong> → an unknown reaction will develop</li>
 </ul>
-<p>Here, the term <strong>load</strong> is used in a broad sense to mean either a <strong>force</strong> or a <strong>moment</strong>, applied in the direction of a DOF.</p>
-<p><strong>Rule of thumb:</strong><br/>
-A joint load may be applied in the direction of each degree of freedom.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_support_reactions_match_restrained_coords">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Support-Reactions">Support Reactions<a class="anchor-link" href="#Support-Reactions">¶</a></h3><p>A reaction can develop at each <strong>restrained coordinate</strong>:</p>
+<p>For a 2D frame element:</p>
 <ul>
-<li>restrained $u$ → vertical reaction force</li>
-<li>restrained $\theta$ → reaction moment</li>
+<li>$u_x$  ⟷  Axial force $F_x$ (horizontal force)</li>
+<li>$u_y$  ⟷  Shear force $F_y$ (vertical force)</li>
+<li>$\theta_z$ ⟷  Bending moment $M_z$</li>
 </ul>
-<p>So if a beam has $N_R$ restrained coordinates, it can develop up to <strong>$N_R$ reactions</strong>.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=22966a91">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel6.png" style="width:92%;"/>
-</div>
 </div>
 </div>
 </div>
@@ -8090,7 +7974,7 @@ A joint load may be applied in the direction of each degree of freedom.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-7-%E2%80%94-Putting-It-All-Together">Part 7 — Putting It All Together<a class="anchor-link" href="#Part-7-%E2%80%94-Putting-It-All-Together">¶</a></h2>
+<h2 id="Part-5-%E2%80%94-Putting-It-All-Together">Part 5 — Putting It All Together<a class="anchor-link" href="#Part-5-%E2%80%94-Putting-It-All-Together">¶</a></h2>
 </div>
 </div>
 </div>
@@ -8103,11 +7987,12 @@ A joint load may be applied in the direction of each degree of freedom.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Global-System-Equation">Global System Equation<a class="anchor-link" href="#Global-System-Equation">¶</a></h3><p>Once the beam is discretized and DOFs are numbered:
 $$
-\boxed{\mathbf{K}\mathbf{u} = \mathbf{f}}
+\boxed{\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f^F}}
 $$</p>
 <ul>
 <li>$\mathbf{u}$ collects joint translations and rotations at the selected coordinates</li>
 <li>$\mathbf{f}$ collects the corresponding joint forces and moments</li>
+<li>$\mathbf{f^F}$ collects the corresponding fixed end joint forces and moments</li>
 <li>$\mathbf{K}$ comes from <strong>assembling beam element stiffness matrices</strong></li>
 </ul>
 </div>
@@ -8120,222 +8005,367 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example-Structure">Example Structure<a class="anchor-link" href="#Example-Structure">¶</a></h3><p>For the beam shown (4 joints, 2 DOFs per joint), the assembled global system is</p>
-<div style="display:flex; gap:2rem; align-items:center;">
-<div style="flex:0.55; text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_BeamModel6.png" style="width:100%;"/>
+<h3 id="Example-Structure">Example Structure<a class="anchor-link" href="#Example-Structure">¶</a></h3><p>A frame with 6 joints (3 DOFs per joint)</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Frame_Example.png" style="width:70%;"/>
 </div>
-<div style="flex:0.45;">
-  $$
-  \begin{bmatrix}
-  K
-  \end{bmatrix}
-  \begin{Bmatrix}
-  0 \\
-  0 \\
-  0 \\
-  u_4 \\
-  u_5 \\
-  u_6 \\
-  0 \\
-  0
-  \end{Bmatrix}
-  =
-  \begin{Bmatrix}
-  R_1 \\
-  R_2 \\
-  R_3 \\
-  F_4 \\
-  F_5 \\
-  F_6 \\
-  R_7 \\
-  R_8
-  \end{Bmatrix}
-  $$
-  </div>
 </div>
-<p>where:</p>
-<ul>
-<li>$R_1, R_2, R_3, R_7, R_8$ = support reactions (forces or moments at restrained DOFs)</li>
-<li>$F_4, F_5, F_6$ = applied joint loads (forces or moments at free DOFs)</li>
-<li>$[K]$ = $8\times8$ global stiffness matrix assembled from Elements 1–3.</li>
-</ul>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fb560dc6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>For FEF forces, look at standard cases: (1) distributed load, (2) point load in center of span</p>
+<div style="display:flex; align-items:flex-start; gap:2rem;">
+<!-- Left: figure -->
+<div style="flex:1.2; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Frame_Example.png" style="width:100%;"/>
+</div>
+<!-- Right: equation -->
+<div style="flex:1; font-size:0.55em; line-height:1.05;">
+<p>$$
+\mathbf{K}_{18\times 18}
+\begin{Bmatrix}
+0\\0\\0\\u_4\\0\\u_6\\u_7\\u_8\\u_9\\u_{10}\\u_{11}\\u_{12}\\u_{13}\\u_{14}\\u_{15}\\u_{16}\\u_{17}\\u_{18}
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+R_1\\R_2\\R_3\\0\\R_5\\0\\100\\0\\0\\0\\0\\-75\\50\\-57.5\\0\\0\\-57.5\\0
+\end{Bmatrix}
++
+\begin{Bmatrix}
+0\\0\\0\\0\\0\\0\\0\\F^{F}_{8}\\F^{F}_{9}\\0\\F^{F}_{11}\\F^{F}_{12}\\0\\F^{F}_{14}\\F^{F}_{15}\\0\\F^{F}_{17}\\F^{F}_{18}
+\end{Bmatrix}
+$$</p>
+</div>
+</div>
+<br/>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f6b85809">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=06463255">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-8-%E2%80%94-Relating-Moment-to-Rotation">Part 8 — Relating Moment to Rotation<a class="anchor-link" href="#Part-8-%E2%80%94-Relating-Moment-to-Rotation">¶</a></h2><p>Before deriving the beam stiffness matrix, it is helpful to recall the analogy
-between <strong>axial deformation in a truss</strong> and <strong>bending deformation in a beam</strong>.</p>
+<h2 id="Part-6-%E2%80%94-2D-Frame-Element-Stiffness-Relations">Part 6 — 2D Frame Element Stiffness Relations<a class="anchor-link" href="#Part-6-%E2%80%94-2D-Frame-Element-Stiffness-Relations">¶</a></h2><blockquote>
+<p>Local Behavior</p>
+</blockquote>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=086ce805">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=403712f5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Recall:-Truss-(Axial-Deformation)">Recall: Truss (Axial Deformation)<a class="anchor-link" href="#Recall:-Truss-(Axial-Deformation)">¶</a></h3><p>For a prismatic bar in axial tension/compression:</p>
-<p>$$
-F = \frac{E A}{L}\, u
-$$</p>
+<h3 id="Frame-Element-Response">Frame Element Response<a class="anchor-link" href="#Frame-Element-Response">¶</a></h3><p>The <strong>member stiffness relations</strong> express the end forces of a beam element as functions of the <strong>end displacements</strong></p>
+<p>When a beam element is subjected to external loading:</p>
 <ul>
-<li>$F$ = axial force</li>
-<li>$u$ = axial displacement</li>
-<li>$E$ = Young’s modulus</li>
-<li>$A$ = cross-sectional area</li>
-<li>$L$ = member length</li>
+<li><strong>Axial forces</strong> develop at the ends</li>
+<li><strong>Shear forces</strong> develop at the ends</li>
+<li><strong>Bending moments</strong> are induced at the ends</li>
 </ul>
-<p>The axial stiffness is therefore:</p>
-<p>$$
-k_{\text{axial}} = \frac{EA}{L}
-$$</p>
+<p>These loads are fully determined by the <strong>displacements and rotations at the element ends</strong>.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8b0d6e7f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0859c71c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Beam:-Bending-and-Rotation">Beam: Bending and Rotation<a class="anchor-link" href="#Beam:-Bending-and-Rotation">¶</a></h3><p>For bending of a prismatic beam, the fundamental curvature relation from flexural theory:</p>
-<p>$$
-\kappa = \frac{M}{E I}
-$$</p>
-<p>where:</p>
+<h3 id="Generic-Displacement-for-a-2D-Frame-Element">Generic Displacement for a 2D Frame Element<a class="anchor-link" href="#Generic-Displacement-for-a-2D-Frame-Element">¶</a></h3><p>We define all quantities in the <strong>local coordinate system</strong>, with origin at the left end $b$, and ending at node $e$.</p>
+<div style="display:flex; gap:1.2rem; align-items:center;">
+<div style="flex:0.80;">
+<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L1_GenericFrame.png" style="width:100%; height:auto;"/>
+<figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=eacb4393">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="2D-Beam-Element-DOF-Numbering">2D Beam Element DOF Numbering<a class="anchor-link" href="#2D-Beam-Element-DOF-Numbering">¶</a></h3><p>Degrees of freedom are ordered from <strong>left → right</strong> node</p>
+<div style="display:flex; gap:1.3rem; align-items:center;">
+<!-- Figure -->
+<div style="flex:0.50;">
+<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L1_GenericFrame.png" style="width:100%; height:auto;"/>
+<figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
+</figure>
+</div>
+<!-- Text -->
+<div style="flex:0.50;">
 <ul>
-<li>$M$ = bending moment</li>
-<li>$E$ = Young’s modulus</li>
-<li>$I$ = second moment of area</li>
+<li><strong>DOF 1:</strong> $u_1$ — node $b$, local $x$</li>
+<li><strong>DOF 2:</strong> $u_2$ — node $b$, local $y$</li>
+<li><strong>DOF 3:</strong> $u_3$ — node $b$, $\theta$</li>
+<li><strong>DOF 4:</strong> $u_4$ — node $b$, local $x$</li>
+<li><strong>DOF 5:</strong> $u_5$ — node $e$, local $y$</li>
+<li><strong>DOF 6:</strong> $u_6$ — node $e$, $\theta$</li>
+</ul>
+</div>
+</div>
+<p><strong>Sign conventions:</strong></p>
+<ul>
+<li>$+u_x$ → right (local $x$ direction)</li>
+<li>$+u_y$ → up (local $y$ direction)</li>
+<li>$+\theta$ → counterclockwise</li>
+<li>Forces follow the same order and convention</li>
 </ul>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7ed5a8b7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=db1a03ae">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Curvature-from-Displacement">Curvature from Displacement<a class="anchor-link" href="#Curvature-from-Displacement">¶</a></h3><p>Curvature is the second derivative of transverse displacement:</p>
-<p>$$
-\kappa = \frac{d^2 u}{dx^2}
+<h3 id="Relating-Local-Displacement-and-Force">Relating Local Displacement and Force<a class="anchor-link" href="#Relating-Local-Displacement-and-Force">¶</a></h3><p>$$\boldsymbol{Q} = \boldsymbol{k}\,\boldsymbol{u} + \boldsymbol{Q_f}$$</p>
+<ul>
+<li>$\mathbf{Q}$ denotes the $6 \times 1$ member end-force vector</li>
+<li>$\mathbf{u}$ denote the $6 \times 1$ member end-displacement vectors</li>
+<li>$\mathbf{k}$ represents the $6 \times 6$ member local stiffness matrix</li>
+<li>$\mathbf{Q}_f$ is the $6 \times 1$ member fixed-end force vector in the local coordinate system.</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a2efeb88">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="6-Linear-Equations-(one-per-DOF)">6 Linear Equations (one per DOF)<a class="anchor-link" href="#6-Linear-Equations-(one-per-DOF)">¶</a></h3><p>For a linear elastic element, the force at any DOF is a <strong>linear combination</strong> of the force induced by all DOF displacements:</p>
+<ul>
+<li>displacing one DOF can induce forces at <em>all</em> DOFs</li>
+<li>the proportionality constants are the stiffness coefficients $k_{ij}$</li>
+</ul>
+<p>Each equation expresses <strong>force equilibrium at a single local degree of freedom</strong>.</p>
+<p>For example DOF 1:
+$$
+Q_1 = k_{11}u_1 + k_{12}u_2 + k_{13}u_3 + k_{14}u_4 + Q_{f,1}
 $$</p>
-<p>Therefore,</p>
+<p>Rather than writing out all 6 equations:</p>
 <p>$$
-\frac{d^2 u}{dx^2} = \frac{M}{EI}
+Q_i = \sum_{j=1}^{6} \left( k_{ij} \, u_j \right) + Q_{fi},
+\qquad i = 1, 2, \ldots, 6
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f0456f94">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=087cbe1e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Connecting-to-Rotation">Connecting to Rotation<a class="anchor-link" href="#Connecting-to-Rotation">¶</a></h3><p>Rotation is the <strong>slope</strong> of the deflection curve:</p>
-<p>$$
-\theta = \frac{du}{dx}
-$$</p>
-<p>So curvature is the derivative of rotation,</p>
-<p>$$
-\kappa = \frac{d\theta}{dx} = \frac{d^2 u}{dx^2}
-$$</p>
-<p>Substituting the bending relation:</p>
-<p>$$
-\frac{d\theta}{dx}
+<h3 id="Same-Equations-in-Matrix-Form">Same Equations in Matrix Form<a class="anchor-link" href="#Same-Equations-in-Matrix-Form">¶</a></h3><p>$$
+\begin{Bmatrix}
+Q_1\\
+Q_2\\
+Q_3\\
+Q_4\\
+Q_5\\
+Q_6
+\end{Bmatrix}
 =
-\frac{M}{EI}
+\begin{bmatrix}
+k_{11} &amp; k_{12} &amp; k_{13} &amp; k_{14} &amp; k_{15} &amp; k_{16}\\
+k_{21} &amp; k_{22} &amp; k_{23} &amp; k_{24} &amp; k_{25} &amp; k_{26}\\
+k_{31} &amp; k_{32} &amp; k_{33} &amp; k_{34} &amp; k_{35} &amp; k_{36}\\
+k_{41} &amp; k_{42} &amp; k_{43} &amp; k_{44} &amp; k_{45} &amp; k_{46}\\
+k_{51} &amp; k_{52} &amp; k_{53} &amp; k_{54} &amp; k_{55} &amp; k_{56}\\
+k_{61} &amp; k_{62} &amp; k_{63} &amp; k_{64} &amp; k_{65} &amp; k_{66}
+\end{bmatrix}
+\begin{Bmatrix}
+u_1\\
+u_2\\
+u_3\\
+u_4\\
+u_5\\
+u_6
+\end{Bmatrix}
++
+\begin{Bmatrix}
+Q_{f1}\\
+Q_{f2}\\
+Q_{f3}\\
+Q_{f4}\\
+Q_{f5}\\
+Q_{f6}
+\end{Bmatrix}
 $$</p>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cfe6d565">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42118e2f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Integrating-Along-the-Member">Integrating Along the Member<a class="anchor-link" href="#Integrating-Along-the-Member">¶</a></h3><p>Integrate over a beam segment of length $L$:</p>
-<p>$$
-\Delta \theta
-=
-\int_0^L \frac{M(x)}{EI}\, dx
-$$</p>
-<p>For the simple case of <strong>constant bending moment</strong> ($M(x) = M$):</p>
-<p>$$
-\Delta \theta = \frac{ML}{EI}
-$$</p>
-<p>Rearranging gives a stiffness-like relationship:</p>
-<p>$$
-M = \frac{EI}{L}\, \Delta \theta
-$$</p>
+<h2 id="Part-6---2D-Frame-Element-Stiffness-Matrix">Part 6 - 2D Frame Element Stiffness Matrix<a class="anchor-link" href="#Part-6---2D-Frame-Element-Stiffness-Matrix">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=088ba8ea">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f6c0800e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Analogy:-Truss-(Axial)-vs-Beam-(Bending)">Analogy: Truss (Axial) vs Beam (Bending)<a class="anchor-link" href="#Analogy:-Truss-(Axial)-vs-Beam-(Bending)">¶</a></h3><p>The stiffness relationships for trusses and beams follow the same structural pattern.</p>
-<table>
-<thead>
-<tr>
-<th>Axial Bar (Truss)</th>
-<th>Beam (Bending)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>$u = \dfrac{F L}{EA}$</td>
-<td>$\Delta\theta = \dfrac{M L}{EI}$</td>
-</tr>
-<tr>
-<td>$F = \dfrac{EA}{L}\, u$</td>
-<td>$M = \dfrac{EI}{L}\, \Delta\theta$</td>
-</tr>
-</tbody>
-</table>
-<p>Both have the general form:</p>
+<h3 id="Unit-Displacement-Method">Unit Displacement Method<a class="anchor-link" href="#Unit-Displacement-Method">¶</a></h3><p>You can derive 2D frame element from scratch using unit displacement method.</p>
 <p>$$
-\text{Force-like quantity} = \text{(stiffness)} \times \text{deformation}
+k_{ij} = \text{force at DOF } i \text{ due to a unit displacement at DOF } j, \text{ with all other DOFs fixed.}
 $$</p>
+<div style="display:flex; gap:1.2rem; align-items:center;">
+<div style="flex:0.80;">
+<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L1_UnitDisplacement.png" style="width:100%; height:auto;"/>
+<figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
+</figure>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e0b9f1e6">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14803ab1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Key-Insight">Key Insight<a class="anchor-link" href="#Key-Insight">¶</a></h3><ul>
-<li>In a <strong>truss</strong>, axial force is proportional to axial displacement.</li>
-<li>In a <strong>beam</strong>, bending moment is proportional to rotation.</li>
-</ul>
-<p>This analogy allows us to anticipate the structure of the <strong>beam element stiffness matrix</strong>:</p>
+<h3 id="Combination-of-Truss-and-Beam-Stiffnesses">Combination of Truss and Beam Stiffnesses<a class="anchor-link" href="#Combination-of-Truss-and-Beam-Stiffnesses">¶</a></h3><p>We have already derived the <strong>axial (truss)</strong> and <strong>bending (beam)</strong> stiffness matrices.</p>
+<p>For a 2D frame element (local DOF ordering<br>
+$(u_1,\, v_1,\, \theta_1,\, u_2,\, v_2,\, \theta_2)$):</br></p>
 <ul>
-<li>Axial DOFs → relate forces to translations via $\dfrac{EA}{L}$</li>
-<li>Rotational DOFs → relate moments to rotations via $\dfrac{EI}{L}$</li>
+<li>Axial effects act in <strong>DOFs 1 and 4</strong></li>
+<li>Bending effects act in <strong>DOFs 2, 3, 5, 6</strong></li>
+<li>In local coordinates, these effects are <strong>decoupled</strong></li>
 </ul>
-<p>The beam stiffness matrix will therefore contain terms that connect <strong>moments and rotations</strong> in exactly the same systematic way that the truss matrix connects <strong>forces and displacements</strong>.</p>
+<p>Therefore, the frame stiffness matrix is obtained by <strong>superposing</strong> the two contributions:</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7d2c6878">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Axial-+-Bending-Stiffness">Axial + Bending Stiffness<a class="anchor-link" href="#Axial-+-Bending-Stiffness">¶</a></h3><p>$$
+\small
+\mathbf{k}_{\text{frame}}
+=
+\underbrace{
+\frac{EA}{L}
+\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp;  0 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp;  0 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 0 &amp;  1 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp;  0 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp;  0 &amp; 0 &amp; 0
+\end{bmatrix}
+}_{\text{axial}}
++
+\underbrace{
+\frac{EI}{L^3}
+\begin{bmatrix}
+ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; 12 &amp; 6L &amp; 0 &amp; -12 &amp; 6L \\
+ 0 &amp; 6L &amp; 4L^2 &amp; 0 &amp; -6L &amp; 2L^2 \\
+ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; -12 &amp; -6L &amp; 0 &amp; 12 &amp; -6L \\
+ 0 &amp; 6L &amp; 2L^2 &amp; 0 &amp; -6L &amp; 4L^2
+\end{bmatrix}
+}_{\text{bending}}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b38bf00">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="2D-Frame-Stiffness-Matrix">2D Frame Stiffness Matrix<a class="anchor-link" href="#2D-Frame-Stiffness-Matrix">¶</a></h3><p>$$
+\mathbf{k}_{\text{frame}}
+=
+\begin{bmatrix}
+\frac{EA}{L} &amp; 0 &amp; 0 &amp; -\frac{EA}{L} &amp; 0 &amp; 0 \\
+0 &amp; \frac{12EI}{L^3} &amp; \frac{6EI}{L^2} &amp; 0 &amp; -\frac{12EI}{L^3} &amp; \frac{6EI}{L^2} \\
+0 &amp; \frac{6EI}{L^2} &amp; \frac{4EI}{L} &amp; 0 &amp; -\frac{6EI}{L^2} &amp; \frac{2EI}{L} \\
+-\frac{EA}{L} &amp; 0 &amp; 0 &amp; \frac{EA}{L} &amp; 0 &amp; 0 \\
+0 &amp; -\frac{12EI}{L^3} &amp; -\frac{6EI}{L^2} &amp; 0 &amp; \frac{12EI}{L^3} &amp; -\frac{6EI}{L^2} \\
+0 &amp; \frac{6EI}{L^2} &amp; \frac{2EI}{L} &amp; 0 &amp; -\frac{6EI}{L^2} &amp; \frac{4EI}{L}
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2de464ab">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="2D-Frame-Stiffness-Matrix-(Factored)">2D Frame Stiffness Matrix (Factored)<a class="anchor-link" href="#2D-Frame-Stiffness-Matrix-(Factored)">¶</a></h3><p>$$
+\mathbf{k}_{\text{frame}}
+=
+\frac{EI}{L^{3}}
+\begin{bmatrix}
+\frac{A L^{2}}{I} &amp; 0 &amp; 0 &amp; -\frac{A L^{2}}{I} &amp; 0 &amp; 0 \\
+0 &amp; 12 &amp; 6L &amp; 0 &amp; -12 &amp; 6L \\
+0 &amp; 6L &amp; 4L^{2} &amp; 0 &amp; -6L &amp; 2L^{2} \\
+-\frac{A L^{2}}{I} &amp; 0 &amp; 0 &amp; \frac{A L^{2}}{I} &amp; 0 &amp; 0 \\
+0 &amp; -12 &amp; -6L &amp; 0 &amp; 12 &amp; -6L \\
+0 &amp; 6L &amp; 2L^{2} &amp; 0 &amp; -6L &amp; 4L^{2}
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=827d137e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Test">Test<a class="anchor-link" href="#Test">¶</a></h3>
 </div>
 </div>
 </div>
@@ -8347,18 +8377,7 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
-<ul>
-<li>discretized a beam into members + joints</li>
-<li>defined global/local coordinate systems (and when transformations are unnecessary)</li>
-<li>introduced beam DOFs $(u,\theta)$ and sign conventions</li>
-<li>counted and numbered DOFs, identifying restrained coordinates</li>
-<li>connected loads/reactions to DOFs and formed $\mathbf{K}\mathbf{u}=\mathbf{f}$</li>
-<li>related moment ↔ rotation using the truss–beam analogy</li>
-</ul>
 <p>Next lecture:</p>
-<ul>
-<li>derive the beam element stiffness matrix and begin assembling beam systems</li>
-</ul>
 </div>
 </div>
 </div>
