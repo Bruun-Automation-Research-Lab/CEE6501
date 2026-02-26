@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>CEE6501 — Lecture 6.1 — Beams (2D Bending) slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>CEE6501 — Lecture 7.2 — 2D Frames (Local ↔ Global) slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-7.2">CEE6501 — Lecture 7.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-7.2">¶</a></h1><h2 id="Introduction-to-2D-Frame-Analysis">Introduction to 2D Frame Analysis<a class="anchor-link" href="#Introduction-to-2D-Frame-Analysis">¶</a></h2>
+<h1 id="CEE6501-%E2%80%94-Lecture-7.2">CEE6501 — Lecture 7.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-7.2">¶</a></h1><h2 id="Global-Formulation-for-2D-Frame-Analysis">Global Formulation for 2D Frame Analysis<a class="anchor-link" href="#Global-Formulation-for-2D-Frame-Analysis">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7454,7 +7454,11 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li></li>
+<li>Define consistent local and global coordinate systems for 2D frame elements</li>
+<li>Build the 2D frame transformation matrix $\boldsymbol{T}$ and apply it to forces and displacements</li>
+<li>Derive and use the global member relation $\boldsymbol{F}=\boldsymbol{K}\boldsymbol{u}+\boldsymbol{F}^F$</li>
+<li>Compute and transform fixed-end force (FEF) vectors for member loads</li>
+<li>Outline and execute the DSM forward pass (solve) and backward pass (recover element forces)</li>
 </ul>
 </div>
 </div>
@@ -7466,41 +7470,45 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><p>Part 1 — Roadmap: truss → beam → 3D frame<br/>
-Part 2 —</p>
+<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><p>Part 1 — Local ↔ global transformations<br/>
+Part 2 — Global stiffness relationship<br/>
+Part 3 — 2D frame element stiffness matrix (global form)<br/>
+Part 4 — Member forces (global coordinates)<br/>
+Part 5 — Worked example (Kassimali 6.3–6.4)<br/>
+Part 6 — DSM full procedure for 2D frames</p>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=827d137e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_part1_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1---Local-to-Global-Transformation">Part 1 - Local to Global Transformation<a class="anchor-link" href="#Part-1---Local-to-Global-Transformation">¶</a></h2>
+<h2 id="Part-1-%E2%80%94-Local-to-Global-Transformation">Part 1 — Local to Global Transformation<a class="anchor-link" href="#Part-1-%E2%80%94-Local-to-Global-Transformation">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=39fc326e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_note_truss_reference">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Note</strong>: See Lecture 3.2 slides (Trusses) for detaled information on this.</p>
+<p><strong>Note:</strong> See Lecture 3.2 (Trusses) for detailed background on direction cosines and transformations.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=37d9c10b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_generic_element_figure">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Generic-Truss-Element-in-a-Structure">Generic Truss Element in a Structure<a class="anchor-link" href="#Generic-Truss-Element-in-a-Structure">¶</a></h3><div style="display:flex; gap:1.2rem; align-items:center;">
+<h3 id="Generic-Element-in-a-Structure">Generic Element in a Structure<a class="anchor-link" href="#Generic-Element-in-a-Structure">¶</a></h3><div style="display:flex; gap:1.2rem; align-items:center;">
 <div style="flex:0.80;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L2_FrameGlobal.png" style="width:100%; height:auto;"/>
@@ -7512,13 +7520,13 @@ Part 2 —</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bff950ca">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_local_global_perspective">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local/Global-Perspective">Local/Global Perspective<a class="anchor-link" href="#Local/Global-Perspective">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
+<h3 id="Local-vs.-Global-Perspective">Local vs. Global Perspective<a class="anchor-link" href="#Local-vs.-Global-Perspective">¶</a></h3><div style="display:flex; gap:1.5rem; align-items:center;">
 <div style="flex:0.95;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L2_Local2Global.png" style="width:80%; height:auto;"/>
@@ -7529,14 +7537,14 @@ Part 2 —</p>
 </div>
 </div>
 <ul>
-<li><strong>Local coordinate system (left):</strong> forces $\boldsymbol{Q}$, displacements $\boldsymbol{u}$</li>
-<li><strong>Global coordinate system (right):</strong> forces $\boldsymbol{F}$, displacements $\boldsymbol{v}$</li>
+<li><strong>Local coordinates (left):</strong> forces $\boldsymbol{Q}$, displacements $\boldsymbol{u}$</li>
+<li><strong>Global coordinates (right):</strong> forces $\boldsymbol{F}$, displacements $\boldsymbol{v}$</li>
 </ul>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6cf313a0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_force_transform_global_to_local_closed_form">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7551,11 +7559,11 @@ Q_2 &amp;= -F_1 \sin \theta + F_2 \cos \theta \\
 Q_3 &amp;= F_3
 \end{aligned}
 $$</p>
-<p>The local and global $z$-axes are aligned (out of plane), therefore the bending moment is unchanged:</p>
+<p>The local and global $z$-axes are aligned (out of plane), so the bending moment is unchanged:</p>
 <p>$$
 Q_3 = F_3
 $$</p>
-<p>At node, $j$:</p>
+<p>At node $j$:</p>
 <p>$$
 \begin{aligned}
 Q_4 &amp;= F_4 \cos \theta + F_5 \sin \theta \\
@@ -7567,7 +7575,7 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ecc6bdf0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_force_transform_global_to_local_matrix">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7599,20 +7607,20 @@ $$</p>
 }_{\boldsymbol{T}}
 \begin{Bmatrix}F_1\\F_2\\F_3\\F_4\\F_5\\F_6\end{Bmatrix}
 $$</p>
-<p><strong>Note:</strong> This is identical to the truss transformation for translational DOFs; the only addition is the rotational DOF (unchanged). See truss lecture for details on <strong>direction cosines</strong>.</p>
+<p><strong>Note:</strong> This matches the truss transformation for translational DOFs; the only addition is the rotational DOF (unchanged).</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7ec2616d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_displacement_transform_global_to_local">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Global-($%5Cboldsymbol%7Bv%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7Bu%7D$)-Displacements">Global ($\boldsymbol{v}$) → Local ($\boldsymbol{u}$) Displacements<a class="anchor-link" href="#Global-($%5Cboldsymbol%7Bv%7D$)-%E2%86%92-Local-($%5Cboldsymbol%7Bu%7D$)-Displacements">¶</a></h3><ul>
-<li>Nodal displacements are transformed using the <strong>same rotation matrix</strong> as forces</li>
-<li>Displacements and forces transform identically because they are defined along the <strong>same directions</strong></li>
+<li>Displacements are transformed using the <strong>same rotation matrix</strong> as forces</li>
+<li>Forces and displacements transform identically because they are defined along the <strong>same directions</strong></li>
 </ul>
 <p>$$
 \boldsymbol{u} = \boldsymbol{T}\boldsymbol{v}
@@ -7621,48 +7629,48 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b8649cfd">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_reverse_transforms_local_to_global">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)-Force">Local ($\boldsymbol{Q}$) → Global ($\boldsymbol{F}$) Force<a class="anchor-link" href="#Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)-Force">¶</a></h3><ul>
-<li>This is the <strong>reverse of the global → local process</strong></li>
-<li>Local member forces or displacements are <strong>rotated back</strong> into the global $(X,Y)$ directions
-$$
+<h3 id="Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)">Local ($\boldsymbol{Q}$) → Global ($\boldsymbol{F}$)<a class="anchor-link" href="#Local-($%5Cboldsymbol%7BQ%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7BF%7D$)">¶</a></h3><ul>
+<li>Reverse of the global → local process</li>
+<li>Rotate local quantities back into the global $(X,Y)$ directions</li>
+</ul>
+<p>$$
 \boldsymbol{F} = \boldsymbol{T}^{\mathsf{T}}\boldsymbol{Q}
-$$</li>
+$$</p>
+<h3 id="Local-($%5Cboldsymbol%7Bu%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7Bv%7D$)">Local ($\boldsymbol{u}$) → Global ($\boldsymbol{v}$)<a class="anchor-link" href="#Local-($%5Cboldsymbol%7Bu%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7Bv%7D$)">¶</a></h3><ul>
+<li>Reverse of the global → local process</li>
+<li>Rotate local quantities back into the global $(X,Y)$ directions</li>
 </ul>
-<h3 id="Local-($%5Cboldsymbol%7Bu%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7Bv%7D$)-Displacements">Local ($\boldsymbol{u}$) → Global ($\boldsymbol{v}$) Displacements<a class="anchor-link" href="#Local-($%5Cboldsymbol%7Bu%7D$)-%E2%86%92-Global-($%5Cboldsymbol%7Bv%7D$)-Displacements">¶</a></h3><ul>
-<li>This is the <strong>reverse of the global → local process</strong></li>
-<li>Local member forces or displacements are <strong>rotated back</strong> into the global $(X,Y)$ directions
-$$
+<p>$$
 \boldsymbol{v} = \boldsymbol{T}^{\mathsf{T}}\boldsymbol{u}
-$$</li>
-</ul>
+$$</p>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=361033ec">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_part2_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-2---Global-Stiffness-Relationship">Part 2 - Global Stiffness Relationship<a class="anchor-link" href="#Part-2---Global-Stiffness-Relationship">¶</a></h2>
+<h2 id="Part-2-%E2%80%94-Global-Stiffness-Relationship">Part 2 — Global Stiffness Relationship<a class="anchor-link" href="#Part-2-%E2%80%94-Global-Stiffness-Relationship">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7d755341">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_local_relation_reminder">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We start from the known local relation:</p>
+<p>We start from the local relation:</p>
 <p>$$
 \mathbf{Q} = \mathbf{k}\mathbf{u} + \mathbf{Q}^F
 $$</p>
@@ -7677,29 +7685,29 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ca3a9ac0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_step1_transform_forces">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Step-1-%E2%80%94-Transform-Forces-to-Global-System">Step 1 — Transform Forces to Global System<a class="anchor-link" href="#Step-1-%E2%80%94-Transform-Forces-to-Global-System">¶</a></h3><p>Forces transform as:</p>
+<h3 id="Step-1-%E2%80%94-Transform-Forces-to-the-Global-System">Step 1 — Transform Forces to the Global System<a class="anchor-link" href="#Step-1-%E2%80%94-Transform-Forces-to-the-Global-System">¶</a></h3><p>Forces transform as:</p>
 <p>$$
-\mathbf{F} = \mathbf{T}^T \mathbf{Q}
+\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{Q}
 $$</p>
 <p>Substitute the local stiffness relation:</p>
 <p>$$
-\mathbf{F} = \mathbf{T}^T(\mathbf{k}\mathbf{u} + \mathbf{Q}^F)
+\mathbf{F} = \mathbf{T}^{\mathsf{T}}(\mathbf{k}\mathbf{u} + \mathbf{Q}^F)
 $$</p>
 <p>Distribute:</p>
 <p>$$
-\mathbf{F} = \mathbf{T}^T \mathbf{k} \mathbf{u} + \mathbf{T}^T \mathbf{Q}^F
+\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{u} + \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=67da228f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_step2_transform_displacements">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7709,44 +7717,43 @@ $$</p>
 <p>$$
 \mathbf{u} = \mathbf{T}\mathbf{v}
 $$</p>
-<p>Substitute into previous equation:</p>
+<p>Substitute into the previous equation:</p>
 <p>$$
-\mathbf{F} = \mathbf{T}^T \mathbf{k} \mathbf{T}\mathbf{v} + \mathbf{T}^T \mathbf{Q}^F
+\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{T}\mathbf{v} + \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1a1aaf6c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_step3_define_global_quantities">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Step-3-%E2%80%94-Define-Global-Quantities">Step 3 — Define Global Quantities<a class="anchor-link" href="#Step-3-%E2%80%94-Define-Global-Quantities">¶</a></h3><p>Define:</p>
-<p>Global Member Stiffness Matrix</p>
+<h3 id="Step-3-%E2%80%94-Define-Global-Quantities">Step 3 — Define Global Quantities<a class="anchor-link" href="#Step-3-%E2%80%94-Define-Global-Quantities">¶</a></h3><p>Global member stiffness matrix:</p>
 <p>$$
-\boxed{\mathbf{K} = \mathbf{T}^T \mathbf{k} \mathbf{T}}
+\boxed{\mathbf{K} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{T}}
 $$</p>
-<p>Global Fixed-End Force Vector</p>
+<p>Global fixed-end force vector:</p>
 <p>$$
-\boxed{\mathbf{F}^F = \mathbf{T}^T \mathbf{Q}^F}
+\boxed{\mathbf{F}^F = \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F}
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=20a385ff">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_final_global_member_relation">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Final-Global-Member-Relation">Final Global Member Relation<a class="anchor-link" href="#Final-Global-Member-Relation">¶</a></h3><p>Substitute definitions:</p>
+<h3 id="Final-Global-Member-Relation">Final Global Member Relation<a class="anchor-link" href="#Final-Global-Member-Relation">¶</a></h3><p>Substitute the definitions:</p>
 <p>$$
 \boxed{\mathbf{F} = \mathbf{K}\mathbf{v} + \mathbf{F}^F}
 $$</p>
-<p>Consistent with our notation, where we use $u$ for global</p>
+<p>In our course notation, we typically use $\mathbf{u}$ for global displacements:</p>
 <p>$$
 \boxed{\mathbf{F} = \mathbf{K}\mathbf{u} + \mathbf{F}^F}
 $$</p>
@@ -7754,26 +7761,26 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1bf0878c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_part3_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3---2D-Frame-Element-Stiffness-Matrix">Part 3 - 2D Frame Element Stiffness Matrix<a class="anchor-link" href="#Part-3---2D-Frame-Element-Stiffness-Matrix">¶</a></h2><blockquote>
+<h2 id="Part-3-%E2%80%94-2D-Frame-Element-Stiffness-Matrix">Part 3 — 2D Frame Element Stiffness Matrix<a class="anchor-link" href="#Part-3-%E2%80%94-2D-Frame-Element-Stiffness-Matrix">¶</a></h2><blockquote>
 <p>Global Coordinates</p>
 </blockquote>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=52beb6b8">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_unit_displacement_method">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Unit-Displacement-Method">Unit Displacement Method<a class="anchor-link" href="#Unit-Displacement-Method">¶</a></h3><p>You can derive 2D frame element from scratch using unit displacement method.</p>
+<h3 id="Unit-Displacement-Method">Unit Displacement Method<a class="anchor-link" href="#Unit-Displacement-Method">¶</a></h3><p>You can derive the 2D frame element from scratch using the unit displacement method:</p>
 <p>$$
 k_{ij} = \text{force at DOF } i \text{ due to a unit displacement at DOF } j, \text{ with all other DOFs fixed.}
 $$</p>
@@ -7781,7 +7788,7 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f5e69c3c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_unit_displacement_figure">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7799,14 +7806,14 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bbbca83b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_closed_form_k">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Closed-Form-Expression">Closed Form Expression<a class="anchor-link" href="#Closed-Form-Expression">¶</a></h3><p>A closed-form expression for the global member stiffness matrix <strong>does exist</strong> for frame elements (Section 6.4 in Kassimali)</p>
-<p>However, unlike the truss case, the resulting expression is considerably more involved and not especially transparent.</p>
+<h3 id="Closed-Form-Expression">Closed-Form Expression<a class="anchor-link" href="#Closed-Form-Expression">¶</a></h3><p>A closed-form expression for the global member stiffness matrix <strong>does exist</strong> for frame elements (Kassimali, Section 6.4).</p>
+<p>However, unlike the truss case, the resulting expression is more involved and not especially transparent.</p>
 <div style="display:flex; gap:1.2rem; align-items:center;">
 <div style="flex:1.0;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
@@ -7819,57 +7826,57 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=78d1a768">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_prefer_tkt">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>For this reason, it is generally cleaner and more systematic to just compute:</p>
+<p>For this reason, it is generally cleaner and more systematic to compute:</p>
 <p>$$
-\mathbf{K} = \mathbf{T}^T \mathbf{k} \mathbf{T}
+\mathbf{K} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{T}
 $$</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=be3bd65f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_part4_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-4---Member-Forces">Part 4 - Member Forces<a class="anchor-link" href="#Part-4---Member-Forces">¶</a></h2><blockquote>
+<h2 id="Part-4-%E2%80%94-Member-Forces">Part 4 — Member Forces<a class="anchor-link" href="#Part-4-%E2%80%94-Member-Forces">¶</a></h2><blockquote>
 <p>Global Coordinates</p>
 </blockquote>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f4ca0aa9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_why_rotate_fefs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-Need-to-Rotate-to-Global?">Why Need to Rotate to Global?<a class="anchor-link" href="#Why-Need-to-Rotate-to-Global?">¶</a></h3><p>We need the fixed-end forces (FEFs) in <strong>global coordinates</strong> before we assemble the structure, because the global system solution is written and solved in the <strong>global coordinate system</strong>.</p>
+<h3 id="Why-Do-We-Rotate-to-Global?">Why Do We Rotate to Global?<a class="anchor-link" href="#Why-Do-We-Rotate-to-Global?">¶</a></h3><p>We need fixed-end forces (FEFs) in <strong>global coordinates</strong> before assembly, because the global system is written and solved in the <strong>global coordinate system</strong>.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=991ee6c2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_math_expression_t_transpose">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Mathematical-Expression">Mathematical Expression<a class="anchor-link" href="#Mathematical-Expression">¶</a></h3><p>The force transformation we use for fixed-end forces is:</p>
+<h3 id="Mathematical-Expression">Mathematical Expression<a class="anchor-link" href="#Mathematical-Expression">¶</a></h3><p>The force transformation for fixed-end forces is:</p>
 <p>$$
-\mathbf{F}^F = \mathbf{T}^T \mathbf{Q}^F
+\mathbf{F}^F = \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F
 $$</p>
 <p>Using the same $\mathbf{T}$ as before:</p>
 <p>$$
-\mathbf{T}^T
+\mathbf{T}^{\mathsf{T}}
 =
 \begin{bmatrix}
 \cos\theta &amp; -\sin\theta &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
@@ -7884,7 +7891,7 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f83736ea">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_closed_form_fef_transform">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7901,7 +7908,7 @@ F_5^F\\
 F_6^F
 \end{Bmatrix}
 =
-\mathbf{T}^T
+\mathbf{T}^{\mathsf{T}}
 \begin{Bmatrix}
 Q_1^F\\
 Q_2^F\\
@@ -7924,7 +7931,7 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3dd7170f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_transformation_process">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7932,8 +7939,8 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Transformation-Process">Transformation Process<a class="anchor-link" href="#Transformation-Process">¶</a></h3><ol>
 <li>Compute the member fixed-end force vector in <strong>local</strong> coordinates: $\mathbf{Q}^F$</li>
-<li>Rotate it into <strong>global</strong> coordinates using: $\mathbf{F}^F = \mathbf{T}^T\mathbf{Q}^F$</li>
-<li>Assemble $\mathbf{F}^F$ into the global force vector (same coordinate system as the global stiffness matrix)</li>
+<li>Rotate it into <strong>global</strong> coordinates: $\mathbf{F}^F = \mathbf{T}^{\mathsf{T}}\mathbf{Q}^F$</li>
+<li>Assemble $\mathbf{F}^F$ into the global load vector (same coordinates as the global stiffness matrix)</li>
 </ol>
 <div style="text-align:center; margin-top:0.5rem;">
 <img alt="No description has been provided for this image" src="assets/L2_FEF_transform.png" style="width:85%; height:auto;"/>
@@ -7942,24 +7949,24 @@ $$</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3cc8f992">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_part5_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5---Example-(6.3-and-6.4-in-Kassimali)">Part 5 - Example (6.3 and 6.4 in Kassimali)<a class="anchor-link" href="#Part-5---Example-(6.3-and-6.4-in-Kassimali)">¶</a></h2>
+<h2 id="Part-5-%E2%80%94-Example-(Kassimali-6.3-and-6.4)">Part 5 — Example (Kassimali 6.3 and 6.4)<a class="anchor-link" href="#Part-5-%E2%80%94-Example-(Kassimali-6.3-and-6.4)">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=39a35e93">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_example_figure">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Continue with same structure.</p>
+<p>Continue with the same structure.</p>
 <div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L1_Example.png" style="width:70%;"/>
 </div>
@@ -7967,15 +7974,15 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=38a375a0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_local_to_global_forces_slide">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local--%3E-Global-Element-Forces">Local -&gt; Global Element Forces<a class="anchor-link" href="#Local--%3E-Global-Element-Forces">¶</a></h3><p>If given local element forces from earlier problem</p>
+<h3 id="Local-%E2%86%92-Global-Element-Forces">Local → Global Element Forces<a class="anchor-link" href="#Local-%E2%86%92-Global-Element-Forces">¶</a></h3><p>If given local element forces from an earlier step:</p>
 <p>$$
-\mathbf{F} = \mathbf{T}^T \mathbf{Q}
+\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{Q}
 $$</p>
 <p>$$
 \mathbf{Q} =
@@ -7989,34 +7996,31 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=495a81fa">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=sec5_code_transformation_matrix">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [114]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">transformation_matrix</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Returns the 6x6 transformation matrix T for a 2D frame element.</span>
-<span class="sd">    """</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>  <span class="c1"># convert degrees → radians</span>
-
+<span class="w">    </span><span class="sd">"""Return the 6x6 transformation matrix T for a 2D frame element (theta in degrees)."""</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>  <span class="c1"># degrees → radians</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
     <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-        <span class="p">[</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span> <span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
-        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">]</span>
-    <span class="p">])</span>
+        <span class="p">[</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">T</span>
 </pre></div>
@@ -8024,12 +8028,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f7291124">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_print_T">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [115]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">270</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
@@ -8059,18 +8063,17 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d289998e">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_compute_F_from_Q">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [116]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">436.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">67.669</span><span class="p">,</span> <span class="o">-</span><span class="mf">246.929</span><span class="p">,</span> <span class="o">-</span><span class="mf">580.5</span><span class="p">,</span> <span class="mf">259.669</span><span class="p">,</span> <span class="o">-</span><span class="mf">571.418</span><span class="p">])</span>
 
 <span class="n">F</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Q</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -8091,7 +8094,7 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=54452fd0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_example_result_F_figure">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8104,15 +8107,15 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7c46bd12">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_local_to_global_displacements_slide">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local--%3E-Global-Element-Displacements">Local -&gt; Global Element Displacements<a class="anchor-link" href="#Local--%3E-Global-Element-Displacements">¶</a></h3><p>If given local element forces from earlier problem</p>
+<h3 id="Local-%E2%86%92-Global-Element-Displacements">Local → Global Element Displacements<a class="anchor-link" href="#Local-%E2%86%92-Global-Element-Displacements">¶</a></h3><p>If given local element displacements from an earlier step:</p>
 <p>$$
-\mathbf{v} = \mathbf{T}^T \mathbf{u}
+\mathbf{v} = \mathbf{T}^{\mathsf{T}} \mathbf{u}
 $$</p>
 <p>$$
 \mathbf{u} =
@@ -8126,22 +8129,22 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8ed3b353">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_compute_v_from_u">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [117]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># displacement vector (units: m, rad)</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="mf">0.030599</span><span class="p">,</span>
     <span class="mf">0.023897</span><span class="p">,</span>
-   <span class="o">-</span><span class="mf">0.0029702</span><span class="p">,</span> <span class="c1"># Clockwise rotation is negative</span>
+   <span class="o">-</span><span class="mf">0.0029702</span><span class="p">,</span>  <span class="c1"># clockwise rotation is negative</span>
     <span class="mf">0.029582</span><span class="p">,</span>
     <span class="mf">0.021352</span><span class="p">,</span>
-   <span class="o">-</span><span class="mf">0.010447</span> <span class="c1"># Clockwise rotation is negative</span>
+   <span class="o">-</span><span class="mf">0.010447</span>    <span class="c1"># clockwise rotation is negative</span>
 <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
 <span class="n">v</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">u</span>
@@ -8165,7 +8168,7 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=84633b47">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_example_result_disp_figure">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8178,14 +8181,14 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=01512db7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_global_stiffness_relation_forces_slide">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Element-Forces-Using-Global-Stiffness-Relationship">Element Forces Using Global Stiffness Relationship<a class="anchor-link" href="#Element-Forces-Using-Global-Stiffness-Relationship">¶</a></h3><p>$$
-\mathbf{F} = \mathbf{T}^T \mathbf{k} \mathbf{T}\mathbf{v} + \mathbf{T}^T \mathbf{Q}^F
+<h3 id="Element-Forces-Using-the-Global-Stiffness-Relationship">Element Forces Using the Global Stiffness Relationship<a class="anchor-link" href="#Element-Forces-Using-the-Global-Stiffness-Relationship">¶</a></h3><p>$$
+\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{T}\mathbf{v} + \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F
 $$</p>
 <p>Given:</p>
 <p>$$
@@ -8215,12 +8218,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=079a35a8">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_compute_K_global">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [118]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
@@ -8233,7 +8236,6 @@ $$</p>
 <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
 <span class="n">K</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">k</span> <span class="o">@</span> <span class="n">T</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -8258,12 +8260,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f52132ee">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_transform_Qf_matrix">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [119]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">Qf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">72</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="o">-</span><span class="mi">72</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -8288,18 +8290,18 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b20bd1e3">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_transform_Qf_closed_form">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [120]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Should give same result as T.T @ Qf</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Should give the same result as T.T @ Qf</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">transform_Qf_to_global</span><span class="p">(</span><span class="n">Qf</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Compute F^F = T^T Q^F using the closed-form expressions."""</span>
+<span class="w">    </span><span class="sd">"""Compute F^F = T^T Q^F using the closed-form expressions (theta in degrees)."""</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
@@ -8337,12 +8339,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2a833a75">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_compute_F_global">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [121]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0388174</span><span class="p">,</span> <span class="mf">0.0007582</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0029702</span><span class="p">,</span>
@@ -8369,7 +8371,7 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b943dded">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_example_result_F_repeat_figure">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8382,7 +8384,7 @@ $$</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f3254bca">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_part6_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8393,7 +8395,7 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=78daec29">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_forward_pass_1_2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8423,7 +8425,7 @@ $$</li>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=db4a270f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_forward_pass_3_5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8456,7 +8458,7 @@ $$</li>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=132e2e6e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_forward_pass_6_8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8496,13 +8498,13 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ea0c0cc7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_backward_pass_1_4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Backward-Pass-%E2%80%94-Element-Recovery-and-Design">Backward Pass — Element Recovery and Design<a class="anchor-link" href="#Backward-Pass-%E2%80%94-Element-Recovery-and-Design">¶</a></h3><ol start="7">
+<h3 id="Backward-Pass-%E2%80%94-Element-Recovery-and-Design">Backward Pass — Element Recovery and Design<a class="anchor-link" href="#Backward-Pass-%E2%80%94-Element-Recovery-and-Design">¶</a></h3><ol>
 <li><p><strong>Extract element global displacement vectors</strong></p>
 <ul>
 <li>For each member, collect the relevant entries from $\boldsymbol{u}$ to form $\boldsymbol{u}_{(e)}$</li>
@@ -8513,10 +8515,9 @@ $$
 \boldsymbol{u}' = \boldsymbol{T}\,\boldsymbol{u}_{(e)}
 $$</p>
 </li>
-<li><p><strong>Extract element FEF vectors</strong></p>
+<li><p><strong>Extract element global FEF vectors</strong></p>
 <ul>
-<li>For each member, collect the relevant entries from $\boldsymbol{F^F}$ to form $\boldsymbol{F}^F_{(e)}$</li>
-<li>You already have these from Step (3)</li>
+<li>For each member, collect the relevant entries from $\boldsymbol{F}^F$ to form $\boldsymbol{F}^F_{(e)}$</li>
 </ul>
 </li>
 <li><p><strong>Transform FEFs to local coordinates</strong>
@@ -8529,44 +8530,42 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=085828f3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_backward_pass_5_6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<ol start="10">
+<ol start="5">
 <li><p><strong>Compute local element end forces and moments</strong>
 $$
-   \boldsymbol{f}' = \boldsymbol{k}'\,\boldsymbol{u}' + \boldsymbol{Q}^F
-   $$</p>
+\boldsymbol{f}' = \boldsymbol{k}'\,\boldsymbol{u}' + \boldsymbol{Q}^F
+$$</p>
 </li>
-<li><p><strong>Compute axial stress and bending stress (design quantities)</strong>
-- With the beam end forces, you can draw shear and bending moment diagrams for each member</p>
+<li><p><strong>Compute design quantities</strong></p>
+<ul>
+<li>Use local end forces to draw shear and bending moment diagrams (per member)</li>
+<li>Compute axial and bending stresses as needed</li>
+</ul>
 </li>
 </ol>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec9_wrap_up">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec7_wrap_up">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
-<p>Next lecture:</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ab4b6947">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li>Reviewed local ↔ global transformations for forces and displacements</li>
+<li>Applied transformtation in a worked example</li>
+<li>Built the global member relation $\mathbf{F} = \mathbf{K}\mathbf{u} + \mathbf{F}^F$</li>
+<li>Outlined the DSM procedure</li>
+</ul>
 </div>
 </div>
 </div>
