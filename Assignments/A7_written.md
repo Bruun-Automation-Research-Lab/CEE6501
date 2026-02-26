@@ -1,10 +1,10 @@
-# CEE6501 — Written Assignment, Week 6
+# CEE6501 — Written Assignment, Week 7
 
-**Assigned:** 02/20/2026 (Week 6)
+**Assigned:** 02/27/2026 (Week 7)
 
-**Due:** 03/02/2026
+**Due:** 03/12/2026
 
-**Canvas Submission Link:** <https://gatech.instructure.com/courses/517856/assignments/2320752>
+**Canvas Submission Link:** <https://gatech.instructure.com/courses/517856/assignments/2320540>
 
 ## Logistics
 
