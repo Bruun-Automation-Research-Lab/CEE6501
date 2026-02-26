@@ -334,29 +334,50 @@ N/A, 3D Truss Coding Assignment to be completed this week
 
 ## 📅 Week 7 — Direct Stiffness Method (Frames)
 
-This week extends the Direct Stiffness Method...
+This week extends the **Direct Stiffness Method (DSM)** to **2D frame elements**, combining axial and bending behavior
+within a single unified formulation. We build on last week’s beam theory and reintroduce axial deformation to develop
+the full 6×6 frame element stiffness matrix. Emphasis is placed on **local–global transformations**, consistent
+notation, and systematic assembly of complete frame systems.
 
-Kassimali – Chapter 6, §6.1...
-
-McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.1 (3D Coordinate transformations)
+Kassimali – Chapter 6, §6.1–6.5  
+McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.1 (3D Coordinate Transformations)
 
 ### 📖 Lectures
 
-#### Part 1 — Introduction to 2D Beam Analysis
+#### Part 1 — Introduction to 2D Frame Analysis
 
-Introduces the
+Introduces the **plane frame element** in local coordinates. We define the six element DOFs, combine axial and flexural
+stiffness contributions, and derive the full 6×6 local stiffness matrix.
 
-- 🌐 **Slides (HTML):** [L7_1_Frames.slides.html](Lectures/L7/L7_1_Frames.slides.html)
-- 📄 **Slides (PDF):** [L7_1_Frames.pdf](Lectures/L7/L7_1_Frames.pdf)
-- 📓 **Notebook:** [L7_1_Frames.ipynb](Lectures/L7/L7_1_Frames.ipynb)
+- 🌐 **Slides (HTML):** [L7_1_FramesLocal.slides.html](Lectures/L7/L7_1_FramesLocal.slides.html)
+- 📄 **Slides (PDF):** [L7_1_FramesLocal.pdf](Lectures/L7/L7_1_FramesLocal.pdf)
+- 📓 **Notebook:** [L7_1_FramesLocal.ipynb](Lectures/L7/L7_1_FramesLocal.ipynb)
 
-#### Part 2 —
+#### Part 2 — Global Formulation for 2D Frame Analysis
 
-#### Part 3 —
+Develops the **coordinate transformation matrix** and shows how element stiffness matrices are mapped from local to
+global coordinates. We assemble multi-member frame systems and construct the global equilibrium equations for complete
+2D frame problems.
+
+- 🌐 **Slides (HTML):** [L7_2_FramesGlobal.slides.html](Lectures/L7/L7_2_FramesGlobal.slides.html)
+- 📄 **Slides (PDF):** [L7_2_FramesGlobal.pdf](Lectures/L7/L7_2_FramesGlobal.pdf)
+- 📓 **Notebook:** [L7_2_FramesGlobal.ipynb](Lectures/L7/L7_2_FramesGlobal.ipynb)
+
+#### Part 3 — Miscellaneous Extra Topics
+
+Covers a set of practical and course-related topics. We review this week’s homework expectations, discuss how to prepare
+clear and well-structured Markdown writeups for submitted assignments, and go over key takeaways from the midterm exam.
+We also summarize and reflect on midterm course feedback, highlighting adjustments and clarifications moving forward.
+
+- 🌐 **Slides (HTML):** [L7_3_Extra.slides.html](Lectures/L7/L7_3_Extra.slides.html)
+- 📄 **Slides (PDF):** [L7_3_Extra.pdf](Lectures/L7/L7_3_Extra.pdf)
+- 📓 **Notebook:** [L7_3_Extra.ipynb](Lectures/L7/L7_3_Extra.ipynb)
 
 ### Extra In-Class Code
 
-N/A
+- [InClass_LocalFrame.ipynb](Code/L7/InClass_LocalFrame.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L7/InClass_LocalFrame.ipynb)
+- [Example_SolutionPresentation.md](Code/L7/Example_SolutionPresentation.md)
 
 ### 📝 Assignments
 
@@ -364,7 +385,11 @@ Use standard submission naming from Week 1.
 
 #### Assignment Files
 
-N/A, 3D Truss Coding Assignment to be completed this week
+- ✍️ **Written Assignment:** [A7_written.md](Assignments/A7_written.md)
+- 💻 **Coding Assignment:**
+
+  [A7_code.ipynb](Assignments/A7_code.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A7_code.ipynb)
 
 ---
 
