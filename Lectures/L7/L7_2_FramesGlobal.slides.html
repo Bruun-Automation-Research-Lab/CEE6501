@@ -7980,7 +7980,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-%E2%86%92-Global-Element-Forces">Local → Global Element Forces<a class="anchor-link" href="#Local-%E2%86%92-Global-Element-Forces">¶</a></h3><p>If given local element forces from an earlier step:</p>
+<h3 id="Global-Element-Forces-(Method-1)">Global Element Forces (Method 1)<a class="anchor-link" href="#Global-Element-Forces-(Method-1)">¶</a></h3><p>If given local element forces from an earlier step:</p>
 <p>$$
 \mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{Q}
 $$</p>
@@ -8001,7 +8001,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8033,7 +8033,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="mi">270</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
@@ -8068,7 +8068,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">436.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">67.669</span><span class="p">,</span> <span class="o">-</span><span class="mf">246.929</span><span class="p">,</span> <span class="o">-</span><span class="mf">580.5</span><span class="p">,</span> <span class="mf">259.669</span><span class="p">,</span> <span class="o">-</span><span class="mf">571.418</span><span class="p">])</span>
@@ -8107,13 +8107,51 @@ $$</p>
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_global_stiffness_relation_forces_slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Global-Element-Forces-(Method-2)">Global Element Forces (Method 2)<a class="anchor-link" href="#Global-Element-Forces-(Method-2)">¶</a></h3><p>Using the Global Stiffness Relationship:</p>
+<p>$$
+\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{T}\mathbf{v} + \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F
+$$</p>
+<p>Given:</p>
+<p>$$
+\mathbf{k} =
+\begin{bmatrix}
+ 500000 &amp; 0 &amp; 0 &amp; -500000 &amp; 0 &amp; 0 \\
+ 0 &amp; 5280 &amp; 13200 &amp; 0 &amp; -5280 &amp; 13200 \\
+ 0 &amp; 13200 &amp; 44000 &amp; 0 &amp; -13200 &amp; 22000 \\
+ -500000 &amp; 0 &amp; 0 &amp; 500000 &amp; 0 &amp; 0 \\
+ 0 &amp; -5280 &amp; -13200 &amp; 0 &amp; 5280 &amp; -13200 \\
+ 0 &amp; 13200 &amp; 22000 &amp; 0 &amp; -13200 &amp; 44000
+\end{bmatrix}
+$$</p>
+<p>$$
+\mathbf{Q}^F =
+\begin{bmatrix}
+-72 &amp; 96 &amp; 80 &amp; -72 &amp; 96 &amp; -80
+\end{bmatrix}^T
+$$</p>
+<p>$$
+\mathbf{u} =
+\begin{bmatrix}
+0.030599 &amp; 0.023897 &amp; -0.0029702 &amp; 0.029582 &amp; 0.021352 &amp; -0.010447
+\end{bmatrix}^T
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_local_to_global_displacements_slide">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-%E2%86%92-Global-Element-Displacements">Local → Global Element Displacements<a class="anchor-link" href="#Local-%E2%86%92-Global-Element-Displacements">¶</a></h3><p>If given local element displacements from an earlier step:</p>
+<p>If given local element displacements, $u$, from an earlier step:</p>
 <p>$$
 \mathbf{v} = \mathbf{T}^{\mathsf{T}} \mathbf{u}
 $$</p>
@@ -8129,12 +8167,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_compute_v_from_u">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c0db9f39">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># displacement vector (units: m, rad)</span>
@@ -8180,50 +8218,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_global_stiffness_relation_forces_slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Element-Forces-Using-the-Global-Stiffness-Relationship">Element Forces Using the Global Stiffness Relationship<a class="anchor-link" href="#Element-Forces-Using-the-Global-Stiffness-Relationship">¶</a></h3><p>$$
-\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{k} \mathbf{T}\mathbf{v} + \mathbf{T}^{\mathsf{T}} \mathbf{Q}^F
-$$</p>
-<p>Given:</p>
-<p>$$
-\mathbf{k} =
-\begin{bmatrix}
- 500000 &amp; 0 &amp; 0 &amp; -500000 &amp; 0 &amp; 0 \\
- 0 &amp; 5280 &amp; 13200 &amp; 0 &amp; -5280 &amp; 13200 \\
- 0 &amp; 13200 &amp; 44000 &amp; 0 &amp; -13200 &amp; 22000 \\
- -500000 &amp; 0 &amp; 0 &amp; 500000 &amp; 0 &amp; 0 \\
- 0 &amp; -5280 &amp; -13200 &amp; 0 &amp; 5280 &amp; -13200 \\
- 0 &amp; 13200 &amp; 22000 &amp; 0 &amp; -13200 &amp; 44000
-\end{bmatrix}
-$$</p>
-<p>$$
-\mathbf{Q}^F =
-\begin{bmatrix}
--72 &amp; 96 &amp; 80 &amp; -72 &amp; 96 &amp; -80
-\end{bmatrix}^T
-$$</p>
-<p>$$
-\mathbf{v} =
-\begin{bmatrix}
-0.0388174 &amp; 0.0007582 &amp; -0.0029702 &amp;
-0.0364768 &amp; -0.0006676 &amp; -0.010447
-\end{bmatrix}^T
-$$</p>
-</div>
-</div>
-</div>
 </div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec5_code_compute_K_global">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
@@ -8265,7 +8265,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">Qf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">72</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="o">-</span><span class="mi">72</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -8295,7 +8295,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Should give the same result as T.T @ Qf</span>
@@ -8344,7 +8344,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0388174</span><span class="p">,</span> <span class="mf">0.0007582</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0029702</span><span class="p">,</span>
@@ -8380,6 +8380,7 @@ $$</p>
 <div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L2_Example_Result_F.png" style="width:60%;"/>
 </div>
+<p>This should match the results of Method 1, $\mathbf{F} = \mathbf{T}^{\mathsf{T}} \mathbf{Q}$ from earlier slide</p>
 </div>
 </div>
 </div>
