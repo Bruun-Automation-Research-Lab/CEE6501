@@ -7830,7 +7830,7 @@ $$</p>
 $$
 \boldsymbol{K}\boldsymbol{u} = \boldsymbol{F}^E
 $$</p>
-<p>Standard DSM solution</p>
+<p>Using standard DSM solution</p>
 </div>
 <!-- Right: figure -->
 <div style="flex:0.55;">
@@ -7881,8 +7881,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="List-of-Typical-FEFs">List of Typical FEFs<a class="anchor-link" href="#List-of-Typical-FEFs">¶</a></h3><p>the internal forces and displacements of the fixed-end part of the problem must be obtained by some means</p>
-<p>You don't need to calculate each time. There are typical cases</p>
+<h3 id="List-of-Typical-FEFs">List of Typical FEFs<a class="anchor-link" href="#List-of-Typical-FEFs">¶</a></h3><p>The internal forces and displacements of the fixed-end part of the problem must be obtained by some means</p>
+<p>Don't need to calculate these each time as there are closed form solutions for typical cases.</p>
 </div>
 </div>
 </div>
@@ -7955,13 +7955,25 @@ $$</p>
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e18defcc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Physically, this states that, in the absence of any nodal displacement, i.e., $\boldsymbol{u} = 0$, $\boldsymbol{F}$ would be equal to the vector of fixed end forces, $\boldsymbol{F^F}$.</p>
+<p>Conceptually, this formation is useful because it helps to keep clear the distinction between any real nodal loads and reaction components of $\boldsymbol{F}$ and the fictitious components that comprise $\boldsymbol{F^F}$.</p>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=54bd138d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Partitioned-Matrix-Form">Partitioned Matrix Form<a class="anchor-link" href="#Partitioned-Matrix-Form">¶</a></h3><p>Bring $F^F$ to the other side of the equation</p>
+<h3 id="Partitioned-Matrix-Form">Partitioned Matrix Form<a class="anchor-link" href="#Partitioned-Matrix-Form">¶</a></h3><p>Bring $F^F$ to the other side of the equation, and partition along with the rest of the vectors and matrices.</p>
 <p>$$
 
 \left[
@@ -8087,14 +8099,10 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="FEFs-for-Middle-Span">FEFs for Middle Span<a class="anchor-link" href="#FEFs-for-Middle-Span">¶</a></h3><p>$$
-F^F_{yb} = \frac{qL}{2}, \quad
-F^F_{mb} = \frac{qL^2}{12}
-$$</p>
-<p>$$
-F^F_{yc} = \frac{qL}{2}, \quad
-F^F_{mc} = -\frac{qL^2}{12}
-$$</p>
+<h3 id="FEFs-for-Middle-Span">FEFs for Middle Span<a class="anchor-link" href="#FEFs-for-Middle-Span">¶</a></h3><p>DOF 3: $F^F_{yb} = \frac{qL}{2}$</p>
+<p>DOF 4: $F^F_{mb} = \frac{qL^2}{12} \quad$</p>
+<p>DOF 5: $F^F_{yc} = \frac{qL}{2}$</p>
+<p>DOF 6: $F^F_{mc} = -\frac{qL^2}{12}$</p>
 </div>
 </div>
 </div>
@@ -8105,8 +8113,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="DSM-Setup-for-Example-Structure">DSM Setup for Example Structure<a class="anchor-link" href="#DSM-Setup-for-Example-Structure">¶</a></h3><br/>
-<p>$$
+<h3 id="DSM-Setup-for-Example-Structure-(Partitioned)">DSM Setup for Example Structure (Partitioned)<a class="anchor-link" href="#DSM-Setup-for-Example-Structure-(Partitioned)">¶</a></h3><p>$$
 \small{
 \left[
 \begin{array}{c:c}
@@ -8154,6 +8161,13 @@ R_{md}
 \right\}
 }
 $$</p>
+<div style="display:flex; gap:1rem; align-items:flex-end;">
+<div style="flex:0.65;">
+<figure style="margin:0; text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L3_FEF_example_stage0.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -8184,18 +8198,15 @@ $$</p>
 <li>Restraints and Applied Forces</li>
 </ul>
 </li>
-<li><p><strong>Assemble global stiffness matrix and force vector</strong></p>
+<li><p><strong>Assemble global stiffness matrix</strong></p>
 <ul>
 <li>Scatter-add element contributions into $\boldsymbol{K}$</li>
 <li>This assumes beam element is aligned with global axis (no transformation)</li>
 </ul>
 </li>
-<li><p><strong>Generate applied force and FEF vectors</strong></p>
+<li><p><strong>Generate applied force vector</strong></p>
 <ul>
 <li>Scatter-add force and moment contributions into $\boldsymbol{F}$</li>
-<li>Fix all beam segments</li>
-<li>identify what case, calculate closed form FEFs</li>
-<li>Scatter-add FEFs into $\boldsymbol{F^F}$</li>
 </ul>
 </li>
 </ol>
@@ -8209,7 +8220,14 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Forward-Pass-%E2%80%94-Structural-Analysis,-cont...">Forward Pass — Structural Analysis, cont...<a class="anchor-link" href="#Forward-Pass-%E2%80%94-Structural-Analysis,-cont...">¶</a></h3><ol start="5">
+<h3 id="Forward-Pass-%E2%80%94-Structural-Analysis,-cont...">Forward Pass — Structural Analysis, cont...<a class="anchor-link" href="#Forward-Pass-%E2%80%94-Structural-Analysis,-cont...">¶</a></h3><ol start="4">
+<li><p><strong>Generate FEF vectors</strong></p>
+<ul>
+<li>Fix all beam segments</li>
+<li>identify what case, calculate closed form FEFs</li>
+<li>Scatter-add FEFs into $\boldsymbol{F^F}$</li>
+</ul>
+</li>
 <li><p><strong>Apply boundary conditions</strong></p>
 <ul>
 <li>Partition DOFs into free $(f)$ and restrained $(r)$</li>
@@ -8250,26 +8268,44 @@ $$</p>
 <li>This assumes beam element is aligned with global axis (no transformation)</li>
 </ul>
 </li>
-</ol>
-<!-- 8. **Transform displacements to local coordinates**
-   $$
-   \boldsymbol{u}' = \boldsymbol{T}\,\boldsymbol{u}_e
-   $$ -->
-<ol start="9">
-<li><p><strong>Compute local element end forces and moments</strong>
+<li><p><strong>Compute local element end forces and moments</strong></p>
+<ul>
+<li>Add element-level FEFs to deformation-based forces and moments
 $$
 \boldsymbol{f}' = \boldsymbol{k}'\,\boldsymbol{u}' + \boldsymbol{Q}_f
-$$</p>
+$$</li>
+</ul>
 </li>
-<li><p><strong>Compute axial stress and bending stress (design quantities)</strong>
-$$
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e24a3e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ol start="10">
+<li><strong>Compute shear stress and bending stress (design quantities)</strong></li>
+</ol>
+<p>$$
 \begin{aligned}
-\sigma_{\text{axial}}   &amp;= \frac{N}{A} \\
+\tau_{\text{shear}}   &amp;= \frac{V Q}{I t} \\
 \sigma_{\text{bending}} &amp;= \pm \frac{M y}{I}
 \end{aligned}
 $$</p>
+<ol start="11">
+<li><strong>Plot Deformed Shape</strong><ul>
+<li>Use the nodal displacement vector $\boldsymbol{u}'$</li>
+<li>Interpolate along each element using appropriate shape functions</li>
+</ul>
 </li>
 </ol>
+<p>$$
+  u(x) = \sum_{i=1}^4 N_i(x)\,u^{'}_i
+  $$</p>
 </div>
 </div>
 </div>
