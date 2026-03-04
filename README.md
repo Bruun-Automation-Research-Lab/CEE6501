@@ -395,6 +395,56 @@ Use standard submission naming from Week 1.
 
 ---
 
+## 📅 Week 8 — Member Releases and Support Settlement
+
+This week extends the **Direct Stiffness Method (DSM)** to handle two important practical modeling features: **member
+releases** and **support settlements**. We examine how hinges modify the stiffness relationships in frame elements, and
+how **prescribed support displacements** can be incorporated into the standard DSM formulation.
+
+Kassimali – Chapter 7, §7.1–7.3
+
+### 📖 Lectures
+
+#### Part 1 — Member Releases
+
+This lecture introduces **moment releases and hinged joints** in frame structures (can be extended to beams as well). We
+discuss how releases affect element stiffness, how they are represented in the global system, and how fictitious
+restraints can be used to stabilize the formulation when rotational stiffness is removed.
+
+- 🌐 **Slides (HTML):** [L8_1_FramesReleases.slides.html](Lectures/L8/L8_1_FramesReleases.slides.html)
+- 📄 **Slides (PDF):** [L8_1_FramesReleases.pdf](Lectures/L8/L8_1_FramesReleases.pdf)
+- 📓 **Notebook:** [L8_1_FramesReleases.ipynb](Lectures/L8/L8_1_FramesReleases.ipynb)
+
+#### Part 2 — Support Settlement
+
+This lecture introduces **support settlements and other prescribed displacements** within the DSM framework f. We derive
+the modified equilibrium equations and show how settlements appear as **equivalent joint loads**, allowing truss, beam
+or frame problems to be solved using the same stiffness-based workflow we have been using thus far in the class.
+
+- 🌐 **Slides (HTML):** [L8_2_SupportSettlement.slides.html](Lectures/L8/L8_2_SupportSettlement.slides.html)
+- 📄 **Slides (PDF):** [L8_2_SupportSettlement.pdf](Lectures/L8/L8_2_SupportSettlement.pdf)
+- 📓 **Notebook:** [L8_2_SupportSettlement.ipynb](Lectures/L8/L8_2_SupportSettlement.ipynb)
+
+### Extra In-Class Code
+
+- [InClass_Exercise.ipynb](Code/L8/InClass_Exercise.ipynb)
+
+### 📝 Assignments
+
+Use standard submission naming from Week 1.
+
+#### Assignment Files
+
+- ✍️ **Written Assignment:** [A8_written.md](Assignments/A8_written.md)
+- 💻 **Coding Assignment:**
+
+  [A8_code.ipynb](Assignments/A8_code.ipynb)  
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A8_code.ipynb)
+
+---
+
+---
+
 ## Creating Slides from Notebook
 
 ### command to convert notebook to presentation with hidden code
