@@ -7475,8 +7475,12 @@ main {
 <h3 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h3><ul>
 <li><strong>Part 1</strong> — Concepts + notation</li>
 <li><strong>Part 2</strong> — Derivations (MT = 1, 2, 3)</li>
-<li><strong>Part 3</strong> — Hinged joints + singularity</li>
-<li><strong>Part 4</strong> — Wrap-up</li>
+<li><strong>Part 3</strong> — Hinged joints &amp; Matrix Singularity</li>
+<li><strong>Part 4</strong> — Method A, Fictitious Fixity</li>
+<li><strong>Part 5</strong> — Method B, Fictitious Stiffness</li>
+<li><strong>Part 6</strong> — Implementing Method A</li>
+<li><strong>Part 7</strong> — In-Class Excercise</li>
+<li><strong>Part 8</strong> — Implementing Method B</li>
 </ul>
 </div>
 </div>
@@ -7746,6 +7750,9 @@ Q_3
 = \frac{EI}{L^3}(6Lu_2+4L^2u_3-6Lu_5+2L^2u_6) + Q_{mb}^F
 $$
 Set $Q_3=0$ and solve for $u_3$ (released rotation at b).</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Classification_M1.png" style="width:35%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -7872,6 +7879,9 @@ Q_6
 = \frac{EI}{L^3}(6Lu_2+2L^2u_3-6Lu_5+4L^2u_6) + Q_{me}^F
 $$
 Set $Q_6=0$ and solve for $u_6$ (released rotation at e).</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Classification_M2.png" style="width:35%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -7905,22 +7915,19 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="MT-=-2:-substitute-$u_6$-back-into-$Q_2,-Q_3,-Q_5$">MT = 2: substitute $u_6$ back into $Q_2, Q_3, Q_5$<a class="anchor-link" href="#MT-=-2:-substitute-$u_6$-back-into-$Q_2,-Q_3,-Q_5$">¶</a></h3><p>Resulting modified equations (MT = 2):</p>
 <p>$$
+\small{
 \begin{array}{rcl}
-Q_1 &amp; = &amp; \dfrac{EA}{L}(u_1-u_4) + Q_{xb}^F \\[6pt]
-
+Q_1 &amp; = &amp; \dfrac{EA}{L}(u_1-u_4) + Q_{xb}^F \\
 Q_2 &amp; = &amp; \dfrac{EI}{L^3}\left(3u_2+3Lu_3-3u_5\right)
-          + \left(Q_{yb}^F - \dfrac{3}{2L}Q_{me}^F\right) \\[6pt]
-
+          + \left(Q_{yb}^F - \dfrac{3}{2L}Q_{me}^F\right) \\
 Q_3 &amp; = &amp; \dfrac{EI}{L^3}\left(3Lu_2+3L^2u_3-3Lu_5\right)
-          + \left(Q_{mb}^F - \dfrac{1}{2}Q_{me}^F\right) \\[6pt]
-
-Q_4 &amp; = &amp; \dfrac{EA}{L}(-u_1+u_4) + Q_{xe}^F \\[6pt]
-
+          + \left(Q_{mb}^F - \dfrac{1}{2}Q_{me}^F\right) \\
+Q_4 &amp; = &amp; \dfrac{EA}{L}(-u_1+u_4) + Q_{xe}^F \\
 Q_5 &amp; = &amp; \dfrac{EI}{L^3}\left(-3u_2-3Lu_3+3u_5\right)
-          + \left(Q_{ye}^F + \dfrac{3}{2L}Q_{me}^F\right) \\[6pt]
-
+          + \left(Q_{ye}^F + \dfrac{3}{2L}Q_{me}^F\right) \\
 Q_6 &amp; = &amp; 0
 \end{array}
+}
 $$</p>
 </div>
 </div>
@@ -7991,6 +7998,9 @@ $$
 $$
 Q_6= \frac{EI}{L^3}(6Lu_2+2L^2u_3-6Lu_5+4L^2u_6) + Q_{me}^F
 $$</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Classification_M3.png" style="width:35%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -8051,7 +8061,6 @@ $$</p>
 <li>The bending stiffness contributions have completely disappeared.</li>
 <li>This means the element <strong>cannot develop bending resistance</strong>.</li>
 <li>The transverse shear forces are determined solely by equilibrium of the fixed-end moments.</li>
-<li>The element now behaves as a <strong>pure axial (truss-type) member</strong>.</li>
 </ul>
 </div>
 </div>
@@ -8078,6 +8087,9 @@ $$</p>
 \end{bmatrix}
 $$</p>
 <p>What does this stiffness matrix remind you of?</p>
+<ul>
+<li>The element now behaves as a <strong>pure axial (truss-type) member</strong>.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8143,15 +8155,25 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Hinged-joints-in-beams-and-plane-frames">Hinged joints in beams and plane frames<a class="anchor-link" href="#Hinged-joints-in-beams-and-plane-frames">¶</a></h3><p>A <strong>hinged joint</strong> is a joint where all members meeting at that joint are connected by <strong>moment releases</strong>.</p>
-<!-- TODO: Insert textbook Fig. 7.2 (hinged joint example) -->
-<p><strong>Figure placeholder:</strong> Fig. 7.2 — Example plane frame showing a hinged joint</p>
-<p>Physical consequence:</p>
+<h3 id="Hinged-joints-in-beams-and-plane-frames">Hinged joints in beams and plane frames<a class="anchor-link" href="#Hinged-joints-in-beams-and-plane-frames">¶</a></h3><div style="display:flex; gap:1.3rem; align-items:center;">
+<!-- Figure -->
+<div style="flex:0.50;">
+<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L1_HingedJoint.png" style="width:100%; height:auto;"/>
+<figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
+</figure>
+</div>
+<!-- Text -->
+<div style="flex:0.50;">
+<p>A <strong>hinged joint</strong> is a joint where <strong>ALL</strong> members meeting at that joint are connected by <strong>moment releases</strong>.</p>
+<p>Physical consequence:
 <ul>
-<li>The joint <strong>cannot transmit bending moment</strong>.</li>
-<li>The joint is <strong>free to rotate</strong>.</li>
-<li>Axial and shear forces may still be transmitted.</li>
-</ul>
+<li>The joint <b>cannot transmit bending moment</b></li>
+<li>The joint is <b>free to rotate</b></li>
+<li>Axial and shear forces may still be transmitted</li>
+</ul></p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -8199,7 +8221,7 @@ $$</p>
 <p>$$
 \mathbf{u}_f
 =
-K_{ff}^{-1} (\mathbf{F}_f - \mathbf{K}_{fr}\mathbf{u}_r)
+ \mathbf{K}_{ff}^{-1} (\mathbf{F}_f - \mathbf{K}_{fr}\mathbf{u}_r)
 $$</p>
 <p>This requires that $\mathbf{K}_{ff}$ be <strong>invertible</strong>.</p>
 </div>
@@ -8226,6 +8248,35 @@ From our earlier derivations, the entire row and column associated with $\theta_
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6df1f3a6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Simple-Example-with-Joint-DOF-Included-in-$%5Cmathbf%7BK%7D_%7Bff%7D$">Simple Example with Joint DOF Included in $\mathbf{K}_{ff}$<a class="anchor-link" href="#Simple-Example-with-Joint-DOF-Included-in-$%5Cmathbf%7BK%7D_%7Bff%7D$">¶</a></h3><div style="display:flex; gap:1.3rem; align-items:center;">
+<!-- Figure -->
+<div style="flex:0.70;">
+<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L1_Kff_singular.png" style="width:100%; height:auto;"/>
+<figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
+</figure>
+</div>
+<!-- Text -->
+<div style="flex:0.30;">
+<p>$$
+  \mathbf{K}_{ff} =
+  \begin{bmatrix}
+  k_{11} &amp; k_{12} &amp; 0 \\
+  k_{21} &amp; k_{22} &amp; 0 \\
+  0 &amp; 0 &amp; 0
+  \end{bmatrix}
+  $$</p>
+</div>
+</div>
+</div>
+</div>
+</div></div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_modeling_artifact">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -8261,9 +8312,9 @@ From our earlier derivations, the entire row and column associated with $\theta_
 </ul>
 <p><strong>Method B — Artifically stiffen the joint DOF</strong></p>
 <ul>
-<li>Model the joint as rigidly connected to <strong>one</strong> of the members meeting there</li>
-<li>Assign the joint three DOFs $(u_x, u_y, \theta)$ as usual</li>
-<li>Other members connect by hinges (moment releases) so the net joint moment remains zero</li>
+<li>Model the joint as rigidly connected to <strong>ONLY ONE</strong> of the members meeting there</li>
+<li>Keep the joint DOFs $(u_x, u_y, \theta)$ free as usual</li>
+<li>Other members at the joint are connected by hinges (moment releases) so the net joint moment remains zero</li>
 </ul>
 </div>
 </div>
@@ -8295,6 +8346,19 @@ From our earlier derivations, the entire row and column associated with $\theta_
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=40b3229a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_MethodA.png" style="width:75%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e932f6d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -8310,11 +8374,31 @@ $$
 M_i = 0 \quad \text{at the joint.}
 $$</li>
 </ul>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_MethodA_JointEQ1.png" style="width:40%;"/>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3d46eda2">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=559a8f48">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Artificially-Fixing-the-Rotation">Artificially Fixing the Rotation<a class="anchor-link" href="#Artificially-Fixing-the-Rotation">¶</a></h3><p>Suppose we introduce <strong>fictitious fixity</strong> by restraining the rotation at the joint DOF associated with joint $j$:</p>
+<p>$$
+\theta_j = 0
+$$</p>
+<p>Instead of leaving $\theta_j$ in the free displacement vector, we move it into the restrained set.</p>
+<p>After solving for the free DOFs, the reaction vector, $F_r$, is computed containing the load value for all restrained DOFs.</p>
+<p>For the fictitiously fixed rotation at node $j$, let us call the reported reaction moment: $M_{\text{ext}}$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1f1a94be">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8329,30 +8413,9 @@ $$</p>
 <li>$M_i$ = internal end moment from element $i$</li>
 <li>$M_{\text{ext}}$ = applied or reaction moment at the joint</li>
 </ul>
-<!-- For a fully hinged joint:
-
-- No external reaction moment can develop  
-  ($M_{\text{ext}} = 0$)
-- Each released member satisfies $M_i = 0$ -->
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_MethodA_JointEQ2.png" style="width:40%;"/>
 </div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=559a8f48">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Artificially-Fixing-the-Rotation">Artificially Fixing the Rotation<a class="anchor-link" href="#Artificially-Fixing-the-Rotation">¶</a></h3><p>Suppose we introduce <strong>fictitious fixity</strong> by restraining the rotation at the joint DOF associated with member $j$:</p>
-<p>$$
-\theta_j = 0
-$$</p>
-<p>Instead of leaving $\theta_j$ in the free displacement vector, we move it into the restrained set.</p>
-<p>After solving for the free DOFs, reactions $F_r$ are computed at all restrained DOFs. For the fictitiously fixed rotation for member $j$, the reported reaction is a moment:</p>
-<p>$$
-M_{\text{ext}} = M_j
-$$</p>
 </div>
 </div>
 </div>
@@ -8363,16 +8426,16 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="What-Happens-to-the-%E2%80%9CReaction%E2%80%9D-at-That-DOF?">What Happens to the “Reaction” at That DOF?<a class="anchor-link" href="#What-Happens-to-the-%E2%80%9CReaction%E2%80%9D-at-That-DOF?">¶</a></h3><p>As stated, joint equilibrium requires</p>
+<h3 id="What-Happens-to-the-%E2%80%9CReaction%E2%80%9D-at-That-DOF?">What Happens to the “Reaction” at That DOF?<a class="anchor-link" href="#What-Happens-to-the-%E2%80%9CReaction%E2%80%9D-at-That-DOF?">¶</a></h3><p>At a <strong>hinged joint</strong>, all connected members have <strong>moment releases</strong>, so none of them can transmit bending moment to the joint.</p>
+<p>Therefore the joint moment equilibrium becomes:</p>
 <p>$$
-\sum_{i=1}^{n_{ele}} M_i + M_{\text{ext}} = 0
+\sum_{i=1}^{n_{ele}} M_i = 0
 $$</p>
-<p>Separating the contribution from member $j$ from the internal moment sum and setting $M_{\text{ext}} = M_j$.</p>
+<p>And since no element can deliver moment to the joint:</p>
 <p>$$
-\left( \sum_{\substack{i=1 \\ i \ne j}}^{n_{ele}} M_i \right) + M_j = 0.
+M_{\text{ext}} \approx 0
 $$</p>
-<p>At a hinged joint, all other connected members contribute zero moment, so $M_j = 0$</p>
-<p>Thus, the reported “reaction” at the fictitiously fixed member, $j$, is a numerical artifact and evaluates to zero (up to roundoff).</p>
+<p>Thus, the reported “reaction” at the fictitiously fixed joint, $j$, is a numerical artifact must evaluates to zero (up to roundoff).</p>
 </div>
 </div>
 </div>
@@ -8389,8 +8452,9 @@ $$</p>
 <li>The global stiffness matrix contains no coupling terms involving $\theta_j$.</li>
 <li>The equilibrium equations do not depend on that rotational DOF.</li>
 </ul>
-<p>Because no bending stiffness exists at the joint, fixing the rotation does not generate any additional reaction moment (moment is related to displacement through stiffness).</p>
-<p>You can think of DOF $j$ as a restrained DOF that simply develops <strong>no reaction load</strong>.</p>
+<p>Because moment is related to rotation through stiffness, and the rotational stiffness is zero, restraining the rotation cannot generate a moment.</p>
+<p>Thus, even if the rotation is <strong>artificially fixed</strong>, the joint develops <strong>no reaction moment</strong>, and the structural response remains unchanged.</p>
+<p>You can think of $\theta_j$ as a restrained DOF that simply develops <strong>no reaction load</strong>.</p>
 </div>
 </div>
 </div>
@@ -8441,13 +8505,13 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Method-A-%E2%80%94-Step-by-Step-Procedure">Method A — Step-by-Step Procedure<a class="anchor-link" href="#Method-A-%E2%80%94-Step-by-Step-Procedure">¶</a></h3><ol>
-<li><p><strong>Identify the hinged joint</strong></p>
+<li><p><strong>Identify the hinged joint</strong>, $j$</p>
 <ul>
 <li>All connected member ends at that node are moment-released.</li>
 <li>The joint cannot transmit bending moment.</li>
 </ul>
 </li>
-<li><p><strong>Classify the rotation as a restrained DOF</strong></p>
+<li><p><strong>Classify the rotational DOF as restrained</strong></p>
 <ul>
 <li>Place $\theta_j$ in the restrained displacement vector $\mathbf{u}_r$.</li>
 <li>Impose the artificial condition
@@ -8494,7 +8558,7 @@ the assembled stiffness terms associated with $\theta_j$ are zero.</li>
 +
 \mathbf{F}_r^{\,F}
 $$</p>
-<p>The reaction moment at the fictitiously fixed DOF evaluates to</p>
+<p>The reaction moment at the fixed rotational DOF at joint $j$ evaluates to:</p>
 <p>$$
 M_j \approx 0
 $$</p>
@@ -8527,7 +8591,20 @@ $$</p>
 <p>Model <strong>one (and only one)</strong> of the members meeting at that joint as having rotational rigidity.</p>
 </blockquote>
 <p>All other members framing into the joint remain <strong>hinged (moment-released)</strong>.</p>
-<p><strong>Figure placeholder:</strong> Joint $j$ rigid to one member, hinged to others</p>
+<p>This is imposing <strong>fictitious rigidity</strong> that does not change global structural behavior.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a7d39881">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_MethodB.png" style="width:75%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -8559,16 +8636,25 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-This-Does-NOT-Change-the-Structural-Behavior">Why This Does NOT Change the Structural Behavior<a class="anchor-link" href="#Why-This-Does-NOT-Change-the-Structural-Behavior">¶</a></h3><p>Even though one member, $j$, is fictitiously modeled as rigid at the joint:</p>
-<ul>
-<li>There is <strong>no external moment applied at that joint</strong>.</li>
-<li>All other members connected there are hinged.</li>
-<li>Hinged ends cannot transmit moment.</li>
-</ul>
-<p>From joint equilibrium:</p>
+<h3 id="Why-This-Does-NOT-Change-the-Structural-Behavior">Why This Does NOT Change the Structural Behavior<a class="anchor-link" href="#Why-This-Does-NOT-Change-the-Structural-Behavior">¶</a></h3><p>From joint equilibrium:</p>
 <p>$$
 \sum_{i=1}^{n_{ele}} M_i = 0
 $$</p>
+<p>Even though one member, $j$, is fictitiously modeled as rigid at the joint:</p>
+<ul>
+<li>All other members connected there are hinged.</li>
+<li>Hinged ends cannot transmit moment.</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=34c5fed6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>All hinged members satisfy $M_i = 0$, so the joint moment equilibrium can be written as:</p>
 <p>$$
 \sum_{i=1}^{n_c} M_i
@@ -8578,9 +8664,12 @@ $$</p>
 =
 0 + M_j
 =
-0.
+0
 $$</p>
-<p>Thus, the rigidly connected member must also have zero end moment, $M_j = 0$, in the final solution in order to satisfy joint equilibrium.</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_MethodB_JointEQ1.png" style="width:30%;"/>
+</div>
+<p>Thus, the rigidly connected member must also have zero end moment, $M_j \approx 0$, in the final solution in order to satisfy joint equilibrium.</p>
 </div>
 </div>
 </div>
@@ -8667,10 +8756,9 @@ $$</p>
 <li><p><strong>Treat the joint as a normal rigid node in global bookkeeping</strong></p>
 <ul>
 <li>The rotational DOF $\theta_j$ remains in the <strong>free displacement vector</strong>.</li>
-<li>Because one member now contributes stiffness,<br/>
-the corresponding row/column in $\mathbf{K}_{ff}$ is no longer zero.</li>
+<li>Because one member now contributes stiffness, the corresponding row/column in $\mathbf{K}_{ff}$ is no longer zero.</li>
+<li>The singularity disappears.</li>
 </ul>
-<p>The singularity disappears.</p>
 </li>
 <li><p><strong>Assemble and solve the system</strong></p>
 <ul>
@@ -8678,13 +8766,11 @@ the corresponding row/column in $\mathbf{K}_{ff}$ is no longer zero.</li>
 <li>Solve for the free DOFs.</li>
 <li>Compute member end forces.</li>
 </ul>
-<p>Although one member was modeled as rigid at the joint,<br/>
-equilibrium at that joint still requires:</p>
+<p>Although one member was modeled as rigid at the joint, equilibrium at that joint still requires:</p>
 <p>$$
 \sum M = 0
 $$</p>
-<p>Since the other members are hinged and no external moment is applied,<br/>
-the rigid member’s end moment evaluates to:</p>
+<p>Since the other members are hinged and no external moment is applied, the rigid member’s end moment evaluates to:</p>
 <p>$$
 M_j \approx 0
 $$</p>
@@ -8709,7 +8795,7 @@ $$</p>
 <p><strong>Effect:</strong></p>
 <ul>
 <li>Eliminates the zero-stiffness DOF from $\mathbf{K}_{ff}$.</li>
-<li>The computed fictituous reaction moment evaluates to $M_j = 0$</li>
+<li>The computed fictituous reaction moment evaluates to  $\approx 0$</li>
 </ul>
 </div>
 <div style="flex:1;">
@@ -8722,7 +8808,7 @@ $$</p>
 <p><strong>Effect:</strong></p>
 <ul>
 <li>The rigid member supplies nonzero rotational stiffness.</li>
-<li>From joint equilibrium,$\sum M = 0$, the fictituously rigid member’s end moment evaluates to zero.</li>
+<li>From joint equilibrium,$\sum M = 0$, the fictituously rigid member’s end moment evaluates to $\approx 0$.</li>
 </ul>
 </div>
 </div>
@@ -8759,7 +8845,20 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5-%E2%80%94-Implementing-Method-A">Part 5 — Implementing Method A<a class="anchor-link" href="#Part-5-%E2%80%94-Implementing-Method-A">¶</a></h2>
+<h2 id="Part-6-%E2%80%94-Implementing-Method-A">Part 6 — Implementing Method A<a class="anchor-link" href="#Part-6-%E2%80%94-Implementing-Method-A">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b77171a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Example-Problem-(7.1-Kassimali)">Example Problem (7.1 Kassimali)<a class="anchor-link" href="#Example-Problem-(7.1-Kassimali)">¶</a></h3><div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_ExampleProblem.png" style="width:60%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -8770,7 +8869,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Problem-data-(from-the-example)">Problem data (from the example)<a class="anchor-link" href="#Problem-data-(from-the-example)">¶</a></h3><p>Assume member properties are constant for all members:</p>
+<h3 id="Problem-data">Problem data<a class="anchor-link" href="#Problem-data">¶</a></h3><p>Assume member properties are constant for all members:</p>
 <ul>
 <li>$E = 200 \times 10^{6}\ \text{kN/m}^2\ (= 200\ \text{GPa})$</li>
 <li>$A = 0.0065\ \text{m}^2\ (= 6500\ \text{mm}^2)$</li>
@@ -8799,6 +8898,19 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Member-1-(MT-=-2)">Member 1 (MT = 2)<a class="anchor-link" href="#Member-1-(MT-=-2)">¶</a></h3><p>Member 1 has a <strong>hinge at end $e$</strong>, so it is <strong>MT = 2</strong>.</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_ExampleProblem_e1.png" style="width:50%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=706dc5e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>All stiffness terms are expressed in <strong>kN</strong> and <strong>m</strong>.</p>
 <p><strong>Local stiffness matrix</strong> (MT = 2):
 $$
@@ -8903,6 +9015,19 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Member-2-(MT-=-1)">Member 2 (MT = 1)<a class="anchor-link" href="#Member-2-(MT-=-1)">¶</a></h3><p>Member 2 has a <strong>hinge at end $b$</strong>, so it is <strong>MT = 1</strong>.</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_ExampleProblem_e2.png" style="width:50%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e750396">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>All stiffness terms are expressed in <strong>kN</strong> and <strong>m</strong>.</p>
 <p><strong>Local stiffness matrix</strong> (MT = 1):
 $$
@@ -9011,18 +9136,31 @@ $$</p>
 <p>We have two equivalent modeling choices:</p>
 <p><strong>Option 1 — Standard Frame Element (MT = 0)</strong></p>
 <ul>
-<li>Use the full $6 \times 6$ local stiffness matrix (no releases).</li>
-<li>Impose $u_x = 0$ and $u_y = 0$ in the restrained DOF set.</li>
-<li>Leave the rotational DOF $\theta$ free.</li>
+<li>Use the full $6 \times 6$ local stiffness matrix (no releases)</li>
+<li>Impose $u_x = 0$ and $u_y = 0$ in the restrained DOF set</li>
+<li>Leave the rotational DOF $\theta$ free</li>
 </ul>
 <p>In this approach, this location remains numerically stable without any additional treatment.</p>
 <p><strong>Option 2 — Member Release at Start (MT = 1)</strong></p>
 <ul>
-<li>Model the pin as a <strong>hinge at the start of the element</strong>.</li>
-<li>This removes moment transfer at that end.</li>
-<li>The element is therefore classified as <strong>MT = 1</strong>.</li>
+<li>The pin support removes moment transfer at that end of the element</li>
+<li>This is the same effect as if there was a <strong>hinge</strong> at the start of the element</li>
+<li>The element can therefore be classified as <strong>MT = 1</strong></li>
 </ul>
 <p>Because a rotational release eliminates bending stiffness at that end, this creates another situation where fictitous fixity must be applied</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4172184c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_ExampleProblem_e3.png" style="width:95%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -9052,7 +9190,7 @@ $$</p>
 <li>Vertical member:</li>
 </ul>
 <p>$$
-\theta = 90^\circ \quad \mathbf{T}_{3} = \mathbf{T}_{2}
+\theta = 90^\circ \quad \mathbf{T}_{3} = \mathbf{T}_{1}
 $$</p>
 <ul>
 <li>Mapping
@@ -9071,7 +9209,20 @@ $$</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Note: Both approaches are correct — using MT = 1 simply keeps the setup cleaner.</p>
-<p>You will try this process with a standard 6x6 element (in class excercise)</p>
+<p>You will prove this later using a standard 6x6 element (in class excercise)</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0e3624ac">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Fictitious-Fixity-at-Nodes-2-and-4">Fictitious Fixity at Nodes 2 and 4<a class="anchor-link" href="#Fictitious-Fixity-at-Nodes-2-and-4">¶</a></h3><div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_ExampleProblem2.png" style="width:60%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -9083,7 +9234,13 @@ $$</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Import Libraries and Helper Functions</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide imports the required Python libraries and adds the</span>
+<span class="c1"># course helper-code directory to the Python path.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -9235,7 +9392,13 @@ $$</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Initialize Global System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide sets up the global variables needed for assembly of the</span>
+<span class="c1"># Direct Stiffness Method system.</span>
+
+<span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
 <span class="n">T_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">T3</span><span class="p">]</span>
 <span class="n">Qf_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Qf1</span><span class="p">,</span> <span class="n">Qf2</span><span class="p">,</span> <span class="n">Qf3</span><span class="p">]</span>
 <span class="n">map_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">m3</span><span class="p">]</span>   <span class="c1"># 1-based DOF maps</span>
@@ -9261,7 +9424,12 @@ $$</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1">## USER SPECIFIED</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># User-Specified Boundary Conditions</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide defines the external loads and support conditions.</span>
+
+<span class="c1"># Applied Load</span>
 <span class="n">F_global</span><span class="p">[</span><span class="mi">4</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">90.75</span>
 
 <span class="c1"># Restrained DOFs</span>
@@ -9302,13 +9470,19 @@ $$</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Assemble Global Stiffness System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This step assembles the global stiffness matrix and the global</span>
+<span class="c1"># fixed-end force vector from all elements.</span>
+
+<span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
     <span class="n">ndof</span><span class="p">,</span>
     <span class="n">k_list</span><span class="p">,</span>
     <span class="n">T_list</span><span class="p">,</span>
     <span class="n">Qf_list</span><span class="p">,</span>
     <span class="n">map_list</span>
-    <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9322,7 +9496,13 @@ $$</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">print_matrix_scaled</span><span class="p">(</span><span class="n">K_global</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display Global Stiffness Matrix</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Print the assembled global stiffness matrix in a readable format.</span>
+<span class="c1"># The matrix is scaled for clearer presentation in the slides.</span>
+
+<span class="n">print_matrix_scaled</span><span class="p">(</span><span class="n">K_global</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9336,18 +9516,18 @@ $$</li>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>K = 1e+03 ×
-1 | 0.7 0.0 -3.6 -0.7 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
-2 | 0.0 260.0 0.0 0.0 -260.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
-3 | -3.6 0.0 18.0 3.6 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
-4 | -0.7 0.0 3.6 260.7 0.0 0.0 -260.0 0.0 0.0 0.0 0.0 0.0
-5 | 0.0 -260.0 0.0 0.0 260.7 0.0 0.0 -0.7 3.6 0.0 0.0 0.0
-6 | 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
-7 | 0.0 0.0 0.0 -260.0 0.0 0.0 260.7 0.0 3.6 -0.7 0.0 0.0
-8 | 0.0 0.0 0.0 0.0 -0.7 0.0 0.0 260.7 -3.6 0.0 -260.0 0.0
-9 | 0.0 0.0 0.0 0.0 3.6 0.0 3.6 -3.6 36.0 -3.6 0.0 0.0
-10 | 0.0 0.0 0.0 0.0 0.0 0.0 -0.7 0.0 -3.6 0.7 0.0 0.0
-11 | 0.0 0.0 0.0 0.0 0.0 0.0 0.0 -260.0 0.0 0.0 260.0 0.0
-12 | 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+01 |  0.7  0.0 -3.6 -0.7  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+02 |  0.0 260.0  0.0  0.0 -260.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+03 | -3.6  0.0 18.0  3.6  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+04 | -0.7  0.0  3.6 260.7  0.0  0.0 -260.0  0.0  0.0  0.0  0.0  0.0
+05 |  0.0 -260.0  0.0  0.0 260.7  0.0  0.0 -0.7  3.6  0.0  0.0  0.0
+06 |  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+07 |  0.0  0.0  0.0 -260.0  0.0  0.0 260.7  0.0  3.6 -0.7  0.0  0.0
+08 |  0.0  0.0  0.0  0.0 -0.7  0.0  0.0 260.7 -3.6  0.0 -260.0  0.0
+09 |  0.0  0.0  0.0  0.0  3.6  0.0  3.6 -3.6 36.0 -3.6  0.0  0.0
+10 |  0.0  0.0  0.0  0.0  0.0  0.0 -0.7  0.0 -3.6  0.7  0.0  0.0
+11 |  0.0  0.0  0.0  0.0  0.0  0.0  0.0 -260.0  0.0  0.0 260.0  0.0
+12 |  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
 </pre>
 </div>
 </div>
@@ -9361,7 +9541,13 @@ $$</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Partition Global System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># The global stiffness equation is partitioned into free and restrained</span>
+<span class="c1"># degrees of freedom based on the support conditions.</span>
+
+<span class="p">(</span>
     <span class="n">K_ff</span><span class="p">,</span>
     <span class="n">K_fr</span><span class="p">,</span>
     <span class="n">K_rf</span><span class="p">,</span>
@@ -9409,7 +9595,14 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Solve Partitioned System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Solve for the unknown displacements at the free DOFs,</span>
+<span class="c1"># compute the reactions at restrained DOFs, and then</span>
+<span class="c1"># reconstruct the complete global displacement and force vectors.</span>
+
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span>
 <span class="n">u_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">K_ff</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
 
 <span class="n">F_r</span> <span class="o">=</span> <span class="n">K_rf</span> <span class="o">@</span> <span class="n">u_f</span> <span class="o">+</span> <span class="n">f_fef_r</span>
@@ -9419,14 +9612,14 @@ $$</p>
     <span class="n">u_r</span><span class="p">,</span>
     <span class="n">free_dofs</span><span class="p">,</span>
     <span class="n">restrained_dofs</span>
-    <span class="p">)</span>
+<span class="p">)</span>
 
 <span class="n">f_global_complete</span> <span class="o">=</span> <span class="n">assemble_global_forces</span><span class="p">(</span>
     <span class="n">f_f</span><span class="p">,</span>
     <span class="n">F_r</span><span class="p">,</span>
     <span class="n">free_dofs</span><span class="p">,</span>
     <span class="n">restrained_dofs</span>
-    <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9440,7 +9633,12 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">print_dsm_results</span><span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display DSM Results</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Print the final global displacement vector and force vector.</span>
+
+<span class="n">print_dsm_results</span><span class="p">(</span>
     <span class="n">u_global</span><span class="p">,</span>
     <span class="n">f_global_complete</span><span class="p">,</span>
     <span class="n">dof_restrained_1based</span><span class="p">,</span>
@@ -9485,7 +9683,11 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Element 1,2,3</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display Element Results</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Compute and print the element-level results for each member.</span>
+
 <span class="n">print_element</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">Qf1</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">print_element</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">Qf2</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">print_element</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m3</span><span class="p">,</span> <span class="n">T3</span><span class="p">,</span> <span class="n">k3</span><span class="p">,</span> <span class="n">Qf3</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -9528,7 +9730,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-6---In-Class-Excercise">Part 6 - In-Class Excercise<a class="anchor-link" href="#Part-6---In-Class-Excercise">¶</a></h2><p>Open <code>InClass_Excercise.ipynb</code> in the <code>../../Code/L8</code> folder</p>
+<h2 id="Part-7---In-Class-Excercise">Part 7 - In-Class Excercise<a class="anchor-link" href="#Part-7---In-Class-Excercise">¶</a></h2><p>Open <code>InClass_Excercise.ipynb</code> in the <code>../../Code/L8</code> folder</p>
 </div>
 </div>
 </div>
@@ -9539,7 +9741,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-7-%E2%80%94-Implementing-Method-B">Part 7 — Implementing Method B<a class="anchor-link" href="#Part-7-%E2%80%94-Implementing-Method-B">¶</a></h2>
+<h2 id="Part-8-%E2%80%94-Implementing-Method-B">Part 8 — Implementing Method B<a class="anchor-link" href="#Part-8-%E2%80%94-Implementing-Method-B">¶</a></h2>
 </div>
 </div>
 </div>
@@ -9674,7 +9876,13 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Initialize Global System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide sets up the global variables needed for assembly of the</span>
+<span class="c1"># Direct Stiffness Method system.</span>
+
+<span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
 <span class="n">T_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">T3</span><span class="p">]</span>
 <span class="n">Qf_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Qf1</span><span class="p">,</span> <span class="n">Qf2</span><span class="p">,</span> <span class="n">Qf3</span><span class="p">]</span>
 <span class="n">map_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">m3</span><span class="p">]</span>   <span class="c1"># 1-based DOF maps</span>
@@ -9700,7 +9908,10 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1">## USER SPECIFIED</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># User-Specified Boundary Conditions</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide defines the external loads and support conditions.</span>
 
 <span class="c1"># Applied Load</span>
 <span class="n">F_global</span><span class="p">[</span><span class="mi">4</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">90.75</span>
@@ -9728,7 +9939,14 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Assemble Global Stiffness System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This step assembles the global stiffness matrix and the global</span>
+<span class="c1"># fixed-end force vector from all elements.</span>
+
+
+<span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
     <span class="n">ndof</span><span class="p">,</span>
     <span class="n">k_list</span><span class="p">,</span>
     <span class="n">T_list</span><span class="p">,</span>
@@ -9748,7 +9966,14 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Partition Global System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># The global stiffness equation is partitioned into free and restrained</span>
+<span class="c1"># degrees of freedom based on the support conditions.</span>
+
+
+<span class="p">(</span>
     <span class="n">K_ff</span><span class="p">,</span>
     <span class="n">K_fr</span><span class="p">,</span>
     <span class="n">K_rf</span><span class="p">,</span>
@@ -9780,7 +10005,14 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Solve Partitioned System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Solve for the unknown displacements at the free DOFs,</span>
+<span class="c1"># compute the reactions at restrained DOFs, and then</span>
+<span class="c1"># reconstruct the complete global displacement and force vectors.</span>
+
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span>
 <span class="n">u_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">K_ff</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
 
 <span class="n">F_r</span> <span class="o">=</span> <span class="n">K_rf</span> <span class="o">@</span> <span class="n">u_f</span> <span class="o">+</span> <span class="n">f_fef_r</span>
@@ -9811,7 +10043,13 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">print_dsm_results</span><span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display DSM Results</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Print the final global displacement vector and force vector.</span>
+
+
+<span class="n">print_dsm_results</span><span class="p">(</span>
     <span class="n">u_global</span><span class="p">,</span>
     <span class="n">f_global_complete</span><span class="p">,</span>
     <span class="n">dof_restrained_1based</span><span class="p">,</span>
@@ -9856,7 +10094,11 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Element 1,2,3</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display Element Results</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Compute and print the element-level results for each member.</span>
+
 <span class="n">print_element</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">Qf1</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">print_element</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">Qf2</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">print_element</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m3</span><span class="p">,</span> <span class="n">T3</span><span class="p">,</span> <span class="n">k3</span><span class="p">,</span> <span class="n">Qf3</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -9886,7 +10128,7 @@ q [kN,kN·m]: [60.8, 89.2, 0.0, -60.8, 210.8, -304.2]
 E3
 u [mm,rad]: [0.0, 0.0, -0.0267, 91.3, -0.8, -0.0014]
 v [mm,rad]: [0.0, 0.0, -0.0267, -0.8, -91.3, -0.0014]
-q [kN,kN·m]: [210.8, 60.8, -0.0, -210.8, -60.8, 304.2]
+q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 </pre>
 </div>
 </div>
@@ -9902,10 +10144,6 @@ q [kN,kN·m]: [210.8, 60.8, -0.0, -210.8, -60.8, 304.2]
 <h3 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h3><p>In this lecture, we:</p>
 <ul>
 <li>Defined <strong>member releases</strong> and enforced hinge conditions ($M_b=0$ and/or $M_e=0$)</li>
-<li>Standardized FEF notation:<ul>
-<li>$F_{xb}^F, F_{yb}^F, F_{mb}^F, F_{xe}^F, F_{ye}^F, F_{me}^F$</li>
-</ul>
-</li>
 <li>Derived modified member relations for:<ul>
 <li><strong>MT = 1</strong> (hinge at b)</li>
 <li><strong>MT = 2</strong> (hinge at e)</li>

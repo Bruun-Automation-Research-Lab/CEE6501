@@ -22,8 +22,8 @@ def print_dsm_results(
     else:
         dof_fictitious_1based = np.atleast_1d(dof_fictitious_1based)
 
-    restrained_set = set(int(d) for d in dof_restrained_1based)
-    fictitious_set = set(int(d) for d in dof_fictitious_1based)
+    restrained_set = {int(d) for d in dof_restrained_1based}
+    fictitious_set = {int(d) for d in dof_fictitious_1based}
 
     for i in range(ndof):
         dof_1based = i + 1
@@ -179,7 +179,7 @@ def print_matrix_scaled(K, scale=1000, decimals=1, col_width=3):
     for i, row in enumerate(K, start=1):
         row_scaled = row / scale
         row_str = " ".join(fmt.format(val) for val in row_scaled)
-        print(f"{i} | {row_str}")
+        print(f"{i:02d} | {row_str}")
 
 
 def plot_truss_deformation(nodes, elements, u_global, scale=1.0):
