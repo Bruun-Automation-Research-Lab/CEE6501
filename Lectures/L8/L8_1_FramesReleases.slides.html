@@ -7518,14 +7518,25 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Member-release-types-(classification)">Member release types (classification)<a class="anchor-link" href="#Member-release-types-(classification)">¶</a></h3><!-- TODO: Insert textbook Fig. 7.1 (Member Releases) -->
-<p><strong>Figure placeholder:</strong> Fig. 7.1 — Member release types</p>
-<ul>
+<h3 id="Member-Release-Types-(Classification)">Member Release Types (Classification)<a class="anchor-link" href="#Member-Release-Types-(Classification)">¶</a></h3><ul>
 <li><strong>MT = 0:</strong> no hinges (rigid at both ends, normal frame element)</li>
 <li><strong>MT = 1:</strong> hinge at <strong>beginning</strong> (end <strong>b</strong>)</li>
 <li><strong>MT = 2:</strong> hinge at <strong>end</strong> (end <strong>e</strong>)</li>
 <li><strong>MT = 3:</strong> hinges at <strong>both ends</strong></li>
 </ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ea3a6d1f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Classification.png" style="width:95%;"/>
+</div>
 </div>
 </div>
 </div>
@@ -7536,7 +7547,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-DOFs-and-end-forces-(2D-frame-member)">Local DOFs and end forces (2D frame member)<a class="anchor-link" href="#Local-DOFs-and-end-forces-(2D-frame-member)">¶</a></h3><p>Local displacement vector (member coordinates):</p>
+<h3 id="Reminder:-Frame-Local-DOFs-and-End-Forces-Notation">Reminder: Frame Local DOFs and End Forces Notation<a class="anchor-link" href="#Reminder:-Frame-Local-DOFs-and-End-Forces-Notation">¶</a></h3><p>Local displacement vector (member coordinates):</p>
 <p>$$
 \mathbf{u}^{T}
 =
@@ -7570,7 +7581,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Fixed-end-force-notation-(FEFs)">Fixed-end force notation (FEFs)<a class="anchor-link" href="#Fixed-end-force-notation-(FEFs)">¶</a></h3><p>We write local fixed-end forces using the convention:</p>
+<h3 id="Reminder:-Frame-Fixed-End-Force-Notation-(FEFs)">Reminder: Frame Fixed-End Force Notation (FEFs)<a class="anchor-link" href="#Reminder:-Frame-Fixed-End-Force-Notation-(FEFs)">¶</a></h3><p>We write local fixed-end forces using the convention:</p>
 <ul>
 <li><p>$Q_{xb}^F$ = FEF at node <strong>b</strong> in local <strong>x</strong> (axial) → corresponds to <strong>DOF 1</strong></p>
 </li>
@@ -7587,12 +7598,12 @@ $$</p>
 </ul>
 <p>So the fixed-end force vector is
 $$
-\mathbf{Q}_f^{T}
+\mathbf{Q}^{F,T}
 =
 \begin{bmatrix}
 Q_{xb}^F &amp; Q_{yb}^F &amp; Q_{mb}^F &amp;
 Q_{xe}^F &amp; Q_{ye}^F &amp; Q_{me}^F
-\end{bmatrix}
+\end{bmatrix}^T
 $$</p>
 </div>
 </div>
@@ -7621,7 +7632,7 @@ $$</p>
 <p>Member releases modify <strong>only</strong>:</p>
 <ul>
 <li>the local stiffness matrix $\mathbf{k}$, and</li>
-<li>the fixed-end force vector $\mathbf{Q}^F$,</li>
+<li>the fixed-end force vector $\mathbf{Q}^F$</li>
 </ul>
 <p>so the DSM workflow stays the same.</p>
 </div>
@@ -7634,8 +7645,9 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Base-local-stiffness-relations-(no-hinges)">Base local stiffness relations (no hinges)<a class="anchor-link" href="#Base-local-stiffness-relations-(no-hinges)">¶</a></h3><p>Recall from last lecture. For a plane frame member with no hinges, the local end-force components can be written (explicitly) as:</p>
+<h3 id="Base-local-stiffness-relations-(no-hinges)">Base local stiffness relations (no hinges)<a class="anchor-link" href="#Base-local-stiffness-relations-(no-hinges)">¶</a></h3><p>Recall from last lecture. For a plane frame member with no hinges, the local end-force components can be written (explicitly) as 6 independent equations:</p>
 <p>$$
+\small{
 \begin{array}{rcl}
 Q_1 &amp; = &amp; \dfrac{EA}{L}(u_1-u_4) + Q_{xb}^F \\
 Q_2 &amp; = &amp; \dfrac{EI}{L^3}(12u_2+6Lu_3-12u_5+6Lu_6) + Q_{yb}^F \\
@@ -7644,6 +7656,7 @@ Q_4 &amp; = &amp; \dfrac{EA}{L}(-u_1+u_4) + Q_{xe}^F \\
 Q_5 &amp; = &amp; \dfrac{EI}{L^3}(-12u_2-6Lu_3+12u_5-6Lu_6) + Q_{ye}^F \\
 Q_6 &amp; = &amp; \dfrac{EI}{L^3}(6Lu_2+2L^2u_3-6Lu_5+4L^2u_6) + Q_{me}^F
 \end{array}
+}
 $$</p>
 </div>
 </div>
@@ -7655,7 +7668,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Same-Equations-in-Matrix-Form">Same Equations in Matrix Form<a class="anchor-link" href="#Same-Equations-in-Matrix-Form">¶</a></h3><p>$$
+<h3 id="6-Independent-Equations-in-Matrix-Form">6 Independent Equations in Matrix Form<a class="anchor-link" href="#6-Independent-Equations-in-Matrix-Form">¶</a></h3><p>$$
 \begin{Bmatrix}
 Q_1\\
 Q_2\\
@@ -7779,6 +7792,7 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="MT-=-1:-substitute-$u_3$-back-into-$Q_2,-Q_5,-Q_6$">MT = 1: substitute $u_3$ back into $Q_2, Q_5, Q_6$<a class="anchor-link" href="#MT-=-1:-substitute-$u_3$-back-into-$Q_2,-Q_5,-Q_6$">¶</a></h3><p>Resulting modified equations (MT = 1):</p>
 <p>$$
+\small{
 \begin{array}{rcl}
 Q_1 &amp; = &amp; \dfrac{EA}{L}(u_1-u_4) + Q_{xb}^F \\
 Q_2 &amp; = &amp; \dfrac{EI}{L^3}\left(3u_2-3u_5+3Lu_6\right)
@@ -7790,6 +7804,7 @@ Q_5 &amp; = &amp; \dfrac{EI}{L^3}\left(-3u_2+3u_5-3Lu_6\right)
 Q_6 &amp; = &amp; \dfrac{EI}{L^3}\left(3Lu_2-3Lu_5+3L^2u_6\right)
           + \left(Q_{me}^F - \dfrac{1}{2}Q_{mb}^F\right)
 \end{array}
+}
 $$</p>
 </div>
 </div>
@@ -9065,7 +9080,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [55]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -9092,16 +9107,16 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [56]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs_dsm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">assemble_global_stiffness_and_fef</span><span class="p">,</span>
     <span class="n">partition_system</span><span class="p">,</span>
     <span class="n">assemble_global_displacements</span><span class="p">,</span>
     <span class="n">assemble_global_forces</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs_output</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">print_element</span><span class="p">,</span>
     <span class="n">print_dsm_results</span><span class="p">,</span>
     <span class="n">print_matrix_scaled</span>
@@ -9124,7 +9139,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [57]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9164,7 +9179,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [58]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9197,7 +9212,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [59]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9217,7 +9232,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [60]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
@@ -9227,6 +9242,12 @@ $$</li>
 
 <span class="c1"># Global system size (still using 1-based maps here)</span>
 <span class="n">ndof</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">map_list</span><span class="p">)))</span>
+
+<span class="c1"># Initialize Applied Load</span>
+<span class="n">F_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Initialize Global Displacement</span>
+<span class="n">u_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9237,13 +9258,10 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [61]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">## USER SPECIFIED</span>
-
-<span class="c1"># Applied Load</span>
-<span class="n">F_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <span class="n">F_global</span><span class="p">[</span><span class="mi">4</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">90.75</span>
 
 <span class="c1"># Restrained DOFs</span>
@@ -9281,7 +9299,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [62]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
@@ -9301,10 +9319,10 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [63]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">print_matrix_scaled</span><span class="p">(</span><span class="n">K_global</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">print_matrix_scaled</span><span class="p">(</span><span class="n">K_global</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9317,7 +9335,7 @@ $$</li>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>K = 1.0e+03 ×
+<pre>K = 1e+03 ×
 1 | 0.7 0.0 -3.6 -0.7 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
 2 | 0.0 260.0 0.0 0.0 -260.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
 3 | -3.6 0.0 18.0 3.6 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
@@ -9340,7 +9358,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [64]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="p">(</span>
@@ -9350,6 +9368,7 @@ $$</li>
     <span class="n">K_rr</span><span class="p">,</span>
     <span class="n">f_f</span><span class="p">,</span>
     <span class="n">f_r</span><span class="p">,</span>
+    <span class="n">u_r</span><span class="p">,</span>
     <span class="n">f_fef_f</span><span class="p">,</span>
     <span class="n">f_fef_r</span><span class="p">,</span>
     <span class="n">free_dofs</span><span class="p">,</span>
@@ -9357,6 +9376,7 @@ $$</li>
 <span class="p">)</span> <span class="o">=</span> <span class="n">partition_system</span><span class="p">(</span>
     <span class="n">K_global</span><span class="p">,</span>
     <span class="n">F_global</span><span class="p">,</span>
+    <span class="n">u_global</span><span class="p">,</span>
     <span class="n">F_fef_global</span><span class="p">,</span>
     <span class="n">dof_restrained_1based</span>
 <span class="p">)</span>
@@ -9386,7 +9406,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [65]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span>
@@ -9396,6 +9416,7 @@ $$</p>
 
 <span class="n">u_global</span> <span class="o">=</span> <span class="n">assemble_global_displacements</span><span class="p">(</span>
     <span class="n">u_f</span><span class="p">,</span>
+    <span class="n">u_r</span><span class="p">,</span>
     <span class="n">free_dofs</span><span class="p">,</span>
     <span class="n">restrained_dofs</span>
     <span class="p">)</span>
@@ -9416,7 +9437,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [66]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">print_dsm_results</span><span class="p">(</span>
@@ -9461,7 +9482,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [67]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Element 1,2,3</span>
@@ -9527,7 +9548,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -9550,7 +9571,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [69]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9590,7 +9611,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [70]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9629,7 +9650,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [71]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9650,7 +9671,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [72]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
@@ -9660,6 +9681,12 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 
 <span class="c1"># Global system size (still using 1-based maps here)</span>
 <span class="n">ndof</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">map_list</span><span class="p">)))</span>
+
+<span class="c1"># Initialize Applied Load</span>
+<span class="n">F_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Initialize Global Displacement</span>
+<span class="n">u_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9670,13 +9697,12 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [73]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">## USER SPECIFIED</span>
 
 <span class="c1"># Applied Load</span>
-<span class="n">F_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <span class="n">F_global</span><span class="p">[</span><span class="mi">4</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">90.75</span>
 
 <span class="c1"># Restrained DOFs</span>
@@ -9699,7 +9725,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [74]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
@@ -9719,7 +9745,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [75]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="p">(</span>
@@ -9729,6 +9755,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
     <span class="n">K_rr</span><span class="p">,</span>
     <span class="n">f_f</span><span class="p">,</span>
     <span class="n">f_r</span><span class="p">,</span>
+    <span class="n">u_r</span><span class="p">,</span>
     <span class="n">f_fef_f</span><span class="p">,</span>
     <span class="n">f_fef_r</span><span class="p">,</span>
     <span class="n">free_dofs</span><span class="p">,</span>
@@ -9736,6 +9763,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <span class="p">)</span> <span class="o">=</span> <span class="n">partition_system</span><span class="p">(</span>
     <span class="n">K_global</span><span class="p">,</span>
     <span class="n">F_global</span><span class="p">,</span>
+    <span class="n">u_global</span><span class="p">,</span>
     <span class="n">F_fef_global</span><span class="p">,</span>
     <span class="n">dof_restrained_1based</span>
 <span class="p">)</span>
@@ -9749,7 +9777,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [76]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span>
@@ -9759,6 +9787,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 
 <span class="n">u_global</span> <span class="o">=</span> <span class="n">assemble_global_displacements</span><span class="p">(</span>
     <span class="n">u_f</span><span class="p">,</span>
+    <span class="n">u_r</span><span class="p">,</span>
     <span class="n">free_dofs</span><span class="p">,</span>
     <span class="n">restrained_dofs</span>
     <span class="p">)</span>
@@ -9779,7 +9808,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [77]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">print_dsm_results</span><span class="p">(</span>
@@ -9824,7 +9853,7 @@ q [kN,kN·m]: [210.8, 60.8, 0.0, -210.8, -60.8, 304.2]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [78]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Element 1,2,3</span>
@@ -9860,17 +9889,6 @@ v [mm,rad]: [0.0, 0.0, -0.0267, -0.8, -91.3, -0.0014]
 q [kN,kN·m]: [210.8, 60.8, -0.0, -210.8, -60.8, 304.2]
 </pre>
 </div>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2e835136">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="PART-8-%E2%80%94-Wrap-Up">PART 8 — Wrap-Up<a class="anchor-link" href="#PART-8-%E2%80%94-Wrap-Up">¶</a></h2>
 </div>
 </div>
 </div>
