@@ -7477,7 +7477,8 @@ main {
 <li><strong>Part 3</strong> — Temperature Changes: Fixed-End Forces</li>
 <li><strong>Part 4</strong> — Fabrication Errors: Conceptual Framework</li>
 <li><strong>Part 5</strong> — Fabrication Errors: Fixed-End Force Expressions</li>
-<li><strong>Part 6</strong> — DSM Implementation and Wrap-Up</li>
+<li><strong>Part 6</strong> — DSM Implementation</li>
+<li><strong>Part 6</strong> — Truss Example</li>
 </ul>
 </div>
 </div>
@@ -8068,11 +8069,12 @@ $$</p>
 <p>$$
 \mathbf{q}^{H}
 =
+EA\alpha T_u 
 \begin{bmatrix}
-EA\alpha T_u \\[4pt]
+1 \\[4pt]
 0 \\[4pt]
 0 \\[4pt]
--EA\alpha T_u \\[4pt]
+-1 \\[4pt]
 0 \\[4pt]
 0
 \end{bmatrix}
@@ -8099,29 +8101,6 @@ $$</p>
 <li>For a <strong>beam</strong>: $q_{xb}^{H}=0$ and $q_{xe}^{H}=0$</li>
 <li>For a <strong>truss</strong>: $q_{mb}^{H}=0$ and $q_{me}^{H}=0$</li>
 </ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_global_equation">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Where-Thermal-FEFs-Enter-the-DSM-Equations">Where Thermal FEFs Enter the DSM Equations<a class="anchor-link" href="#Where-Thermal-FEFs-Enter-the-DSM-Equations">¶</a></h3><p>At the element level,</p>
-<p>$$
-\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + \mathbf{q}_i^{F} + \mathbf{q}_i^{H}
-$$</p>
-<p>At the assembled global level,</p>
-<p>$$
-\mathbf{f} = \mathbf{K}\mathbf{u} + \mathbf{f}^{F} + \mathbf{f}^{\theta}
-$$</p>
-<p>or, equivalently,</p>
-<p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{\theta}
-$$</p>
-<p>So thermal effects enter the system exactly like other equivalent nodal force terms.</p>
 </div>
 </div>
 </div>
@@ -8162,13 +8141,13 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Same-Superposition-Logic-as-Temperature">Same Superposition Logic as Temperature<a class="anchor-link" href="#Same-Superposition-Logic-as-Temperature">¶</a></h3><p>The derivation is parallel to the thermal case:</p>
 <ol>
-<li>Determine the member’s free end displacements caused by the geometric error</li>
-<li>Apply equal and opposite end actions to suppress those displacements</li>
-<li>The required end actions are the fabrication-error fixed-end forces</li>
+<li>Determine the member’s free end displacements caused by the geometric error, $v^E$</li>
+<li>Apply equal and opposite end actions to suppress those displacements, $-v^E$</li>
+<li>The required end loads are the fabrication-error fixed-end forces</li>
 </ol>
 <p>We will denote these by</p>
 <p>$$
-\mathbf{q}_i^{\varepsilon}
+\mathbf{q}^{E}
 $$</p>
 </div>
 </div>
@@ -8182,10 +8161,10 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Two-Common-Types-of-Fabrication-Error">Two Common Types of Fabrication Error<a class="anchor-link" href="#Two-Common-Types-of-Fabrication-Error">¶</a></h3><p>In this lecture we consider:</p>
 <ol>
-<li><strong>Error in initial member length</strong></li>
-<li><strong>Error in initial member straightness</strong></li>
+<li>Error in initial member length, $a$</li>
+<li>Error in initial member straightness, $b$</li>
 </ol>
-<p>These lead to different forms of $\mathbf{q}_i^{\varepsilon}$.</p>
+<p>These lead to different forms of $\mathbf{q}^{E}$</p>
 </div>
 </div>
 </div>
@@ -8197,22 +8176,6 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Part-5-%E2%80%94-Fabrication-Errors:-Fixed-End-Force-Expressions">Part 5 — Fabrication Errors: Fixed-End Force Expressions<a class="anchor-link" href="#Part-5-%E2%80%94-Fabrication-Errors:-Fixed-End-Force-Expressions">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_length_error_figure">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Error-in-Initial-Member-Length">Error in Initial Member Length<a class="anchor-link" href="#Error-in-Initial-Member-Length">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L9_1_Fig7_17.png" style="width:82%;"/>
-</div>
-<div style="font-size:0.9em; margin-top:0.4em; text-align:center;">
-Placeholder for member too long by an amount $e_a$
-</div>
 </div>
 </div>
 </div>
@@ -8229,15 +8192,98 @@ L + e_a
 $$</p>
 <p>with $e_a &gt; 0$ meaning the member is too long.</p>
 <p>To fit the member between supports separated by distance $L$, the structure must compress it axially.</p>
-<p>That induces the local fabrication-error fixed-end force vector</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_Fab_FEF1.png" style="width:75%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=49f1e50d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Local-End-Displacement-Vector-Due-to-Straightness-Error">Local End Displacement Vector Due to Straightness Error<a class="anchor-link" href="#Local-End-Displacement-Vector-Due-to-Straightness-Error">¶</a></h3><p>For a beam/frame member, the local end displacement vector due to the extra length is</p>
 <p>$$
-\mathbf{q}_i^{\varepsilon, a}
+\mathbf{v}^{E,a}
 =
 \begin{bmatrix}
-EAe_a/L \\[4pt]
 0 \\[4pt]
 0 \\[4pt]
--EAe_a/L \\[4pt]
+0 \\[4pt]
+e_a \\[4pt]
+0 \\[4pt]
+0
+\end{bmatrix}
+=
+e_a
+\begin{bmatrix}
+0 \\[4pt]
+0 \\[4pt]
+0 \\[4pt]
+1 \\[4pt]
+0 \\[4pt]
+0
+\end{bmatrix}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5791df6b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Local-FEFs-from-the-Local-Stiffness-Matrix">Local FEFs from the Local Stiffness Matrix<a class="anchor-link" href="#Local-FEFs-from-the-Local-Stiffness-Matrix">¶</a></h3><p>Apply end forces that produce the opposite displacement vector $-\mathbf{v}^{E,a}$</p>
+<p>$$
+\mathbf{q}^{E,a}
+=
+\mathbf{k} \, (-\mathbf{v}^{E,a})
+$$</p>
+<p>$$
+{\scriptsize
+=
+\begin{bmatrix}
+\dfrac{EA}{L} &amp; 0 &amp; 0 &amp; -\dfrac{EA}{L} &amp; 0 &amp; 0 \\
+0 &amp; \dfrac{12EI}{L^3} &amp; \dfrac{6EI}{L^2} &amp; 0 &amp; -\dfrac{12EI}{L^3} &amp; \dfrac{6EI}{L^2} \\
+0 &amp; \dfrac{6EI}{L^2} &amp; \dfrac{4EI}{L} &amp; 0 &amp; -\dfrac{6EI}{L^2} &amp; \dfrac{2EI}{L} \\
+-\dfrac{EA}{L} &amp; 0 &amp; 0 &amp; \dfrac{EA}{L} &amp; 0 &amp; 0 \\
+0 &amp; -\dfrac{12EI}{L^3} &amp; -\dfrac{6EI}{L^2} &amp; 0 &amp; \dfrac{12EI}{L^3} &amp; -\dfrac{6EI}{L^2} \\
+0 &amp; \dfrac{6EI}{L^2} &amp; \dfrac{2EI}{L} &amp; 0 &amp; -\dfrac{6EI}{L^2} &amp; \dfrac{4EI}{L}
+\end{bmatrix}
+\left(
+-e_a
+\begin{bmatrix}
+0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0
+\end{bmatrix}
+\right)
+}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=105f4316">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>That induces the local fabrication-error fixed-end force vector</p>
+<p>$$
+\mathbf{q}^{E,a}
+=
+
+\frac{EA}{L}e_a
+\begin{bmatrix}
+1 \\[4pt]
+0 \\[4pt]
+0 \\[4pt]
+-1 \\[4pt]
 0 \\[4pt]
 0
 \end{bmatrix}
@@ -8253,31 +8299,15 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Component-Form-for-Length-Error">Component Form for Length Error<a class="anchor-link" href="#Component-Form-for-Length-Error">¶</a></h3><p>$$
-N_b^{\varepsilon,a} = -N_e^{\varepsilon,a} = \frac{EA}{L}e_a
+q_{xb}^{E,a} = -q_{xe}^{E,a} = \frac{EA}{L}e_a
 $$</p>
 <p>$$
-V_b^{\varepsilon,a} = V_e^{\varepsilon,a} = 0
+q_{yb}^{E,a} = q_{ye}^{E,a} = 0
 $$</p>
 <p>$$
-M_b^{\varepsilon,a} = M_e^{\varepsilon,a} = 0
+q_{mb}^{E,a} = q_{me}^{E,a}= 0
 $$</p>
 <p>This expression also applies directly to truss members, since the effect is purely axial.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_straightness_figure">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Error-in-Initial-Member-Straightness">Error in Initial Member Straightness<a class="anchor-link" href="#Error-in-Initial-Member-Straightness">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L9_1_Fig7_18.png" style="width:88%;"/>
-</div>
-<div style="font-size:0.9em; margin-top:0.4em; text-align:center;">
-Placeholder for member with initial bend $e_b$ at distance $l_1$ from the left end, with $l_2 = L-l_1$
-</div>
 </div>
 </div>
 </div>
@@ -8288,11 +8318,24 @@ Placeholder for member with initial bend $e_b$ at distance $l_1$ from the left e
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="End-Rotations-Caused-by-the-Initial-Bend">End Rotations Caused by the Initial Bend<a class="anchor-link" href="#End-Rotations-Caused-by-the-Initial-Bend">¶</a></h3><p>Let the initial straightness error be $e_b$, occurring at a point that divides the member into lengths $l_1$ and $l_2$, with</p>
+<h3 id="Error-in-Initial-Member-Straightness">Error in Initial Member Straightness<a class="anchor-link" href="#Error-in-Initial-Member-Straightness">¶</a></h3><div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_Fab_FEF2.png" style="width:75%;"/>
+</div>
+<p>Let the initial straightness error be $e_b$, occurring at a point that divides the member into lengths $l_1$ and $l_2$, with</p>
 <p>$$
 L = l_1 + l_2
 $$</p>
-<p>Then the corresponding end rotations are</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=65b936a6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Assuming small angles, then the corresponding end rotations are</p>
 <p>$$
 \theta_b = \frac{e_b}{l_1}
 \qquad
@@ -8315,7 +8358,7 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Local-End-Displacement-Vector-Due-to-Straightness-Error">Local End Displacement Vector Due to Straightness Error<a class="anchor-link" href="#Local-End-Displacement-Vector-Due-to-Straightness-Error">¶</a></h3><p>For a beam/frame member, the local end displacement vector due to the initial bend is</p>
 <p>$$
-\mathbf{v}_i^{\varepsilon,b}
+\mathbf{v}^{E,b}
 =
 \begin{bmatrix}
 0 \\[4pt]
@@ -8340,22 +8383,70 @@ $$</p>
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ba20e13e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Apply end forces that produce the opposite displacement vector $-\mathbf{v}^{E,b}$</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_Fab_FEF3.png" style="width:75%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42cb5ccc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Local-FEFs-from-the-Local-Stiffness-Matrix">Local FEFs from the Local Stiffness Matrix<a class="anchor-link" href="#Local-FEFs-from-the-Local-Stiffness-Matrix">¶</a></h3><p>$$
+\mathbf{q}^{E,b}
+=
+\mathbf{k} \, (-\mathbf{v}^{E,b})
+$$</p>
+<p>$$
+{\scriptsize
+=
+\begin{bmatrix}
+\dfrac{EA}{L} &amp; 0 &amp; 0 &amp; -\dfrac{EA}{L} &amp; 0 &amp; 0 \\
+0 &amp; \dfrac{12EI}{L^3} &amp; \dfrac{6EI}{L^2} &amp; 0 &amp; -\dfrac{12EI}{L^3} &amp; \dfrac{6EI}{L^2} \\
+0 &amp; \dfrac{6EI}{L^2} &amp; \dfrac{4EI}{L} &amp; 0 &amp; -\dfrac{6EI}{L^2} &amp; \dfrac{2EI}{L} \\
+-\dfrac{EA}{L} &amp; 0 &amp; 0 &amp; \dfrac{EA}{L} &amp; 0 &amp; 0 \\
+0 &amp; -\dfrac{12EI}{L^3} &amp; -\dfrac{6EI}{L^2} &amp; 0 &amp; \dfrac{12EI}{L^3} &amp; -\dfrac{6EI}{L^2} \\
+0 &amp; \dfrac{6EI}{L^2} &amp; \dfrac{2EI}{L} &amp; 0 &amp; -\dfrac{6EI}{L^2} &amp; \dfrac{4EI}{L}
+\end{bmatrix}
+\left(
+-e_b
+\begin{bmatrix}
+0 \\ 0 \\ -1/l_1 \\ 0 \\ 0 \\ 1/l_2
+\end{bmatrix}
+\right)
+}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_straightness_fef">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-FEF-Vector-Due-to-Straightness-Error">Local FEF Vector Due to Straightness Error<a class="anchor-link" href="#Local-FEF-Vector-Due-to-Straightness-Error">¶</a></h3><p>The corresponding local fixed-end force vector is</p>
+<h3 id="Local-FEFs-Vector">Local FEFs Vector<a class="anchor-link" href="#Local-FEFs-Vector">¶</a></h3><p>Assume the begin node is $b$ and the end node is $e$.</p>
 <p>$$
-\mathbf{q}_i^{\varepsilon,b}
+\mathbf{q}^{E,b}
 =
 \begin{bmatrix}
-0 \\[6pt]
-\dfrac{6EIe_b}{L^2 l_1 l_2}(l_2-l_1) \\[10pt]
-\dfrac{2EIe_b}{L l_1 l_2}(2l_2-l_1) \\[10pt]
-0 \\[6pt]
--\dfrac{6EIe_b}{L^2 l_1 l_2}(l_2-l_1) \\[10pt]
+0 \\[1pt]
+\dfrac{6EIe_b}{L^2 l_1 l_2}(l_2-l_1) \\[1pt]
+\dfrac{2EIe_b}{L l_1 l_2}(2l_2-l_1) \\[1pt]
+0 \\[1pt]
+-\dfrac{6EIe_b}{L^2 l_1 l_2}(l_2-l_1) \\[1pt]
 \dfrac{2EIe_b}{L l_1 l_2}(l_2-2l_1)
 \end{bmatrix}
 $$</p>
@@ -8370,16 +8461,16 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Component-Form-for-Straightness-Error">Component Form for Straightness Error<a class="anchor-link" href="#Component-Form-for-Straightness-Error">¶</a></h3><p>$$
-N_b^{\varepsilon,b} = N_e^{\varepsilon,b} = 0
+q_{xb}^{E,b} = q_{xe}^{E,b} = 0
 $$</p>
 <p>$$
-V_b^{\varepsilon,b} = -V_e^{\varepsilon,b} = \frac{6EIe_b}{L^2 l_1 l_2}(l_2-l_1)
+q_{yb}^{E,b} = -q_{ye}^{E,b} = \frac{6EIe_b}{L^2 l_1 l_2}(l_2-l_1)
 $$</p>
 <p>$$
-M_b^{\varepsilon,b} = \frac{2EIe_b}{L l_1 l_2}(2l_2-l_1)
+q_{mb}^{E,b} = \frac{2EIe_b}{L l_1 l_2}(2l_2-l_1)
 $$</p>
 <p>$$
-M_e^{\varepsilon,b} = \frac{2EIe_b}{L l_1 l_2}(l_2-2l_1)
+q_{me}^{E,b}= \frac{2EIe_b}{L l_1 l_2}(l_2-2l_1)
 $$</p>
 <p>Since the straightness error is assumed small, it produces no axial deformation, only bending-type restraint effects.</p>
 </div>
@@ -8394,11 +8485,11 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Total-Fabrication-Error-FEFs">Total Fabrication-Error FEFs<a class="anchor-link" href="#Total-Fabrication-Error-FEFs">¶</a></h3><p>If multiple fabrication-error sources are present, their local fixed-end force vectors add:</p>
 <p>$$
-\mathbf{q}_i^{\varepsilon}
+\mathbf{q}^{E}
 =
-\mathbf{q}_i^{\varepsilon,a}
+\mathbf{q}^{E,a}
 +
-\mathbf{q}_i^{\varepsilon,b}
+\mathbf{q}^{E,b}
 + \cdots
 $$</p>
 <p>So fabrication error is treated just like any other equivalent nodal load source.</p>
@@ -8417,48 +8508,25 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_notation_summary">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8562e270">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Notation-Summary">Notation Summary<a class="anchor-link" href="#Notation-Summary">¶</a></h3><p>Local equivalent nodal force vectors:</p>
+<h3 id="Where-Thermal-FEFs-Enter-the-DSM-Equations">Where Thermal FEFs Enter the DSM Equations<a class="anchor-link" href="#Where-Thermal-FEFs-Enter-the-DSM-Equations">¶</a></h3><p>At the element level,</p>
 <p>$$
-\mathbf{q}_i^{F}
-\quad \text{member-load FEFs}
+\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + \mathbf{q}_i^{F} + \mathbf{q}_i^{H} + \mathbf{q}_i^{E}
 $$</p>
+<p>At the assembled global level,</p>
 <p>$$
-\mathbf{q}_i^{\theta}
-\quad \text{temperature-change FEFs}
+\mathbf{f} = \mathbf{K}\mathbf{u} + \mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E}
 $$</p>
+<p>or, equivalently,</p>
 <p>$$
-\mathbf{q}_i^{\varepsilon}
-\quad \text{fabrication-error FEFs}
+\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{H} - \mathbf{f}^{E}
 $$</p>
-<p>Total local end force equation:</p>
-<p>$$
-\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + \mathbf{q}_i^{F} + \mathbf{q}_i^{\theta} + \mathbf{q}_i^{\varepsilon}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_global_assembly">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Global-Assembly-Statement">Global Assembly Statement<a class="anchor-link" href="#Global-Assembly-Statement">¶</a></h3><p>After transformation and assembly,</p>
-<p>$$
-\mathbf{f} = \mathbf{K}\mathbf{u} + \mathbf{f}^{F} + \mathbf{f}^{\theta} + \mathbf{f}^{\varepsilon}
-$$</p>
-<p>or, in solved form,</p>
-<p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{\theta} - \mathbf{f}^{\varepsilon}
-$$</p>
-<p>So the implementation pattern is the same one we have already used throughout DSM.</p>
+<p>So thermal effects enter the system exactly like other equivalent nodal force terms.</p>
 </div>
 </div>
 </div>
@@ -8471,7 +8539,7 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Implementation-Steps">Implementation Steps<a class="anchor-link" href="#Implementation-Steps">¶</a></h3><ol>
 <li>Build each element local stiffness matrix $\mathbf{k}_{l,i}$</li>
-<li>Compute any element-level vectors $\mathbf{q}_i^{F}$, $\mathbf{q}_i^{\theta}$, $\mathbf{q}_i^{\varepsilon}$</li>
+<li>Compute any element-level vectors $\mathbf{q}_i^{F}$, $\mathbf{q}_i^{H}$, $\mathbf{q}_i^{E}$</li>
 <li>Transform to global coordinates</li>
 <li>Assemble the global equivalent nodal force vectors</li>
 <li>Solve the global system</li>
@@ -8485,23 +8553,725 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec6_code_placeholder">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f1520707">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Coding-Example-Placeholder">Coding Example Placeholder<a class="anchor-link" href="#Coding-Example-Placeholder">¶</a></h3><p>A natural coding example here would:</p>
+<h2 id="Part-7-%E2%80%94-Truss-Example">Part 7 — Truss Example<a class="anchor-link" href="#Part-7-%E2%80%94-Truss-Example">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e74e9b75">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Example-Problem-(7.5-Kassimali)">Example Problem (7.5 Kassimali)<a class="anchor-link" href="#Example-Problem-(7.5-Kassimali)">¶</a></h3><p>Same truss structure we looked at for support settlement</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L1_Example.png" width="90%"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1725a292">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Determine the joint displacements, member axial forces, and support reactions for the plane truss due to the combined effect of the following:</p>
+<p><strong>(a) Joint loading</strong></p>
 <ul>
-<li>define a frame element</li>
-<li>compute $\mathbf{q}_i^{\theta}$ for a temperature gradient</li>
-<li>compute $\mathbf{q}_i^{\varepsilon}$ for an initial fabrication error</li>
-<li>assemble these into the global system</li>
-<li>compare the resulting reactions and member-end forces</li>
+<li>Nodal load at Node 1:<br/>
+$$
+\mathbf{P}_1 = [600,\,-900]\ \text{kN}
+$$</li>
 </ul>
-<div style="margin-top:1em; padding:0.8em; border:1px solid #999; border-radius:6px;">
-Add a short numerical frame example here in the same style as your Lecture 9 settlement notebook.
+<p><strong>(b) Thermal effect</strong></p>
+<ul>
+<li>Uniform temperature decrease of $15^\circ\mathrm{C}$ in <strong>Member 1</strong></li>
+</ul>
+<p><strong>(c) Fabrication error</strong></p>
+<ul>
+<li><strong>Member 3</strong> fabricated $3\ \text{mm}$ too short</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0825181d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [166]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Import Libraries and Helper Functions</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide imports the required Python libraries and adds the</span>
+<span class="c1"># course helper-code directory to the Python path.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Get current notebook directory</span>
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="c1"># Go up two levels, then into Code/L8</span>
+<span class="n">helpers_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s2">".."</span><span class="p">,</span> <span class="s2">".."</span><span class="p">,</span> <span class="s2">"Code"</span><span class="p">,</span> <span class="s2">"L8"</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helpers_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b85476c9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [167]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs_dsm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">assemble_global_stiffness_and_fef</span><span class="p">,</span>
+    <span class="n">partition_system</span><span class="p">,</span>
+    <span class="n">assemble_global_displacements</span><span class="p">,</span>
+    <span class="n">assemble_global_forces</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs_output</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">print_element_truss</span><span class="p">,</span>
+    <span class="n">print_dsm_results</span><span class="p">,</span>
+    <span class="n">print_matrix_scaled</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># -------------------------</span>
+<span class="c1"># Problem data (hard-coded)</span>
+<span class="c1"># -------------------------</span>
+<span class="n">E</span> <span class="o">=</span> <span class="mf">200e6</span>          <span class="c1"># kN/m^2</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.2e-5</span>     <span class="c1"># 1/°C</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5814af40">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [168]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Member 1, hard-coded</span>
+<span class="c1"># -------------------------</span>
+<span class="n">A1</span> <span class="o">=</span> <span class="mf">0.004</span> <span class="c1"># m^2</span>
+<span class="n">L1</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">8</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>  <span class="c1"># radians</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="n">factor</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A1</span> <span class="o">/</span> <span class="n">L1</span>
+
+<span class="n">k1</span> <span class="o">=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">T1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Mapping</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3328841e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [169]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Temperature change in truss member 1</span>
+<span class="n">T_b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span>
+<span class="n">T_t</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span>
+
+<span class="n">Qf1</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="n">A1</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_b</span> <span class="o">+</span> <span class="n">T_t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="mf">0.0</span><span class="p">,</span>
+    <span class="o">-</span><span class="n">A1</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_b</span> <span class="o">+</span> <span class="n">T_t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="mf">0.0</span><span class="p">,</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Qf1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[-144.    0.  144.    0.]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9e750de0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [170]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Member 2, hard-coded</span>
+<span class="c1"># -------------------------</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="mf">0.003</span> <span class="c1"># m^2</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">8</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="n">factor</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A2</span> <span class="o">/</span> <span class="n">L2</span>
+
+<span class="n">k2</span> <span class="o">=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">T2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=67b86a64">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [171]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 2</span>
+<span class="n">Qf2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0e9578b3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [172]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Member 3, hard-coded</span>
+<span class="c1"># -------------------------</span>
+<span class="n">A3</span> <span class="o">=</span> <span class="mf">0.004</span> <span class="c1"># m^2</span>
+<span class="n">L3</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">6</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">8</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="n">factor</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A3</span> <span class="o">/</span> <span class="n">L3</span>
+
+<span class="n">k3</span> <span class="o">=</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">T3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span>  <span class="n">s</span><span class="p">],</span>
+    <span class="p">[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span><span class="o">-</span><span class="n">s</span><span class="p">,</span>  <span class="n">c</span><span class="p">]</span>
+<span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="n">m3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cb251417">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [173]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Temperature change in member 3</span>
+<span class="n">e_a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">1000</span> <span class="c1"># mm -&gt; m</span>
+
+<span class="n">Qf3</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A3</span> <span class="o">/</span> <span class="n">L3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="n">e_a</span><span class="p">,</span>
+    <span class="mf">0.0</span><span class="p">,</span>
+    <span class="o">-</span><span class="n">e_a</span><span class="p">,</span>
+    <span class="mf">0.0</span><span class="p">,</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Qf3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[-240.    0.  240.    0.]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=085a4ea2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [174]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Initialize Global System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide sets up the global variables needed for assembly of the</span>
+<span class="c1"># Direct Stiffness Method system.</span>
+
+<span class="n">k_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">k3</span><span class="p">]</span>
+<span class="n">T_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">T3</span><span class="p">]</span>
+<span class="n">Qf_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Qf1</span><span class="p">,</span> <span class="n">Qf2</span><span class="p">,</span> <span class="n">Qf3</span><span class="p">]</span>
+<span class="n">map_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">m3</span><span class="p">]</span>   <span class="c1"># 1-based DOF maps</span>
+
+<span class="c1"># Global system size (still using 1-based maps here)</span>
+<span class="n">ndof</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">map_list</span><span class="p">)))</span>
+
+<span class="c1"># Initialize Applied Load</span>
+<span class="n">F_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Initialize Global Displacement</span>
+<span class="n">u_global</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cb262c8c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [175]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># User-Specified Boundary Conditions</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This slide defines the external loads and support conditions.</span>
+
+<span class="c1"># Global Forces (0-indexed)</span>
+<span class="n">F_global</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">600</span> <span class="c1">#kN</span>
+<span class="n">F_global</span><span class="p">[</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">900</span> <span class="c1">#kN</span>
+
+<span class="n">dof_restrained_1based</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=dda4ffa1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [176]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Assemble Global Stiffness System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># This step assembles the global stiffness matrix and the global</span>
+<span class="c1"># fixed-end force vector from all elements.</span>
+
+<span class="n">K_global</span><span class="p">,</span> <span class="n">F_fef_global</span> <span class="o">=</span> <span class="n">assemble_global_stiffness_and_fef</span><span class="p">(</span>
+    <span class="n">ndof</span><span class="p">,</span>
+    <span class="n">k_list</span><span class="p">,</span>
+    <span class="n">T_list</span><span class="p">,</span>
+    <span class="n">Qf_list</span><span class="p">,</span>
+    <span class="n">map_list</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=548bf199">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [177]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display Global Stiffness Matrix</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Print the assembled global stiffness matrix in a readable format.</span>
+<span class="c1"># The matrix is scaled for clearer presentation in the slides.</span>
+
+<span class="n">print_matrix_scaled</span><span class="p">(</span><span class="n">K_global</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>K = 1e+03 ×
+01 |  61.88 -17.12 -28.80 -38.40  -4.28  17.12 -28.80  38.40
+02 | -17.12 170.88 -38.40 -51.20  17.12 -68.48  38.40 -51.20
+03 | -28.80 -38.40  28.80  38.40   0.00   0.00   0.00   0.00
+04 | -38.40 -51.20  38.40  51.20   0.00   0.00   0.00   0.00
+05 |  -4.28  17.12   0.00   0.00   4.28 -17.12   0.00   0.00
+06 |  17.12 -68.48   0.00   0.00 -17.12  68.48   0.00   0.00
+07 | -28.80  38.40   0.00   0.00   0.00   0.00  28.80 -38.40
+08 |  38.40 -51.20   0.00   0.00   0.00   0.00 -38.40  51.20
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=eb3fcb0c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [178]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Partition Global System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># The global stiffness equation is partitioned into free and restrained</span>
+<span class="c1"># degrees of freedom based on the support conditions.</span>
+
+<span class="p">(</span>
+    <span class="n">K_ff</span><span class="p">,</span>
+    <span class="n">K_fr</span><span class="p">,</span>
+    <span class="n">K_rf</span><span class="p">,</span>
+    <span class="n">K_rr</span><span class="p">,</span>
+    <span class="n">f_f</span><span class="p">,</span>
+    <span class="n">f_r</span><span class="p">,</span>
+    <span class="n">u_r</span><span class="p">,</span>
+    <span class="n">f_fef_f</span><span class="p">,</span>
+    <span class="n">f_fef_r</span><span class="p">,</span>
+    <span class="n">free_dofs</span><span class="p">,</span>
+    <span class="n">restrained_dofs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">partition_system</span><span class="p">(</span>
+    <span class="n">K_global</span><span class="p">,</span>
+    <span class="n">F_global</span><span class="p">,</span>
+    <span class="n">u_global</span><span class="p">,</span>
+    <span class="n">F_fef_global</span><span class="p">,</span>
+    <span class="n">dof_restrained_1based</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3c51254b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [179]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Solve Partitioned System</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Solve for the unknown displacements at the free DOFs,</span>
+<span class="c1"># compute the reactions at restrained DOFs, and then</span>
+<span class="c1"># reconstruct the complete global displacement and force vectors.</span>
+
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">f_f</span> <span class="o">-</span> <span class="n">f_fef_f</span> <span class="o">-</span> <span class="n">K_fr</span> <span class="o">@</span> <span class="n">u_r</span>
+<span class="n">u_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">K_ff</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+
+<span class="n">F_r</span> <span class="o">=</span> <span class="n">K_rf</span> <span class="o">@</span> <span class="n">u_f</span> <span class="o">+</span> <span class="n">K_rr</span> <span class="o">@</span> <span class="n">u_r</span> <span class="o">+</span> <span class="n">f_fef_r</span>
+
+<span class="n">u_global</span> <span class="o">=</span> <span class="n">assemble_global_displacements</span><span class="p">(</span>
+    <span class="n">u_f</span><span class="p">,</span>
+    <span class="n">u_r</span><span class="p">,</span>
+    <span class="n">free_dofs</span><span class="p">,</span>
+    <span class="n">restrained_dofs</span>
+    <span class="p">)</span>
+
+<span class="n">f_global_complete</span> <span class="o">=</span> <span class="n">assemble_global_forces</span><span class="p">(</span>
+    <span class="n">f_f</span><span class="p">,</span>
+    <span class="n">F_r</span><span class="p">,</span>
+    <span class="n">free_dofs</span><span class="p">,</span>
+    <span class="n">restrained_dofs</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=50f915b3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [180]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display DSM Results</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Print the final global displacement vector and force vector.</span>
+
+<span class="n">print_dsm_results</span><span class="p">(</span>
+    <span class="n">u_global</span><span class="p">,</span>
+    <span class="n">f_global_complete</span><span class="p">,</span>
+    <span class="n">dof_restrained_1based</span><span class="p">,</span>
+    <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> DOF  Type Status  Disp (mm / rad)  Load (kN / kN·m)
+   1   u_x   Free            8.920           600.000
+   2   u_y   Free           -6.171          -900.000
+   3 theta  Fixed            0.000          -106.324
+   4   u_x  Fixed            0.000          -141.766
+   5   u_y  Fixed            0.000          -143.824
+   6 theta  Fixed            0.000           575.297
+   7   u_x  Fixed            0.000          -349.852
+   8   u_y  Fixed            0.000           466.469
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=85aa2d09">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Member-Level-Solution-(Local)">Member-Level Solution (Local)<a class="anchor-link" href="#Member-Level-Solution-(Local)">¶</a></h3><p>Then the backward pass goes extract u_global for the element</p>
+<p>$$
+\mathbf{u}_i \leftarrow \mathbf{u}_{\text{global}}
+$$</p>
+<p>Convert global DOFs to the element’s local coordinate system:</p>
+<p>$$
+\mathbf{v}_i = \mathbf{T}_i \, \mathbf{u}_i
+$$</p>
+<p>Local element forces are the sum of displacement-related forces and FEFs:</p>
+<p>$$
+\mathbf{q}_i
+=
+\mathbf{k}_{\ell,i} \, \mathbf{v}_i
++
+(\mathbf{q}_i^{F} + \mathbf{q}_i^{H} + \mathbf{q}_i^{E})
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c304b09b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [181]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
+<span class="c1"># Display Element Results</span>
+<span class="c1"># -------------------------</span>
+<span class="c1"># Compute and print the element-level results for each member.</span>
+
+<span class="n">print_element_truss</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">Qf1</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">print_element_truss</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">T2</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">Qf2</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">print_element_truss</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">u_global</span><span class="p">,</span> <span class="n">m3</span><span class="p">,</span> <span class="n">T3</span><span class="p">,</span> <span class="n">k3</span><span class="p">,</span> <span class="n">Qf3</span><span class="p">,</span> <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+E1 (Truss)
+u_global [mm]: [0.00, 0.00, 8.92, -6.17]
+u_local  [mm]: [0.00, 0.00, 0.42, -10.84]
+q_local  [kN]: [-177.21, 0.00, 177.21, 0.00]
+N (tension +) = 177.21 kN
+
+
+E2 (Truss)
+u_global [mm]: [0.00, 0.00, 8.92, -6.17]
+u_local  [mm]: [0.00, 0.00, -8.15, -7.16]
+q_local  [kN]: [593.00, 0.00, -593.00, 0.00]
+N (tension +) = -593.00 kN
+
+
+E3 (Truss)
+u_global [mm]: [0.00, 0.00, 8.92, -6.17]
+u_local  [mm]: [0.00, 0.00, -10.29, -3.43]
+q_local  [kN]: [583.09, 0.00, -583.09, 0.00]
+N (tension +) = -583.09 kN
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c28bd7fe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_Example_Soln1.png" style="width:85%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=66b010e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Member-Level-Solution-(Global)">Member-Level Solution (Global)<a class="anchor-link" href="#Member-Level-Solution-(Global)">¶</a></h3><p>Then transform <strong>member end forces in local coordinates</strong> to the <strong>global coordinate system</strong> using $f = T^{T} q$</p>
+<p>The resulting global force components provide the <strong>reactions at the supports</strong> due to the prescribed support displacement.</p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c6fa69f7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [182]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">u_global</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">T1</span> <span class="o">@</span> <span class="n">u</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">k1</span> <span class="o">@</span> <span class="n">v</span> <span class="o">+</span> <span class="n">Qf1</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">T1</span> <span class="o">@</span> <span class="n">q</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[-106.32412627  141.76550169  106.32412627 -141.76550169]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=999ad714">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>All elements start at supports and end at top node.</p>
+<p>First two terms in each element's f-vector give support forces:</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_Example_Soln2.png" style="width:85%;"/>
 </div>
 </div>
 </div>
@@ -8526,11 +9296,11 @@ Add a short numerical frame example here in the same style as your Lecture 9 set
 </ul>
 <p>At the element level:</p>
 <p>$$
-\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + \mathbf{q}_i^{F} + \mathbf{q}_i^{\theta} + \mathbf{q}_i^{\varepsilon}
+\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + (\mathbf{q}_i^{F} + \mathbf{q}_i^{H} + \mathbf{q}_i^{E})
 $$</p>
 <p>At the global level:</p>
 <p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{\theta} - \mathbf{f}^{\varepsilon}
+\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{H} - \mathbf{f}^{E}
 $$</p>
 </div>
 </div>
