@@ -10,7 +10,6 @@ This week introduces the course structure and establishes the core software tool
 
 Course scope, learning objectives, expectations, and semester structure.
 
-- 🌐 **Slides (HTML):** [L1_intro.slides.html](Lectures/L1/L1_intro.slides.html)
 - 📄 **Slides (PDF):** [L1_intro.pdf](Lectures/L1/L1_intro.pdf)
 - 📓 **Notebook:** [L1_intro.ipynb](Lectures/L1/L1_intro.ipynb)
 
@@ -18,7 +17,6 @@ Course scope, learning objectives, expectations, and semester structure.
 
 Version control, collaboration workflows, and course repository setup.
 
-- 🌐 **Slides (HTML):** [L1_software_git.slides.html](Lectures/L1/L1_software_git.slides.html)
 - 📄 **Slides (PDF):** [L1_software_git.pdf](Lectures/L1/L1_software_git.pdf)
 - 📓 **Notebook:** [L1_software_git.ipynb](Lectures/L1/L1_software_git.ipynb)
 
@@ -26,7 +24,6 @@ Version control, collaboration workflows, and course repository setup.
 
 Setup of Python and Conda environments and introduction to the core computational tools used in the course.
 
-- 🌐 **Slides (HTML):** [L1_software_python.slides.html](Lectures/L1/L1_software_python.slides.html)
 - 📄 **Slides (PDF):** [L1_software_python.pdf](Lectures/L1/L1_software_python.pdf)
 - 📓 **Notebook:** [L1_software_python.ipynb](Lectures/L1/L1_software_python.ipynb)
 
@@ -34,7 +31,6 @@ Setup of Python and Conda environments and introduction to the core computationa
 
 Configuration of VS Code for Python development, Jupyter notebooks, and course workflows.
 
-- 🌐 **Slides (HTML):** [L1_software_VScode.slides.html](Lectures/L1/L1_software_VScode.slides.html)
 - 📄 **Slides (PDF):** [L1_software_VScode.pdf](Lectures/L1/L1_software_VScode.pdf)
 - 📓 **Notebook:** [L1_software_VScode.ipynb](Lectures/L1/L1_software_VScode.ipynb)
 
@@ -84,7 +80,6 @@ McGuire – Chapter 11, §11.1–11.3
 This lecture introduces matrices as linear mappings, covering notation, indexing, matrix–vector products, and
 fundamental matrix operations used throughout structural analysis.
 
-- 🌐 **Slides (HTML):** [L2_1_matrices.slides.html](Lectures/L2/L2_1_matrices.slides.html)
 - 📄 **Slides (PDF):** [L2_1_matrices.pdf](Lectures/L2/L2_1_matrices.pdf)
 - 📓 **Notebook:** [L2_1_matrices.ipynb](Lectures/L2/L2_1_matrices.ipynb)
 
@@ -93,7 +88,6 @@ fundamental matrix operations used throughout structural analysis.
 This lecture develops direct and iterative methods for solving linear systems, emphasizing elimination, factorization,
 and solver efficiency for large-scale engineering problems.
 
-- 🌐 **Slides (HTML):** [L2_2_solvers.slides.html](Lectures/L2/L2_2_solvers.slides.html)
 - 📄 **Slides (PDF):** [L2_2_solvers.pdf](Lectures/L2/L2_2_solvers.pdf)
 - 📓 **Notebook:** [L2_2_solvers.ipynb](Lectures/L2/L2_2_solvers.ipynb)
 
@@ -136,7 +130,6 @@ This lecture builds the axial bar element from first principles: truss DOFs and 
 coordinates, axial kinematics and statics, the $2 \times 2$ local stiffness matrix, a brief preview of flexibility, and
 the local $4 \times 4$ element stiffness form (local-only; not yet transformed).
 
-- 🌐 **Slides (HTML):** [L3_1_AxialElement.slides.html](Lectures/L3/L3_1_AxialElement.slides.html)
 - 📄 **Slides (PDF):** [L3_1_AxialElement.pdf](Lectures/L3/L3_1_AxialElement.pdf)
 - 📓 **Notebook:** [L3_1_AxialElement.ipynb](Lectures/L3/L3_1_AxialElement.ipynb)
 
@@ -146,7 +139,6 @@ This lecture begins to develop the full DSM workflow for trusses: local-to-globa
 cosines, deriving the global element stiffness $[k]_g = [T]^T [k'] [T]$, and manually assembling the global stiffness
 matrix of the structure to solve the unknown joint displacements.
 
-- 🌐 **Slides (HTML):** [L3_2_Trusses.slides.html](Lectures/L3/L3_2_Trusses.slides.html)
 - 📄 **Slides (PDF):** [L3_2_Trusses.pdf](Lectures/L3/L3_2_Trusses.pdf)
 - 📓 **Notebook:** [L3_2_Trusses.ipynb](Lectures/L3/L3_2_Trusses.ipynb)
 
@@ -190,7 +182,6 @@ global stiffness matrix based on compatibility and force equilibrium, and then f
 scatter–add assembly of the global stiffness matrix, enforcement of boundary conditions, solution for unknown joint
 displacements and support reactions, and recovery of member axial forces.
 
-- 🌐 **Slides (HTML):** [L4_1_Trusses.slides.html](Lectures/L4/L4_1_Trusses.slides.html)
 - 📄 **Slides (PDF):** [L4_1_Trusses.pdf](Lectures/L4/L4_1_Trusses.pdf)
 - 📓 **Notebook:** [L4_1_Trusses.ipynb](Lectures/L4/L4_1_Trusses.ipynb)
 
@@ -202,7 +193,6 @@ into global arrays, application of boundary conditions via partitioning, solutio
 post-processing for element force recovery. The emphasis is on building a larger, readable piece of analysis software by
 implementing each DSM step explicitly and validating intermediate results along the way.
 
-- 🌐 **Slides (HTML):** [L4_2_Implementation.slides.html](Lectures/L4/L4_2_Implementation.slides.html)
 - 📄 **Slides (PDF):** [L4_2_Implementation.pdf](Lectures/L4/L4_2_Implementation.pdf)
 - 📓 **Notebook:** [L4_2_Implementation.ipynb](Lectures/L4/L4_2_Implementation.ipynb)
 
@@ -211,7 +201,6 @@ implementing each DSM step explicitly and validating intermediate results along 
 This lecture explores computational and modeling extensions to the DSM, including **sparsity and bandwidth of the
 stiffness matrix**, the impact of DOF ordering on solver performance
 
-- 🌐 **Slides (HTML):** [L4_3_SparsityBandwidth.slides.html](Lectures/L4/L4_3_SparsityBandwidth.slides.html)
 - 📄 **Slides (PDF):** [L4_3_SparsityBandwidth.pdf](Lectures/L4/L4_3_SparsityBandwidth.pdf)
 - 📓 **Notebook:** [L4_3_SparsityBandwidth.ipynb](Lectures/L4/L4_3_SparsityBandwidth.ipynb)
 
@@ -247,7 +236,6 @@ This week includes an in-class midterm examination (~2.0 hours).
 A brief preview of extending the Direct Stiffness Method (DSM) framework to 3D truss systems, in preparation for the
 upcoming assignment where this extension will be implemented computationally.
 
-- 🌐 **Slides (HTML):** [L5_1_SpaceTrusses.slides.html](Lectures/L5/L5_1_SpaceTrusses.slides.html)
 - 📄 **Slides (PDF):** [L5_1_SpaceTrusses.pdf](Lectures/L5/L5_1_SpaceTrusses.pdf)
 - 📓 **Notebook:** [L5_1_SpaceTrusses.ipynb](Lectures/L5/L5_1_SpaceTrusses.ipynb)
 
@@ -291,7 +279,6 @@ McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.2 (FEFs), 5.3 (Self-Straining
 Introduces the Euler–Bernoulli beam model within the DSM framework. We define beam DOFs, establish sign conventions,
 distinguish joint vs member loads, and set up the global system $\mathbf{K}\mathbf{u}=\mathbf{f}$.
 
-- 🌐 **Slides (HTML):** [L6_1_Beams.slides.html](Lectures/L6/L6_1_Beams.slides.html)
 - 📄 **Slides (PDF):** [L6_1_Beams.pdf](Lectures/L6/L6_1_Beams.pdf)
 - 📓 **Notebook:** [L6_1_Beams.ipynb](Lectures/L6/L6_1_Beams.ipynb)
 
@@ -300,7 +287,6 @@ distinguish joint vs member loads, and set up the global system $\mathbf{K}\math
 Develops the 4×4 beam element stiffness matrix using the unit displacement method. The lecture builds physical intuition
 for the stiffness coefficients and shows how beam elements are assembled into the global system.
 
-- 🌐 **Slides (HTML):** [L6_2_PlaneFrames.slides.html](Lectures/L6/L6_2_Beams_Stiffness.slides.html)
 - 📄 **Slides (PDF):** [L6_2_PlaneFrames.pdf](Lectures/L6/L6_2_Beams_Stiffness.pdf)
 - 📓 **Notebook:** [L6_2_PlaneFrames.ipynb](Lectures/L6/L6_2_Beams_Stiffness.ipynb)
 
@@ -310,7 +296,6 @@ Introduces fixed-end forces for handling member loading. We show how beam proble
 superposition, convert distributed loads into equivalent nodal forces, and incorporate FEFs into the global DSM
 equations.
 
-- 🌐 **Slides (HTML):** [L6_3_FEFs.slides.html](Lectures/L6/L6_3_FEFs.slides.html)
 - 📄 **Slides (PDF):** [L6_3_FEFs.pdf](Lectures/L6/L6_3_FEFs.pdf)
 - 📓 **Notebook:** [L6_3_FEFs.ipynb](Lectures/L6/L6_3_FEFs.ipynb)
 
@@ -347,7 +332,6 @@ McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.1 (3D Coordinate Transformati
 Introduces the **plane frame element** in local coordinates. We define the six element DOFs, combine axial and flexural
 stiffness contributions, and derive the full 6×6 local stiffness matrix.
 
-- 🌐 **Slides (HTML):** [L7_1_FramesLocal.slides.html](Lectures/L7/L7_1_FramesLocal.slides.html)
 - 📄 **Slides (PDF):** [L7_1_FramesLocal.pdf](Lectures/L7/L7_1_FramesLocal.pdf)
 - 📓 **Notebook:** [L7_1_FramesLocal.ipynb](Lectures/L7/L7_1_FramesLocal.ipynb)
 
@@ -357,7 +341,6 @@ Develops the **coordinate transformation matrix** and shows how element stiffnes
 global coordinates. We assemble multi-member frame systems and construct the global equilibrium equations for complete
 2D frame problems.
 
-- 🌐 **Slides (HTML):** [L7_2_FramesGlobal.slides.html](Lectures/L7/L7_2_FramesGlobal.slides.html)
 - 📄 **Slides (PDF):** [L7_2_FramesGlobal.pdf](Lectures/L7/L7_2_FramesGlobal.pdf)
 - 📓 **Notebook:** [L7_2_FramesGlobal.ipynb](Lectures/L7/L7_2_FramesGlobal.ipynb)
 
@@ -367,7 +350,6 @@ Covers a set of practical and course-related topics. We review this week’s hom
 clear and well-structured Markdown writeups for submitted assignments, and go over key takeaways from the midterm exam.
 We also summarize and reflect on midterm course feedback, highlighting adjustments and clarifications moving forward.
 
-- 🌐 **Slides (HTML):** [L7_3_Extra.slides.html](Lectures/L7/L7_3_Extra.slides.html)
 - 📄 **Slides (PDF):** [L7_3_Extra.pdf](Lectures/L7/L7_3_Extra.pdf)
 - 📓 **Notebook:** [L7_3_Extra.ipynb](Lectures/L7/L7_3_Extra.ipynb)
 
@@ -395,7 +377,7 @@ Use standard submission naming from Week 1.
 
 ## 📅 Week 8 — Member Releases and Support Settlement
 
-This week extends the **Direct Stiffness Method (DSM)** to handle two important practical modeling features: **member
+This week extends the Direct Stiffness Method (DSM) to handle two important practical modeling features: **member
 releases** and **support settlements**. We examine how hinges modify the stiffness relationships in frame elements, and
 how **prescribed support displacements** can be incorporated into the standard DSM formulation.
 
@@ -409,7 +391,6 @@ This lecture introduces **moment releases and hinged joints** in frame structure
 discuss how releases affect element stiffness, how they are represented in the global system, and how fictitious
 restraints can be used to stabilize the formulation when rotational stiffness is removed.
 
-- 🌐 **Slides (HTML):** [L8_1_FramesReleases.slides.html](Lectures/L8/L8_1_FramesReleases.slides.html)
 - 📄 **Slides (PDF):** [L8_1_FramesReleases.pdf](Lectures/L8/L8_1_FramesReleases.pdf)
 - 📓 **Notebook:** [L8_1_FramesReleases.ipynb](Lectures/L8/L8_1_FramesReleases.ipynb)
 
@@ -439,8 +420,8 @@ Use standard submission naming from Week 1.
 
 ## 📅 Week 9 — Support Settlement, Temperature & Fit-up Forces
 
-This week, we extend the Direct Stiffness Method (DSM) to handle several important sources of internal force that arise. We study prescribed support motion, temperature-induced actions, and
-fabrication / fit-up errors, and show how each can be incorporated into the DSM workflow. We also wrap up
+This week, we extend the Direct Stiffness Method (DSM) to handle several important sources of internal force that arise. We study **prescribed support displacement**, **temperature-induced actions**, and
+**fabrication / fit-up errors**, and show how each can be incorporated into the DSM workflow. We also wrap up
 with information and review material for Midterm #2.
 
 Kassimali – Chapter 7, §7.3 & 7.5
@@ -449,7 +430,7 @@ Kassimali – Chapter 7, §7.3 & 7.5
 
 #### Part 1 — Support Settlement
 
-This lecture introduces support settlements and other prescribed displacements within the DSM framework. We derive the modified equilibrium equations and show how prescribed displacements enter the system naturally through the partitioned stiffness equations, without introducing fixed-end forces or requiring the additional element-level force manipulations used for member loads, thermal effects, or fabrication errors. For consistency with the fixed-end-force terms used in those other cases, one can also view this contribution as an equivalent load acting on the free degrees of freedom.
+This lecture introduces **support settlements and other prescribed displacements** within the DSM framework. We derive the modified equilibrium equations and show how prescribed displacements enter the system naturally through the partitioned stiffness equations, without introducing fixed-end forces or requiring the additional element-level force manipulations used for member loads, thermal effects, or fabrication errors. For consistency with the fixed-end-force terms used in those other cases, one can also view this contribution as an equivalent load acting on the free degrees of freedom.
 
 - 📄 **Slides (PDF):** [L9_1_SupportSettlement.pdf](Lectures/L9/L9_1_SupportSettlement.pdf)
 - 📓 **Notebook:** [L9_1_SupportSettlement.ipynb](Lectures/L9/L9_1_SupportSettlement.ipynb)
