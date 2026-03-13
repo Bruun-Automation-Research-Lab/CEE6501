@@ -7475,6 +7475,8 @@ main {
 <li><strong>Part 2</strong> — Global Equations</li>
 <li><strong>Part 3</strong> — Support Settlement, DSM Implementation</li>
 <li><strong>Part 4</strong> — Truss Example</li>
+<li><strong>Part 5</strong> — In-class Exercise</li>
+<li><strong>Part 6</strong> — Solution In-class Exercise</li>
 </ul>
 </div>
 </div>
@@ -7538,7 +7540,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
+<h3 id="Displacement-in-Free-DOFs-when-Supports-Dispalce">Displacement in Free DOFs when Supports Dispalce<a class="anchor-link" href="#Displacement-in-Free-DOFs-when-Supports-Dispalce">¶</a></h3><div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L1_Structure1.png" style="width:95%;"/>
 </div>
 </div>
@@ -7594,13 +7596,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="(1)-Imaginary-Fully-fixed-Frame-with-Settlement">(1) Imaginary Fully fixed Frame with Settlement<a class="anchor-link" href="#(1)-Imaginary-Fully-fixed-Frame-with-Settlement">¶</a></h3><div style="text-align:center;">
+<h3 id="(1)-Imaginary-Fully-Fixed-Frame-with-Settlement">(1) Imaginary Fully-Fixed Frame with Settlement<a class="anchor-link" href="#(1)-Imaginary-Fully-Fixed-Frame-with-Settlement">¶</a></h3><div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L1_Structure2.png" style="width:75%;"/>
 </div>
 <ul>
 <li>Joints restrained</li>
 <li>Settlements imposed</li>
-<li>Fixed-joint forces develop</li>
+<li>Fixed-end forces, $F^S$, develop</li>
 </ul>
 <p>These forces represent the structural resistance to the imposed support movements.</p>
 </div>
@@ -7627,11 +7629,11 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="What-Does-This-Mean-Physically?">What Does This Mean Physically?<a class="anchor-link" href="#What-Does-This-Mean-Physically?">¶</a></h3><ul>
-<li>The fully fixed system develops forces $F^S$</li>
+<li>The fully fixed system develops, <strong>fixed-end forces</strong>, $F^S$</li>
 <li>Applying their negatives to the real frame cancels out the artificial restraints</li>
 <li>What remains is the true compatibility-driven response</li>
 </ul>
-<p>The negatives of the fixed-joint forces therefore act as:</p>
+<p>The <strong>negatives of the fixed-end forces</strong> therefore act as:</p>
 <p>$$
 \textbf{Equivalent joint loads due to settlement}
 $$</p>
@@ -7657,7 +7659,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Global-Equilibrium">Global Equilibrium<a class="anchor-link" href="#Global-Equilibrium">¶</a></h3><p>The assembled system (including fixed-end forces) is</p>
+<h3 id="Global-Equilibrium">Global Equilibrium<a class="anchor-link" href="#Global-Equilibrium">¶</a></h3><p>The assembled system (including fixed-end forces from member loading) is</p>
 <p>$$
 K u = F - F^F
 $$</p>
@@ -7725,7 +7727,7 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Physical-Interpretation-of-$K_%7Bfr%7D%5C,u_r$">Physical Interpretation of $K_{fr}\,u_r$<a class="anchor-link" href="#Physical-Interpretation-of-$K_%7Bfr%7D%5C,u_r$">¶</a></h3><p>What does the term $K_{fr} u_r$ represent?</p>
 <ul>
-<li>$u_r$ = <strong>prescribed displacements</strong> at restrained DOFs (e.g., support settlements).</li>
+<li>$u_r$ = <strong>imposed displacements</strong> at restrained DOFs (e.g., support settlements).</li>
 <li>$K_{fr} u_r$ = <strong>forces induced at the free DOFs</strong> by those imposed displacements.</li>
 </ul>
 <p>Physically, this term represents the forces that would develop in the <strong>free DOFs if they were temporarily held fixed while the supports moved</strong>.</p>
@@ -7784,14 +7786,28 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Each column of $K_{fr}$ represents the <strong>forces at the free DOFs caused by a unit displacement at a restrained DOF</strong>.</p>
-<p>Instead of a unit displacement, we now apply the <strong>actual prescribed displacement</strong> (e.g., a support settlement).</p>
+<p>Instead of a unit displacement, where $f = K_{fr}u_r = K_{fr}$ we now apply the <strong>actual imporsed displacement</strong> (e.g., a support settlement).</p>
 <p>The product, $K_{fr}u_r$, therefore gives the <strong>forces induced at the free DOFs by the imposed support movements</strong>.</p>
-<p>These forces are analogous to the <strong>fixed-joint forces</strong>, $F_f^{S}$, because they correspond to the forces that would develop if the structure were <strong>temporarily fixed at all DOFs</strong> while the support DOFs were displaced.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b9cc469b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Analogy-between-$K_%7Bfr%7D-u_r$-and-$F_f%5ES$">Analogy between $K_{fr} u_r$ and $F_f^S$<a class="anchor-link" href="#Analogy-between-$K_%7Bfr%7D-u_r$-and-$F_f%5ES$">¶</a></h3><p>These $K_{fr}u_r$ forces are analogous to the <strong>fixed-end forces</strong>, $F_f^{S}$, we derived earlier in the superpositon approach. They correspond to the forces that would develop if the structure were <strong>temporarily fixed at all DOFs</strong> while the support DOFs were displaced.</p>
 <p>Thus,</p>
 <p>$$
 F_f^{S} = K_{fr} u_r
 $$</p>
-<p>is the expression for the <strong>fixed-joint force vector</strong>, which is then <strong>subtracted from the real system</strong> to remove the artificial restraint in the superposition process.</p>
+<p>is the expression for the <strong>fixed-end force vector</strong>, which is then <strong>subtracted from the real system</strong> to remove the artificial restraint in the superposition process.</p>
+<p>This is why we see the negative in the expression when applied in our DSM formulation:</p>
+<p>$$
+-K_{fr}u_r
+$$</p>
 </div>
 </div>
 </div>
@@ -7858,7 +7874,7 @@ $$</p>
 <h3 id="Code-implementation-steps">Code implementation steps<a class="anchor-link" href="#Code-implementation-steps">¶</a></h3><ol>
 <li>Assemble global $K$</li>
 <li>Assemble applied load vector, $F$</li>
-<li>Assemble fixed end force vector, $F^F$</li>
+<li>Assemble member loading fixed end force vector, $F^F$</li>
 <li>Insert prescribed settlements into $u_r$</li>
 <li>Partition matrices</li>
 <li>Solve</li>
@@ -7900,7 +7916,7 @@ $$</p>
 <div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L1_Example.png" width="90%"/>
 </div>
-<p>Determine the joint displacements, member axial forces, and support reactions for the plane truss due to a settlement of 10 mm of support 4.</p>
+<p>Determine the joint displacements, member axial forces, and support reactions for the plane truss due to a vertical settlement (down) of 10 mm of support 4.</p>
 </div>
 </div>
 </div>
@@ -7909,7 +7925,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [262]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [67]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -7942,7 +7958,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [263]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [68]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs_dsm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -7979,7 +7995,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [264]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [69]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8020,7 +8036,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [265]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [70]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8060,7 +8076,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [266]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [71]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8100,7 +8116,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [267]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [72]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8132,7 +8148,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [268]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [73]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8156,7 +8172,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [269]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [74]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8182,7 +8198,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [270]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [75]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8223,7 +8239,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [271]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [76]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8261,7 +8277,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [272]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [77]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8299,7 +8315,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [273]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [78]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8370,7 +8386,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [274]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [79]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8449,7 +8465,7 @@ N (tension +) = 218.26 kN
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [275]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [80]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">-</span> <span class="mi">1</span>
@@ -8535,7 +8551,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [276]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [81]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8568,7 +8584,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [277]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [82]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8594,7 +8610,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [278]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8613,7 +8629,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [279]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [84]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8642,7 +8658,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [280]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [85]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 1 (given by the example result)</span>
@@ -8657,7 +8673,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [281]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [86]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8686,7 +8702,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [282]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [87]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 2</span>
@@ -8701,7 +8717,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [283]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [88]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8730,7 +8746,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [284]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [89]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 3</span>
@@ -8745,7 +8761,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [285]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [90]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8777,7 +8793,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [286]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [91]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8804,7 +8820,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [287]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [92]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8830,7 +8846,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [288]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [93]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8850,7 +8866,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [289]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [94]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8876,7 +8892,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [290]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [95]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8914,7 +8930,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [291]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [96]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8952,7 +8968,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [292]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [97]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9001,7 +9017,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [293]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [98]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9049,7 +9065,7 @@ q [kN,kN·m]: [0.0, 70.7, 85.7, 0.0, 49.3, 0.0]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [296]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [99]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
