@@ -7854,6 +7854,7 @@ A uniform temperature increase induces <strong>thermal strain</strong>, which is
 <div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L2_Temp_FEF1.png" style="width:85%;"/>
 </div>
+<p>Note: all $q$ forces are shown in their positive direction, based on sign convention, not the actual direction under axial expansion.</p>
 </div>
 </div>
 </div>
@@ -7891,6 +7892,7 @@ A uniform temperature increase induces <strong>thermal strain</strong>, which is
 <div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L2_Temp_FEF3.png" style="width:85%;"/>
 </div>
+<p>Note: all $q$ forces are shown in their positive direction, based on sign convention, not the actual direction under axial expansion.</p>
 </div>
 </div>
 </div>
@@ -7903,11 +7905,11 @@ A uniform temperature increase induces <strong>thermal strain</strong>, which is
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Superposition-Principle">Superposition Principle<a class="anchor-link" href="#Superposition-Principle">¶</a></h3><p>The restrained (fixed–fixed) member response equals the sum of two simply supported cases:</p>
 <p>$$
-\text{Fixed member}
+\text{(1) Fixed member}
 =
-\text{Temperature-only}
+\text{(2) Temperature-only}
 +
-\text{End-force-only}
+\text{(3) End-force-only}
 $$</p>
 <p>Displacement form:</p>
 <p>$$
@@ -8037,8 +8039,9 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Component-Form">Component Form<a class="anchor-link" href="#Component-Form">¶</a></h3><div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L2_Temp_FEF1.png" style="width:60%;"/>
+<h3 id="Component-Form">Component Form<a class="anchor-link" href="#Component-Form">¶</a></h3><p>Note: all $q$ forces are shown in their positive direction</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_Temp_FEF1.png" style="width:50%;"/>
 </div>
 <p>The thermal fixed-end force expressions are therefore</p>
 <p>$$
@@ -8205,7 +8208,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-End-Displacement-Vector-Due-to-Straightness-Error">Local End Displacement Vector Due to Straightness Error<a class="anchor-link" href="#Local-End-Displacement-Vector-Due-to-Straightness-Error">¶</a></h3><p>For a beam/frame member, the local end displacement vector due to the extra length is</p>
+<h3 id="Local-End-Displacement-Vector-Due-to-Member-Length">Local End Displacement Vector Due to Member Length<a class="anchor-link" href="#Local-End-Displacement-Vector-Due-to-Member-Length">¶</a></h3><p>For a beam/frame member, the local end displacement vector due to the extra length is</p>
 <p>$$
 \mathbf{v}^{E,a}
 =
@@ -8238,7 +8241,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Local-FEFs-from-the-Local-Stiffness-Matrix">Local FEFs from the Local Stiffness Matrix<a class="anchor-link" href="#Local-FEFs-from-the-Local-Stiffness-Matrix">¶</a></h3><p>Apply end forces that produce the opposite displacement vector $-\mathbf{v}^{E,a}$</p>
+<h3 id="Local-FEFs-from-the-Local-Stiffness-Matrix">Local FEFs from the Local Stiffness Matrix<a class="anchor-link" href="#Local-FEFs-from-the-Local-Stiffness-Matrix">¶</a></h3><p>Apply end forces that produce the opposite displacement vector: $-\mathbf{v}^{E,a}$</p>
 <p>$$
 \mathbf{q}^{E,a}
 =
@@ -8393,6 +8396,7 @@ $$</p>
 <div style="text-align:center;">
 <img alt="No description has been provided for this image" src="assets/L2_Fab_FEF3.png" style="width:75%;"/>
 </div>
+<p>Note: all $q$ forces are shown in their positive direction</p>
 </div>
 </div>
 </div>
