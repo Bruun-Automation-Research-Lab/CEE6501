@@ -8327,7 +8327,8 @@ $$</p>
     <span class="n">u_global</span><span class="p">,</span>
     <span class="n">f_global_complete</span><span class="p">,</span>
     <span class="n">dof_restrained_1based</span><span class="p">,</span>
-    <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">member_type</span><span class="o">=</span><span class="s2">"truss"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -8341,15 +8342,15 @@ $$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre> DOF  Type Status  Disp (mm / rad)  Load (kN / kN·m)
-   1   u_x   Free            5.530             0.000
-   2   u_y   Free           -2.442             0.000
-   3 theta  Fixed            0.000           -65.479
-   4   u_x  Fixed            0.000           -87.306
-   5   u_y  Fixed            0.000           -65.479
-   6 theta  Fixed            0.000           261.917
-   7   u_x  Fixed            0.000           130.958
-   8   u_y  Fixed          -10.000          -174.611
+<pre> DOF Type Status  Disp (mm / rad)  Load (kN / kN·m)
+   1  u_x   Free            5.530             0.000
+   2  u_y   Free           -2.442             0.000
+   3  u_x  Fixed            0.000           -65.479
+   4  u_y  Fixed            0.000           -87.306
+   5  u_x  Fixed            0.000           -65.479
+   6  u_y  Fixed            0.000           261.917
+   7  u_x  Fixed            0.000           130.958
+   8  u_y  Fixed          -10.000          -174.611
 </pre>
 </div>
 </div>
@@ -8605,7 +8606,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3293bdb7">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3293bdb7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8619,25 +8620,8 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <span class="n">E</span> <span class="o">=</span> <span class="mf">200e6</span>          <span class="c1"># kPa</span>
 <span class="n">I</span> <span class="o">=</span> <span class="mf">102e-6</span>         <span class="c1"># m^4</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mf">8.0</span>            <span class="c1"># m</span>
-<span class="n">A</span> <span class="o">=</span> <span class="c1">#Set to anything, doesn't matter for a beam</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="c1"># Can set to anything, doesn't matter for a beam</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>
-  <span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[17]</span><span class="ansi-green-fg">, line 7</span>
-<span class="ansi-red-fg">    </span><span class="ansi-red-fg">A = #Set to anything, doesn't matter for a beam</span>
-        ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
-</pre>
 </div>
 </div>
 </div>
@@ -8647,7 +8631,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8676,7 +8660,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 1 (given by the example result)</span>
@@ -8691,7 +8675,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8720,7 +8704,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 2</span>
@@ -8735,7 +8719,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8764,7 +8748,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 3</span>
@@ -8779,7 +8763,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8811,7 +8795,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8838,7 +8822,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8864,7 +8848,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8884,7 +8868,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8910,7 +8894,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8948,7 +8932,7 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8981,12 +8965,12 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bbadee6e">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=bbadee6e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8998,19 +8982,45 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
     <span class="n">u_global</span><span class="p">,</span>
     <span class="n">f_global_complete</span><span class="p">,</span>
     <span class="n">dof_restrained_1based</span><span class="p">,</span>
-    <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">disp_in_mm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">member_type</span><span class="o">=</span><span class="s2">"frame"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e281f491">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre> DOF  Type Status  Disp (mm / rad)  Load (kN / kN·m)
+   1   u_x  Fixed            0.000             0.000
+   2   u_y  Fixed            0.000            58.692
+   3 theta  Fixed            0.000            76.512
+   4   u_x   Free            0.000             0.000
+   5   u_y  Fixed            0.000           121.467
+   6 theta   Free           -0.002             0.000
+   7   u_x   Free            0.000             0.000
+   8   u_y  Fixed          -45.000           130.555
+   9 theta   Free           -0.009             0.000
+  10   u_x   Free            0.000             0.000
+  11   u_y  Fixed          -15.000            49.287
+  12 theta   Free            0.033             0.000
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e281f491">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9026,12 +9036,39 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c738edab">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+E1
+u [mm,rad]: [0.0, 0.0, 0.000000, 0.0, 0.0, -0.001954]
+v [mm,rad]: [0.0, 0.0, 0.000000, 0.0, 0.0, -0.001954]
+q [kN,kN·m]: [0.0, 58.7, 76.5, 0.0, 61.3, -87.0]
+
+E2
+u [mm,rad]: [0.0, 0.0, -0.001954, 0.0, -45.0, -0.009059]
+v [mm,rad]: [0.0, 0.0, -0.001954, 0.0, -45.0, -0.009059]
+q [kN,kN·m]: [0.0, 60.2, 87.0, 0.0, 59.8, -85.7]
+
+E3
+u [mm,rad]: [0.0, -45.0, -0.009059, 0.0, -15.0, 0.032563]
+v [mm,rad]: [0.0, -45.0, -0.009059, 0.0, -15.0, 0.032563]
+q [kN,kN·m]: [0.0, 70.7, 85.7, 0.0, 49.3, 0.0]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c738edab">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9040,6 +9077,19 @@ continuous beam, due to the combined effect of the uniformly distributed load sh
 
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">f_global_complete</span><span class="p">[</span><span class="n">dof_restrained_1based</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[  0.     58.692  76.512 121.467 130.555  49.287]
+</pre>
 </div>
 </div>
 </div>

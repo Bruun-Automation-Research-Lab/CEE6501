@@ -7,10 +7,10 @@ def print_dsm_results(
     u_global,
     f_global_complete,
     dof_restrained_1based,
-    dof_fictitious_1based=None,  # ← optional kwarg
+    dof_fictitious_1based=None,  # optional kwarg
     disp_in_mm=False,
+    member_type="frame",
 ):
-
     ndof = len(u_global)
     rows = []
 
@@ -25,18 +25,30 @@ def print_dsm_results(
     restrained_set = {int(d) for d in dof_restrained_1based}
     fictitious_set = {int(d) for d in dof_fictitious_1based}
 
+    member_type = member_type.lower()
+
+    if member_type == "frame":
+        dof_labels = ["u_x", "u_y", "theta"]
+        translational_idx = {0, 1}
+    elif member_type == "truss":
+        dof_labels = ["u_x", "u_y"]
+        translational_idx = {0, 1}
+    elif member_type == "beam":
+        dof_labels = ["u_y", "theta"]
+        translational_idx = {0}
+    else:
+        raise ValueError("member_type must be 'frame', 'truss', or 'beam'")
+
+    dof_per_node = len(dof_labels)
+
     for i in range(ndof):
         dof_1based = i + 1
-        mod = i % 3
+        mod = i % dof_per_node
+        dof_type = dof_labels[mod]
 
-        if mod == 0:
-            dof_type = "u_x"
-            disp = u_global[i] * (1000 if disp_in_mm else 1)
-        elif mod == 1:
-            dof_type = "u_y"
+        if mod in translational_idx:
             disp = u_global[i] * (1000 if disp_in_mm else 1)
         else:
-            dof_type = "theta"
             disp = u_global[i]
 
         if dof_1based in fictitious_set:
