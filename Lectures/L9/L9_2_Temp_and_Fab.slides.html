@@ -7783,6 +7783,31 @@ $$</p>
 </div>
 </div>
 </div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_physical_reading">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Reading-the-Temperature-Displacement-Vector">Reading the Temperature Displacement Vector<a class="anchor-link" href="#Reading-the-Temperature-Displacement-Vector">¶</a></h3><p>$$
+\mathbf{v}^{H}
+=
+\begin{bmatrix}
+0 &amp; 0 &amp; -\theta_H &amp; \Delta_H &amp; 0 &amp; \theta_H
+\end{bmatrix}^{T}
+$$</p>
+<p>Interpretation:</p>
+<ul>
+<li>no transverse joint translations: $v_2 = v_5 = 0$</li>
+<li>no axial motion at the start node: $v_1 = 0$</li>
+<li>axial expansion appears at the end node: $v_4 = \Delta_H$</li>
+<li>equal and opposite end rotations appear due to curvature: $v_3 = -\theta_H$ and $v_5 = \theta_H$</li>
+</ul>
+<p>This is a <strong>free deformation vector</strong> for the simply supported member.</p>
+</div>
+</div>
+</div>
+</div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4f1c5f72">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7803,31 +7828,6 @@ T_b + T_t \\[4pt]
 (T_b - T_t)/d
 \end{bmatrix}
 $$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_physical_reading">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Reading-the-Temperature-Displacement-Vector">Reading the Temperature Displacement Vector<a class="anchor-link" href="#Reading-the-Temperature-Displacement-Vector">¶</a></h3><p>$$
-\mathbf{v}^{H}
-=
-\begin{bmatrix}
-0 &amp; 0 &amp; -\theta_T &amp; \Delta_T &amp; 0 &amp; \theta_T
-\end{bmatrix}^{T}
-$$</p>
-<p>Interpretation:</p>
-<ul>
-<li>no transverse joint translations: $v_2 = v_5 = 0$</li>
-<li>no axial motion at the start node: $v_1 = 0$</li>
-<li>axial expansion appears at the end node: $v_4 = \Delta_T$</li>
-<li>equal and opposite end rotations appear due to curvature: $v_3 = -\theta_T$ and $v_5 = \theta_T$</li>
-</ul>
-<p>This is a <strong>free deformation vector</strong> for the simply supported member.</p>
 </div>
 </div>
 </div>
@@ -8340,9 +8340,9 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Assuming small angles, then the corresponding end rotations are</p>
 <p>$$
-\theta_b = \frac{e_b}{l_1}
+\theta_b \approx \frac{e_b}{l_1}
 \qquad
-\theta_e = \frac{e_b}{l_2}
+\theta_e \approx \frac{e_b}{l_2}
 $$</p>
 <p>Using our local sign convention:</p>
 <ul>
@@ -8520,15 +8520,15 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Where-Thermal-and-Fabrication-FEFs-Enter-the-DSM-Equations">Where Thermal and Fabrication FEFs Enter the DSM Equations<a class="anchor-link" href="#Where-Thermal-and-Fabrication-FEFs-Enter-the-DSM-Equations">¶</a></h3><p>At the element level,</p>
 <p>$$
-\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + \mathbf{q}_i^{F} + \mathbf{q}_i^{H} + \mathbf{q}_i^{E}
+\mathbf{q}_i = \mathbf{k}_{l,i}\mathbf{v}_i + (\mathbf{q}_i^{F} + \mathbf{q}_i^{H} + \mathbf{q}_i^{E})
 $$</p>
 <p>At the assembled global level,</p>
 <p>$$
-\mathbf{f} = \mathbf{K}\mathbf{u} + \mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E}
+\mathbf{f} = \mathbf{K}\mathbf{u} + (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
 $$</p>
 <p>or, equivalently,</p>
 <p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{H} - \mathbf{f}^{E}
+\mathbf{K}\mathbf{u} = \mathbf{f} - (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
 $$</p>
 <p>So thermal and fabrication effects enter the system exactly like other equivalent nodal force terms.</p>
 </div>
@@ -8542,16 +8542,11 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Why-Do-FEF-Terms-Appear-with-a-Minus-Sign?">Why Do FEF Terms Appear with a Minus Sign?<a class="anchor-link" href="#Why-Do-FEF-Terms-Appear-with-a-Minus-Sign?">¶</a></h3><p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
+\mathbf{K}\mathbf{u} = \mathbf{f} - \left(\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E}\right)
 $$</p>
-<p>When we solve for $\mathbf{u}$, we are finding the deformation needed so that the <strong>deformation-induced forces</strong></p>
-<p>$$
-\mathbf{K}\mathbf{u}
-$$</p>
-<p>balance the <strong>remaining nodal load</strong> after the known fixed-end-force contribution has already been accounted for.</p>
-<p>$$
-\mathbf{f} - (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
-$$</p>
+<p>The left-hand side (LHS), $\mathbf{K}\mathbf{u}$, represents the <strong>nodal forces generated by structural deformation</strong>.</p>
+<p>When we solve for $\mathbf{u}$, we are finding the displacement vector that produces the additional deformation-induced forces required for equilibrium.</p>
+<p>The right-hand side (RHS), $\mathbf{f} - \left(\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E}\right)$, represents the <strong>net applied nodal load still to be balanced</strong> by the LHS after the known fixed-end-force contributions have already been included.</p>
 </div>
 </div>
 </div>
@@ -8563,12 +8558,12 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Physical-Interpretation">Physical Interpretation<a class="anchor-link" href="#Physical-Interpretation">¶</a></h3><p>A member load, temperature change, or fabrication error gives the element a <strong>free deformation</strong> it would naturally like to undergo.</p>
-<p>If that free deformation is restrained, forces develop at the element ends. Those are the fixed-end forces, $(\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})$, in the element force vector, $\mathbf{q}_i$.</p>
+<p>If that free deformation is restrained, forces develop at the element ends. Those are the fixed-end forces, $(\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})$</p>
 <p>In the assembled system, the fixed-end-force contribution appears at each structural node as an equal-and-opposite nodal load required by equilibrium, which is why it enters with a minus sign.</p>
 <p>$$
 -(\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
 $$</p>
-<p>So before we solve for the structural displacements, the element already contributes a known force pattern.</p>
+<p>So before we solve for the structural displacements, $\mathbf{u}$, the elements in the structure already contribute a known force pattern.</p>
 <p>The term $\mathbf{K}\mathbf{u}$ then provides only the <strong>additional</strong> force needed so that the structure satisfies compatibility and equilibrium.</p>
 </div>
 </div>
@@ -8581,11 +8576,11 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Takeaway">Takeaway<a class="anchor-link" href="#Takeaway">¶</a></h3><p>The minus sign does <strong>not</strong> mean the FEFs are inherently negative.</p>
-<p>It appears because the known fixed-end-force contribution is moved to the right-hand side in the global solve:</p>
+<p>The fixed-end-force terms appear with a minus sign because they are <strong>known force contributions already present in the structure</strong>.</p>
+<p>They reduce the amount of force that must be generated by deformation, so the displacement solution $\mathbf{K}\mathbf{u}$ balances only the <strong>remaining unbalanced load</strong>.</p>
 <p>$$
 \mathbf{K}\mathbf{u} = \mathbf{f} - (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
 $$</p>
-<p>So the displacement solution does <strong>not</strong> recreate the FEFs; it balances what remains after they are already included.</p>
 </div>
 </div>
 </div>
@@ -8604,7 +8599,7 @@ $$</p>
 <li>Solve the global system</li>
 </ol>
 <p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{H} - \mathbf{f}^{E}
+\mathbf{K}\mathbf{u} = \mathbf{f} - (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
 $$</p>
 <ol start="6">
 <li>Perform the backward pass to recover local element end forces</li>
@@ -8668,7 +8663,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8701,7 +8696,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs_dsm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -8731,7 +8726,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [38]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8772,7 +8767,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [38]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Temperature change in truss member 1</span>
@@ -8810,7 +8805,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8850,7 +8845,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Local fixed-end vector for member 2</span>
@@ -8865,7 +8860,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8905,10 +8900,10 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Temperature change in member 3</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Fabrication error in member 3</span>
 <span class="n">e_a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">1000</span> <span class="c1"># mm -&gt; m</span>
 
 <span class="n">Qf3</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A3</span> <span class="o">/</span> <span class="n">L3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
@@ -8942,7 +8937,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [44]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8974,7 +8969,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [44]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -8999,7 +8994,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [45]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9025,7 +9020,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [46]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [47]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9066,7 +9061,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [47]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9104,7 +9099,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9142,7 +9137,7 @@ $$</li>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [50]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9213,7 +9208,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [50]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [51]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># -------------------------</span>
@@ -9292,16 +9287,16 @@ N (tension +) = -583.09 kN
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [51]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [52]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">m1</span> <span class="o">-</span> <span class="mi">1</span>
 <span class="n">u</span> <span class="o">=</span> <span class="n">u_global</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">T1</span> <span class="o">@</span> <span class="n">u</span>
 <span class="n">q</span> <span class="o">=</span> <span class="n">k1</span> <span class="o">@</span> <span class="n">v</span> <span class="o">+</span> <span class="n">Qf1</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">T1</span> <span class="o">@</span> <span class="n">q</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">q</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -9314,7 +9309,7 @@ N (tension +) = -583.09 kN
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>[-106.32412627  141.76550169  106.32412627 -141.76550169]
+<pre>[-106.32 -141.77  106.32  141.77]
 </pre>
 </div>
 </div>
@@ -9359,7 +9354,7 @@ N (tension +) = -583.09 kN
 $$</p>
 <p>At the global level:</p>
 <p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f} - \mathbf{f}^{F} - \mathbf{f}^{H} - \mathbf{f}^{E}
+\mathbf{K}\mathbf{u} = \mathbf{f} - (\mathbf{f}^{F} + \mathbf{f}^{H} + \mathbf{f}^{E})
 $$</p>
 </div>
 </div>

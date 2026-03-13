@@ -45,12 +45,13 @@ written by you and you must understand it**. If you used outside help, add a sho
 
 ## Question 1
 
-Consider a beam element with **three moment DOFs** ($M_T = 3$) and a distributed load acting on the member. Recall that
+Consider a frame element with hinges are both ends ($M_T = 3$) and a distributed load acting on the member. Recall that
 the **fixed-end force (FEF)** vector represents the internal forces that develop when the element ends are restrained
 against displacement.
 
-Using the **local element equilibrium equations**, show that the internal moment $Q_2$ can be expressed **entirely in
-terms of the fixed-end forces (FEFs)** and **does not depend on the bending stiffness parameters** (such as $EI$).
+Starting from the 6 **local element equilibrium equations**, show that the internal shear $Q_2$ can be expressed
+**entirely in terms of the fixed-end forces (FEFs)** and **does not depend on the bending stiffness parameters** (such
+as $EI$).
 
 Your derivation should:
 
@@ -58,4 +59,4 @@ Your derivation should:
 - Clearly separate the contributions from **elastic stiffness** and **fixed-end forces**
 - Demonstrate algebraically that the expression for **$Q_2$ contains only FEF terms**
 
-Conclude by briefly explaining **why this result makes physical sense** in the context of beam equilibrium.
+Conclude by briefly explaining **why this result makes physical sense** in the context of frame equilibrium.
