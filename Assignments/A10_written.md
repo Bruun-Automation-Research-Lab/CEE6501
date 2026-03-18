@@ -6,6 +6,8 @@
 
 **Canvas Submission Link:** <https://gatech.instructure.com/courses/517856/assignments/2320544>
 
+---
+
 ## Logistics
 
 ### 📄 Assignment Format
@@ -14,7 +16,7 @@ This is a **written assignment**, not a coding assignment.
 
 - Complete the assignment **by hand or typed up**
 - You may write:
-  - in a markdown file
+  - in a markdown or jupyter file
   - on paper
   - on a tablet
   - using a stylus or digital note-taking app
@@ -43,19 +45,78 @@ written by you and you must understand it**. If you used outside help, add a sho
 
 ---
 
-## Question 1
+---
 
-Consider a beam element with **three moment DOFs** ($M_T = 3$) and a distributed load acting on the member. Recall that
-the **fixed-end force (FEF)** vector represents the internal forces that develop when the element ends are restrained
-against displacement.
+## Revisit Frame Structure in `A7_written.md`
 
-Using the **local element equilibrium equations**, show that the internal moment $Q_2$ can be expressed **entirely in
-terms of the fixed-end forces (FEFs)** and **does not depend on the bending stiffness parameters** (such as $EI$).
+Using your solution to Question 2 in `A7_written.md` as the starting point, now apply the methods from Week 9 for
+support displacements, temperature, and fabrication / fit-up forces.
 
-Your derivation should:
+You should treat this as an extension of your earlier DSM solution, not as a completely new problem. In particular, you
+may use your previously assembled stiffness matrix, DOF partitioning, and element information from your `A7_written.md`
+solution. For this assignment, the new effects enter through the **right-hand side of the equilibrium equations**, so
+you do not need to reassemble the global stiffness matrix.
 
-- Start from the **local element force–displacement relationship**
-- Clearly separate the contributions from **elastic stiffness** and **fixed-end forces**
-- Demonstrate algebraically that the expression for **$Q_2$ contains only FEF terms**
+Hand-written solutions are acceptable — but they must be **neat, clearly organized, and easy to follow**. Clearly label
+all steps, vectors, and intermediate results.
 
-Conclude by briefly explaining **why this result makes physical sense** in the context of beam equilibrium.
+If possible, submit a clean solution in **Markdown** or a **Jupyter notebook**. A notebook allows you to structure your
+work clearly, embed images, and present your solution as a short technical report that walks through your reasoning step
+by step.
+
+### Submit / report
+
+For each of the question below, submit the following:
+
+- The modified right-hand-side vector(s) used in the solution
+- Global displacements at the **free DOFs**
+- Global reactions at the **restrained DOFs**
+- A **global equilibrium check**
+- Local element end forces
+- Local element end displacements
+- A clear, neat sketch of the **deformed shape**
+
+### Numbering conventions
+
+- Number global nodes **bottom-left → top-left → top-right**
+- Use the Lecture 7 DOF convention (1-based):
+  - $\mathrm{DOF}(j, u_x) = 3j - 2$
+  - $\mathrm{DOF}(j, u_y) = 3j - 1$
+  - $\mathrm{DOF}(j, \theta) = 3j$
+
+### Structural info
+
+- $E, A, I$ are constant
+- $E = 200~\text{GPa}$
+- $A = 4740~\text{mm}^2$
+- $I = 22.2\times 10^{6}~\text{mm}^4$
+- use the $\alpha$ for steel as given in lecture
+
+![Indeterminate frame for Question 2](../Lectures/L7/assets/Homework_2.png)
+
+---
+
+## Question 1 — Support Displacements
+
+Starting from your solution to Question 2 in `A7_written.md`, redo the problem assuming the following prescribed support
+motions:
+
+- The **top-right pin support** moves **10 mm downward**
+- The **top-right pin support** also moves **5 mm to the right**
+- The **bottom-left support** undergoes a **counterclockwise rotation of 0.01 rad**
+
+## Question 2 — Temperature Effects
+
+Starting from your solution to Question 2 in `A7_written.md`, redo the problem assuming the following temperature
+changes:
+
+- **Vertical member:** uniform temperature increase of **+10°C**
+- **Horizontal member:** temperature gradient of **+15°C at the top** and **+5°C at the bottom**
+
+## Question 3 — Fabrication / Fit-up Errors
+
+Starting from your solution to Question 2 in `A7_written.md`, redo the problem assuming the following fabrication
+errors:
+
+- **Vertical member:** fabricated **3 mm too short**
+- **Horizontal member:** fabricated **3 mm too short**
