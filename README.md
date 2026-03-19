@@ -223,15 +223,15 @@ No Assignment this week, study for the midterm.
 
 ---
 
-## 📅 Week 5 — Direct Stiffness Method (Space Trusses)
+## 📅 Week 5 — Midterm and DSM for Space Trusses
 
-Chapter 5, §5.1 (3D coordinate transform)
+McGuire - Chapter 5, §5.1 (3D coordinate transform)
 
 ### 📖 Lectures
 
 This week includes an in-class midterm examination (~2.0 hours).
 
-#### Part 1 — The DSM for Space Trusses
+#### Part 1 — Space Trusses
 
 A brief preview of extending the Direct Stiffness Method (DSM) framework to 3D truss systems, in preparation for the
 upcoming assignment where this extension will be implemented computationally.
@@ -322,7 +322,8 @@ within a single unified formulation. We build on last week’s beam theory and r
 the full 6×6 frame element stiffness matrix. Emphasis is placed on **local–global transformations**, consistent
 notation, and systematic assembly of complete frame systems.
 
-Kassimali – Chapter 6, §6.1–6.5  
+Kassimali – Chapter 6, §6.1–6.5
+
 McGuire – Chapter 4, §4.1, 4.5 ; Chapter 5, §5.1 (3D Coordinate Transformations)
 
 ### 📖 Lectures
@@ -420,9 +421,10 @@ Use standard submission naming from Week 1.
 
 ## 📅 Week 9 — Support Settlement, Temperature & Fit-up Forces
 
-This week, we extend the Direct Stiffness Method (DSM) to handle several important sources of internal force that arise. We study **prescribed support displacement**, **temperature-induced actions**, and
-**fabrication / fit-up errors**, and show how each can be incorporated into the DSM workflow. We also wrap up
-with information and review material for Midterm #2.
+This week, we extend the Direct Stiffness Method (DSM) to handle several important sources of internal force that arise.
+We study **prescribed support displacement**, **temperature-induced actions**, and **fabrication / fit-up errors**, and
+show how each can be incorporated into the DSM workflow. We also wrap up with information and review material for
+Midterm #2.
 
 Kassimali – Chapter 7, §7.3 & 7.5
 
@@ -430,7 +432,12 @@ Kassimali – Chapter 7, §7.3 & 7.5
 
 #### Part 1 — Support Settlement
 
-This lecture introduces **support settlements and other prescribed displacements** within the DSM framework. We derive the modified equilibrium equations and show how prescribed displacements enter the system naturally through the partitioned stiffness equations, without introducing fixed-end forces or requiring the additional element-level force manipulations used for member loads, thermal effects, or fabrication errors. For consistency with the fixed-end-force terms used in those other cases, one can also view this contribution as an equivalent load acting on the free degrees of freedom.
+This lecture introduces **support settlements and other prescribed displacements** within the DSM framework. We derive
+the modified equilibrium equations and show how prescribed displacements enter the system naturally through the
+partitioned stiffness equations, without introducing fixed-end forces or requiring the additional element-level force
+manipulations used for member loads, thermal effects, or fabrication errors. For consistency with the fixed-end-force
+terms used in those other cases, one can also view this contribution as an equivalent load acting on the free degrees of
+freedom.
 
 - 📄 **Slides (PDF):** [L9_1_SupportSettlement.pdf](Lectures/L9/L9_1_SupportSettlement.pdf)
 - 📓 **Notebook:** [L9_1_SupportSettlement.ipynb](Lectures/L9/L9_1_SupportSettlement.ipynb)
@@ -466,19 +473,38 @@ No Assignment this week, study for the 2nd midterm.
 
 ---
 
-## 📅 Week 10 — Support Settlement, Temperature & Fit-up Forces, Intro to 3D
+## 📅 Week 10 — Midterm and Final Project Introduction
 
-This week...
-
-Chapter 5, §5.1 (3D coordinate transform)
+McGuire – Chapter 4 §4.5.2 (torsion beam); Chapter 5, §5.1 (3D coordinate transform)
 
 ### 📖 Lectures
 
-This week includes an in-class midterm examination (~2.0 hours).
+This week includes an in-class midterm examination (~2.0 hours) and the introduction to the course project.
 
-#### Part 1 — The DSM for Space Frames
+#### Part 1 — 3D Frames
 
-This lecture...
+A brief preview of extending the Direct Stiffness Method (DSM) framework to 3D frame systems, in preparation for the
+upcoming course project.
+
+- 📄 **Slides (PDF):** [L10_1_Frames3D.pdf](Lectures/L10/L10_1_Frames3D.pdf)
+- 📓 **Notebook:** [L10_1_Frames3D.ipynb](Lectures/L10/L10_1_Frames3D.ipynb)
+
+#### Part 2 — Course Project
+
+- 📄 **Slides (PDF):** [L10_1_CourseProject.pdf](Lectures/L10/L10_1_InfoMidterm.pdf)
+- 📓 **Notebook:** [L10_1_CourseProject.ipynb](Lectures/L10/L10_1_InfoMidterm.ipynb)
+
+### 📝 Assignments
+
+Use standard submission naming from Week 1.
+
+#### Assignment Files
+
+- ✍️ **Written Assignment:** [A10_written.md](Assignments/A10_written.md)
+- 💻 **Coding Assignment:**
+
+  [A10_code.ipynb](Assignments/A10_code.ipynb)  
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A10_code.ipynb)
 
 ---
 
