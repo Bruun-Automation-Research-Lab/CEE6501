@@ -473,26 +473,24 @@ No Assignment this week, study for the 2nd midterm.
 
 ---
 
-## 📅 Week 10 — Midterm and Final Project Introduction
+## 📅 Week 10 — Midterm and Direct Stiffness Method for 3D Frames
 
 McGuire – Chapter 4 §4.5.2 (torsion beam); Chapter 5, §5.1 (3D coordinate transform)
 
+Kassimali – Chapter 8 §8.2 (torsion), 8.3 (space frame)
+
 ### 📖 Lectures
 
-This week includes an in-class midterm examination (~2.0 hours) and the introduction to the course project.
+This week includes an in-class midterm examination (~2.0 hours) and finishing up the linear portion of the course with
+3D frame elements.
 
 #### Part 1 — 3D Frames
 
 A brief preview of extending the Direct Stiffness Method (DSM) framework to 3D frame systems, in preparation for the
-upcoming course project.
+upcoming course project, which will be based on implementing it.
 
 - 📄 **Slides (PDF):** [L10_1_Frames3D.pdf](Lectures/L10/L10_1_Frames3D.pdf)
 - 📓 **Notebook:** [L10_1_Frames3D.ipynb](Lectures/L10/L10_1_Frames3D.ipynb)
-
-#### Part 2 — Course Project
-
-- 📄 **Slides (PDF):** [L10_1_CourseProject.pdf](Lectures/L10/L10_1_InfoMidterm.pdf)
-- 📓 **Notebook:** [L10_1_CourseProject.ipynb](Lectures/L10/L10_1_InfoMidterm.ipynb)
 
 ### 📝 Assignments
 

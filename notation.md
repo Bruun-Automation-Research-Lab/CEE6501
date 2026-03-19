@@ -6,6 +6,12 @@ These need to be implemented consistently across lectures
 
 ---
 
+`##` headings should be each word capitalized
+
+`###` headings should be lowercase
+
+---
+
 ## 🔹 1. General Rules
 
 - **Vectors** → bold lowercase
@@ -91,6 +97,8 @@ This convention:
 
 ## 🔹 7. Fixed-End Force (FEF) Convention
 
+Refer to nodes as b = beginning, e = end
+
 Fixed-end forces represent element end forces caused by element loading **with all element DOFs restrained**.
 
 They appear as additive force terms in all stiffness equations.
@@ -106,12 +114,12 @@ v_5 \\[4pt]
 v_6
 \end{bmatrix}
 =\begin{bmatrix}
-v_{xb} \\[4pt]
-v_{yb} \\[4pt]
-\theta_b \\[4pt]
-v_{xe} \\[4pt]
-v_{ye} \\[4pt]
-\theta_e
+v_{x,b} \\[4pt]
+v_{y,b} \\[4pt]
+v_{\theta,b} \\[4pt]
+v_{x,e} \\[4pt]
+v_{y,e} \\[4pt]
+v_{\theta,e}
 \end{bmatrix}
 $$
 
@@ -132,12 +140,12 @@ q_5^{F} \\[4pt]
 q_6^{F}
 \end{bmatrix}
 =\begin{bmatrix}
-q_{xb}^{F} \\[4pt]
-q_{yb}^{F} \\[4pt]
-q_{mb}^{F} \\[4pt]
-q_{xe}^{F} \\[4pt]
-q_{ye}^{F} \\[4pt]
-q_{me}^{F}
+q_{x,b}^{F} \\[4pt]
+q_{y,b}^{F} \\[4pt]
+q_{m,b}^{F} \\[4pt]
+q_{x,e}^{F} \\[4pt]
+q_{y,e}^{F} \\[4pt]
+q_{m,e}^{F}
 \end{bmatrix}
 =\begin{bmatrix}
 N_b^{F} \\[4pt]
@@ -166,12 +174,12 @@ q_5^{H} \\[4pt]
 q_6^{H}
 \end{bmatrix}
 =\begin{bmatrix}
-q_{xb}^{H} \\[4pt]
-q_{yb}^{H} \\[4pt]
-q_{mb}^{H} \\[4pt]
-q_{xe}^{H} \\[4pt]
-q_{ye}^{H} \\[4pt]
-q_{me}^{H}
+q_{x,b}^{H} \\[4pt]
+q_{y,b}^{H} \\[4pt]
+q_{m,b}^{H} \\[4pt]
+q_{x,e}^{H} \\[4pt]
+q_{y,e}^{H} \\[4pt]
+q_{m,e}^{H}
 \end{bmatrix}
 =\begin{bmatrix}
 N_b^{H} \\[4pt]
@@ -200,12 +208,12 @@ q_5^{E} \\[4pt]
 q_6^{E}
 \end{bmatrix}
 =\begin{bmatrix}
-q_{xb}^{E} \\[4pt]
-q_{yb}^{E} \\[4pt]
-q_{mb}^{E} \\[4pt]
-q_{xe}^{E} \\[4pt]
-q_{ye}^{E} \\[4pt]
-q_{me}^{E}
+q_{x,b}^{E} \\[4pt]
+q_{y,b}^{E} \\[4pt]
+q_{m,b}^{E} \\[4pt]
+q_{x,e}^{E} \\[4pt]
+q_{y,e}^{E} \\[4pt]
+q_{m,e}^{E}
 \end{bmatrix}
 =\begin{bmatrix}
 N_b^{E} \\[4pt]
