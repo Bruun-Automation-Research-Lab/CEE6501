@@ -8555,7 +8555,7 @@ stiffness-based formulations resolve redundancy automatically by enforcing <stro
 <li>Straight, prismatic truss member</li>
 <li>Length $L$, cross-sectional area $A$, Young’s modulus $E$</li>
 <li>Defined by two nodes: <strong>node 1</strong> and <strong>node 2</strong></li>
-<li>One axial displacement DOF at each node: $v_{x1}$ and $v_{x2}$</li>
+<li>One axial displacement DOF at each node: $v_{x,1}$ and $v_{x,2}$</li>
 <li>Local $x$-axis is aligned with the member (positive from node 1 → node 2)</li>
 </ul>
 </div>
@@ -8570,13 +8570,13 @@ stiffness-based formulations resolve redundancy automatically by enforcing <stro
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>For brevity in this section, we write displacements as:</p>
 <p>$$
-v_1 \equiv v_{x1}, \qquad
-v_2 \equiv v_{x2}
+v_1 \equiv v_{x,1} \qquad
+v_2 \equiv v_{x,2}
 $$</p>
 <p>and forces as:</p>
 <p>$$
-q_1 \equiv q_{x1}, \qquad
-q_2 \equiv q_{x2}
+q_1 \equiv q_{x,1} \qquad
+q_2 \equiv q_{x,2}
 $$</p>
 <p>since we work entirely in the <strong>local x-axis</strong>.</p>
 </div>
@@ -8598,12 +8598,12 @@ $$</p>
 </div>
 </div>
 <ul>
-<li>Axial displacement at node 1: $v_{x1} = v_{1}$</li>
-<li>Axial displacement at node 2: $v_{x2} = v_{2}$</li>
+<li>Axial displacement at node 1: $v_{x,1} = v_{1}$</li>
+<li>Axial displacement at node 2: $v_{x,2} = v_{2}$</li>
 </ul>
-<p><strong>In this section:</strong> axial DOFs only ($v_{x1}, v_{x2}$).</p>
+<p><strong>In this section:</strong> axial DOFs only ($v_{x,1}, v_{x,2}$).</p>
 <blockquote>
-<p>Note: transverse DOFs ($v_{y1}, v_{y2}$) appear later when we build the full 4×4 local truss matrix.</p>
+<p>Note: transverse DOFs ($v_{y,1}, v_{y,2}$) appear later when we build the full 4×4 local truss matrix.</p>
 </blockquote>
 </div>
 </div>
@@ -8616,14 +8616,14 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Axial-kinematics">Axial kinematics<a class="anchor-link" href="#Axial-kinematics">¶</a></h3><p>The axial deformation is the relative displacement of the ends:</p>
-<p>$$\delta = v_{x2} - v_{x1}$$</p>
+<p>$$\delta = v_{2} - v_{1}$$</p>
 <ul>
-<li>If $v_{x2} &gt; v_{x1}$ then $\delta&gt;0$ → <strong>elongation (tension)</strong></li>
-<li>If $v_{x2} &lt; v_{x1}$ then $\delta&lt;0$ → <strong>shortening (compression)</strong></li>
+<li>If $v_{2} &gt; v_{1}$ then $\delta&gt;0$ → <strong>elongation (tension)</strong></li>
+<li>If $v_{2} &lt; v_{1}$ then $\delta&lt;0$ → <strong>shortening (compression)</strong></li>
 </ul>
 <h3 id="Free-body-diagram-(axial)">Free-body diagram (axial)<a class="anchor-link" href="#Free-body-diagram-(axial)">¶</a></h3><ul>
-<li>Axial end force at node 1: $q_{x1}$</li>
-<li>Axial end force at node 2: $q_{x2}$</li>
+<li>Axial end force at node 1: $q_{1}$</li>
+<li>Axial end force at node 2: $q_{2}$</li>
 </ul>
 <p>Equilibrium along the member axis:
 $$\sum F_x = 0$$</p>
@@ -8638,10 +8638,10 @@ $$\sum F_x = 0$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Kinematics-examples-(what-do-$%5Cdelta$-and-$q$-look-like?)">Kinematics examples (what do $\delta$ and $q$ look like?)<a class="anchor-link" href="#Kinematics-examples-(what-do-$%5Cdelta$-and-$q$-look-like?)">¶</a></h3><p><strong>Compression example:</strong> $v_{x1}=1$, $v_{x2}=0$
+<h3 id="Kinematics-examples-(what-do-$%5Cdelta$-and-$q$-look-like?)">Kinematics examples (what do $\delta$ and $q$ look like?)<a class="anchor-link" href="#Kinematics-examples-(what-do-$%5Cdelta$-and-$q$-look-like?)">¶</a></h3><p><strong>Compression example:</strong> $v_{1}=1$, $v_{2}=0$
 $$\delta = 0-1 = -1 &lt; 0 \quad \Rightarrow \text{compression}$$</p>
 <p>Take positive as pointing to the right:</p>
-<p>$$+q_{x1} - q_{x2} = 0 \quad \Rightarrow \quad q_{x1} = q_{x2}$$</p>
+<p>$$+q_{1} - q_{2} = 0 \quad \Rightarrow \quad q_{1} = q_{2}$$</p>
 <div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.85;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
@@ -8660,10 +8660,10 @@ $$\delta = 0-1 = -1 &lt; 0 \quad \Rightarrow \text{compression}$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Tension example:</strong> $v_{x1}=0$, $v_{x2}=1$
+<p><strong>Tension example:</strong> $v_{1}=0$, $v_{2}=1$
 $$\delta = 1-0 = 1 &gt; 0 \quad \Rightarrow \text{tension}$$</p>
 <p>Take positive as pointing to the right:</p>
-<p>$$-q_{x1} + q_{x2} = 0 \quad \Rightarrow \quad q_{x1} = q_{x2}$$</p>
+<p>$$-q_{1} + q_{2} = 0 \quad \Rightarrow \quad q_{1} = q_{2}$$</p>
 <div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.85;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
@@ -8696,13 +8696,13 @@ $$\delta = 1-0 = 1 &gt; 0 \quad \Rightarrow \text{tension}$$</p>
 <h3 id="Axial-constitutive-law-(linear-elasticity)">Axial constitutive law (linear elasticity)<a class="anchor-link" href="#Axial-constitutive-law-(linear-elasticity)">¶</a></h3><p>Hooke’s law (uniaxial, linear elastic):
 $$ E = \frac{\sigma}{\varepsilon}$$</p>
 <p>Strain (engineering strain, small deformation, $L=0$):
-$$\varepsilon = \frac{\delta}{L} = \frac{v_{x2}-v_{x1}}{L}$$</p>
+$$\varepsilon = \frac{\delta}{L} = \frac{v_{2}-v_{1}}{L}$$</p>
 <p>Stress definition:
 $$\sigma = \frac{F}{A}$$</p>
 <p>Axial force:
-$$q =\frac{EA}{L}(v_{x2}-v_{x1})$$</p>
+$$q =\frac{EA}{L}(v_{2}-v_{1})$$</p>
 <blockquote>
-<p>Notes: In geometric nonlinearity, the “$L$” and kinematics change; in material nonlinearity, the $\sigma$–$\varepsilon$ law changes.</p>
+<p>Notes: In geometric nonlinearity, the length ($L$) and kinematics change; in material nonlinearity, the $\sigma$–$\varepsilon$ law changes.</p>
 </blockquote>
 </div>
 </div>
@@ -8714,13 +8714,13 @@ $$q =\frac{EA}{L}(v_{x2}-v_{x1})$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="End-forces-in-terms-of-$v_%7Bx1%7D,-v_%7Bx2%7D$">End forces in terms of $v_{x1}, v_{x2}$<a class="anchor-link" href="#End-forces-in-terms-of-$v_%7Bx1%7D,-v_%7Bx2%7D$">¶</a></h3><p>Using the same sign convention (positive to the right):</p>
+<h3 id="End-forces-in-terms-of-$v_%7B1%7D,-v_%7B2%7D$">End forces in terms of $v_{1}, v_{2}$<a class="anchor-link" href="#End-forces-in-terms-of-$v_%7B1%7D,-v_%7B2%7D$">¶</a></h3><p>Using the same sign convention (positive to the right):</p>
 <ul>
-<li><p>If $v_{x1}&gt;v_{x2}$ (compression), then $q_{x1}&gt;0$ ($q_{x2}&lt;0)$
-$$q_{x1} = \frac{EA}{L}(v_{x1}-v_{x2})$$</p>
+<li><p>If $v_{1}&gt;v_{2}$ (compression), then $q_{1}&gt;0$ ($q_{2}&lt;0)$
+$$q_{1} = \frac{EA}{L}(v_{1}-v_{2})$$</p>
 </li>
-<li><p>If $v_{x2}&gt;v_{x1}$ (tension), then $q_{x2}&gt;0$ ($q_{x1}&lt;0)$
-$$q_{x2} = \frac{EA}{L}(v_{x2}-v_{x1})$$</p>
+<li><p>If $v_{2}&gt;v_{1}$ (tension), then $q_{2}&gt;0$ ($q_{1}&lt;0)$
+$$q_{2} = \frac{EA}{L}(v_{2}-v_{1})$$</p>
 </li>
 </ul>
 </div>
@@ -8734,13 +8734,13 @@ $$q_{x2} = \frac{EA}{L}(v_{x2}-v_{x1})$$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Local-axial-stiffness-matrix-(2%C3%972)">Local axial stiffness matrix (2×2)<a class="anchor-link" href="#Local-axial-stiffness-matrix-(2%C3%972)">¶</a></h3><p>Multiply out the end-force equations:
-$$q_{x1} = \frac{EA}{L}\cdot v_{x1} - \frac{EA}{L}\cdot v_{x2}$$</p>
-<p>$$q_{x2} = -\frac{EA}{L}\cdot v_{x1} + \frac{EA}{L}\cdot v_{x2}$$</p>
+$$q_{1} = \frac{EA}{L}\cdot v_{1} - \frac{EA}{L}\cdot v_{2}$$</p>
+<p>$$q_{2} = -\frac{EA}{L}\cdot v_{1} + \frac{EA}{L}\cdot v_{2}$$</p>
 <p>Collect in matrix form:
 $$
 \begin{Bmatrix}
-q_{x1}\\
-q_{x2}
+q_{1}\\
+q_{2}
 \end{Bmatrix}
 =
 \frac{EA}{L}
@@ -8749,8 +8749,8 @@ q_{x2}
 -1 &amp; 1
 \end{bmatrix}
 \begin{Bmatrix}
-v_{x1}\\
-v_{x2}
+v_{1}\\
+v_{2}
 \end{Bmatrix}
 $$</p>
 </div>
@@ -8763,11 +8763,11 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scenario-1-(unit-displacement):-$v_%7Bx1%7D=1,%5C;v_%7Bx2%7D=0$">Scenario 1 (unit displacement): $v_{x1}=1,\;v_{x2}=0$<a class="anchor-link" href="#Scenario-1-(unit-displacement):-$v_%7Bx1%7D=1,%5C;v_%7Bx2%7D=0$">¶</a></h3><p>$$\delta = u_2-u_1 = 0-1 = -1 \quad (\text{compression})$$</p>
+<h3 id="Scenario-1-(unit-displacement):-$v_%7B1%7D=1,%5C;v_%7B2%7D=0$">Scenario 1 (unit displacement): $v_{1}=1,\;v_{2}=0$<a class="anchor-link" href="#Scenario-1-(unit-displacement):-$v_%7B1%7D=1,%5C;v_%7B2%7D=0$">¶</a></h3><p>$$\delta = v_2-v_1 = 0-1 = -1 \quad (\text{compression})$$</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
+q_1\\
+q_2
 \end{Bmatrix}
 =
 \frac{EA}{L}
@@ -8787,8 +8787,8 @@ F_2
 \end{Bmatrix}
 $$</p>
 <p>So:
-$$F_1=+EA/L$$
-$$F_2=-EA/L$$</p>
+$$q_1=+EA/L$$
+$$q_2=-EA/L$$</p>
 <blockquote>
 <p>This matches the "compression example" we looked at in Part 5</p>
 </blockquote>
@@ -8802,11 +8802,11 @@ $$F_2=-EA/L$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scenario-2:-$u_1=5,%5C;u_2=3$">Scenario 2: $u_1=5,\;u_2=3$<a class="anchor-link" href="#Scenario-2:-$u_1=5,%5C;u_2=3$">¶</a></h3><p>$$\delta = u_2-u_1 = 3-5 = -2 \quad (\text{compression})$$</p>
+<h3 id="Scenario-2:-$v_1=5,%5C;v_2=3$">Scenario 2: $v_1=5,\;v_2=3$<a class="anchor-link" href="#Scenario-2:-$v_1=5,%5C;v_2=3$">¶</a></h3><p>$$\delta = v_2-v_1 = 3-5 = -2 \quad (\text{compression})$$</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
+q_1\\
+q_2
 \end{Bmatrix}
 =
 \frac{EA}{L}
@@ -8826,8 +8826,8 @@ F_2
 \end{Bmatrix}
 $$</p>
 <p>So:
-$$F_1=+2EA/L$$
-$$F_2=-2EA/L$$</p>
+$$q_1=+2EA/L$$
+$$q_2=-2EA/L$$</p>
 <blockquote>
 <p>Double the amount of strain, double the amount of force.</p>
 </blockquote>
@@ -8841,11 +8841,11 @@ $$F_2=-2EA/L$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scenario-3:-$u_1=1,%5C;u_2=-1$">Scenario 3: $u_1=1,\;u_2=-1$<a class="anchor-link" href="#Scenario-3:-$u_1=1,%5C;u_2=-1$">¶</a></h3><p>$$\delta = u_2-u_1 = -1-1 = -2 \quad (\text{compression})$$</p>
+<h3 id="Scenario-3:-$v_1=1,%5C;v_2=-1$">Scenario 3: $v_1=1,\;v_2=-1$<a class="anchor-link" href="#Scenario-3:-$v_1=1,%5C;v_2=-1$">¶</a></h3><p>$$\delta = v_2-v_1 = -1-1 = -2 \quad (\text{compression})$$</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
+q_1\\
+q_2
 \end{Bmatrix}
 =
 \frac{EA}{L}
@@ -8865,8 +8865,8 @@ F_2
 \end{Bmatrix}
 $$</p>
 <p>So:
-$$F_1=+2EA/L$$
-$$F_2=-2EA/L$$</p>
+$$q_1=+2EA/L$$
+$$q_2=-2EA/L$$</p>
 <blockquote>
 <p>Same relative deformation ($\delta=-2$) ⇒ same end-force pattern.</p>
 </blockquote>
@@ -8880,11 +8880,11 @@ $$F_2=-2EA/L$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scenario-4:-$u_1=-2,%5C;u_2=-1$">Scenario 4: $u_1=-2,\;u_2=-1$<a class="anchor-link" href="#Scenario-4:-$u_1=-2,%5C;u_2=-1$">¶</a></h3><p>$$\delta = u_2-u_1 = -1-(-2) = +1 \quad (\text{tension})$$</p>
+<h3 id="Scenario-4:-$v_1=-2,%5C;v_2=-1$">Scenario 4: $v_1=-2,\;v_2=-1$<a class="anchor-link" href="#Scenario-4:-$v_1=-2,%5C;v_2=-1$">¶</a></h3><p>$$\delta = v_2-v_1 = -1-(-2) = +1 \quad (\text{tension})$$</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
+q_1\\
+q_2
 \end{Bmatrix}
 =
 \frac{EA}{L}
@@ -8904,8 +8904,8 @@ F_2
 \end{Bmatrix}
 $$</p>
 <p>So:
-$$F_1=-EA/L$$
-$$F_2=+EA/L$$</p>
+$$q_1=-EA/L$$
+$$q_2=+EA/L$$</p>
 <blockquote>
 <p>Same example we looked at in Part 5, tension where $u=1$.</p>
 </blockquote>
@@ -8919,11 +8919,11 @@ $$F_2=+EA/L$$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scenario-5-(rigid-body-translation):-$u_1=3,%5C;u_2=3$">Scenario 5 (rigid-body translation): $u_1=3,\;u_2=3$<a class="anchor-link" href="#Scenario-5-(rigid-body-translation):-$u_1=3,%5C;u_2=3$">¶</a></h3><p>$$\delta = u_2-u_1 = 3-3 = 0 \quad (\text{no deformation})$$</p>
+<h3 id="Scenario-5-(rigid-body-translation):-$v_1=3,%5C;v_2=3$">Scenario 5 (rigid-body translation): $v_1=3,\;v_2=3$<a class="anchor-link" href="#Scenario-5-(rigid-body-translation):-$v_1=3,%5C;v_2=3$">¶</a></h3><p>$$\delta = v_2-v_1 = 3-3 = 0 \quad (\text{no deformation})$$</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
+q_1\\
+q_2
 \end{Bmatrix}
 =
 \frac{EA}{L}
@@ -8943,8 +8943,8 @@ F_2
 \end{Bmatrix}
 $$</p>
 <p>So:
-$$F_1=0$$
-$$F_2=0$$</p>
+$$q_1=0$$
+$$q_2=0$$</p>
 <blockquote>
 <p>Rigid translation produces <strong>no internal axial force</strong>.</p>
 </blockquote>
@@ -8956,7 +8956,7 @@ $$F_2=0$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Axial 2×2 stiffness: one editable scenario</span>
@@ -8968,19 +8968,19 @@ $$F_2=0$$</p>
                           <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
 
 <span class="c1"># --- Edit these ---</span>
-<span class="n">u1</span> <span class="o">=</span> <span class="mf">3.0</span>
-<span class="n">u2</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="mf">3.0</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="mf">5.0</span>
 
-<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">])</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">k</span> <span class="o">@</span> <span class="n">u</span>
-<span class="n">delta</span> <span class="o">=</span> <span class="n">u2</span> <span class="o">-</span> <span class="n">u1</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">])</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">k</span> <span class="o">@</span> <span class="n">v</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">v2</span> <span class="o">-</span> <span class="n">v1</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="s2">"tension"</span> <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="s2">"compression"</span> <span class="k">if</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"rigid-body (no deformation)"</span><span class="p">)</span>
 
 <span class="c1"># print("k =\n", k)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"u = [u1, u2] = </span><span class="si">{</span><span class="n">u</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"delta = u2 - u1 = </span><span class="si">{</span><span class="n">delta</span><span class="si">}</span><span class="s2">  -&gt;  </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"f = [F1, F2] = </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"v = [v1, v2] = </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"delta = v2 - v1 = </span><span class="si">{</span><span class="n">delta</span><span class="si">}</span><span class="s2">  -&gt;  </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"q = [q1, q2] = </span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8993,9 +8993,9 @@ $$F_2=0$$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>u = [u1, u2] = [3. 5.]
-delta = u2 - u1 = 2.0  -&gt;  tension
-f = [F1, F2] = [-2.  2.]
+<pre>v = [v1, v2] = [3. 5.]
+delta = v2 - v1 = 2.0  -&gt;  tension
+q = [q1, q2] = [-2.  2.]
 </pre>
 </div>
 </div>
@@ -9047,7 +9047,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-1:-impose-$u_1-=-1$-($u_2=0$)">Column 1: impose $u_1 = 1$ ($u_2=0$)<a class="anchor-link" href="#Column-1:-impose-$u_1-=-1$-($u_2=0$)">¶</a></h3><p>$$
+<h3 id="Column-1:-impose-$v_1-=-1$-($v_2=0$)">Column 1: impose $v_1 = 1$ ($v_2=0$)<a class="anchor-link" href="#Column-1:-impose-$v_1-=-1$-($v_2=0$)">¶</a></h3><p>$$
 \begin{bmatrix}
 \boxed{k_{11}} &amp; k_{12}\\
 \boxed{k_{21}} &amp; k_{22}
@@ -9056,14 +9056,14 @@ $$</p>
 <p>$k_{11}$ $(i = 1, j = 1)$:</p>
 <ul>
 <li>$i = 1$: force at DOF 1</li>
-<li>$j = 1$: due to a unit displacement at DOF 1 ($u_1 = 1$)</li>
-<li>all other displacements are 0 (i.e., $u_2 = 0$)</li>
+<li>$j = 1$: due to a unit displacement at DOF 1 ($v_1 = 1$)</li>
+<li>all other displacements are 0 (i.e., $v_2 = 0$)</li>
 </ul>
 <p>$k_{21}$ $(i = 2, j = 1)$:</p>
 <ul>
 <li>$i = 2$: force at DOF 2</li>
-<li>$j = 1$: due to a unit displacement at DOF 1 ($u_1 = 1$)</li>
-<li>all other displacements are 0 (i.e., $u_2 = 0$)</li>
+<li>$j = 1$: due to a unit displacement at DOF 1 ($v_1 = 1$)</li>
+<li>all other displacements are 0 (i.e., $v_2 = 0$)</li>
 </ul>
 </div>
 </div>
@@ -9075,7 +9075,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-1:-impose-$u_1-=-1$-($u_2=0$)">Column 1: impose $u_1 = 1$ ($u_2=0$)<a class="anchor-link" href="#Column-1:-impose-$u_1-=-1$-($u_2=0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
+<h3 id="Column-1:-impose-$v_1-=-1$-($v_2=0$)">Column 1: impose $v_1 = 1$ ($v_2=0$)<a class="anchor-link" href="#Column-1:-impose-$v_1-=-1$-($v_2=0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.85;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L1_TrussDerive2.png" style="width:100%; height:auto;"/>
@@ -9086,9 +9086,9 @@ $$</p>
 <p>The resulting nodal force vector is:</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
-\end{Bmatrix}_{\;u_1=1,\;u_2=0}
+q_1\\
+q_2
+\end{Bmatrix}_{\;v_1=1,\;v_2=0}
 =
 \frac{EA}{L}
 \begin{Bmatrix}
@@ -9119,7 +9119,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-2:-impose-$u_2-=-1$-($u_1=0$)">Column 2: impose $u_2 = 1$ ($u_1=0$)<a class="anchor-link" href="#Column-2:-impose-$u_2-=-1$-($u_1=0$)">¶</a></h3><p>$$
+<h3 id="Column-2:-impose-$v_2-=-1$-($v_1=0$)">Column 2: impose $v_2 = 1$ ($v_1=0$)<a class="anchor-link" href="#Column-2:-impose-$v_2-=-1$-($v_1=0$)">¶</a></h3><p>$$
 \begin{bmatrix}
 k_{11} &amp; \boxed{k_{12}}\\
 k_{21} &amp; \boxed{k_{22}}
@@ -9128,14 +9128,14 @@ $$</p>
 <p>$k_{12}$ $(i = 1, j = 2)$:</p>
 <ul>
 <li>$i = 1$: force at DOF 1</li>
-<li>$j = 2$: due to a unit displacement at DOF 2 ($u_2 = 1$)</li>
-<li>all other displacements are 0 (i.e., $u_1 = 0$)</li>
+<li>$j = 2$: due to a unit displacement at DOF 2 ($v_2 = 1$)</li>
+<li>all other displacements are 0 (i.e., $v_1 = 0$)</li>
 </ul>
 <p>$k_{22}$ $(i = 2, j = 2)$:</p>
 <ul>
 <li>$i = 2$: force at DOF 2</li>
-<li>$j = 2$: due to a unit displacement at DOF 2 ($u_2 = 1$)</li>
-<li>all other displacements are 0 (i.e., $u_1 = 0$)</li>
+<li>$j = 2$: due to a unit displacement at DOF 2 ($v_2 = 1$)</li>
+<li>all other displacements are 0 (i.e., $v_1 = 0$)</li>
 </ul>
 </div>
 </div>
@@ -9147,7 +9147,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-2:-impose-$u_2-=-1$-($u_1=0$)">Column 2: impose $u_2 = 1$ ($u_1=0$)<a class="anchor-link" href="#Column-2:-impose-$u_2-=-1$-($u_1=0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
+<h3 id="Column-2:-impose-$v_2-=-1$-($v_1=0$)">Column 2: impose $v_2 = 1$ ($v_1=0$)<a class="anchor-link" href="#Column-2:-impose-$v_2-=-1$-($v_1=0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.85;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L1_TrussDerive3.png" style="width:100%; height:auto;"/>
@@ -9158,9 +9158,9 @@ $$</p>
 <p>The resulting nodal force vector is:</p>
 <p>$$
 \begin{Bmatrix}
-F_1\\
-F_2
-\end{Bmatrix}_{\;u_1=0,\;u_2=1}
+q_1\\
+q_2
+\end{Bmatrix}_{\;v_1=0,\;v_2=1}
 =
 \frac{EA}{L}
 \begin{Bmatrix}
@@ -9209,10 +9209,10 @@ $$</p>
 k_{12} = k_{21} = -\frac{EA}{L}
 $$</p>
 <ul>
-<li><p><strong>Case 1 ($k_{12}$):</strong> response to $u_2 = 1$ (with $u_1 = 0$)<br/>
+<li><p><strong>Case 1 ($k_{12}$):</strong> response to $v_2 = 1$ (with $v_1 = 0$)<br/>
 → the element is <strong>stretched</strong>, producing a negative force (left) at DOF 1</p>
 </li>
-<li><p><strong>Case 2 ($k_{21}$):</strong> response to $u_1 = 1$ (with $u_2 = 0$)<br/>
+<li><p><strong>Case 2 ($k_{21}$):</strong> response to $v_1 = 1$ (with $v_2 = 0$)<br/>
 → the element is <strong>compressed</strong>, producing a negative force (left) at DOF 2</p>
 </li>
 </ul>
@@ -9230,7 +9230,7 @@ the work done by DOF 1 on DOF 2 equals the work done by DOF 2 on DOF 1.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-the-element-stiffness-matrix-is-singular?">Why the element stiffness matrix is singular?<a class="anchor-link" href="#Why-the-element-stiffness-matrix-is-singular?">¶</a></h3><p>$$\det(\boldsymbol{k})=0$$</p>
+<h3 id="Why-the-element-stiffness-matrix-is-singular?">Why the element stiffness matrix is singular?<a class="anchor-link" href="#Why-the-element-stiffness-matrix-is-singular?">¶</a></h3><p>$$\det(\mathbf{k})=0$$</p>
 <p>Matrix meaning: there is some <strong>nonzero/non-trivial displacement vector</strong> that produces <strong>zero force</strong>.</p>
 <p>Physical meaning: the element alone is not anchored — it can undergo <strong>rigid-body translation</strong> (we showed this in scenario 5)</p>
 <p>This is not a problem at the local level: stability is enforced only when we assemble the <strong>full structure</strong> and apply supports in the form of DOF restraints.</p>
@@ -9244,9 +9244,9 @@ the work done by DOF 1 on DOF 2 equals the work done by DOF 2 on DOF 1.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Rigid-body-motion-(worked-out)">Rigid-body motion (worked out)<a class="anchor-link" href="#Rigid-body-motion-(worked-out)">¶</a></h3><p>Let $u_1=u_2=c$:</p>
+<h3 id="Rigid-body-motion-(worked-out)">Rigid-body motion (worked out)<a class="anchor-link" href="#Rigid-body-motion-(worked-out)">¶</a></h3><p>Let $v_1=v_2=c$</p>
 <p>$$
-\begin{Bmatrix}F_1\\F_2\end{Bmatrix}
+\begin{Bmatrix}q_1\\q_2\end{Bmatrix}
 =
 \frac{EA}{L}
 \begin{bmatrix}1 &amp; -1\\-1 &amp; 1\end{bmatrix}
@@ -9271,7 +9271,7 @@ $$</p>
 <h3 id="Key-takeaways">Key takeaways<a class="anchor-link" href="#Key-takeaways">¶</a></h3><ul>
 <li>The 2×2 axial stiffness matrix enforces <strong>equilibrium + compatibility</strong> at the element level</li>
 <li>Symmetry reflects <strong>reciprocity</strong> ($k_{12}=k_{21}$)</li>
-<li>Singularity reflects <strong>rigid-body freedom</strong> (no force if $u_1=u_2$)</li>
+<li>Singularity reflects <strong>rigid-body freedom</strong> (no force if $v_1=v_2$)</li>
 <li>Supports/constraints are applied at the <strong>global structure level</strong>, not the element level</li>
 </ul>
 <p>➡️ This 2×2 matrix is the fundamental building block of truss stiffness assembly.</p>
@@ -9296,15 +9296,15 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-do-we-need-a-4%C3%974-matrix?">Why do we need a 4×4 matrix?<a class="anchor-link" href="#Why-do-we-need-a-4%C3%974-matrix?">¶</a></h3><p>In a 2D truss, each node has <strong>two translational degrees of freedom</strong>:</p>
+<h3 id="Why-do-we-need-a-4%C3%974-matrix?">Why do we need a 4×4 matrix?<a class="anchor-link" href="#Why-do-we-need-a-4%C3%974-matrix?">¶</a></h3><p>In a 2D truss, each node technically has <strong>two translational degrees of freedom</strong>:</p>
 <ul>
-<li>$u$ : displacement in the local $x$ direction (along the member axis)</li>
-<li>$v$ : displacement in the local $y$ direction (perpendicular to the member)</li>
+<li>$v_x$ : displacement in the local $x$ direction (along the member axis)</li>
+<li>$v_y$ : displacement in the local $y$ direction (perpendicular to the member)</li>
 </ul>
 <div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.85;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_TrussDerive1.png" style="width:100%; height:auto;"/>
+<img alt="No description has been provided for this image" src="assets/L1_Truss_4x4_Disp.png" style="width:100%; height:auto;"/>
 <figcaption style="font-size:0.75em; margin-top:0.4em;"></figcaption>
 </figure>
 </div>
@@ -9344,15 +9344,15 @@ $$</p>
 <div style="flex:0.38; font-size:0.95em;">
 <p><strong>Local DOF numbering (for 2x2):</strong></p>
 <ul>
-<li><strong>DOF 1:</strong> $u_1$ — node 1, local $x$</li>
-<li><strong>DOF 2:</strong> $u_2$ — node 2, local $x$</li>
+<li><strong>DOF 1:</strong> $v_1$ — node 1, local $x$</li>
+<li><strong>DOF 2:</strong> $v_2$ — node 2, local $x$</li>
 </ul>
 <p><strong>Local DOF numbering (for 4x4):</strong></p>
 <ul>
-<li><strong>DOF 1:</strong> $u_1$ — node 1, local $x$</li>
-<li><strong>DOF 2:</strong> $u_2$ — node 1, local $y$</li>
-<li><strong>DOF 3:</strong> $u_3$ — node 2, local $x$</li>
-<li><strong>DOF 4:</strong> $u_4$ — node 2, local $y$</li>
+<li><strong>DOF 1:</strong> $v_1$ — node 1, local $x$</li>
+<li><strong>DOF 2:</strong> $v_2$ — node 1, local $y$</li>
+<li><strong>DOF 3:</strong> $v_3$ — node 2, local $x$</li>
+<li><strong>DOF 4:</strong> $v_4$ — node 2, local $y$</li>
 </ul>
 </div>
 </div>
@@ -9368,27 +9368,26 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Local-displacement-and-force-vectors">Local displacement and force vectors<a class="anchor-link" href="#Local-displacement-and-force-vectors">¶</a></h3><p>Local displacement vector:
 $$
-\boldsymbol{u}=
+\mathbf{v}=
 \begin{Bmatrix}
-u_1\\
-u_2\\
-u_3\\
-u_4
+v_1\\
+v_2\\
+v_3\\
+v_4
 \end{Bmatrix}
 $$</p>
-<p>Local nodal force vector (using $Q$ to stay consistent with figures):
+<p>Local nodal force vector:
 $$
-\boldsymbol{F} =
-\boldsymbol{Q} =
+\mathbf{q} =
 \begin{Bmatrix}
-Q_1\\
-Q_2\\
-Q_3\\
-Q_4
+q_1\\
+q_2\\
+q_3\\
+q_4
 \end{Bmatrix}
 $$</p>
 <p>We seek:
-$$\boldsymbol{Q} = \boldsymbol{k}\,\boldsymbol{u}$$</p>
+$$\mathbf{q} = \mathbf{k}\,\mathbf{v}$$</p>
 </div>
 </div>
 </div>
@@ -9400,16 +9399,16 @@ $$\boldsymbol{Q} = \boldsymbol{k}\,\boldsymbol{u}$$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Four-equations-(one-per-DOF)">Four equations (one per DOF)<a class="anchor-link" href="#Four-equations-(one-per-DOF)">¶</a></h3><p>$$
-Q_1 = k_{11}u_1 + k_{12}u_2 + k_{13}u_3 + k_{14}u_4
+q_1 = k_{11}v_1 + k_{12}v_2 + k_{13}v_3 + k_{14}v_4
 $$
 $$
-Q_2 = k_{21}u_1 + k_{22}u_2 + k_{23}u_3 + k_{24}u_4
+q_2 = k_{21}v_1 + k_{22}v_2 + k_{23}v_3 + k_{24}v_4
 $$
 $$
-Q_3 = k_{31}u_1 + k_{32}u_2 + k_{33}u_3 + k_{34}u_4
+q_3 = k_{31}v_1 + k_{32}v_2 + k_{33}v_3 + k_{34}v_4
 $$
 $$
-Q_4 = k_{41}u_1 + k_{42}u_1 + k_{43}u_3 + k_{44}u_4
+q_4 = k_{41}v_1 + k_{42}v_1 + k_{43}v_3 + k_{44}v_4
 $$</p>
 <p>Each equation expresses <strong>force equilibrium at a single local degree of freedom</strong>.</p>
 <p>For a linear elastic element, the force at any DOF is a <strong>linear combination of all DOF displacements</strong>:</p>
@@ -9429,10 +9428,10 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Same-equations-in-matrix-form">Same equations in matrix form<a class="anchor-link" href="#Same-equations-in-matrix-form">¶</a></h3><p>$$
 \begin{Bmatrix}
-Q_1\\
-Q_2\\
-Q_3\\
-Q_4
+q_1\\
+q_2\\
+q_3\\
+q_4
 \end{Bmatrix}
 =
 \begin{bmatrix}
@@ -9442,10 +9441,10 @@ k_{31} &amp; k_{32} &amp; k_{33} &amp; k_{34}\\
 k_{41} &amp; k_{42} &amp; k_{43} &amp; k_{44}
 \end{bmatrix}
 \begin{Bmatrix}
-u_1\\
-u_2\\
-u_3\\
-u_4
+v_1\\
+v_2\\
+v_3\\
+v_4
 \end{Bmatrix}
 $$</p>
 </div>
@@ -9479,17 +9478,17 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-1:-impose-$u_1-=-1$-($u_2-=-u_3-=-u_4-=-0$)">Column 1: impose $u_1 = 1$ ($u_2 = u_3 = u_4 = 0$)<a class="anchor-link" href="#Column-1:-impose-$u_1-=-1$-($u_2-=-u_3-=-u_4-=-0$)">¶</a></h3><div style="display:flex; gap:1.4rem; align-items:flex-start;">
+<h3 id="Column-1:-impose-$v_1-=-1$-($v_2-=-v_3-=-v_4-=-0$)">Column 1: impose $v_1 = 1$ ($v_2 = v_3 = v_4 = 0$)<a class="anchor-link" href="#Column-1:-impose-$v_1-=-1$-($v_2-=-v_3-=-v_4-=-0$)">¶</a></h3><div style="display:flex; gap:1.4rem; align-items:flex-start;">
 <!-- Matrix (left) -->
 <div style="flex:0.45;">
-$$
+<p>$$
 \begin{bmatrix}
 \boxed{k_{11}} &amp; k_{12} &amp; k_{13} &amp; k_{14}\\
 \boxed{k_{21}} &amp; k_{22} &amp; k_{23} &amp; k_{24}\\
 \boxed{k_{31}} &amp; k_{32} &amp; k_{33} &amp; k_{34}\\
 \boxed{k_{41}} &amp; k_{42} &amp; k_{43} &amp; k_{44}
 \end{bmatrix}
-$$
+$$</p>
 </div>
 <!-- Text (right) -->
 <div style="flex:0.50; font-size:0.95em;">
@@ -9519,7 +9518,7 @@ force at <strong>DOF 4</strong> due to unit displacement at <strong>DOF 1</stron
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Column-1:-impose-$u_1-=-1$-($u_2-=-u_3-=-u_4-=-0$)">Column 1: impose $u_1 = 1$ ($u_2 = u_3 = u_4 = 0$)<a class="anchor-link" href="#Column-1:-impose-$u_1-=-1$-($u_2-=-u_3-=-u_4-=-0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
+<h3 id="Column-1:-impose-$v_1-=-1$-($v_2-=-v_3-=-v_4-=-0$)">Column 1: impose $v_1 = 1$ ($v_2 = v_3 = v_4 = 0$)<a class="anchor-link" href="#Column-1:-impose-$v_1-=-1$-($v_2-=-v_3-=-v_4-=-0$)">¶</a></h3><div style="display:flex; gap:1rem; align-items:flex-end;">
 <div style="flex:0.75;">
 <figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
 <img alt="No description has been provided for this image" src="assets/L1_Truss_4x4_1.png" style="width:100%; height:auto;"/>
