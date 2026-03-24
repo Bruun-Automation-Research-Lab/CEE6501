@@ -334,3 +334,23 @@ def k_local_2d_frame_moment_release(E, A, I_z, L, release=None):
         )
 
     return k_axial + k_bend
+
+
+def frame_transformation_2d(theta_deg):
+    theta = np.deg2rad(theta_deg)
+    c = np.cos(theta)
+    s = np.sin(theta)
+
+    T = np.array(
+        [
+            [c, s, 0, 0, 0, 0],
+            [-s, c, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0],
+            [0, 0, 0, c, s, 0],
+            [0, 0, 0, -s, c, 0],
+            [0, 0, 0, 0, 0, 1],
+        ],
+        dtype=float,
+    )
+
+    return T

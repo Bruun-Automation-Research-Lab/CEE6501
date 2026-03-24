@@ -8,8 +8,10 @@ def print_dsm_results(
     f_global_complete,
     dof_restrained_1based,
     dof_fictitious_1based=None,  # optional kwarg
-    disp_in_mm=False,
     member_type="frame",
+    disp_in_mm=False,
+    dec=4,
+    rad_dec=6,
 ):
     ndof = len(u_global)
     rows = []
@@ -48,8 +50,11 @@ def print_dsm_results(
 
         if mod in translational_idx:
             disp = u_global[i] * (1000 if disp_in_mm else 1)
+            disp_str = f"{disp:.{dec}f}"
         else:
-            disp = u_global[i]
+            disp_str = f"{u_global[i]:.{rad_dec}f}"
+
+        load_str = f"{f_global_complete[i]:.{dec}f}"
 
         if dof_1based in fictitious_set:
             status = "Fictitious"
@@ -58,7 +63,7 @@ def print_dsm_results(
         else:
             status = "Free"
 
-        rows.append([dof_1based, dof_type, status, disp, f_global_complete[i]])
+        rows.append([dof_1based, dof_type, status, disp_str, load_str])
 
     disp_unit = "mm" if disp_in_mm else "m"
 
@@ -73,11 +78,11 @@ def print_dsm_results(
         ],
     )
 
-    print(df.to_string(index=False, float_format="%.3f"))
+    print(df.to_string(index=False))
 
 
 def print_element(
-    e, u_global, m_1based, T, k, Qf, disp_in_mm=False, dec=3, rad_dec=4
+    e, u_global, m_1based, T, k, Qf, disp_in_mm=False, dec=4, rad_dec=6
 ):
 
     idx = m_1based - 1
