@@ -108,7 +108,7 @@ motions:
 ## Question 2 — Temperature Effects
 
 Starting from your solution to Question 2 in `A7_written.md`, redo the problem assuming the following temperature
-changes:
+changes (use a cross-sectional depth of 300mm):
 
 - **Vertical member:** uniform temperature increase of **+10°C**
 - **Horizontal member:** temperature gradient of **+15°C at the top** and **+5°C at the bottom**
