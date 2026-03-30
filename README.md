@@ -510,9 +510,9 @@ Use standard submission naming from Week 1.
 
 ## 📅 Week 11 — Intro to Geometrica Nonlinearity
 
-McGuire – Chapter 4 §4.5.2 (torsion beam); Chapter 5, §5.1 (3D coordinate transform)
+McGuire – Chapter 8 §8.1.1 and 8.1.2
 
-Kassimali – Chapter 8 §8.2 (torsion), 8.3 (space frame)
+Kassimali – Chapter 10
 
 ### 📖 Lectures
 
