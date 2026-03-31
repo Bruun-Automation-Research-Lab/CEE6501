@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>CEE6501 — Lecture 11.1 — Introduction to Nonlinearity slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>CEE6501 — Lecture 11.2 — Geometric Nonlinear Truss Analysis slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7441,7 +7441,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-11.1">CEE6501 — Lecture 11.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-11.1">¶</a></h1><h2 id="Introduction-to-Nonlinearity">Introduction to Nonlinearity<a class="anchor-link" href="#Introduction-to-Nonlinearity">¶</a></h2>
+<h1 id="CEE6501-%E2%80%94-Lecture-11.2">CEE6501 — Lecture 11.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-11.2">¶</a></h1><h2 id="Geometric-Nonlinear-Truss-Analysis">Geometric Nonlinear Truss Analysis<a class="anchor-link" href="#Geometric-Nonlinear-Truss-Analysis">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7454,12 +7454,12 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>explain what is meant by <strong>linear</strong> versus <strong>nonlinear</strong> structural analysis</li>
-<li>describe the two main sources of structural nonlinearity: <strong>material</strong> and <strong>geometric</strong></li>
-<li>give examples of each type of nonlinearity and explain why they matter</li>
-<li>distinguish between common <strong>levels of analysis</strong>, from first-order elastic analysis to more advanced nonlinear analysis</li>
-<li>explain why this course will focus on <strong>geometric nonlinearity</strong> for <strong>axial-element frameworks</strong></li>
-<li>connect geometric nonlinearity to later topics in <strong>form finding</strong>, including <strong>force density</strong> and <strong>dynamic relaxation</strong></li>
+<li>explain how the <strong>local coordinate system</strong> for a truss member changes in geometrically nonlinear analysis</li>
+<li>define the <strong>corotational / Eulerian local coordinate system</strong> for a plane truss member</li>
+<li>derive the <strong>member axial force-displacement relation</strong> in the local system</li>
+<li>compute the deformed member length and current direction cosines from the global nodal displacements</li>
+<li>transform the local axial force $q$ into the global member end-force vector $\mathbf{f}$</li>
+<li>explain why the resulting member relations are nonlinear even when the material remains linearly elastic</li>
 </ul>
 </div>
 </div>
@@ -7472,11 +7472,10 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ul>
-<li>Part 1 — What Is Nonlinearity?</li>
-<li>Part 2 — Types of Nonlinearity</li>
-<li>Part 3 — Levels of Analysis</li>
-<li>Part 4 — Scope for This Course</li>
-<li>Part 5 — Set-Up for Geometrically Nonlinear Analysis of Plane Trusses</li>
+<li>Part 1 — What Changes in the Nonlinear Truss Setup?</li>
+<li>Part 2 — Member Force-Displacement Relations in the Local System</li>
+<li>Part 3 — Local to Global Transformations</li>
+<li>Part 4 — Example (Given Displacements)</li>
 </ul>
 </div>
 </div>
@@ -7488,179 +7487,78 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1-%E2%80%94-What-Is-Nonlinearity?">Part 1 — What Is Nonlinearity?<a class="anchor-link" href="#Part-1-%E2%80%94-What-Is-Nonlinearity?">¶</a></h2><blockquote>
-<p>We begin by stepping beyond the assumptions of ordinary linear structural analysis.</p>
-</blockquote>
+<h2 id="Part-1-%E2%80%94-What-Changes-in-the-Nonlinear-Truss-Setup?">Part 1 — What Changes in the Nonlinear Truss Setup?<a class="anchor-link" href="#Part-1-%E2%80%94-What-Changes-in-the-Nonlinear-Truss-Setup?">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_linear_review">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_same_global_setup">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Review:-What-Linear-Analysis-Assumes">Review: What Linear Analysis Assumes<a class="anchor-link" href="#Review:-What-Linear-Analysis-Assumes">¶</a></h3><p>In the usual <strong>linear</strong> structural analysis, we rely on two key assumptions:</p>
+<h3 id="What-Stays-the-Same">What Stays the Same<a class="anchor-link" href="#What-Stays-the-Same">¶</a></h3><p>Much of the overall structural setup remains the same as in the linear truss case.</p>
+<p>We still need to:</p>
 <ul>
-<li><strong>Geometric linearity</strong>: deformations are small enough that equilibrium can be written on the <strong>undeformed geometry</strong></li>
-<li><strong>Material linearity</strong>: stress is proportional to strain, so the material remains <strong>linearly elastic</strong></li>
+<li>establish a <strong>global coordinate system</strong></li>
+<li>number the <strong>joints</strong> and <strong>members</strong></li>
+<li>identify the global displacement DOFs</li>
+<li>identify restrained and free coordinates</li>
 </ul>
+<p>So the overall direct-stiffness workflow is familiar.</p>
+<p>What changes is the way we define the <strong>member local coordinate system</strong> and the way we express the member force-displacement relations.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=85c2442c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_local_system_difference">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In its simplest form, linear structural analysis gives a relation such as</p>
-<p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f}
-$$</p>
-<p>where:</p>
+<h3 id="What-Changes">What Changes<a class="anchor-link" href="#What-Changes">¶</a></h3><p>In <strong>linear truss analysis</strong>, the member local coordinate system is fixed in the initial undeformed configuration.</p>
+<p>In <strong>geometrically nonlinear truss analysis</strong>, it is more convenient to use a local coordinate system that:</p>
 <ul>
-<li>$\mathbf{K}$ is constant</li>
-<li>response is proportional to load</li>
-<li>superposition holds</li>
+<li>remains attached to the member</li>
+<li>translates with the member</li>
+<li>rotates with the member as the structure deforms</li>
 </ul>
-<p>This is often adequate for many structures under ordinary <strong>service-load</strong> conditions.</p>
+<p>So the local $x$-axis is always directed along the member centroidal axis in its <strong>current deformed state</strong>.</p>
+<p>This moving local system is often called a <strong>corotational</strong> or <strong>Eulerian</strong> local coordinate system.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_linear_vs_nonlinear_math">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_corotational_definition">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="A-Simple-Mathematical-View">A Simple Mathematical View<a class="anchor-link" href="#A-Simple-Mathematical-View">¶</a></h3><p>In a <strong>linear</strong> structural problem, the applied load and the response are proportional.</p>
-<p>For a single degree of freedom spring:</p>
-<p>$$
-f = ku
-$$</p>
-<p>where:</p>
+<h3 id="Corotational-/-Eulerian-Local-Coordinate-System">Corotational / Eulerian Local Coordinate System<a class="anchor-link" href="#Corotational-/-Eulerian-Local-Coordinate-System">¶</a></h3><p>For a plane truss member:</p>
 <ul>
-<li>$f$ = applied force</li>
-<li>$u$ = displacement</li>
-<li>$k$ = stiffness</li>
+<li>the origin of the local system is always at the <strong>beginning node</strong> of the member in its deformed state</li>
+<li>the local $x$-axis is directed along the <strong>deformed member axis</strong></li>
+<li>the positive local $y$-axis is chosen so the coordinate system remains <strong>right-handed</strong></li>
 </ul>
-<p>If $k$ is constant, then doubling the load doubles the displacement:</p>
-<p>$$
-2f = k \times 2u
-$$</p>
-<p>So the force-displacement curve is a <strong>straight line</strong>.</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_LocalAxis.png" style="width:50%;"/>
+</div>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b0bb4ad0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_why_use_corotational">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In a <strong>nonlinear</strong> problem, that proportional relationship no longer holds.</p>
-<p>The response may instead look like.</p>
-<p>$$
-f = f(u)
-$$</p>
-<p>which means the force is some nonlinear function of displacement.</p>
-<p>For example, the slope of a menber may change as the structure deforms, so the stiffness is no longer constant:</p>
-<p>$$
-k_{\text{tangent}} = \frac{df}{du}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8bb0a002">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>At the structural level, we usually write the problem in terms of <strong>equilibrium</strong> between external and internal forces:</p>
-<p>$$
-\mathbf{R}(\mathbf{u}) = \mathbf{f}_{\mathrm{ext}} - \mathbf{f}_{\mathrm{int}}(\mathbf{u}) = \mathbf{0}
-$$</p>
-<p>Here:</p>
-<ul>
-<li>$\mathbf{f}_{\mathrm{ext}}$ is the applied load vector</li>
-<li>$\mathbf{f}_{\mathrm{int}}(\mathbf{u})$ is the internal resisting force vector</li>
-<li>$\mathbf{R}(\mathbf{u})$ is the <strong>residual</strong>, or out-of-balance force</li>
-</ul>
-<p>So in a nonlinear analysis, the goal is to find the displacement state $\mathbf{u}$ for which the structure is in equilibrium.</p>
-<p>This is harder than the linear case because:</p>
-<ul>
-<li>internal force depends on the current displacement</li>
-<li>stiffness may change as the structure deforms</li>
-<li>the solution usually must be found <strong>iteratively</strong></li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_why_nonlinear">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-Nonlinear-Analysis-Is-Needed">Why Nonlinear Analysis Is Needed<a class="anchor-link" href="#Why-Nonlinear-Analysis-Is-Needed">¶</a></h3><p>As loads increase, or as deformations become significant, the assumptions of linear analysis begin to break down.</p>
-<p>A structure may become nonlinear because:</p>
-<ul>
-<li>its <strong>geometry changes enough</strong> during deformation to affect equilibrium and internal force</li>
-<li>its <strong>material behavior changes</strong>, for example through yielding, cracking, or inelastic response</li>
-</ul>
-<p>Then the structural response is no longer a straight-line relation between load and displacement.</p>
-<p><b>Key idea:</b> in a nonlinear problem, the structure you are solving for also changes while you solve it.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_nonlinear_features">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="What-Changes-in-Nonlinear-Analysis?">What Changes in Nonlinear Analysis?<a class="anchor-link" href="#What-Changes-in-Nonlinear-Analysis?">¶</a></h3><p>In nonlinear analysis:</p>
-<ul>
-<li>stiffness may change during loading</li>
-<li>equilibrium may be written on the <strong>current</strong> or <strong>updated</strong> configuration</li>
-<li>the load-displacement path may curve, soften, or stiffen</li>
-<li>the response may involve instability, bifurcation, limit points, or post-critical behavior</li>
-</ul>
-<p>So instead of solving once with a fixed stiffness matrix, we usually solve <strong>iteratively</strong>.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_design_context">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-This-Matters-in-Structural-Engineering">Why This Matters in Structural Engineering<a class="anchor-link" href="#Why-This-Matters-in-Structural-Engineering">¶</a></h3><p>Linear analysis is often very useful, but it has inherent limitations.</p>
-<p>It may not capture:</p>
-<ul>
-<li>loss of stiffness caused by large deformations</li>
-<li>second-order effects such as <strong>$P$-$\Delta$</strong> and <strong>$P$-$\delta$</strong></li>
-<li>instability phenomena such as buckling</li>
-<li>inelastic material behavior and strength degradation</li>
-</ul>
-<p>So nonlinear analysis becomes important when the goal is not only to compute forces and displacements under service conditions, but also to understand:</p>
-<ul>
-<li>ultimate strength</li>
-<li>stability</li>
-<li>large-deformation behavior</li>
-<li>failure mechanisms</li>
-</ul>
+<h3 id="Why-This-Coordinate-Choice-Helps">Why This Coordinate Choice Helps<a class="anchor-link" href="#Why-This-Coordinate-Choice-Helps">¶</a></h3><p>For a truss member, the only true member deformation is <strong>axial stretching or shortening</strong>.</p>
+<p>By aligning the local axis with the <strong>current deformed member direction</strong>, we can write the member constitutive law in a very simple form.</p>
+<p>So even though the structure moves and rotates in space, the member still behaves locally like an axial bar.</p>
 </div>
 </div>
 </div>
@@ -7671,127 +7569,139 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-2-%E2%80%94-Types-of-Nonlinearity">Part 2 — Types of Nonlinearity<a class="anchor-link" href="#Part-2-%E2%80%94-Types-of-Nonlinearity">¶</a></h2>
+<h2 id="Part-2-%E2%80%94-Member-Force-Displacement-Relations-in-the-Local-System">Part 2 — Member Force-Displacement Relations in the Local System<a class="anchor-link" href="#Part-2-%E2%80%94-Member-Force-Displacement-Relations-in-the-Local-System">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_material_nonlinearity_split">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_member_axial_deformation">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Material-Nonlinearity">Material Nonlinearity<a class="anchor-link" href="#Material-Nonlinearity">¶</a></h3><p>One major source of structural nonlinearity is <strong>material nonlinearity</strong>.</p>
-<p>The constitutive law is nonlinear, so the relationship between stress and strain is no longer a straight line.</p>
-<p>For a linear elastic material, we write</p>
+<h3 id="Axial-Deformation-in-the-Local-System">Axial Deformation in the Local System<a class="anchor-link" href="#Axial-Deformation-in-the-Local-System">¶</a></h3><p>Let a plane truss member have:</p>
+<ul>
+<li>undeformed length $L$</li>
+<li>deformed length $\bar{L}$</li>
+</ul>
+<p>Then the member axial deformation is defined as</p>
+<p>$$
+v = L - \bar{L}
+\tag{1}
+$$</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_LocalDeform.png" style="width:60%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d8aa25f0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>With this sign convention:</p>
+<ul>
+<li>$v &gt; 0$ corresponds to <strong>shortening</strong></li>
+<li>$v &lt; 0$ corresponds to <strong>elongation</strong></li>
+</ul>
+<p>Likewise, the member axial force $q$ is taken as:</p>
+<ul>
+<li>positive in <strong>compression</strong></li>
+<li>negative in <strong>tension</strong></li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_stress_strain_defs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stress,-Strain,-and-Constitutive-Law">Stress, Strain, and Constitutive Law<a class="anchor-link" href="#Stress,-Strain,-and-Constitutive-Law">¶</a></h3><p>For the truss member,</p>
+<p>$$
+\sigma = \frac{q}{A}
+\qquad\text{and}\qquad
+\varepsilon = \frac{v}{L}
+\tag{2}
+$$</p>
+<p>For a linearly elastic material,</p>
 <p>$$
 \sigma = E\varepsilon
+\tag{3}
 $$</p>
-<p>where the slope $E$ is constant.</p>
-<p>For a nonlinear material, the stress is some more general function of strain:</p>
+<p>Substituting Eq. (2) into Eq. (3) gives the member force-displacement relation in the local system:</p>
 <p>$$
-\sigma = \sigma(\varepsilon)
+q = \left(\frac{EA}{L}\right)v
+\tag{4}
 $$</p>
-<p>So the material stiffness is no longer constant. Instead, the slope changes as the material deforms:</p>
-<p>$$
-E_t = \frac{d\sigma}{d\varepsilon}
-$$</p>
+<p>So locally, the member still behaves like an axial spring.</p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec2_local_law_code">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Example material and member properties</span>
+<span class="n">E</span> <span class="o">=</span> <span class="mf">70e3</span>      <span class="c1"># MPa = N/mm^2</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">645.2</span>     <span class="c1"># mm^2</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mf">3000.0</span>    <span class="c1"># mm</span>
+
+<span class="c1"># Local axial deformations (positive = shortening with this sign convention)</span>
+<span class="n">u_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.0</span><span class="p">])</span>  <span class="c1"># mm</span>
+<span class="n">q_vals</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_vals</span>
+
+<span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">u_vals</span><span class="p">,</span> <span class="n">q_vals</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s1">'compression'</span> <span class="k">if</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="s1">'tension'</span> <span class="k">if</span> <span class="n">q</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">'zero force'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'v = </span><span class="si">{</span><span class="n">u</span><span class="si">:</span><span class="s1">6.1f</span><span class="si">}</span><span class="s1"> mm  -&gt;  q = </span><span class="si">{</span><span class="n">q</span><span class="si">:</span><span class="s1">10.1f</span><span class="si">}</span><span class="s1"> N   (</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>v =   10.0 mm  -&gt;  q =   150546.7 N   (compression)
+v =    0.0 mm  -&gt;  q =        0.0 N   (zero force)
+v =  -10.0 mm  -&gt;  q =  -150546.7 N   (tension)
+</pre>
+</div>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_material_nonlinearity">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_interpret_local_law">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Examples-of-Material-Nonlinearity">Examples of Material Nonlinearity<a class="anchor-link" href="#Examples-of-Material-Nonlinearity">¶</a></h3><p>Material nonlinearity arises when the stress--strain law is not linear elastic.</p>
-<p>Typical examples include:</p>
+<h3 id="Important-Observation">Important Observation<a class="anchor-link" href="#Important-Observation">¶</a></h3><p>Eq. (4) has the same form as the familiar linear axial bar relation.</p>
+<p>The key point is that the <strong>material law itself is still linear</strong>.</p>
+<p>The geometric nonlinearity enters elsewhere:</p>
 <ul>
-<li>yielding of steel</li>
-<li>cracking of reinforced concrete</li>
-<li>creep or time-dependent deformation</li>
-<li>nonlinear interaction of axial force, bending, shear, and torsion</li>
+<li>through the changing member length $\bar{L}$</li>
+<li>through the changing member orientation</li>
+<li>and through the transformation from local to global quantities</li>
 </ul>
-<p>Conceptually:</p>
-<ul>
-<li>the material stiffness changes as loading proceeds</li>
-<li>unloading and reloading may follow different paths</li>
-<li>the load-displacement curve can become history-dependent</li>
-</ul>
-<div style="margin-top:0.5em;">
-For a linear elastic material, the slope is constant. For a nonlinear material, the tangent stiffness changes along the response path.
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_geometric_nonlinearity_split">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Geometric-Nonlinearity">Geometric Nonlinearity<a class="anchor-link" href="#Geometric-Nonlinearity">¶</a></h3><p>The second major source is <strong>geometric nonlinearity</strong>.</p>
-<p>The deformation is large enough that the changing geometry affects equilibrium, compatibility, and internal force.</p>
-<p>In a linear analysis, we treat the structure as if its geometry does not change significantly during loading, so the stiffness is taken as fixed.</p>
-<p>In a geometrically nonlinear analysis, the current deformed shape affects the response, so the stiffness depends on displacement:</p>
-<p>$$
-\mathbf{K} = \mathbf{K}(\mathbf{u})
-$$</p>
-<p>Equivalently, the internal resisting force depends on the current configuration:</p>
-<p>$$
-\mathbf{f}_{\mathrm{int}} = \mathbf{f}_{\mathrm{int}}(\mathbf{u})
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_geometric_nonlinearity">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Examples-of-Geometric-Nonlinearity">Examples of Geometric Nonlinearity<a class="anchor-link" href="#Examples-of-Geometric-Nonlinearity">¶</a></h3><p>Geometric nonlinearity arises when deformations become large enough that the current geometry cannot be ignored.</p>
-<p>Typical examples include:</p>
-<ul>
-<li>$P$-$\Delta$ effect: gravity load acting through a lateral story displacement</li>
-<li>$P$-$\delta$ effect: axial force interacting with member curvature</li>
-<li>cables, membranes, or very flexible trusses whose stiffness depends strongly on shape</li>
-<li>structures undergoing large displacement before reaching material failure</li>
-</ul>
-<p>Conceptually:</p>
-<ul>
-<li>equilibrium must be written on the <strong>deformed</strong> configuration</li>
-<li>internal force depends on both displacement and current axial state</li>
-<li>stiffness becomes configuration-dependent</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_combined_effects">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Combined-Nonlinear-Effects">Combined Nonlinear Effects<a class="anchor-link" href="#Combined-Nonlinear-Effects">¶</a></h3><p>In many realistic structural problems, the two types of nonlinearity occur together.</p>
-<p>Examples include:</p>
-<ul>
-<li>a steel frame with both <strong>yielding</strong> and <strong>$P$-$\Delta$ effects</strong></li>
-<li>reinforced concrete members with <strong>cracking</strong> and <strong>large deflections</strong></li>
-<li>frames where connection deformation, panel-zone deformation, and stability effects all interact</li>
-</ul>
-<p>A useful way to think about it is:</p>
-<ul>
-<li><strong>material nonlinearity</strong> changes the constitutive law</li>
-<li><strong>geometric nonlinearity</strong> changes the equilibrium problem</li>
-</ul>
-<p>In a first introduction, it is common to isolate one source of nonlinearity at a time.</p>
+<p>Note that because of the modified definition of the local coordinate system, only one degree of freedom (that is the member axial deformation) is now needed to completely specify the displaced position of the member.</p>
 </div>
 </div>
 </div>
@@ -7802,209 +7712,279 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3-%E2%80%94-Levels-of-Analysis">Part 3 — Levels of Analysis<a class="anchor-link" href="#Part-3-%E2%80%94-Levels-of-Analysis">¶</a></h2>
+<h2 id="Part-3-%E2%80%94-Local-to-Global-Transformations">Part 3 — Local to Global Transformations<a class="anchor-link" href="#Part-3-%E2%80%94-Local-to-Global-Transformations">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_levels_intro">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_initial_length">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-We-Talk-About-Levels-of-Analysis">Why We Talk About Levels of Analysis<a class="anchor-link" href="#Why-We-Talk-About-Levels-of-Analysis">¶</a></h3><p>It is rarely practical to model every source of nonlinearity in full detail.</p>
-<p>So structural analysis is often organized into <strong>levels of analysis</strong>, where each level captures more of the true behavior than the one before it.</p>
-<p>These levels differ in:</p>
-<ul>
-<li>what assumptions are retained</li>
-<li>what sources of nonlinearity are included</li>
-<li>what kinds of failure or instability they can detect</li>
-<li>the computational effort required</li>
-</ul>
-<p>Each higher level is not just "more complicated" — it is answering a different question about the structure.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_first_order">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="First-Order-Elastic-Analysis">First-Order Elastic Analysis<a class="anchor-link" href="#First-Order-Elastic-Analysis">¶</a></h3><p>This is the standard <strong>linear</strong> analysis we have used so far.</p>
-<div style="display:flex; gap:4%; align-items:flex-start;">
-<div style="width:48%;">
-<p><strong>Assumptions</strong></p>
-<ul>
-<li>equilibrium written on the <strong>undeformed</strong> structure</li>
-<li>material remains <strong>linearly elastic</strong></li>
-<li>stiffness remains constant</li>
-</ul>
-</div>
-<div style="width:48%;">
-<p><strong>What it misses</strong></p>
-<ul>
-<li>geometric nonlinear effects</li>
-<li>material nonlinear effects</li>
-<li>instability behavior</li>
-</ul>
-</div>
-</div>
+<h3 id="Initial-and-Deformed-Member-Length">Initial and Deformed Member Length<a class="anchor-link" href="#Initial-and-Deformed-Member-Length">¶</a></h3><p>Suppose a member connects nodes $b$ and $e$.</p>
+<p>Using the <strong>initial</strong> nodal coordinates,</p>
 <p>$$
-\mathbf{K}\mathbf{u} = \mathbf{f}
+L = \sqrt{(X_e - X_b)^2 + (Y_e - Y_b)^2}
+\tag{5}
+$$</p>
+<p>If the global nodal displacements are</p>
+<p>$$
+\mathbf{u} = [u_1\;u_2\;u_3\;u_4]^T
+$$</p>
+<p>with:</p>
+<ul>
+<li>$u_1, u_2$ = $X$- and $Y$-displacements (global) at node $b$</li>
+<li>$u_3, u_4$ = $X$- and $Y$-displacements (global) at node $e$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c0505240">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>then the <strong>deformed</strong> member length is</p>
+<p>$$
+\bar{L} = \sqrt{\big[(X_e+u_3)-(X_b+u_1)\big]^2 + \big[(Y_e+u_4)-(Y_b+u_2)\big]^2}
+\tag{6}
+$$</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_GlobalDeform.png" style="width:90%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_direction_cosines">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Current-Direction-Cosines">Current Direction Cosines<a class="anchor-link" href="#Current-Direction-Cosines">¶</a></h3><p>In the <strong>deformed configuration</strong>, the member orientation is described by the current angle $\bar{\theta}$.</p>
+<p>The corresponding direction cosines are</p>
+<p>$$
+c_x = \cos\bar{\theta} = \frac{(X_e+u_3)-(X_b+u_1)}{\bar{L}}
+\tag{7}
+$$</p>
+<p>$$
+c_y = \sin\bar{\theta} = \frac{(Y_e+u_4)-(Y_b+u_2)}{\bar{L}}
+\tag{8}
+$$</p>
+<p>Here, $\bar{\theta}$ is measured <strong>counterclockwise</strong> from the positive global $X$-axis to the positive local $x$-axis of the member in its <strong>deformed</strong> position.</p>
+<p>Unlike in linear analysis, these quantities are <strong>not constant</strong>. Because they depend on the current nodal displacements, they change continuously as the structure deforms.</p>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec3_length_cosines_code">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [84]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Example: compute deformed length and direction cosines from nodal displacements</span>
+
+<span class="n">Xb</span><span class="p">,</span> <span class="n">Yb</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+<span class="n">Xe</span><span class="p">,</span> <span class="n">Ye</span> <span class="o">=</span> <span class="mf">4000.0</span><span class="p">,</span> <span class="mf">3000.0</span>
+
+<span class="n">u1</span><span class="p">,</span> <span class="n">u2</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">10.0</span>
+<span class="n">u3</span><span class="p">,</span> <span class="n">u4</span> <span class="o">=</span> <span class="mf">80.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">40.0</span>
+
+<span class="n">L0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">Xe</span> <span class="o">-</span> <span class="n">Xb</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Ye</span> <span class="o">-</span> <span class="n">Yb</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Lbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">Xe</span> <span class="o">+</span> <span class="n">u3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xb</span> <span class="o">+</span> <span class="n">u1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">((</span><span class="n">Ye</span> <span class="o">+</span> <span class="n">u4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Yb</span> <span class="o">+</span> <span class="n">u2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cx</span> <span class="o">=</span> <span class="p">((</span><span class="n">Xe</span> <span class="o">+</span> <span class="n">u3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xb</span> <span class="o">+</span> <span class="n">u1</span><span class="p">))</span> <span class="o">/</span> <span class="n">Lbar</span>
+<span class="n">cy</span> <span class="o">=</span> <span class="p">((</span><span class="n">Ye</span> <span class="o">+</span> <span class="n">u4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Yb</span> <span class="o">+</span> <span class="n">u2</span><span class="p">))</span> <span class="o">/</span> <span class="n">Lbar</span>
+<span class="n">u_local</span> <span class="o">=</span> <span class="n">L0</span> <span class="o">-</span> <span class="n">Lbar</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Initial length L      = </span><span class="si">{</span><span class="n">L0</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> mm'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Deformed length Lbar  = </span><span class="si">{</span><span class="n">Lbar</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> mm'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'c_x = </span><span class="si">{</span><span class="n">cx</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'c_y = </span><span class="si">{</span><span class="n">cy</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Local axial deformation u = </span><span class="si">{</span><span class="n">u_local</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> mm'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Initial length L      = 5000.000 mm
+Deformed length Lbar  = 5018.575 mm
+c_x = 0.808995
+c_y = 0.587816
+Local axial deformation u = -18.575 mm
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_local_global_forces">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="From-Local-Axial-Force-to-Global-End-Forces">From Local Axial Force to Global End Forces<a class="anchor-link" href="#From-Local-Axial-Force-to-Global-End-Forces">¶</a></h3><p>At node $b$, the global end-force components are the components of the local axial force $q$ along the global axes:</p>
+<p>$$
+f_1 = c_x q
+\tag{9a}
+$$</p>
+<p>$$
+f_2 = c_y q
+\tag{9b}
+$$</p>
+<p>At node $e$, the equal-and-opposite components are</p>
+<p>$$
+f_3 = -c_x q
+\tag{9c}
+$$</p>
+<p>$$
+f_4 = -c_y q
+\tag{9d}
+$$</p>
+<div style="text-align:center;">
+<img alt="No description has been provided for this image" src="assets/L2_GlobalDeform_Forces.png" style="width:40%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_T_symbolic">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Transformation-Form">Transformation Form<a class="anchor-link" href="#Transformation-Form">¶</a></h3><p>So the global member end-force vector is</p>
+<p>$$
+\mathbf{f}
+=
+\begin{bmatrix}
+f_1\\[4pt]
+f_2\\[4pt]
+f_3\\[4pt]
+f_4
+\end{bmatrix}
+=
+\begin{bmatrix}
+c_x\\[4pt]
+c_y\\[4pt]
+-c_x\\[4pt]
+-c_y
+\end{bmatrix}q
+\tag{10}
+$$</p>
+<p>We can write Eq. (10) more compactly as</p>
+<p>$$
+\mathbf{f} = \mathbf{T}^T q
+\tag{11}
+$$</p>
+<p>where the $1\times 4$ transformation matrix is</p>
+<p>$$
+\mathbf{T} = \begin{bmatrix} c_x &amp; c_y &amp; -c_x &amp; -c_y \end{bmatrix}
+\tag{12}
 $$</p>
 </div>
 </div>
 </div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec3_q_to_f_code">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [85]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Continue from the previous example</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">L0</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_local</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="o">-</span><span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="n">cy</span><span class="p">]])</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">q</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Local axial force q = </span><span class="si">{</span><span class="n">q</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> kN'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Transformation matrix T ='</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Global end-force vector f ='</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'f_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">val</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> kN'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Local axial force q = -167.789 kN
+
+Transformation matrix T =
+[[ 0.80899451  0.5878162  -0.80899451 -0.5878162 ]]
+
+Global end-force vector f =
+f_1 = -135.7 kN
+f_2 = -98.6 kN
+f_3 = 135.7 kN
+f_4 = 98.6 kN
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c0037985">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_conceptual_summary">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_Levels1.png" style="width:80%;"/>
-</div>
+<h3 id="Conceptual-Summary-of-the-Member-Relations">Conceptual Summary of the Member Relations<a class="anchor-link" href="#Conceptual-Summary-of-the-Member-Relations">¶</a></h3><p>To evaluate the member global end-force vector $\mathbf{f}$ from known global nodal displacements $\mathbf{u}$, the steps are:</p>
+<ol>
+<li>compute the initial length $L$ using Eq. (5)</li>
+<li>compute the deformed length $\bar{L}$ using Eq. (6)</li>
+<li>compute the current direction cosines $c_x, c_y$ using Eqs. (7) and (8)</li>
+<li>compute the local axial deformation $u = L - \bar{L}$ using Eq. (1)</li>
+<li>compute the local axial force $q$ from Eq. (4)</li>
+<li>transform $q$ to the global end-force vector $\mathbf{f}$ using Eq. (11)</li>
+</ol>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_second_order_elastic">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_why_nonlinear">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Second-Order-Elastic-Analysis">Second-Order Elastic Analysis<a class="anchor-link" href="#Second-Order-Elastic-Analysis">¶</a></h3><p>This level includes the effects of deformation on equilibrium while still assuming elastic material behavior.</p>
-<p>So it can represent:</p>
-<ul>
-<li>finite displacement effects</li>
-<li>$P$-$\Delta$ effects</li>
-<li>$P$-$\delta$ effects</li>
-<li>some aspects of stability and load amplification</li>
-</ul>
-<p>But it still does <strong>not</strong> represent yielding, cracking, or other material nonlinearity.</p>
-<p>Symbolically, the problem begins to look like</p>
+<h3 id="Why-the-Global-Member-Relations-Are-Nonlinear">Why the Global Member Relations Are Nonlinear<a class="anchor-link" href="#Why-the-Global-Member-Relations-Are-Nonlinear">¶</a></h3><p>Even though the local constitutive law</p>
 <p>$$
-\mathbf{K}(\mathbf{u}) \times \mathbf{u} = \mathbf{f}
+q = \left(\frac{EA}{L}\right)u
 $$</p>
-<p>or, more carefully, as a sequence of updated equilibrium states.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dd93462d">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Several possible modes of nonlinear elastic behavior are shown.</p>
+<p>is linear, the <strong>global</strong> member relations are geometrically nonlinear because:</p>
 <ul>
-<li><strong>bifurcation</strong> of the load path into an alternative branch</li>
-<li>gradual softening that culminates in an <strong>elastic instability</strong> at a limit point</li>
-<li>stiffness changes that may lead to either softening or stiffening behavior</li>
+<li>$u = L - \bar{L}$ depends nonlinearly on the global nodal displacements</li>
+<li>$c_x$ and $c_y$ depend on the current deformed orientation</li>
+<li>the transformation matrix $\mathbf{T}$ therefore changes during deformation</li>
 </ul>
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_Levels2.png" style="width:80%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_inelastic_levels">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="First-Order-Inelastic-and-Second-Order-Inelastic-Analysis">First-Order Inelastic and Second-Order Inelastic Analysis<a class="anchor-link" href="#First-Order-Inelastic-and-Second-Order-Inelastic-Analysis">¶</a></h3><p>More advanced levels of analysis include material nonlinearity, with or without geometric nonlinearity.</p>
-<div style="display:flex; gap:4%; align-items:flex-start;">
-<div style="width:48%;">
-<p><strong>First-order inelastic</strong></p>
-<ul>
-<li>includes material nonlinearity</li>
-<li>keeps equilibrium on the undeformed geometry</li>
-<li>can represent plastic response, but not geometric nonlinear instability effects</li>
-</ul>
-</div>
-<div style="width:48%;">
-<p><strong>Second-order inelastic</strong></p>
-<ul>
-<li>includes both <strong>material</strong> and <strong>geometric</strong> nonlinearity</li>
-<li>is the most general of these common levels</li>
-<li>can represent strength loss, stability limits, and strongly nonlinear response</li>
-</ul>
-</div>
-</div>
-<p>Much more involved than what we need for our immediate goals.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0267bd6a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_Levels3and4.png" style="width:99%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_summary_table_slide">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Summary-of-the-Levels-of-Analysis">Summary of the Levels of Analysis<a class="anchor-link" href="#Summary-of-the-Levels-of-Analysis">¶</a></h2><table>
-<thead>
-<tr>
-<th>Level of analysis</th>
-<th style="text-align:right">Geometric nonlinearity?</th>
-<th style="text-align:right">Material nonlinearity?</th>
-<th>Typical use</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>First-order elastic</td>
-<td style="text-align:right">No</td>
-<td style="text-align:right">No</td>
-<td>Basic service-load response</td>
-</tr>
-<tr>
-<td>Second-order elastic</td>
-<td style="text-align:right">Yes</td>
-<td style="text-align:right">No</td>
-<td>Large-displacement elastic response, stability effects</td>
-</tr>
-<tr>
-<td>First-order inelastic</td>
-<td style="text-align:right">No</td>
-<td style="text-align:right">Yes</td>
-<td>Inelastic material response without geometric effects</td>
-</tr>
-<tr>
-<td>Second-order inelastic</td>
-<td style="text-align:right">Yes</td>
-<td style="text-align:right">Yes</td>
-<td>Most general response including strength and stability</td>
-</tr>
-</tbody>
-</table>
-<p>For broader background, see:</p>
-<ul>
-<li><strong>McGuire, Chapter 9</strong> — <em>Geometric Nonlinear and Elastic Critical Load Analysis</em></li>
-<li><strong>McGuire, Chapter 10</strong> — <em>Material Nonlinear Analysis</em></li>
-</ul>
+<p>So the member force vector $\mathbf{f}$ is ultimately a nonlinear function of the global displacement vector $\mathbf{u}$.</p>
 </div>
 </div>
 </div>
@@ -8015,467 +7995,78 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-4-%E2%80%94-Scope-for-This-Course">Part 4 — Scope for This Course<a class="anchor-link" href="#Part-4-%E2%80%94-Scope-for-This-Course">¶</a></h2>
+<h2 id="Part-4-%E2%80%94-In-Class-Example-(Given-Displacements)">Part 4 — In-Class Example (Given Displacements)<a class="anchor-link" href="#Part-4-%E2%80%94-In-Class-Example-(Given-Displacements)">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_course_scope">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_blank_placeholder">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="What-We-Will-Focus-On">What We Will Focus On<a class="anchor-link" href="#What-We-Will-Focus-On">¶</a></h3><p>In CEE6501, we will <strong>not</strong> attempt a general treatment of all nonlinear structural analysis.</p>
-<p>Instead, we will focus on:</p>
-<ul>
-<li>geometric nonlinearity</li>
-<li>axial elements only</li>
-<li>bar and joint frameworks (trusses, space frames, cable nets, etc.)</li>
-<li>initially in 2D plane trusses</li>
-</ul>
-<p>So the goal is not a full nonlinear analysis of general frames or continuous surfaces.</p>
-<p>The goal is to understand the <strong>basic concepts of geometrically nonlinear analysis</strong> for axial-member structures whose stiffness and equilibrium depend strongly on their deformed shape.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_why_this_scope">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-This-Narrower-Scope-Makes-Sense">Why This Narrower Scope Makes Sense<a class="anchor-link" href="#Why-This-Narrower-Scope-Makes-Sense">¶</a></h3><p>This narrower focus connects directly to <strong>form finding</strong>, which is fundamentally an inverse problem:</p>
-<ul>
-<li>instead of asking for the response of a known structure</li>
-<li>we ask what <strong>structural form</strong> results from a given set of inputs, constraints, and force patterns</li>
-</ul>
-<p>That requires the structure to <strong>change shape</strong> until forces come into equilibrium, so it is naturally formulated as a <strong>geometrically nonlinear</strong> problem.</p>
-<p>That is exactly the setting for methods such as:</p>
-<ul>
-<li>force density methods (next lecture)</li>
-<li>dynamic relaxation (last lecture)</li>
-</ul>
-<p>So before we can find shapes that are in equilibrium, we first need a basic understanding of <strong>geometric nonlinearity</strong>.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_mcguire_to_kassimali">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Textbook-Readings">Textbook Readings<a class="anchor-link" href="#Textbook-Readings">¶</a></h3><p>McGuire provides the broader background for nonlinear analysis, especially in:</p>
-<ul>
-<li><strong>Chapter 8</strong> — introduction to nonlinear behavior and analysis</li>
-<li><strong>Chapter 9</strong> — geometric nonlinearity and elastic critical load analysis</li>
-<li><strong>Chapter 10</strong> — material nonlinear analysis</li>
-</ul>
-<p>From McGuire, we take the big-picture framework:</p>
-<ul>
-<li>what nonlinearity is</li>
-<li>the main types of nonlinearity</li>
-<li>the common levels of analysis</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bb638824">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>From here, we narrow the scope.</p>
-<p>Following Kassimali (Chapter 10) more closely, we will study only the <strong>basic concepts of geometrically nonlinear analysis</strong> for <strong>plane trusses</strong>.</p>
-<p>Our focus will be on:</p>
-<ul>
-<li>axial elements only</li>
-<li>large displacements</li>
-<li>equilibrium on the deformed geometry</li>
-<li>iterative solution and convergence</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_part_title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5-%E2%80%94-Basic-Concept-of-Geometrically-Nonlinear-Analysis">Part 5 — Basic Concept of Geometrically Nonlinear Analysis<a class="anchor-link" href="#Part-5-%E2%80%94-Basic-Concept-of-Geometrically-Nonlinear-Analysis">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_intro_setup">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="The-Example-Structure">The Example Structure<a class="anchor-link" href="#The-Example-Structure">¶</a></h3><p>To illustrate the basic concept of <strong>geometrically nonlinear analysis</strong>, we consider a simple symmetric <strong>two-member plane truss</strong> made of a linearly elastic material.</p>
-<p>The structure is loaded by a vertical load $P$ at the top joint, so the motion is described by a single degree of freedom:</p>
-<p>$$
-\delta = \text{vertical displacement of joint 2}
-$$</p>
+<h3 id="Example-Problem">Example Problem<a class="anchor-link" href="#Example-Problem">¶</a></h3><p>By using geometrically nonlinear analysis, determine the joint loads P that cause the two-member truss to deform into the configuration shown</p>
 <div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar1.png" style="width:70%;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Example.png" style="width:99%;"/>
 </div>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=006f5d96">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Because the structure is symmetric:</p>
-<ul>
-<li>both members have the same undeformed length $L$</li>
-<li>both members have the same area $A$</li>
-<li>both members have the same angle $\theta$ in the undeformed configuration</li>
-<li>both members carry the same axial force magnitude $Q$</li>
-</ul>
-<p>This very simple system is enough to show the essential difference between <strong>linear</strong> and <strong>geometrically nonlinear</strong> analysis.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_linear_kinematics">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Linear-Analysis:-Small-Displacement-Kinematics">Linear Analysis: Small-Displacement Kinematics<a class="anchor-link" href="#Linear-Analysis:-Small-Displacement-Kinematics">¶</a></h3><p>In <strong>linear analysis</strong>, the displacement $\delta$ is assumed to be small enough that the member axial deformation can be approximated from the <strong>undeformed</strong> geometry.</p>
-<p>For each member,</p>
-<p>$$
-u \approx \delta \sin\theta
-\tag{1}
-$$</p>
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar2.png" style="width:50%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=307f7566">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>so the axial strain is</p>
-<p>$$
-\varepsilon = \frac{u}{L} \approx \left(\frac{\sin\theta}{L}\right)\delta
-\tag{2}
-$$</p>
-<p>This is a <strong>linear</strong> relation between strain and joint displacement.</p>
-<p>The key approximation is that the member direction is taken from the <strong>original configuration</strong>, not the deformed one ($L = L_0$)</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_linear_equilibrium">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Linear-Analysis:-Equilibrium-on-the-Undeformed-Geometry">Linear Analysis: Equilibrium on the Undeformed Geometry<a class="anchor-link" href="#Linear-Analysis:-Equilibrium-on-the-Undeformed-Geometry">¶</a></h3><p>In linear analysis, the equilibrium equations are also written on the <strong>undeformed</strong> geometry.</p>
-<p>At the loaded top joint, vertical equilibrium gives</p>
-<p>$$
-Q \approx \frac{P}{2\sin\theta}
-\tag{3}
-$$</p>
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar3.png" style="width:50%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4924de94">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>and therefore the axial stress is</p>
-<p>$$
-\sigma = \frac{Q}{A} \approx \frac{P}{2A\sin\theta}
-\tag{4}
-$$</p>
-<p>For a linearly elastic material,</p>
-<p>$$
-\sigma = E\varepsilon
-\tag{5}
-$$</p>
-<p>Combining the linear expressions for stress, Eq. (4), and strain, Eq. (2), gives the linear load-displacement relation:</p>
-<p>$$
-P \approx \underbrace{\left(\frac{2EA\sin^2\theta}{L}\right)}_{\text{stiffness term}} \delta
-\tag{6}
-$$</p>
-<p>So in the linear model, the structure behaves like a spring with constant stiffness:</p>
-<p>$$
-k = \frac{2EA\sin^2\theta}{L}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_nonlinear_geometry">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Geometrically-Nonlinear-Analysis:-Use-the-Deformed-Geometry">Geometrically Nonlinear Analysis: Use the Deformed Geometry<a class="anchor-link" href="#Geometrically-Nonlinear-Analysis:-Use-the-Deformed-Geometry">¶</a></h3><p>We do not assume the displacement is small.</p>
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar4.png" style="width:40%;"/>
-</div>
-<p>$$
-\bar{L}
-=
-\sqrt{(L\cos\theta)^2 + (L\sin\theta - \delta)^2}
-=
-L\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}
-\tag{7}
-$$</p>
-<p>$$
-\sin\bar{\theta}
-=
-\frac{L\sin\theta-\delta}{\bar{L}}
-=
-\frac{\sin\theta-\left(\frac{\delta}{L}\right)}
-{\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-\tag{8}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_nonlinear_kinematics">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Exact-Axial-Deformation-and-Strain">Exact Axial Deformation and Strain<a class="anchor-link" href="#Exact-Axial-Deformation-and-Strain">¶</a></h3><p>The <strong>first key difference</strong> from linear analysis is in the <strong>kinematics</strong>. The member deformation is computed from the <strong>actual deformed length</strong>.</p>
-<p>The exact axial deformation is therefore</p>
-<p>$$
-u = \bar{L} - L
-$$</p>
-<p>Substituting the expression for the deformed member length from Eq. (7) gives</p>
-<p>$$
-u
-=
-L\left[
-\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}
--1
-\right]
-\tag{9}
-$$</p>
-<p>and the corresponding axial strain becomes</p>
-<p>$$
-\varepsilon
-=
-\frac{u}{L}
-=
-\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}
--1
-\tag{10}
-$$</p>
-<p>So, unlike the linear case, both axial deformation and strain are now <strong>nonlinear functions</strong> of the joint displacement $\delta$.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_nonlinear_equilibrium">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Equilibrium-Must-Also-Be-Written-on-the-Deformed-Geometry">Equilibrium Must Also Be Written on the Deformed Geometry<a class="anchor-link" href="#Equilibrium-Must-Also-Be-Written-on-the-Deformed-Geometry">¶</a></h3><p>The <strong>second</strong> key difference from linear analysis is in the equilibrium equations since when the current member angle changes, so too does the vertical equilibrium relation.</p>
-<div style="display:flex; align-items:center; gap:4%;">
-<div style="width:49%;">
-<p>vertical equilibrium at the top joint</p>
-<p>$$
-Q = \frac{P}{2\sin\bar{\theta}}
-\tag{11}
-$$</p>
-</div>
-<div style="width:49%; text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar5.png" style="width:100%;"/>
-</div>
-</div>
-<p>So unlike the linear case, the internal member force is not related to $P$ through the original angle $\theta$, but through the <strong>current</strong> angle $\bar{\theta}$.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1ebd99c9">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Substituting the expression for the deformed angle from Eq. (8) gives</p>
-<p>$$
-Q
-=
-\frac{P\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-{2\left[\sin\theta-\left(\frac{\delta}{L}\right)\right]}
-$$</p>
-<p>which yields the expression for member axial stress as</p>
-<p>$$
-\sigma
-=
-\frac{Q}{A}
-=
-\frac{P\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-{2A\left[\sin\theta-\left(\frac{\delta}{L}\right)\right]}
-\tag{12}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c5015c0c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Finally, by substituting the expressions for strain, Eq. (10), and stress, Eq. (12), into the linear stress-strain relationship $\sigma = E\varepsilon$, we obtain the nonlinear load-displacement relation for the truss:</p>
-<p>$$
-P
-=
-2EA\left[\sin\theta-\left(\frac{\delta}{L}\right)\right]
-\left[
-\frac{1-\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-{\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-\right]
-\tag{13}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_full_nonlinear_relation">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Result:-A-Nonlinear-Load-Displacement-Relation">Result: A Nonlinear Load-Displacement Relation<a class="anchor-link" href="#Result:-A-Nonlinear-Load-Displacement-Relation">¶</a></h3><p>After combining:</p>
-<ul>
-<li>the exact deformed geometry</li>
-<li>the exact strain expression</li>
-<li>Hooke's law, $\sigma = E\varepsilon$</li>
-<li>and equilibrium on the deformed configuration</li>
-</ul>
-<p>we obtain a nonlinear relation between load $P$ and displacement $\delta$.</p>
-<p>Symbolically, the important point is:</p>
-<p>$$
-P = P(\delta)
-$$</p>
-<p>not</p>
-<p>$$
-P = k\delta
-$$</p>
-<p>with constant stiffness.</p>
-<p>So even with a <strong>linearly elastic material</strong>, the structural response becomes nonlinear because the geometry changes.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_compare_linear_nonlinear">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Summary-%E2%80%94-Two-Key-Differences">Summary — Two Key Differences<a class="anchor-link" href="#Summary-%E2%80%94-Two-Key-Differences">¶</a></h3><p><strong>Kinematics</strong></p>
-<p>In linear analysis,</p>
-<p>$$
-u \approx \delta \sin\theta
-$$</p>
-<p>In geometrically nonlinear analysis,</p>
-<p>$$
-u = \bar{L} - L
-$$</p>
-<p>So the member deformation is based on the <strong>exact deformed geometry</strong>, not a small-displacement approximation.</p>
-<p><strong>Equilibrium</strong></p>
-<p>In linear analysis, equilibrium is written on the <strong>undeformed</strong> geometry.</p>
-<p>In geometrically nonlinear analysis, equilibrium is written on the <strong>deformed</strong> geometry.</p>
-<p>So both the deformation and the equilibrium equations depend on the <strong>current shape</strong> of the structure.</p>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3be1b04b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Example-%E2%80%94-Linear-vs.-Geometrically-Nonlinear-Analysis">Example — Linear vs. Geometrically Nonlinear Analysis<a class="anchor-link" href="#Example-%E2%80%94-Linear-vs.-Geometrically-Nonlinear-Analysis">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d934bed1">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Example-Setup">Example Setup<a class="anchor-link" href="#Example-Setup">¶</a></h3><p>Consider the shallow two-member truss shown below.</p>
-<p>We will compare:</p>
-<ul>
-<li>the <strong>linear</strong> load-displacement prediction</li>
-<li>the <strong>geometrically nonlinear</strong> load-displacement prediction</li>
-</ul>
-<p>for the same structure and material properties.</p>
-<div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar_Example.png" style="width:60%;"/>
-</div>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0e461c7f">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=54371487">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [86]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="c1"># Two-bar truss properties</span>
-<span class="n">E</span> <span class="o">=</span> <span class="mf">70e3</span>            <span class="c1"># MPa = N/mm^2</span>
-<span class="n">A</span> <span class="o">=</span> <span class="mf">645.2</span>           <span class="c1"># mm^2</span>
-<span class="n">L</span> <span class="o">=</span> <span class="mi">3000</span>            <span class="c1"># mm</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">truss_deformed_geometry</span><span class="p">(</span><span class="n">start_point</span><span class="p">,</span> <span class="n">end_point</span><span class="p">,</span> <span class="n">deformations</span><span class="p">):</span>
+    <span class="n">Xb</span><span class="p">,</span> <span class="n">Yb</span> <span class="o">=</span> <span class="n">start_point</span>
+    <span class="n">Xe</span><span class="p">,</span> <span class="n">Ye</span> <span class="o">=</span> <span class="n">end_point</span>
+    <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">,</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">deformations</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"E = </span><span class="si">{</span><span class="n">E</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> MPa"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"A = </span><span class="si">{</span><span class="n">A</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> mm^2"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"L = </span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"theta = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> deg"</span><span class="p">)</span>
+    <span class="n">L0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">Xe</span> <span class="o">-</span> <span class="n">Xb</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Ye</span> <span class="o">-</span> <span class="n">Yb</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">Lbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">Xe</span> <span class="o">+</span> <span class="n">u3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xb</span> <span class="o">+</span> <span class="n">u1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">((</span><span class="n">Ye</span> <span class="o">+</span> <span class="n">u4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Yb</span> <span class="o">+</span> <span class="n">u2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cx</span> <span class="o">=</span> <span class="p">((</span><span class="n">Xe</span> <span class="o">+</span> <span class="n">u3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xb</span> <span class="o">+</span> <span class="n">u1</span><span class="p">))</span> <span class="o">/</span> <span class="n">Lbar</span>
+    <span class="n">cy</span> <span class="o">=</span> <span class="p">((</span><span class="n">Ye</span> <span class="o">+</span> <span class="n">u4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Yb</span> <span class="o">+</span> <span class="n">u2</span><span class="p">))</span> <span class="o">/</span> <span class="n">Lbar</span>
+    <span class="n">u_local</span> <span class="o">=</span> <span class="n">L0</span> <span class="o">-</span> <span class="n">Lbar</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"L0"</span><span class="p">:</span> <span class="n">L0</span><span class="p">,</span>
+        <span class="s2">"Lbar"</span><span class="p">:</span> <span class="n">Lbar</span><span class="p">,</span>
+        <span class="s2">"cx"</span><span class="p">:</span> <span class="n">cx</span><span class="p">,</span>
+        <span class="s2">"cy"</span><span class="p">:</span> <span class="n">cy</span><span class="p">,</span>
+        <span class="s2">"u_local"</span><span class="p">:</span> <span class="n">u_local</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=deea65cb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [87]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculate member geometric parameters</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">truss_deformed_geometry</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">750</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">))</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="n">truss_deformed_geometry</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">750</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">))</span>
+
+<span class="n">E</span> <span class="o">=</span> <span class="mf">70e3</span>  <span class="c1"># MPa = N/mm^2</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">440.0</span>   <span class="c1"># mm^2</span>
+
+<span class="c1"># calculate local axial forces</span>
+<span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"L0"</span><span class="p">])</span> <span class="o">*</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"u_local"</span><span class="p">]</span>
+<span class="n">q2</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"L0"</span><span class="p">])</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="s2">"u_local"</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Member 1: q = </span><span class="si">{</span><span class="n">q1</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> kN'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Member 2: q = </span><span class="si">{</span><span class="n">q2</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> kN'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8488,98 +8079,43 @@ $$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>E = 70000 MPa
-A = 645.2 mm^2
-L = 3000 mm
-theta = 30.0 deg
+<pre>Member 1: q = -3064.540 kN
+Member 2: q = 5088.069 kN
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=7d456d91">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=89f3621a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [88]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3500</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># mm</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Tranform to global forces</span>
+<span class="n">T1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">],</span> <span class="o">-</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="o">-</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">]]])</span>
+<span class="n">T2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="n">m2</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">],</span> <span class="o">-</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="o">-</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">]]])</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">q1</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="n">T2</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">q2</span>
 
-<span class="c1"># Linear model</span>
-<span class="n">P_lin</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="n">delta</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Global end forces (kN)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"m1: "</span>
+    <span class="sa">f</span><span class="s2">"f1 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
+    <span class="sa">f</span><span class="s2">"f2 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
+    <span class="sa">f</span><span class="s2">"f3 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
+    <span class="sa">f</span><span class="s2">"f4 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
 
-<span class="c1"># Geometrically nonlinear model from the exact truss geometry</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">/</span> <span class="n">L</span>
-<span class="n">root</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-<span class="n">P_geo</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">root</span><span class="p">)</span> <span class="o">/</span> <span class="n">root</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ex_linear_geo_eqns">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Equations-Used-in-the-Example">Equations Used in the Example<a class="anchor-link" href="#Equations-Used-in-the-Example">¶</a></h3><p>The <strong>linear</strong> model is</p>
-<p>$$
-P_{\mathrm{lin}} = \left(\frac{2EA\sin^2\theta}{L}\right)\delta
-\tag{6}
-$$</p>
-<p>The <strong>geometrically nonlinear</strong> model is based on the exact relation</p>
-<p>$$
-P
-=
-2EA\left[\sin\theta-\left(\frac{\delta}{L}\right)\right]
-\left[
-\frac{1-\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-{\sqrt{1+\left(\frac{\delta}{L}\right)^2-2\left(\frac{\delta}{L}\right)\sin\theta}}
-\right]
-\tag{13}
-$$</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d731bba5">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_response</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">P_lin</span><span class="p">,</span> <span class="n">P_geo</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">P_lin</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Linear analysis'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">P_geo</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Geometrically nonlinear analysis'</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Displacement δ (mm)'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Load P (MN)'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2f7ec504">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_response</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">P_lin</span><span class="p">,</span> <span class="n">P_geo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"m2: "</span>
+    <span class="sa">f</span><span class="s2">"f1 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
+    <span class="sa">f</span><span class="s2">"f2 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
+    <span class="sa">f</span><span class="s2">"f3 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
+    <span class="sa">f</span><span class="s2">"f4 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8591,197 +8127,45 @@ $$</p>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
-<img alt="No description has been provided for this image" class="" src="data:image/png;base64,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CpCdna3az8HBwdSHY3HYfmxDc8DzkO1najwHLasNjTGTMW67HButIntZsJMnTyIgIMDUh0FEREREV5CQkAB/f/+6HbwaDAacPn0aHh4esLGxqfHXkysHCZal8T09PWv89awR25DtZ2o8B9mGpsZzkG1Y185DTdOQkZGBJk2awNbWtm6nDUgDXCmCrwnyJjN4ZRuaEs9BtqE54HnI9jM1noOW04ZeXl4V2o8DtoiIiIjIYjB4JSIiIiKLweC1mjk5OeG5555Tj8Q2NAWeg2xDc8DzkO1najwHrbcNrX7AFhERERFZD/a8EhEREZHFYPBKRERERBaDwSsRERERWQwGr0RERERkMRi8VrOPPvoIzZs3h7OzMzp37ozNmzdX90tYpOeff17NcFZy8fPzK/66jBuUfWRmDRcXFwwYMACHDx8u9Rx5eXl4/PHH4ePjAzc3N1x33XVq+l9rtGnTJlx77bWqPaStfv3111Jfr672unDhAu68805VGFoW+XdqairqQhvefffd/zone/ToUWqfutyG8+bNQ9euXdXshL6+vrj++usRFRVVah+eh1VvQ56HlzZ//ny0b9++uEB+z549sWLFCp5/1diGFnv+SbUBqh6LFi3SHBwctM8++0yLiIjQJk+erLm5uWnHjx+v80383HPPaW3atNHOnDlTvCQmJha3yyuvvKJ5eHhov/zyi3bw4EFt/PjxWuPGjbX09PTifR5++GGtadOm2po1a7S///5bGzhwoNahQwetsLDQ6tp3+fLl2syZM1V7yK/pkiVLSn29utprxIgRWtu2bbVt27apRf49ZswYrS604cSJE9XPX/KcTE5OLrVPXW7D4cOHa19++aV26NAhbd++fdro0aO1wMBALTMzs3gfnodVb0Oeh5f2+++/a8uWLdOioqLUMmPGDPUZK+3J86962tBSzz8Gr9WoW7du6k0uqXXr1tqzzz6r1XUSvMrJXh6DwaD5+fmpD0Kj3NxczcvLS/v444/VempqqvqFkwsEo1OnTmm2trbaypUrNWtWNvCqrvaSCyx57h07dhTvs337drXtyJEjmjW5VPA6duzYS34P27A0udiUdty4caNa53lY9TbkeVh59evX1z7//HOef9XQhpb8d5BpA9UkPz8fe/bswbBhw0ptl/Vt27ZV18tYtJiYGHULV9Iqbr31Vhw9elRtP3bsGM6e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"/>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Global end forces (kN)
+m1: f1 = -2675.7   f2 = -1493.9   f3 = 2675.7   f4 = 1493.9
+m2: f1 = -3900.8   f2 = 3266.9   f3 = 3900.8   f4 = -3266.9
+</pre>
 </div>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=80873619">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e8806ae8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Interpreting-the-Response-Curve">Interpreting the Response Curve<a class="anchor-link" href="#Interpreting-the-Response-Curve">¶</a></h3><p>From the plot, we observe:</p>
-<ul>
-<li>the <strong>linear</strong> solution increases indefinitely with constant slope</li>
-<li>the <strong>geometrically nonlinear</strong> solution gradually softens as displacement increases</li>
-<li>the two predictions agree at small displacement, then diverge more and more as deformation grows</li>
-</ul>
-<p>This means the linear approximation becomes progressively less accurate as the geometry change becomes significant.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=01639b58">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Critical-Point-and-Tangent-Stiffness">Critical Point and Tangent Stiffness<a class="anchor-link" href="#Critical-Point-and-Tangent-Stiffness">¶</a></h3><p>The slope of the nonlinear response curve is the <strong>tangent stiffness</strong>.</p>
-<p>At its peak the tangent stiffness becomes zero:</p>
-<p>$$
-\frac{dP}{d\delta} = 0
-$$</p>
-<p>When it reaches 0, the structure has reached a <strong>critical</strong> or <strong>limit point</strong>.</p>
+<p>Add together f3 and f4 for both members to get X and Y forces at node 2</p>
 <div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar_Example_critical.png" style="width:70%;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Example_Soln.png" style="width:99%;"/>
 </div>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=57ae8b66">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec10_wrap_up">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>For the shallow two-member truss, the corresponding critical displacement is</p>
-<p>$$
-\delta_{cr}
-= L\left[\sin\theta - \cos\theta\sqrt{\frac{1}{(\cos\theta)^{2/3}} - 1}\right]
-\tag{14}
-$$</p>
-<p>Substituting $\delta_{cr}$ into Eq. (13) gives the critical load $P_{cr}$.</p>
-<p>This is the point where the structure loses its ability to resist any further increase in load along the same equilibrium path.</p>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=crit_point_code">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">delta_cr</span> <span class="o">=</span> <span class="n">L</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
-
-<span class="n">x_cr</span> <span class="o">=</span> <span class="n">delta_cr</span> <span class="o">/</span> <span class="n">L</span>
-<span class="n">root_cr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x_cr</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x_cr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-<span class="n">P_cr</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">x_cr</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">root_cr</span><span class="p">)</span> <span class="o">/</span> <span class="n">root_cr</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Critical displacement δ_cr = </span><span class="si">{</span><span class="n">delta_cr</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mm"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Critical load P_cr = </span><span class="si">{</span><span class="n">P_cr</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> MN"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Critical displacement δ_cr = 675.78 mm
-Critical load P_cr = 2.498 MN
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_response_curve">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Physical-Meaning-of-the-Critical-Point">Physical Meaning of the Critical Point<a class="anchor-link" href="#Physical-Meaning-of-the-Critical-Point">¶</a></h3><p>The critical point marks the end of stable load increase along the original equilibrium branch.</p>
-<p>Before that point:</p>
+<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
 <ul>
-<li>additional displacement requires additional load</li>
-<li>the structure still has positive tangent stiffness</li>
+<li>introduced the <strong>corotational / Eulerian local coordinate system</strong> for a plane truss member</li>
+<li>defined the member axial deformation and local constitutive law</li>
+<li>expressed the deformed member length and current direction cosines in terms of global nodal displacements</li>
+<li>transformed the local axial force $q$ into the global member end-force vector $\mathbf{f}$</li>
+<li>saw that the member law is locally linear, but globally <strong>geometrically nonlinear</strong></li>
 </ul>
-<p>At the critical point:</p>
-<ul>
-<li>the tangent stiffness becomes zero</li>
-<li>the response curve reaches a peak</li>
-<li>the structure is on the verge of instability</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_snapthrough">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Snap-Through-Instability">Snap-Through Instability<a class="anchor-link" href="#Snap-Through-Instability">¶</a></h3><p>Beyond the critical point, the truss cannot continue to carry additional load along the same equilibrium path.</p>
-<p>Instead, it may undergo <strong>snap-through</strong>, in which a small change in loading triggers a sudden jump to a very different configuration.</p>
-<div style="display:flex; justify-content:center; align-items:flex-start; gap:4%;">
-<div style="width:48%; text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar_Example_snap1.png" style="width:100%;"/>
-</div>
-<div style="width:48%; text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar_Example_snap2.png" style="width:100%;"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a2b8ecaa">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-Snap-Through-Matters">Why Snap-Through Matters<a class="anchor-link" href="#Why-Snap-Through-Matters">¶</a></h3><p>This behavior is important because:</p>
-<ul>
-<li><strong>large changes in shape</strong> can occur suddenly</li>
-<li>the structure can lose stiffness before any material failure occurs</li>
-<li>the <strong>linear model gives no warning</strong> that this instability is approaching</li>
-</ul>
-<p>The two-member truss, often called the <strong>von Mises truss</strong>, is also important historically and computationally.</p>
-<p>Because its behavior is simple enough to study carefully, but rich enough to show true geometric instability, it is commonly used as a <strong>benchmark problem</strong> for validating geometrically nonlinear analysis programs.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_transition_forward">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-This-Example-Matters">Why This Example Matters<a class="anchor-link" href="#Why-This-Example-Matters">¶</a></h3><p>This example captures the central idea of <strong>geometric nonlinearity</strong>:</p>
-<ul>
-<li>the material may remain <strong>linearly elastic</strong></li>
-<li>but the <strong>structural response</strong> can still become strongly nonlinear</li>
-<li>the source of that nonlinearity is the <strong>changing geometry</strong> of the structure</li>
-</ul>
-<p>That is exactly why geometric nonlinear analysis matters for:</p>
-<ul>
-<li>flexible structures with large deformations</li>
-<li>stability problems</li>
-<li>equilibrium shape finding</li>
-<li>later form-finding methods such as <strong>force density</strong> and <strong>dynamic relaxation</strong></li>
-</ul>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_next_lecture_setup">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="What-Comes-Next">What Comes Next<a class="anchor-link" href="#What-Comes-Next">¶</a></h2><p>In the next lecture, we will begin with matrix formulation for the simplest structural setting:</p>
-<ul>
-<li><strong>2D truss elements</strong></li>
-<li><strong>axial force only</strong></li>
-<li><strong>large displacement / changing geometry</strong></li>
-</ul>
+<p>Next: we will use these member relations to begin forming the <strong>geometrically nonlinear load-displacement relations</strong> for entire truss structures.</p>
 </div>
 </div>
 </div>
