@@ -76,6 +76,49 @@ Where:
 
 ---
 
+## 🔹 6. Partitioned Notation
+
+$$
+\begin{bmatrix}
+\mathbf{K}_{ff} & \mathbf{K}_{fr} \\
+\mathbf{K}_{rf} & \mathbf{K}_{rr}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{u}_f \\
+\mathbf{u}_r
+\end{bmatrix}
+= \begin{bmatrix}
+\mathbf{f}_f \\
+\mathbf{f}_r
+\end{bmatrix}
+$$
+
+--
+
+## 🔹 7. Geometric Nonlinearity
+
+Residual:
+
+$$
+\mathbf{r} = \mathbf{f}_f - \mathbf{f}_{f,int}
+$$
+
+Residual, iterations:
+
+$$
+\mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,int}^{(i)}
+$$
+
+Displacement iteration:
+
+$$
+\mathbf{u}_f^{(i+1)} = \mathbf{u}_f^{(i)} + \Delta\mathbf{u}_f^{(i)}
+$$
+
+$$
+\Delta\mathbf{u}_f^{(i)} = \mathbf{K}_{ff}^{(i)-1} \mathbf{r}^{(i)}
+$$
+
 ## 🔹 6. Summary Table
 
 | Level          | Displacements  | Forces         | Stiffness          |
