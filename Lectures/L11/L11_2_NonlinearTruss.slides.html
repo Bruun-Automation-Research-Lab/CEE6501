@@ -7587,7 +7587,7 @@ main {
 </ul>
 <p>Then the member axial deformation is defined as</p>
 <p>$$
-v = L - \bar{L}
+v = \bar{L} - L 
 \tag{1}
 $$</p>
 <div style="text-align:center;">
@@ -7605,14 +7605,15 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>With this sign convention:</p>
 <ul>
-<li>$v &gt; 0$ corresponds to <strong>shortening</strong></li>
-<li>$v &lt; 0$ corresponds to <strong>elongation</strong></li>
+<li>$v &gt; 0$ corresponds to <strong>elongation</strong></li>
+<li>$v &lt; 0$ corresponds to <strong>shortening</strong></li>
 </ul>
 <p>Likewise, the member axial force $q$ is taken as:</p>
 <ul>
-<li>positive in <strong>compression</strong></li>
-<li>negative in <strong>tension</strong></li>
+<li>positive in <strong>tension</strong></li>
+<li>negative in <strong>compression</strong></li>
 </ul>
+<p>Note that Kassimali derivation notation in Chapter 10 is compression positive. This has been flipped in this lecture to better align with typical structural logic.</p>
 </div>
 </div>
 </div>
@@ -7649,7 +7650,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [411]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -7659,13 +7660,16 @@ $$</p>
 <span class="n">A</span> <span class="o">=</span> <span class="mf">645.2</span>     <span class="c1"># mm^2</span>
 <span class="n">L</span> <span class="o">=</span> <span class="mf">3000.0</span>    <span class="c1"># mm</span>
 
-<span class="c1"># Local axial deformations (positive = shortening with this sign convention)</span>
+<span class="c1"># Local axial deformations</span>
+<span class="c1"># Positive = elongation in tension-positive notation</span>
 <span class="n">u_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.0</span><span class="p">])</span>  <span class="c1"># mm</span>
+
+<span class="c1"># Axial force: positive = tension</span>
 <span class="n">q_vals</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">L</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_vals</span>
 
 <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">u_vals</span><span class="p">,</span> <span class="n">q_vals</span><span class="p">):</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="s1">'compression'</span> <span class="k">if</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="s1">'tension'</span> <span class="k">if</span> <span class="n">q</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">'zero force'</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'v = </span><span class="si">{</span><span class="n">u</span><span class="si">:</span><span class="s1">6.1f</span><span class="si">}</span><span class="s1"> mm  -&gt;  q = </span><span class="si">{</span><span class="n">q</span><span class="si">:</span><span class="s1">10.1f</span><span class="si">}</span><span class="s1"> N   (</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s1">'tension'</span> <span class="k">if</span> <span class="n">q</span><span class="o">/</span><span class="mi">1000</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="s1">'compression'</span> <span class="k">if</span> <span class="n">q</span><span class="o">/</span><span class="mi">1000</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">'zero force'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'u = </span><span class="si">{</span><span class="n">u</span><span class="si">:</span><span class="s1">6.1f</span><span class="si">}</span><span class="s1"> mm  -&gt;  q = </span><span class="si">{</span><span class="n">q</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">10.1f</span><span class="si">}</span><span class="s1"> kN   (</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7678,9 +7682,9 @@ $$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>v =   10.0 mm  -&gt;  q =   150546.7 N   (compression)
-v =    0.0 mm  -&gt;  q =        0.0 N   (zero force)
-v =  -10.0 mm  -&gt;  q =  -150546.7 N   (tension)
+<pre>u =   10.0 mm  -&gt;  q =      150.5 kN   (tension)
+u =    0.0 mm  -&gt;  q =        0.0 kN   (zero force)
+u =  -10.0 mm  -&gt;  q =     -150.5 kN   (compression)
 </pre>
 </div>
 </div>
@@ -7766,7 +7770,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Current-Direction-Cosines">Current Direction Cosines<a class="anchor-link" href="#Current-Direction-Cosines">¶</a></h3><p>In the <strong>deformed configuration</strong>, the member orientation is described by the current angle $\bar{\theta}$.</p>
+<h3 id="Current-Direction-Cosines">Current Direction Cosines<a class="anchor-link" href="#Current-Direction-Cosines">¶</a></h3><p>In the <strong>deformed configuration</strong>, the member orientation described by the current angle $\bar{\theta}$.</p>
 <p>The corresponding direction cosines are</p>
 <p>$$
 c_x = \cos\bar{\theta} = \frac{(X_e+u_3)-(X_b+u_1)}{\bar{L}}
@@ -7781,12 +7785,23 @@ $$</p>
 </div>
 </div>
 </div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1c8abd60">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Note: In 2D analysis, these rotation terms are often written more compactly as $c_x = c$ and $c_y = s$ (see Trusses in Lecture 4).</p>
+</div>
+</div>
+</div>
 </div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec3_length_cosines_code">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [84]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [412]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Example: compute deformed length and direction cosines from nodal displacements</span>
@@ -7839,20 +7854,20 @@ Local axial deformation u = -18.575 mm
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="From-Local-Axial-Force-to-Global-End-Forces">From Local Axial Force to Global End Forces<a class="anchor-link" href="#From-Local-Axial-Force-to-Global-End-Forces">¶</a></h3><p>At node $b$, the global end-force components are the components of the local axial force $q$ along the global axes:</p>
 <p>$$
-f_1 = c_x q
+f_1 = -c_x q
 \tag{9a}
 $$</p>
 <p>$$
-f_2 = c_y q
+f_2 = -c_y q
 \tag{9b}
 $$</p>
 <p>At node $e$, the equal-and-opposite components are</p>
 <p>$$
-f_3 = -c_x q
+f_3 = c_x q
 \tag{9c}
 $$</p>
 <p>$$
-f_4 = -c_y q
+f_4 = c_y q
 \tag{9d}
 $$</p>
 <div style="text-align:center;">
@@ -7880,10 +7895,10 @@ f_4
 \end{bmatrix}
 =
 \begin{bmatrix}
-c_x\\[4pt]
-c_y\\[4pt]
 -c_x\\[4pt]
--c_y
+-c_y\\[4pt]
+c_x\\[4pt]
+c_y
 \end{bmatrix}q
 \tag{10}
 $$</p>
@@ -7894,7 +7909,7 @@ $$</p>
 $$</p>
 <p>where the $1\times 4$ transformation matrix is</p>
 <p>$$
-\mathbf{T} = \begin{bmatrix} c_x &amp; c_y &amp; -c_x &amp; -c_y \end{bmatrix}
+\mathbf{T} = \begin{bmatrix} -c_x &amp; -c_y &amp; c_x &amp; c_y \end{bmatrix}
 \tag{12}
 $$</p>
 </div>
@@ -7905,13 +7920,13 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [85]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [413]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Continue from the previous example</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">A</span> <span class="o">/</span> <span class="n">L0</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_local</span>
-<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="o">-</span><span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="n">cy</span><span class="p">]])</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">cx</span><span class="p">,</span> <span class="o">-</span><span class="n">cy</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">]])</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">q</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Local axial force q = </span><span class="si">{</span><span class="n">q</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> kN'</span><span class="p">)</span>
@@ -7936,13 +7951,13 @@ $$</p>
 <pre>Local axial force q = -167.789 kN
 
 Transformation matrix T =
-[[ 0.80899451  0.5878162  -0.80899451 -0.5878162 ]]
+[[-0.809 -0.588  0.809  0.588]]
 
 Global end-force vector f =
-f_1 = -135.7 kN
-f_2 = -98.6 kN
-f_3 = 135.7 kN
-f_4 = 98.6 kN
+f_1 = 135.7 kN
+f_2 = 98.6 kN
+f_3 = -135.7 kN
+f_4 = -98.6 kN
 </pre>
 </div>
 </div>
@@ -7960,7 +7975,7 @@ f_4 = 98.6 kN
 <li>compute the initial length $L$ using Eq. (5)</li>
 <li>compute the deformed length $\bar{L}$ using Eq. (6)</li>
 <li>compute the current direction cosines $c_x, c_y$ using Eqs. (7) and (8)</li>
-<li>compute the local axial deformation $u = L - \bar{L}$ using Eq. (1)</li>
+<li>compute the local axial deformation $u = \bar{L} - L$ using Eq. (1)</li>
 <li>compute the local axial force $q$ from Eq. (4)</li>
 <li>transform $q$ to the global end-force vector $\mathbf{f}$ using Eq. (11)</li>
 </ol>
@@ -7976,11 +7991,12 @@ f_4 = 98.6 kN
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Why-the-Global-Member-Relations-Are-Nonlinear">Why the Global Member Relations Are Nonlinear<a class="anchor-link" href="#Why-the-Global-Member-Relations-Are-Nonlinear">¶</a></h3><p>Even though the local constitutive law</p>
 <p>$$
-q = \left(\frac{EA}{L}\right)u
+q = \left(\frac{EA}{L}\right)v
+\tag{4}
 $$</p>
 <p>is linear, the <strong>global</strong> member relations are geometrically nonlinear because:</p>
 <ul>
-<li>$u = L - \bar{L}$ depends nonlinearly on the global nodal displacements</li>
+<li>$v = \bar{L} - L$ depends nonlinearly on the global nodal displacements</li>
 <li>$c_x$ and $c_y$ depend on the current deformed orientation</li>
 <li>the transformation matrix $\mathbf{T}$ therefore changes during deformation</li>
 </ul>
@@ -8018,7 +8034,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [86]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [414]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8032,7 +8048,7 @@ $$</p>
     <span class="n">Lbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="n">Xe</span> <span class="o">+</span> <span class="n">u3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xb</span> <span class="o">+</span> <span class="n">u1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">((</span><span class="n">Ye</span> <span class="o">+</span> <span class="n">u4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Yb</span> <span class="o">+</span> <span class="n">u2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">cx</span> <span class="o">=</span> <span class="p">((</span><span class="n">Xe</span> <span class="o">+</span> <span class="n">u3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Xb</span> <span class="o">+</span> <span class="n">u1</span><span class="p">))</span> <span class="o">/</span> <span class="n">Lbar</span>
     <span class="n">cy</span> <span class="o">=</span> <span class="p">((</span><span class="n">Ye</span> <span class="o">+</span> <span class="n">u4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Yb</span> <span class="o">+</span> <span class="n">u2</span><span class="p">))</span> <span class="o">/</span> <span class="n">Lbar</span>
-    <span class="n">u_local</span> <span class="o">=</span> <span class="n">L0</span> <span class="o">-</span> <span class="n">Lbar</span>
+    <span class="n">u_local</span> <span class="o">=</span> <span class="n">Lbar</span> <span class="o">-</span> <span class="n">L0</span>
 
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">"L0"</span><span class="p">:</span> <span class="n">L0</span><span class="p">,</span>
@@ -8051,7 +8067,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [87]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [415]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculate member geometric parameters</span>
@@ -8079,8 +8095,8 @@ $$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Member 1: q = -3064.540 kN
-Member 2: q = 5088.069 kN
+<pre>Member 1: q = 3064.540 kN
+Member 2: q = -5088.069 kN
 </pre>
 </div>
 </div>
@@ -8091,12 +8107,12 @@ Member 2: q = 5088.069 kN
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [88]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [416]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Tranform to global forces</span>
-<span class="n">T1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">],</span> <span class="o">-</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="o">-</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">]]])</span>
-<span class="n">T2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="n">m2</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">],</span> <span class="o">-</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="o">-</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">]]])</span>
+<span class="n">T1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="o">-</span><span class="n">m1</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">],</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="n">m1</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">]]])</span>
+<span class="n">T2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="o">-</span><span class="n">m2</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">],</span> <span class="n">m2</span><span class="p">[</span><span class="s2">"cx"</span><span class="p">],</span> <span class="n">m2</span><span class="p">[</span><span class="s2">"cy"</span><span class="p">]]])</span>
 <span class="n">f1</span> <span class="o">=</span> <span class="n">T1</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">q1</span>
 <span class="n">f2</span> <span class="o">=</span> <span class="n">T2</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">q2</span>
 
@@ -8145,8 +8161,611 @@ m2: f1 = -3900.8   f2 = 3266.9   f3 = 3900.8   f4 = -3266.9
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Add together f3 and f4 for both members to get X and Y forces at node 2</p>
 <div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L2_Example_Soln.png" style="width:99%;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Example_Soln.png" style="width:90%;"/>
 </div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_part_title_tangent">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-5-%E2%80%94-Member-Tangent-Stiffness-Matrix">Part 5 — Member Tangent Stiffness Matrix<a class="anchor-link" href="#Part-5-%E2%80%94-Member-Tangent-Stiffness-Matrix">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_why_tangent_needed">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Why-We-Need-a-Tangent-Stiffness-Matrix">Why We Need a Tangent Stiffness Matrix<a class="anchor-link" href="#Why-We-Need-a-Tangent-Stiffness-Matrix">¶</a></h3><p>In the previous part, we expressed the member global end-force vector $\mathbf{f}$ as a nonlinear function of the global displacement vector $\mathbf{u}$.</p>
+<p>That is useful when the displaced configuration is already known.</p>
+<p>But in most analysis problems, the external loading is known, and the unknown is the displaced configuration itself. This requires solving a system of <strong>simultaneous nonlinear equations</strong>.</p>
+<p>These problems are typically solved <strong>iteratively</strong> by repeatedly linearizing the force-displacement relation about the current configuration.</p>
+<p>That linearized relation introduces the <strong>member tangent stiffness matrix</strong>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_incremental_relation">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Incremental-Force-Displacement-Relation">Incremental Force-Displacement Relation<a class="anchor-link" href="#Incremental-Force-Displacement-Relation">¶</a></h3><p>For small increments about the current deformed state, the member force-displacement relation can be written in differential form as</p>
+<p>$$
+\Delta \mathbf{f} = \mathbf{K}_t \, \Delta \mathbf{u}
+\tag{12}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$\Delta \mathbf{f}$ is the increment in the member global end-force vector</li>
+<li>$\Delta \mathbf{u}$ is the increment in the member global displacement vector</li>
+<li>$\mathbf{K}_t$ is the <strong>member tangent stiffness matrix</strong> in the global coordinate system</li>
+</ul>
+<p>So $\mathbf{K}_t$ gives a <strong>local linear approximation</strong> of the nonlinear member response at the current configuration. In other words, it tells us how a small change in displacement produces a small change in force at that point.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=linearization_slide">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Linearizing-a-Nonlinear-Response">Linearizing a Nonlinear Response<a class="anchor-link" href="#Linearizing-a-Nonlinear-Response">¶</a></h2><p>Tangent stiffness matrix, $\mathbf{K}_t$,  gives a <strong>local linear approximation</strong> of the nonlinear response.</p>
+<ul>
+<li>over a small increment, we approximate the nonlinear curve as linear</li>
+<li>the slope of that local approximation is the <strong>tangent stiffness</strong></li>
+</ul>
+<div style="text-align:center; margin-top: 20px;">
+<img alt="No description has been provided for this image" src="assets/L2_linearization.png" style="width: 50%;"/>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_jacobian_definition">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Definition-of-the-Tangent-Stiffness-Matrix">Definition of the Tangent Stiffness Matrix<a class="anchor-link" href="#Definition-of-the-Tangent-Stiffness-Matrix">¶</a></h3><p>By definition,</p>
+<p>$$
+\mathbf{K}_t = \left[\frac{\partial f_i}{\partial u_j}\right]
+\qquad i,j = 1,2,3,4
+\tag{14}
+$$</p>
+<p>So each entry of $\mathbf{K}_t$ tells us how one component of the member end-force vector changes with respect to one component of the member displacement vector (i.e., the Jacobian).</p>
+<p>$$
+\mathbf{K}_t
+=
+\left[
+\begin{smallmatrix}
+\dfrac{\partial f_1}{\partial u_1} &amp; \dfrac{\partial f_1}{\partial u_2} &amp; \dfrac{\partial f_1}{\partial u_3} &amp; \dfrac{\partial f_1}{\partial u_4}\\
+\dfrac{\partial f_2}{\partial u_1} &amp; \dfrac{\partial f_2}{\partial u_2} &amp; \dfrac{\partial f_2}{\partial u_3} &amp; \dfrac{\partial f_2}{\partial u_4}\\
+\dfrac{\partial f_3}{\partial u_1} &amp; \dfrac{\partial f_3}{\partial u_2} &amp; \dfrac{\partial f_3}{\partial u_3} &amp; \dfrac{\partial f_3}{\partial u_4}\\
+\dfrac{\partial f_4}{\partial u_1} &amp; \dfrac{\partial f_4}{\partial u_2} &amp; \dfrac{\partial f_4}{\partial u_3} &amp; \dfrac{\partial f_4}{\partial u_4}
+\end{smallmatrix}
+\right]
+\tag{15}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_where_terms_come_from">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Where-the-Terms-Come-From">Where the Terms Come From<a class="anchor-link" href="#Where-the-Terms-Come-From">¶</a></h3><p>Recall that the member global end-force vector can be written as</p>
+<p>$$
+\mathbf{f} = \mathbf{T}^T q
+\tag{11}
+$$</p>
+<p>where both:</p>
+<ul>
+<li>the local axial force in the member, $q$</li>
+<li>and the transformation matrix, $\mathbf{T}$</li>
+</ul>
+<p>depend on the current member geometry.</p>
+<p>So when we differentiate $\mathbf{f}$ with respect to $\mathbf{u}$, two kinds of terms appear:</p>
+<ul>
+<li>terms from how the <strong>axial force magnitude</strong> changes</li>
+<li>terms from how the <strong>member orientation</strong> changes</li>
+</ul>
+<p>These lead naturally to the two parts of the tangent stiffness matrix.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_one_partial_example">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Example-of-One-Partial-Derivative">Example of One Partial Derivative<a class="anchor-link" href="#Example-of-One-Partial-Derivative">¶</a></h3><p>$$
+\mathbf{K}_t
+=
+\begin{bmatrix}
+\boxed{\dfrac{\partial f_1}{\partial u_1}} &amp; \dfrac{\partial f_1}{\partial u_2} &amp; \dfrac{\partial f_1}{\partial u_3} &amp; \dfrac{\partial f_1}{\partial u_4}\\
+\dfrac{\partial f_2}{\partial u_1} &amp; \dfrac{\partial f_2}{\partial u_2} &amp; \dfrac{\partial f_2}{\partial u_3} &amp; \dfrac{\partial f_2}{\partial u_4}\\
+\dfrac{\partial f_3}{\partial u_1} &amp; \dfrac{\partial f_3}{\partial u_2} &amp; \dfrac{\partial f_3}{\partial u_3} &amp; \dfrac{\partial f_3}{\partial u_4}\\
+\dfrac{\partial f_4}{\partial u_1} &amp; \dfrac{\partial f_4}{\partial u_2} &amp; \dfrac{\partial f_4}{\partial u_3} &amp; \dfrac{\partial f_4}{\partial u_4}
+\end{bmatrix}
+\tag{15}
+$$</p>
+<p>For example, since $f_1 = -c_x q$, Eq. (9a), differentiating with respect to $u_1$ gives</p>
+<p>$$
+\frac{\partial f_1}{\partial u_1}
+= -c_x\left(\frac{\partial q}{\partial u_1}\right)
+- q\left(\frac{\partial c_x}{\partial u_1}\right)
+\tag{16}
+$$</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c3cd2785">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Deriving-$%5Cdfrac%7B%5Cpartial-q%7D%7B%5Cpartial-u_1%7D$">Deriving $\dfrac{\partial q}{\partial u_1}$<a class="anchor-link" href="#Deriving-$%5Cdfrac%7B%5Cpartial-q%7D%7B%5Cpartial-u_1%7D$">¶</a></h3>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a62455fd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-1:-Write-the-governing-equations">Step 1: Write the governing equations<a class="anchor-link" href="#Step-1:-Write-the-governing-equations">¶</a></h3><p>From Eq. (4), the local constitutive law is</p>
+<p>$$
+q = \left(\frac{EA}{L}\right)v
+\tag{4}
+$$</p>
+<p>From Eq. (1), the axial deformation is</p>
+<p>$$
+v = \overline{L} - L 
+\tag{1}
+$$</p>
+<p>From Eq. (6), the deformed length is</p>
+<p>$$
+\overline{L} = \sqrt{\big[(X_e+u_3)-(X_b+u_1)\big]^2 + \big[(Y_e+u_4)-(Y_b+u_2)\big]^2}
+\tag{6}
+$$</p>
+<p>From Eq. (7), the direction cosine is</p>
+<p>$$
+c_x = \cos\bar{\theta} = \frac{(X_e+u_3)-(X_b+u_1)}{\bar{L}}
+\tag{7}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e08eeb46">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-2:-Apply-the-chain-rule-to-$q$">Step 2: Apply the chain rule to $q$<a class="anchor-link" href="#Step-2:-Apply-the-chain-rule-to-$q$">¶</a></h3><p>To find $\dfrac{\partial q}{\partial u_1}$, we apply the chain rule using Eqs. (4), (1), (6), and (7).</p>
+<p>From Eq. (4),</p>
+<p>$$
+\frac{\partial q}{\partial u_1}
+= \left(\frac{EA}{L}\right)\frac{\partial v}{\partial u_1}
+$$</p>
+<p>From Eq. (1),</p>
+<p>$$
+\frac{\partial v}{\partial u_1}
+= \frac{\partial \overline{L}}{\partial u_1}
+$$</p>
+<p>because $L$ is constant.</p>
+<p>Therefore,</p>
+<p>$$
+\frac{\partial q}{\partial u_1}
+= \left(\frac{EA}{L}\right)\frac{\partial \overline{L}}{\partial u_1}
+\tag{17}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=86234f2f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-3:-Differentiate-the-deformed-length">Step 3: Differentiate the deformed length<a class="anchor-link" href="#Step-3:-Differentiate-the-deformed-length">¶</a></h3><p>Only the first squared term depends on $u_1$, so</p>
+<p>$$
+\frac{\partial \bar{L}}{\partial u_1}
+=
+\frac{1}{2}
+\left(
+\big[(X_e+u_3)-(X_b+u_1)\big]^2 + \big[(Y_e+u_4)-(Y_b+u_2)\big]^2
+\right)^{-1/2}
+\cdot
+2\big[(X_e+u_3)-(X_b+u_1)\big](-1)
+$$</p>
+<p>which simplifies to</p>
+<p>$$
+\frac{\partial \bar{L}}{\partial u_1}
+=
+-\frac{(X_e+u_3)-(X_b+u_1)}{\bar{L}}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1849718e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-4:-Substitute-the-direction-cosine">Step 4: Substitute the direction cosine<a class="anchor-link" href="#Step-4:-Substitute-the-direction-cosine">¶</a></h3><p>Using Eq. (7), we obtain</p>
+<p>$$
+\frac{\partial \bar{L}}{\partial u_1} = -c_x
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ccf067dd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-5:-Final">Step 5: Final<a class="anchor-link" href="#Step-5:-Final">¶</a></h3><p>Substituting back into Eq. (17), the expression for $\dfrac{\partial q}{\partial u_1}$, gives</p>
+<p>$$
+\frac{\partial q}{\partial u_1}
+=
+\frac{EA}{L}(-c_x)
+$$</p>
+<p>Therefore,</p>
+<p>$$
+\boxed{
+\frac{\partial q}{\partial u_1}
+=
+-\frac{EA}{L}c_x
+}
+\tag{18}
+$$</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=643415c6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Deriving-$%5Cdfrac%7B%5Cpartial-c_x%7D%7B%5Cpartial-u_1%7D$">Deriving $\dfrac{\partial c_x}{\partial u_1}$<a class="anchor-link" href="#Deriving-$%5Cdfrac%7B%5Cpartial-c_x%7D%7B%5Cpartial-u_1%7D$">¶</a></h3>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=99e5bd93">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-1:-Write-the-governing-equations">Step 1: Write the governing equations<a class="anchor-link" href="#Step-1:-Write-the-governing-equations">¶</a></h3><p>From Eq. (6), the deformed length is</p>
+<p>$$
+\overline{L} = \sqrt{\big[(X_e+u_3)-(X_b+u_1)\big]^2 + \big[(Y_e+u_4)-(Y_b+u_2)\big]^2}
+\tag{6}
+$$</p>
+<p>From Eqs. (7) and (8), the direction cosines are</p>
+<p>$$
+c_x = \cos\bar{\theta} = \frac{(X_e+u_3)-(X_b+u_1)}{\bar{L}}
+\tag{7}
+$$</p>
+<p>$$
+c_y = \sin\bar{\theta} = \frac{(Y_e+u_4)-(Y_b+u_2)}{\bar{L}}
+\tag{8}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=79c0dae0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-2:-Apply-the-quotient-rule-to-$c_x$">Step 2: Apply the quotient rule to $c_x$<a class="anchor-link" href="#Step-2:-Apply-the-quotient-rule-to-$c_x$">¶</a></h3><p>To find $\dfrac{\partial c_x}{\partial u_1}$, we differentiate Eq. (7) with respect to $u_1$.</p>
+<p>Let</p>
+<p>$$
+N = (X_e+u_3)-(X_b+u_1)
+$$</p>
+<p>so that</p>
+<p>$$
+c_x = \frac{N}{\bar{L}}
+$$</p>
+<p>Using the quotient rule</p>
+<p>$$
+\frac{\partial c_x}{\partial u_1}
+=
+\frac{\bar{L}\dfrac{\partial N}{\partial u_1} - N\dfrac{\partial \bar{L}}{\partial u_1}}{\bar{L}^2}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e8800cc1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Since</p>
+<p>$$
+\frac{\partial N}{\partial u_1} = -1
+$$</p>
+<p>this becomes</p>
+<p>$$
+\frac{\partial c_x}{\partial u_1}
+=
+\frac{-\bar{L} - N\dfrac{\partial \bar{L}}{\partial u_1}}{\bar{L}^2}
+\tag{19}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=68bf19c7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-3:-Differentiate-the-deformed-length">Step 3: Differentiate the deformed length<a class="anchor-link" href="#Step-3:-Differentiate-the-deformed-length">¶</a></h3><p>From Eq. (6),</p>
+<p>$$
+\frac{\partial \bar{L}}{\partial u_1}
+=
+-\frac{(X_e+u_3)-(X_b+u_1)}{\bar{L}}
+=
+-\frac{N}{\bar{L}}
+$$</p>
+<p>Substituting this into Eq. (19) gives</p>
+<p>$$
+\frac{\partial c_x}{\partial u_1}
+=
+\frac{-\bar{L} - N\left(-\dfrac{N}{\bar{L}}\right)}{\bar{L}^2}
+$$</p>
+<p>which simplifies to</p>
+<p>$$
+\frac{\partial c_x}{\partial u_1}
+=
+\frac{-\bar{L} + \dfrac{N^2}{\bar{L}}}{\bar{L}^2}
+=
+\frac{-\bar{L}^2 + N^2}{\bar{L}^3}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1fa7fa24">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-4:-Express-the-result-in-terms-of-$c_x$-and-$c_y$">Step 4: Express the result in terms of $c_x$ and $c_y$<a class="anchor-link" href="#Step-4:-Express-the-result-in-terms-of-$c_x$-and-$c_y$">¶</a></h3><p>Since</p>
+<p>$$
+\bar{L}^2 = N^2 + \big[(Y_e+u_4)-(Y_b+u_2)\big]^2
+$$</p>
+<p>we have</p>
+<p>$$
+-\bar{L}^2 + N^2 = -\big[(Y_e+u_4)-(Y_b+u_2)\big]^2
+$$</p>
+<p>Therefore,</p>
+<p>$$
+\frac{\partial c_x}{\partial u_1}
+=
+-\frac{\big[(Y_e+u_4)-(Y_b+u_2)\big]^2}{\bar{L}^3}
+\tag{20}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e2035d48">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Step-5:-Final">Step 5: Final<a class="anchor-link" href="#Step-5:-Final">¶</a></h3><p>Substituting the expression for $c_y$, Eq. (8), into Eq. 20.</p>
+<p>We obtain:</p>
+<p>$$
+\boxed{
+\frac{\partial c_x}{\partial u_1}
+=
+-\frac{c_y^2}{\bar{L}}
+}
+\tag{21}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2cc76e7d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Final-Expression-for-the-First-Term-of-the-Tangent-Stiffness">Final Expression for the First Term of the Tangent Stiffness<a class="anchor-link" href="#Final-Expression-for-the-First-Term-of-the-Tangent-Stiffness">¶</a></h3><p>Substituting Eqs. (18) and (21), into Eq. (16),</p>
+<p>$$
+\frac{\partial f_1}{\partial u_1}
+= -c_x\left(\frac{\partial q}{\partial u_1}\right)
+- q\left(\frac{\partial c_x}{\partial u_1}\right)
+\tag{16}
+$$</p>
+<p>gives</p>
+<p>$$
+\frac{\partial f_1}{\partial u_1}
+= -c_x\left(-\frac{EA}{L}c_x\right)
+- q\left(-\frac{c_y^2}{\bar{L}}\right)
+$$</p>
+<p>which simplifies to</p>
+<p>$$
+\boxed{
+\frac{\partial f_1}{\partial u_1}
+= \left(\frac{EA}{L}\right)c_x^2 + \left(\frac{q}{\bar{L}}\right)c_y^2
+}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_full_matrix">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Explicit-Form-of-the-Member-Tangent-Stiffness-Matrix">Explicit Form of the Member Tangent Stiffness Matrix<a class="anchor-link" href="#Explicit-Form-of-the-Member-Tangent-Stiffness-Matrix">¶</a></h3><p>Carrying out all of the partial derivatives gives</p>
+<p>$$
+\mathbf{K}_t
+=
+\frac{EA}{L}
+\left[
+\begin{smallmatrix}
+c_x^2 &amp; c_xc_y &amp; -c_x^2 &amp; -c_xc_y\\
+c_xc_y &amp; c_y^2 &amp; -c_xc_y &amp; -c_y^2\\
+-c_x^2 &amp; -c_xc_y &amp; c_x^2 &amp; c_xc_y\\
+-c_xc_y &amp; -c_y^2 &amp; c_xc_y &amp; c_y^2
+\end{smallmatrix}
+\right]
++
+\frac{q}{\bar{L}}
+\left[
+\begin{smallmatrix}
+c_y^2 &amp; -c_xc_y &amp; -c_y^2 &amp; c_xc_y\\
+-c_xc_y &amp; c_x^2 &amp; c_xc_y &amp; -c_x^2\\
+-c_y^2 &amp; c_xc_y &amp; c_y^2 &amp; -c_xc_y\\
+c_xc_y &amp; -c_x^2 &amp; -c_xc_y &amp; c_x^2
+\end{smallmatrix}
+\right]
+\tag{22}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_compact_form">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Compact-Form-(Textbook)">Compact Form (Textbook)<a class="anchor-link" href="#Compact-Form-(Textbook)">¶</a></h3><p>It is often convenient to write Eq. (22) in the compact form</p>
+<p>$$
+\mathbf{K}_t = \left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T} + q\,\mathbf{G}
+\tag{23}
+$$</p>
+<p>where the <strong>geometric matrix</strong> $\mathbf{G}$ is</p>
+<p>$$
+\mathbf{G}
+=
+\frac{1}{\bar{L}}
+\begin{bmatrix}
+c_y^2 &amp; -c_x\!c_y &amp; -c_y^2 &amp; c_x\!c_y\\
+-c_x\!c_y &amp; c_x^2 &amp; c_x\!c_y &amp; -c_x^2\\
+-c_y^2 &amp; c_x\!c_y &amp; c_y^2 &amp; -c_x\!c_y\\
+c_x\!c_y &amp; -c_x^2 &amp; -c_x\!c_y &amp; c_x^2
+\end{bmatrix}
+$$</p>
+<p>This form separates the tangent stiffness into a <strong>material part</strong> and a <strong>geometric part</strong>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_meaning_of_two_parts">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Physical-Meaning-of-the-Two-Terms">Physical Meaning of the Two Terms<a class="anchor-link" href="#Physical-Meaning-of-the-Two-Terms">¶</a></h3><p>In Eq. (23):</p>
+<ul>
+<li>$\left(\dfrac{EA}{L}\right)\mathbf{T}^T\mathbf{T}$ is the <strong>material stiffness</strong> contribution</li>
+<li>$q\,\mathbf{G}$ is the <strong>geometric stiffness</strong> contribution</li>
+</ul>
+<p>The first term comes from the constitutive law of the bar.</p>
+<p>The second term comes from the fact that the member direction changes as the structure deforms.</p>
+<p>So even if the material remains linearly elastic, the tangent stiffness still depends on the current force state and current geometry.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_linear_limit">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Check-Against-the-Linear-Limit">Check Against the Linear Limit<a class="anchor-link" href="#Check-Against-the-Linear-Limit">¶</a></h3><p>In the initial undeformed configuration:</p>
+<ul>
+<li>$\bar{L} = L$</li>
+<li>$c_x$ and $c_y$ reduce to the original direction cosines</li>
+<li>the axial force $q = 0$</li>
+</ul>
+<p>So Eq. (22) reduces to</p>
+<p>$$
+\mathbf{K}_t = \left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T}
+$$</p>
+<p>which is exactly the conventional linear stiffness matrix for a 2D truss member.</p>
+<p>That is a useful consistency check.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_figure_placeholder">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div style="text-align:center; margin-top: 20px;">
+<img alt="No description has been provided for this image" src="assets/L2_PastLecture.png" style="width: 50%;"/>
+</div>
+<p>$$
+\mathbf{K}_t
+=
+\frac{EA}{L}
+\left[
+\begin{smallmatrix}
+c_x^2 &amp; c_xc_y &amp; -c_x^2 &amp; -c_xc_y\\
+c_xc_y &amp; c_y^2 &amp; -c_xc_y &amp; -c_y^2\\
+-c_x^2 &amp; -c_xc_y &amp; c_x^2 &amp; c_xc_y\\
+-c_xc_y &amp; -c_y^2 &amp; c_xc_y &amp; c_y^2
+\end{smallmatrix}
+\right]
+$$</p>
 </div>
 </div>
 </div>
