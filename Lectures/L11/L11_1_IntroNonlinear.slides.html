@@ -7454,12 +7454,12 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>explain what is meant by <strong>linear</strong> versus <strong>nonlinear</strong> structural analysis</li>
-<li>describe the two main sources of structural nonlinearity: <strong>material</strong> and <strong>geometric</strong></li>
-<li>give examples of each type of nonlinearity and explain why they matter</li>
-<li>distinguish between common <strong>levels of analysis</strong>, from first-order elastic analysis to more advanced nonlinear analysis</li>
-<li>explain why this course will focus on <strong>geometric nonlinearity</strong> for <strong>axial-element frameworks</strong></li>
-<li>connect geometric nonlinearity to later topics in <strong>form finding</strong>, including <strong>force density</strong> and <strong>dynamic relaxation</strong></li>
+<li>explain the difference between <strong>linear</strong> and <strong>nonlinear</strong> structural analysis</li>
+<li>distinguish between <strong>material</strong> and <strong>geometric</strong> nonlinearity</li>
+<li>describe the main <strong>levels of analysis</strong> used in structural engineering</li>
+<li>explain the course focus on <strong>geometric nonlinearity</strong> for <strong>axial-member structures</strong></li>
+<li>explain why a simple plane truss can have a <strong>nonlinear load-displacement response</strong> even with linearly elastic material</li>
+<li>describe the ideas of <strong>critical point</strong> and <strong>snap-through instability</strong></li>
 </ul>
 </div>
 </div>
@@ -7476,7 +7476,8 @@ main {
 <li>Part 2 — Types of Nonlinearity</li>
 <li>Part 3 — Levels of Analysis</li>
 <li>Part 4 — Scope for This Course</li>
-<li>Part 5 — Set-Up for Geometrically Nonlinear Analysis of Plane Trusses</li>
+<li>Part 5 — Basic Concept of Geometrically Nonlinear Analysis</li>
+<li>Part 6 — Example of Linear vs. Geometrically Nonlinear Analysis</li>
 </ul>
 </div>
 </div>
@@ -7568,38 +7569,11 @@ $$</p>
 <p>$$
 f = f(u)
 $$</p>
-<p>which means the force is some nonlinear function of displacement.</p>
-<p>For example, the slope of a menber may change as the structure deforms, so the stiffness is no longer constant:</p>
+<p>which means the force, $f$, is some nonlinear function of displacement, $u$.</p>
+<p>For example, the slope of a member may change as the structure deforms, so the stiffness is no longer constant:</p>
 <p>$$
 k_{\text{tangent}} = \frac{df}{du}
 $$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8bb0a002">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>At the structural level, we usually write the problem in terms of <strong>equilibrium</strong> between external and internal forces:</p>
-<p>$$
-\mathbf{R}(\mathbf{u}) = \mathbf{f}_{\mathrm{ext}} - \mathbf{f}_{\mathrm{int}}(\mathbf{u}) = \mathbf{0}
-$$</p>
-<p>Here:</p>
-<ul>
-<li>$\mathbf{f}_{\mathrm{ext}}$ is the applied load vector</li>
-<li>$\mathbf{f}_{\mathrm{int}}(\mathbf{u})$ is the internal resisting force vector</li>
-<li>$\mathbf{R}(\mathbf{u})$ is the <strong>residual</strong>, or out-of-balance force</li>
-</ul>
-<p>So in a nonlinear analysis, the goal is to find the displacement state $\mathbf{u}$ for which the structure is in equilibrium.</p>
-<p>This is harder than the linear case because:</p>
-<ul>
-<li>internal force depends on the current displacement</li>
-<li>stiffness may change as the structure deforms</li>
-<li>the solution usually must be found <strong>iteratively</strong></li>
-</ul>
 </div>
 </div>
 </div>
@@ -7617,25 +7591,44 @@ $$</p>
 <li>its <strong>material behavior changes</strong>, for example through yielding, cracking, or inelastic response</li>
 </ul>
 <p>Then the structural response is no longer a straight-line relation between load and displacement.</p>
-<p><b>Key idea:</b> in a nonlinear problem, the structure you are solving for also changes while you solve it.</p>
+<p><b>Main idea:</b> in a nonlinear problem, the structure you are solving for also changes while you solve it.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_nonlinear_features">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8bb0a002">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="What-Changes-in-Nonlinear-Analysis?">What Changes in Nonlinear Analysis?<a class="anchor-link" href="#What-Changes-in-Nonlinear-Analysis?">¶</a></h3><p>In nonlinear analysis:</p>
+<h3 id="Nonlinear-Equilibrium-in-the-Structural-Context">Nonlinear Equilibrium in the Structural Context<a class="anchor-link" href="#Nonlinear-Equilibrium-in-the-Structural-Context">¶</a></h3><p>At the structural level, we usually write the problem in terms of <strong>equilibrium</strong> between external and internal forces:</p>
+<p>$$
+\mathbf{r}(\mathbf{u}) = \mathbf{f}_{\mathrm{ext}} - \mathbf{f}_{\mathrm{int}}(\mathbf{u}) = \mathbf{0}
+$$</p>
+<p>Here:</p>
 <ul>
-<li>stiffness may change during loading</li>
-<li>equilibrium may be written on the <strong>current</strong> or <strong>updated</strong> configuration</li>
-<li>the load-displacement path may curve, soften, or stiffen</li>
-<li>the response may involve instability, bifurcation, limit points, or post-critical behavior</li>
+<li>$\mathbf{f}_{\mathrm{ext}}$ is the applied load vector</li>
+<li>$\mathbf{f}_{\mathrm{int}}(\mathbf{u})$ is the internal resisting force vector, written as a function of the current nodal position</li>
+<li>$\mathbf{r}(\mathbf{u})$ is the <strong>residual</strong>, or out-of-balance force vector, also written as a function of the current nodal position</li>
 </ul>
-<p>So instead of solving once with a fixed stiffness matrix, we usually solve <strong>iteratively</strong>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2b7a1939">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>So in a nonlinear analysis, the goal is to find the displacement state $\mathbf{u}$ for which the structure is in equilibrium.</p>
+<p>This is harder than the linear case because:</p>
+<ul>
+<li>the internal force depends on the current displacement</li>
+<li>the stiffness may change as the structure deforms</li>
+<li>the solution usually must be found <strong>iteratively</strong></li>
+</ul>
 </div>
 </div>
 </div>
@@ -7695,7 +7688,7 @@ $$</p>
 $$</p>
 <p>So the material stiffness is no longer constant. Instead, the slope changes as the material deforms:</p>
 <p>$$
-E_t = \frac{d\sigma}{d\varepsilon}
+E_{tangent} = \frac{d\sigma}{d\varepsilon}
 $$</p>
 </div>
 </div>
@@ -7707,7 +7700,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Examples-of-Material-Nonlinearity">Examples of Material Nonlinearity<a class="anchor-link" href="#Examples-of-Material-Nonlinearity">¶</a></h3><p>Material nonlinearity arises when the stress--strain law is not linear elastic.</p>
+<h3 id="Examples-of-Material-Nonlinearity">Examples of Material Nonlinearity<a class="anchor-link" href="#Examples-of-Material-Nonlinearity">¶</a></h3><p>Material nonlinearity arises when the stress-strain law is not linear elastic.</p>
 <p>Typical examples include:</p>
 <ul>
 <li>yielding of steel</li>
@@ -7737,11 +7730,11 @@ For a linear elastic material, the slope is constant. For a nonlinear material, 
 <h3 id="Geometric-Nonlinearity">Geometric Nonlinearity<a class="anchor-link" href="#Geometric-Nonlinearity">¶</a></h3><p>The second major source is <strong>geometric nonlinearity</strong>.</p>
 <p>The deformation is large enough that the changing geometry affects equilibrium, compatibility, and internal force.</p>
 <p>In a linear analysis, we treat the structure as if its geometry does not change significantly during loading, so the stiffness is taken as fixed.</p>
-<p>In a geometrically nonlinear analysis, the current deformed shape affects the response, so the stiffness depends on displacement:</p>
+<p>In a geometrically nonlinear analysis, the current deformed shape affects the response, so the stiffness depends on the structure's current nodal positions:</p>
 <p>$$
 \mathbf{K} = \mathbf{K}(\mathbf{u})
 $$</p>
-<p>Equivalently, the internal resisting force depends on the current configuration:</p>
+<p>Equivalently, the internal resisting forces depend on the current nodal positions:</p>
 <p>$$
 \mathbf{f}_{\mathrm{int}} = \mathbf{f}_{\mathrm{int}}(\mathbf{u})
 $$</p>
@@ -7760,13 +7753,13 @@ $$</p>
 <ul>
 <li>$P$-$\Delta$ effect: gravity load acting through a lateral story displacement</li>
 <li>$P$-$\delta$ effect: axial force interacting with member curvature</li>
-<li>cables, membranes, or very flexible trusses whose stiffness depends strongly on shape</li>
+<li>cables, membranes, or very flexible trusses whose stiffness depends strongly on shape (need to be form-found)</li>
 <li>structures undergoing large displacement before reaching material failure</li>
 </ul>
 <p>Conceptually:</p>
 <ul>
 <li>equilibrium must be written on the <strong>deformed</strong> configuration</li>
-<li>internal force depends on both displacement and current axial state</li>
+<li>internal force depends on both displacement and applied load</li>
 <li>stiffness becomes configuration-dependent</li>
 </ul>
 </div>
@@ -7889,7 +7882,7 @@ $$</p>
 <p>But it still does <strong>not</strong> represent yielding, cracking, or other material nonlinearity.</p>
 <p>Symbolically, the problem begins to look like</p>
 <p>$$
-\mathbf{K}(\mathbf{u}) \times \mathbf{u} = \mathbf{f}
+\mathbf{K}(\mathbf{u}) \mathbf{u} = \mathbf{f}
 $$</p>
 <p>or, more carefully, as a sequence of updated equilibrium states.</p>
 </div>
@@ -8000,11 +7993,6 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>For broader background, see:</p>
-<ul>
-<li><strong>McGuire, Chapter 9</strong> — <em>Geometric Nonlinear and Elastic Critical Load Analysis</em></li>
-<li><strong>McGuire, Chapter 10</strong> — <em>Material Nonlinear Analysis</em></li>
-</ul>
 </div>
 </div>
 </div>
@@ -8126,7 +8114,7 @@ $$</p>
 \delta = \text{vertical displacement of joint 2}
 $$</p>
 <div style="text-align:center;">
-<img alt="No description has been provided for this image" src="assets/L1_2Bar1.png" style="width:70%;"/>
+<img alt="No description has been provided for this image" src="assets/L1_2Bar1.png" style="width:60%;"/>
 </div>
 </div>
 </div>
@@ -8384,19 +8372,19 @@ $$</p>
 <li>the exact deformed geometry</li>
 <li>the exact strain expression</li>
 <li>Hooke's law, $\sigma = E\varepsilon$</li>
-<li>and equilibrium on the deformed configuration</li>
+<li>and equilibrium written on the deformed configuration</li>
 </ul>
-<p>we obtain a nonlinear relation between load $P$ and displacement $\delta$.</p>
-<p>Symbolically, the important point is:</p>
+<p>we obtain a <strong>nonlinear</strong> relation between load $P$ and displacement $\delta$.</p>
+<p>The key point is that the load is now a function of displacement:</p>
 <p>$$
 P = P(\delta)
 $$</p>
-<p>not</p>
+<p>rather than a linear relation of the form</p>
 <p>$$
 P = k\delta
 $$</p>
-<p>with constant stiffness.</p>
-<p>So even with a <strong>linearly elastic material</strong>, the structural response becomes nonlinear because the geometry changes.</p>
+<p>with constant stiffness $k$.</p>
+<p>So even if the material remains <strong>linearly elastic</strong>, the overall structural response can still be <strong>nonlinear</strong>, because the geometry changes as the structure deforms.</p>
 </div>
 </div>
 </div>
@@ -8431,7 +8419,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Example-%E2%80%94-Linear-vs.-Geometrically-Nonlinear-Analysis">Example — Linear vs. Geometrically Nonlinear Analysis<a class="anchor-link" href="#Example-%E2%80%94-Linear-vs.-Geometrically-Nonlinear-Analysis">¶</a></h2>
+<h2 id="Part-6---Example-of-Linear-vs.-Geometrically-Nonlinear-Analysis">Part 6 - Example of Linear vs. Geometrically Nonlinear Analysis<a class="anchor-link" href="#Part-6---Example-of-Linear-vs.-Geometrically-Nonlinear-Analysis">¶</a></h2>
 </div>
 </div>
 </div>
@@ -8460,7 +8448,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8502,7 +8490,7 @@ theta = 30.0 deg
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3500</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># mm</span>
@@ -8550,7 +8538,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_response</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">P_lin</span><span class="p">,</span> <span class="n">P_geo</span><span class="p">):</span>
@@ -8576,7 +8564,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_response</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">P_lin</span><span class="p">,</span> <span class="n">P_geo</span><span class="p">)</span>
@@ -8656,7 +8644,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [35]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">delta_cr</span> <span class="o">=</span> <span class="n">L</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
@@ -8776,12 +8764,16 @@ Critical load P_cr = 2.498 MN
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="What-Comes-Next">What Comes Next<a class="anchor-link" href="#What-Comes-Next">¶</a></h2><p>In the next lecture, we will begin with matrix formulation for the simplest structural setting:</p>
+<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
 <ul>
-<li><strong>2D truss elements</strong></li>
-<li><strong>axial force only</strong></li>
-<li><strong>large displacement / changing geometry</strong></li>
+<li>introduced the basic idea of <strong>structural nonlinearity</strong></li>
+<li>distinguished between <strong>material</strong> and <strong>geometric</strong> nonlinearity</li>
+<li>reviewed the main <strong>levels of analysis</strong></li>
+<li>defined the course focus on <strong>geometrically nonlinear axial-member structures</strong></li>
+<li>used a simple two-member truss to show how <strong>changing geometry</strong> leads to a nonlinear load-displacement response</li>
+<li>introduced the ideas of <strong>critical point</strong> and <strong>snap-through instability</strong></li>
 </ul>
+<p>Next: we will begin developing the member-level equations for <strong>geometrically nonlinear plane truss analysis</strong> and implement a basic <strong>Newton-Raphson nonlinear solver</strong>.</p>
 </div>
 </div>
 </div>

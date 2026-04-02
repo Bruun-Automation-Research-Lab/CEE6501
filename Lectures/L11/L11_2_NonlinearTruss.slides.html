@@ -8800,6 +8800,16 @@ $$</p>
 \mathbf{r}(\mathbf{u}) = \mathbf{0}
 $$</p>
 <p>where $\mathbf{r}(\mathbf{u})$ is the <strong>residual</strong> or <strong>out-of-balance force vector</strong>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b147eaa2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>So the solution process becomes iterative:</p>
 <ol>
 <li>guess a configuration</li>
@@ -8829,11 +8839,11 @@ $$</p>
 \mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,\mathrm{int}}^{(i)}
 \tag{1}
 $$</p>
-<p>Our goal is to drive $\mathbf{r}^{(i)} -&gt; \mathbf{0}$, with equilibrium is satisfied when:</p>
+<p>Our goal is to drive $\mathbf{r}^{(i)} \to \mathbf{0}$. Equilibrium is satisfied when:</p>
 <p>$$
-\mathbf{r}^{(i)} = \mathbf{0}
+\mathbf{r}^{(i)} =\mathbf{0}
 $$</p>
-<p>or equivalently when the external and internal forces balance.</p>
+<p>or equivalently, when the external and internal forces balance.</p>
 </div>
 </div>
 </div>
@@ -8845,7 +8855,7 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Local-Linearization-Idea">Local Linearization Idea<a class="anchor-link" href="#Local-Linearization-Idea">¶</a></h3><p>Because the exact equilibrium equations are nonlinear, we do not solve them in one step.</p>
-<p>Instead, at the current configuration $\mathbf{u}^{(i)}$, we linearize the problem and solve for a correction increment:</p>
+<p>Instead, at the current configuration for the free DOFs, $\mathbf{u}_f^{(i)}$, we linearize the problem and solve for a correction increment:</p>
 <p>$$
 \mathbf{r}^{(i)} = \mathbf{K}_{ff,t}^{(i)} \, \Delta \mathbf{u}_f^{(i)}
 \tag{2}
@@ -8872,11 +8882,23 @@ $$</p>
 <p>$$
 \mathbf{f}_f^{(1)} = \mathbf{K}_{ff,t}^{(0)} \, \mathbf{u}_f^{(1)}
 $$</p>
-<p>in which $\mathbf{K}_{ff,t}^{(0)}$ denotes the structure tangent stiffness matrix evaluated in the undeformed configuration (i.e., $u_f = u_f^{(0)} = 0)$</p>
-<p>Solve for $\mathbf{u}_f^{(1)}$, This gives a linearized first estimate of the displacement state.</p>
-<p>combine these two lines:
-It should be realized that the configuration, $\mathbf{u}_f^{(1)}$, obtained represents an approximate configuration in the sense that the joint equilibrium equations are not necessarily satisfied.</p>
-<p>However, this first estimate generally does <strong>not</strong> satisfy the full nonlinear equilibrium equations, because the internal resisting force associated with $\mathbf{u}_f^{(1)}$ will usually not match the applied load exactly.</p>
+<p>in which $\mathbf{K}_{ff,t}^{(0)}$ denotes the structure tangent stiffness matrix evaluated in the undeformed configuration (i.e., $\mathbf{u}_f = \mathbf{u}_f^{(0)} = \mathbf{0}$).</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=01b32bfc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Solving for $\mathbf{u}_f^{(1)}$ gives a linearized first estimate of the displacement state:</p>
+<p>$$
+\mathbf{u}_f^{(1)} = \mathbf{K}_{ff,t}^{-1(0)} \mathbf{f}_f^{(1)}
+$$</p>
+<p>However, $\mathbf{u}_f^{(1)}$ is only an approximate configuration, because the joint equilibrium equations are not necessarily satisfied at this stage. In general, the internal resisting force associated with $\mathbf{u}_f^{(1)}$ will not exactly match the applied load.</p>
+<p>Only in the linear case do we obtain exact equilibrium in a single step. This is the type of problem considered earlier in the course, where the stiffness remains constant and no geometric stiffness term is included.</p>
 </div>
 </div>
 </div>
@@ -8888,8 +8910,8 @@ It should be realized that the configuration, $\mathbf{u}_f^{(1)}$, obtained rep
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="First-Approximation---Graphical-Interpretation">First Approximation - Graphical Interpretation<a class="anchor-link" href="#First-Approximation---Graphical-Interpretation">¶</a></h3><ol>
-<li>Initialize with the structure tangent stiffness matrix with 0 deformation, $\mathbf{K}_{ff,t}^{(0)}$</li>
-<li>Solve for $\mathbf{u}_f^{(1)}$, as a linearized first estimate of the displacement state.</li>
+<li>Initialize with the structure tangent stiffness matrix at 0 deformation, $\mathbf{K}_{ff,t}^{(0)}$</li>
+<li>Solve for $\mathbf{u}_f^{(1)}$ as a linearized first estimate of the displacement state</li>
 </ol>
 <div style="text-align:center; margin-top: 20px;">
 <img alt="No description has been provided for this image" src="assets/L2_NewtonRaphson_Init.png" style="width: 70%;"/>
@@ -8904,18 +8926,31 @@ It should be realized that the configuration, $\mathbf{u}_f^{(1)}$, obtained rep
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Residual-and-Correction-Step">Residual and Correction Step<a class="anchor-link" href="#Residual-and-Correction-Step">¶</a></h3><p>To correct the approximate solution at the free DOFs, $\mathbf{u}_f^{(i)}$, we evaluate the structure’s internal joint force vector at the free DOFs, corresponding to this configuration</p>
+<h3 id="Residual-and-Correction-Step">Residual and Correction Step<a class="anchor-link" href="#Residual-and-Correction-Step">¶</a></h3><p>To correct the approximate solution at the free DOFs, $\mathbf{u}_f^{(i)}$, we evaluate the structure's internal joint force vector at the free DOFs corresponding to this configuration:</p>
 <p>$$
 \mathbf{f}_{f,\mathrm{int}}^{(i)} = \mathbf{f}_{f,\mathrm{int}}(\mathbf{u}_f^{(i)})
 $$</p>
-<p>Then subtract it from the applied joint load vector at the free DOFs, $\mathbf{f}_f$, to calculate the unbalanced joint force vector for the structure at free DOFs</p>
+<p>We then subtract it from the applied joint load vector at the free DOFs, $\mathbf{f}_f$, to calculate the unbalanced joint force vector:</p>
 <p>$$
 \mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,\mathrm{int}}^{(i)}
 $$</p>
-<p>This residual is treated as the load that still needs to be balanced. The unbalanced joint forces are now treated as a load increment</p>
-<p>the correction vector, $\Delta \mathbf{u}_f^{(i)}$, is obtained is solved for by using the new tangent stiffness at the current configuration. with $\mathbf{K}_{ff,t}^{(i)}$ now representing the structure tangent stiffness matrix for free DOFs evaluated in the current configuration $\mathbf{u}_f^{(i)}$:</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5692c8e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This residual is treated as the load that still needs to be balanced.</p>
+<p>The correction vector, $\Delta \mathbf{u}_f^{(i)}$, is then obtained by solving with the new tangent stiffness at the current configuration, where $\mathbf{K}_{ff,t}^{(i)}$ now represents the structure tangent stiffness matrix for the free DOFs evaluated at $\mathbf{u}_f^{(i)}$:</p>
 <p>$$
 \mathbf{r}^{(i)} = \mathbf{K}_{ff,t}^{(i)} \, \Delta \mathbf{u}_f^{(i)}
+$$</p>
+<p>$$
+\Delta \mathbf{u}_f^{(i)} = \mathbf{K}_{ff,t}^{-1(i)} \mathbf{r}^{(i)}
 $$</p>
 </div>
 </div>
@@ -8929,7 +8964,7 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Update-of-the-Configuration">Update of the Configuration<a class="anchor-link" href="#Update-of-the-Configuration">¶</a></h3><p>After solving for the correction increment, we update the displacement state:</p>
 <p>$$
-\mathbf{u}_f^{(i + 1)} = \mathbf{u}_f^{(i)}  + \Delta \mathbf{u}_f^{(i)} 
+\mathbf{u}_f^{(i + 1)} = \mathbf{u}_f^{(i)} + \Delta \mathbf{u}_f^{(i)}
 \tag{3}
 $$</p>
 </div>
@@ -8942,21 +8977,20 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Procedure">Procedure<a class="anchor-link" href="#Procedure">¶</a></h3><p>So each iteration consists of:</p>
-<ol start="3">
-<li>evaluate internal force, $\mathbf{f}_{f,\mathrm{int}}^{(i)}$, at configurtation $\mathbf{u}_f^{(i)}$</li>
+<h3 id="Iteration-Procedure">Iteration Procedure<a class="anchor-link" href="#Iteration-Procedure">¶</a></h3><ol start="3">
+<li>evaluate internal force $\mathbf{f}_{f,\mathrm{int}}^{(i)}$ at configuration $\mathbf{u}_f^{(i)}$</li>
 <li>compute residual $\mathbf{r}^{(i)}$
 $$
 \boxed{\mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,\mathrm{int}}^{(i)}}
 $$</li>
-<li>Calculate new  tangent stiffness matrix, $\mathbf{K}_{ff,t}^{(i)}$ at configurtation $\mathbf{u}_f^{(i)}$</li>
+<li>calculate new tangent stiffness matrix $\mathbf{K}_{ff,t}^{(i)}$ at configuration $\mathbf{u}_f^{(i)}$</li>
 <li>solve for correction $\Delta \mathbf{u}_f^{(i)}$
 $$
-\boxed{\Delta \mathbf{u}_f^{(i)} = \mathbf{K}_{ff,t}^{-1 (i)} \mathbf{r}^{(i)}}
+\boxed{\Delta \mathbf{u}_f^{(i)} = \mathbf{K}_{ff,t}^{-1(i)} \mathbf{r}^{(i)}}
 $$</li>
 <li>update to obtain $\mathbf{u}_f^{(i + 1)}$ for the next iteration
 $$
-\boxed{\mathbf{u}_f^{(i + 1)} = \mathbf{u}_f^{(i)}  + \Delta \mathbf{u}_f^{(i)} }
+\boxed{\mathbf{u}_f^{(i + 1)} = \mathbf{u}_f^{(i)} + \Delta \mathbf{u}_f^{(i)}}
 $$</li>
 </ol>
 </div>
@@ -8983,7 +9017,7 @@ $$</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Convergence-Criterion">Convergence Criterion<a class="anchor-link" href="#Convergence-Criterion">¶</a></h3><p>We need a numerical test to decide when the iterations have converged.</p>
-<p>One common displacement-based criterion, at iteration $i$:</p>
+<p>One common displacement-based criterion, at iteration $i$, is:</p>
 <p>$$
 \sqrt{
 \frac{\sum_{j=1}^{NDOF} \left( \Delta u_{f,j}^{(i)} \right)^2}
@@ -8991,7 +9025,7 @@ $$</li>
 }
 \leq e
 $$</p>
-<p>where $e$ is a prescribed tolerance. e.g., 0.01 to 1% change</p>
+<p>where $e$ is a prescribed tolerance, e.g., $0.01$ for a 1% change.</p>
 <p>So convergence is declared when the correction becomes small relative to the current displacement magnitude.</p>
 </div>
 </div>
@@ -9005,8 +9039,8 @@ $$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Algorithm-Summary">Algorithm Summary<a class="anchor-link" href="#Algorithm-Summary">¶</a></h3><p>Newton-Raphson for geometrically nonlinear analysis can be written as:</p>
 <ol>
-<li>Initialize with tangent stiffness matrix at 0 deformation, $\mathbf{K}_{ff,t}^{(0)}$</li>
-<li>Solve for $\mathbf{u}_f^{(i)}$, as a linearized first estimate of the displacement state.</li>
+<li>initialize with tangent stiffness matrix at 0 deformation, $\mathbf{K}_{ff,t}^{(0)}$</li>
+<li>solve for $\mathbf{u}_f^{(1)}$ as a linearized first estimate of the displacement state</li>
 <li>compute internal force $\mathbf{f}_{f,\mathrm{int}}^{(i)}$</li>
 <li>compute residual $\mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,\mathrm{int}}^{(i)}$</li>
 <li>form the new tangent stiffness $\mathbf{K}_{ff,t}^{(i)}$</li>
@@ -9020,25 +9054,18 @@ $$</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec10_wrap_up">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=550d2996">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><ul>
-<li>nonlinear equilibrium is solved iteratively rather than in one step</li>
-<li>the residual vector measures the current out-of-balance force state</li>
-<li>the tangent stiffness gives a local linear approximation at the current configuration</li>
-<li>Newton-Raphson updates the displacement state through repeated correction steps</li>
-<li>convergence is checked by monitoring whether the correction becomes sufficiently small</li>
-</ul>
-<p>Next, we will apply this iteration framework to the geometrically nonlinear truss problem.</p>
+<h2 id="Part-7---Example-1D-Code">Part 7 - Example 1D Code<a class="anchor-link" href="#Part-7---Example-1D-Code">¶</a></h2><p>Open <code>NewtonRaphson_1D.ipynb</code> in the <code>../../Code/L11</code> folder</p>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c7ee1ab4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec10_wrap_up">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
