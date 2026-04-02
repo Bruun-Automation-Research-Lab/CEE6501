@@ -508,7 +508,7 @@ Use standard submission naming from Week 1.
 
 ---
 
-## 📅 Week 11 — Intro to Geometrica Nonlinearity
+## 📅 Week 11 — Direct Stiffness Method for Geometric Nonlinearity
 
 McGuire – Chapter 8 §8.1.1 and 8.1.2
 

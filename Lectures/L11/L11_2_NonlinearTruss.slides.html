@@ -7454,12 +7454,12 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>explain how the <strong>local coordinate system</strong> for a truss member changes in geometrically nonlinear analysis</li>
-<li>define the <strong>corotational / Eulerian local coordinate system</strong> for a plane truss member</li>
-<li>derive the <strong>member axial force-displacement relation</strong> in the local system</li>
+<li>explain the <strong>corotational / Eulerian local coordinate system</strong> for a geometrically nonlinear truss member</li>
 <li>compute the deformed member length and current direction cosines from the global nodal displacements</li>
-<li>transform the local axial force $q$ into the global member end-force vector $\mathbf{f}$</li>
-<li>explain why the resulting member relations are nonlinear even when the material remains linearly elastic</li>
+<li>compute the member axial force and transform it into the global member end-force vector $\mathbf{f}$</li>
+<li>explain why the global member relations are <strong>geometrically nonlinear</strong></li>
+<li>interpret the <strong>tangent stiffness matrix</strong> and its main components</li>
+<li>explain the basic idea of the <strong>Newton-Raphson method</strong> for solving nonlinear equilibrium equations</li>
 </ul>
 </div>
 </div>
@@ -7472,10 +7472,13 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ul>
-<li>Part 1 — What Changes in the Nonlinear Truss Setup?</li>
+<li>Part 1 — Geometric Nonlinear Truss Setup</li>
 <li>Part 2 — Member Force-Displacement Relations in the Local System</li>
 <li>Part 3 — Local to Global Transformations</li>
-<li>Part 4 — Example (Given Displacements)</li>
+<li>Part 4 — In-Class Example (Given Displacements)</li>
+<li>Part 5 — Member Tangent Stiffness Matrix</li>
+<li>Part 6 — Newton-Raphson Method</li>
+<li>Part 7 — Example 1D Code</li>
 </ul>
 </div>
 </div>
@@ -7487,7 +7490,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1-%E2%80%94-What-Changes-in-the-Nonlinear-Truss-Setup?">Part 1 — What Changes in the Nonlinear Truss Setup?<a class="anchor-link" href="#Part-1-%E2%80%94-What-Changes-in-the-Nonlinear-Truss-Setup?">¶</a></h2>
+<h2 id="Part-1-%E2%80%94-Geometric-Nonlinear-Truss-Setup">Part 1 — Geometric Nonlinear Truss Setup<a class="anchor-link" href="#Part-1-%E2%80%94-Geometric-Nonlinear-Truss-Setup">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7645,12 +7648,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec2_local_law_code">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=sec2_local_law_code">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [79]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -7675,21 +7678,6 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>u =   10.0 mm  -&gt;  q =      150.5 kN   (tension)
-u =    0.0 mm  -&gt;  q =        0.0 kN   (zero force)
-u =  -10.0 mm  -&gt;  q =     -150.5 kN   (compression)
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec2_interpret_local_law">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -7699,7 +7687,7 @@ u =  -10.0 mm  -&gt;  q =     -150.5 kN   (compression)
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Important-Observation">Important Observation<a class="anchor-link" href="#Important-Observation">¶</a></h3><p>Eq. (4) has the same form as the familiar linear axial bar relation.</p>
 <p>The key point is that the <strong>material law itself is still linear</strong>.</p>
-<p>The geometric nonlinearity enters elsewhere:</p>
+<p>The geometric nonlinearity enters elsewhere (Part 3):</p>
 <ul>
 <li>through the changing member length $\bar{L}$</li>
 <li>through the changing member orientation</li>
@@ -7796,12 +7784,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec3_length_cosines_code">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=sec3_length_cosines_code">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [80]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Example: compute deformed length and direction cosines from nodal displacements</span>
@@ -7824,23 +7812,6 @@ $$</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'c_y = </span><span class="si">{</span><span class="n">cy</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Local axial deformation u = </span><span class="si">{</span><span class="n">u_local</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> mm'</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Initial length L      = 5000.000 mm
-Deformed length Lbar  = 5018.575 mm
-c_x = 0.808995
-c_y = 0.587816
-Local axial deformation u = -18.575 mm
-</pre>
 </div>
 </div>
 </div>
@@ -7915,12 +7886,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=sec3_q_to_f_code">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=sec3_q_to_f_code">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [81]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Continue from the previous example</span>
@@ -7941,28 +7912,6 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Local axial force q = -167.789 kN
-
-Transformation matrix T =
-[[-0.80899451 -0.5878162   0.80899451  0.5878162 ]]
-
-Global end-force vector f =
-f_1 = 135.7 kN
-f_2 = 98.6 kN
-f_3 = -135.7 kN
-f_4 = -98.6 kN
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div></section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec3_conceptual_summary">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -7975,7 +7924,7 @@ f_4 = -98.6 kN
 <li>compute the initial length $L$ using Eq. (5)</li>
 <li>compute the deformed length $\bar{L}$ using Eq. (6)</li>
 <li>compute the current direction cosines $c_x, c_y$ using Eqs. (7) and (8)</li>
-<li>compute the local axial deformation $u = \bar{L} - L$ using Eq. (1)</li>
+<li>compute the local axial deformation $v = \bar{L} - L$ using Eq. (1)</li>
 <li>compute the local axial force $q$ from Eq. (4)</li>
 <li>transform $q$ to the global end-force vector $\mathbf{f}$ using Eq. (11)</li>
 </ol>
@@ -8034,7 +7983,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [82]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -8062,12 +8011,12 @@ $$</p>
 </div>
 </div>
 </div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=deea65cb">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=deea65cb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [83]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Calculate member geometric parameters</span>
@@ -8088,26 +8037,12 @@ $$</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Member 1: q = 3064.540 kN
-Member 2: q = -5088.069 kN
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=89f3621a">
+</div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=89f3621a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [84]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Tranform to global forces</span>
@@ -8118,7 +8053,7 @@ Member 2: q = -5088.069 kN
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Global end forces (kN)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">"m1: "</span>
+    <span class="sa">f</span><span class="s2">"Member 1: "</span>
     <span class="sa">f</span><span class="s2">"f1 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
     <span class="sa">f</span><span class="s2">"f2 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
     <span class="sa">f</span><span class="s2">"f3 = </span><span class="si">{</span><span class="n">f1</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
@@ -8126,28 +8061,13 @@ Member 2: q = -5088.069 kN
 <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">"m2: "</span>
+    <span class="sa">f</span><span class="s2">"Member 2: "</span>
     <span class="sa">f</span><span class="s2">"f1 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
     <span class="sa">f</span><span class="s2">"f2 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
     <span class="sa">f</span><span class="s2">"f3 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">   "</span>
     <span class="sa">f</span><span class="s2">"f4 = </span><span class="si">{</span><span class="n">f2</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Global end forces (kN)
-m1: f1 = -2675.7   f2 = -1493.9   f3 = 2675.7   f4 = 1493.9
-m2: f1 = -3900.8   f2 = 3266.9   f3 = 3900.8   f4 = -3266.9
-</pre>
 </div>
 </div>
 </div>
@@ -8225,6 +8145,7 @@ $$</p>
 <ul>
 <li>over a small increment, we approximate the nonlinear curve as linear</li>
 <li>the slope of that local approximation is the <strong>tangent stiffness</strong></li>
+<li>For large increments the error in the linear approximation is clear</li>
 </ul>
 <div style="text-align:center; margin-top: 20px;">
 <img alt="No description has been provided for this image" src="assets/L2_linearization.png" style="width: 50%;"/>
@@ -8420,7 +8341,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Step-4:-Substitute-the-direction-cosine">Step 4: Substitute the direction cosine<a class="anchor-link" href="#Step-4:-Substitute-the-direction-cosine">¶</a></h3><p>Using Eq. (7), we obtain</p>
+<h3 id="Step-4:-Substitute-the-direction-cosine-expression">Step 4: Substitute the direction cosine expression<a class="anchor-link" href="#Step-4:-Substitute-the-direction-cosine-expression">¶</a></h3><p>Using Eq. (7), we obtain</p>
 <p>$$
 \frac{\partial \bar{L}}{\partial u_1} = -c_x
 $$</p>
@@ -8572,15 +8493,15 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Step-4:-Express-the-result-in-terms-of-$c_x$-and-$c_y$">Step 4: Express the result in terms of $c_x$ and $c_y$<a class="anchor-link" href="#Step-4:-Express-the-result-in-terms-of-$c_x$-and-$c_y$">¶</a></h3><p>Since</p>
+<h3 id="Step-4:-Rearrange-and-substitute">Step 4: Rearrange and substitute<a class="anchor-link" href="#Step-4:-Rearrange-and-substitute">¶</a></h3><p>From Eq. (6),</p>
 <p>$$
 \bar{L}^2 = N^2 + \big[(Y_e+u_4)-(Y_b+u_2)\big]^2
 $$</p>
-<p>we have</p>
+<p>Rearranging gives</p>
 <p>$$
 -\bar{L}^2 + N^2 = -\big[(Y_e+u_4)-(Y_b+u_2)\big]^2
 $$</p>
-<p>Therefore,</p>
+<p>Substituting in the expression for $\frac{\partial c_x}{\partial u_1}$</p>
 <p>$$
 \frac{\partial c_x}{\partial u_1}
 =
@@ -8682,7 +8603,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Compact-Form-(Textbook)">Compact Form (Textbook)<a class="anchor-link" href="#Compact-Form-(Textbook)">¶</a></h3><p>It is often convenient to write Eq. (22) in the compact form</p>
+<h3 id="Compact-Form-(Kassimali)">Compact Form (Kassimali)<a class="anchor-link" href="#Compact-Form-(Kassimali)">¶</a></h3><p>It is often convenient to write Eq. (22) in the compact form</p>
 <p>$$
 \mathbf{K}_t = \left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T} + q\,\mathbf{G}
 \tag{23}
@@ -8736,7 +8657,7 @@ $$</p>
 </ul>
 <p>So Eq. (22) reduces to</p>
 <p>$$
-\mathbf{K}_t = \left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T}
+\mathbf{K}_t = \left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T} + \mathbf{0}
 $$</p>
 <p>which is exactly the conventional linear stiffness matrix for a 2D truss member.</p>
 <p>That is a useful consistency check.</p>
@@ -8750,13 +8671,13 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align:center; margin-top: 20px;">
-<img alt="No description has been provided for this image" src="assets/L2_PastLecture.png" style="width: 50%;"/>
+<h3 id="Truss-Element-Derivation-from-Lecture-3">Truss Element Derivation from Lecture 3<a class="anchor-link" href="#Truss-Element-Derivation-from-Lecture-3">¶</a></h3><div style="text-align:center; margin-top: 20px;">
+<img alt="No description has been provided for this image" src="assets/L2_PastLecture.png" style="width: 60%;"/>
 </div>
 <p>$$
 \mathbf{K}_t
 =
-\left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T} + 0
+\left(\frac{EA}{L}\right)\mathbf{T}^T\mathbf{T} + \mathbf{0}
 =
 \frac{EA}{L}
 \left[
@@ -8768,7 +8689,7 @@ c_xc_y &amp; c_y^2 &amp; -c_xc_y &amp; -c_y^2\\
 \end{smallmatrix}
 \right]
 +
-0
+\mathbf{0}
 $$</p>
 </div>
 </div>
@@ -8829,9 +8750,9 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Equilibrium-at-an-Iterate">Equilibrium at an Iterate<a class="anchor-link" href="#Equilibrium-at-an-Iterate">¶</a></h3><p>At iteration $i$, at the free DOFs, we compare:</p>
+<h3 id="Equilibrium-at-an-Iteration">Equilibrium at an Iteration<a class="anchor-link" href="#Equilibrium-at-an-Iteration">¶</a></h3><p>At iteration $i$, at the free DOFs, we compare:</p>
 <ul>
-<li>the applied external load vector $\mathbf{f}_f$</li>
+<li>the applied external load vector $\mathbf{f}_f$ (this does not change)</li>
 <li>the current internal resisting force vector $\mathbf{f}_{f,\mathrm{int}}^{(i)}$</li>
 </ul>
 <p>The residual is defined as:</p>
@@ -8843,7 +8764,7 @@ $$</p>
 <p>$$
 \mathbf{r}^{(i)} =\mathbf{0}
 $$</p>
-<p>or equivalently, when the external and internal forces balance.</p>
+<p>In other words, when the external and internal forces balance.</p>
 </div>
 </div>
 </div>
@@ -8898,7 +8819,7 @@ $$</p>
 \mathbf{u}_f^{(1)} = \mathbf{K}_{ff,t}^{-1(0)} \mathbf{f}_f^{(1)}
 $$</p>
 <p>However, $\mathbf{u}_f^{(1)}$ is only an approximate configuration, because the joint equilibrium equations are not necessarily satisfied at this stage. In general, the internal resisting force associated with $\mathbf{u}_f^{(1)}$ will not exactly match the applied load.</p>
-<p>Only in the linear case do we obtain exact equilibrium in a single step. This is the type of problem considered earlier in the course, where the stiffness remains constant and no geometric stiffness term is included.</p>
+<p>Only in the linear case do we obtain exact equilibrium in a single step. This is the type of problem considered earlier in the course (Lecture 3 and 4), where the stiffness remains constant and no geometric stiffness term is included.</p>
 </div>
 </div>
 </div>
@@ -8933,6 +8854,7 @@ $$</p>
 <p>We then subtract it from the applied joint load vector at the free DOFs, $\mathbf{f}_f$, to calculate the unbalanced joint force vector:</p>
 <p>$$
 \mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,\mathrm{int}}^{(i)}
+\tag{1}
 $$</p>
 </div>
 </div>
@@ -8948,6 +8870,7 @@ $$</p>
 <p>The correction vector, $\Delta \mathbf{u}_f^{(i)}$, is then obtained by solving with the new tangent stiffness at the current configuration, where $\mathbf{K}_{ff,t}^{(i)}$ now represents the structure tangent stiffness matrix for the free DOFs evaluated at $\mathbf{u}_f^{(i)}$:</p>
 <p>$$
 \mathbf{r}^{(i)} = \mathbf{K}_{ff,t}^{(i)} \, \Delta \mathbf{u}_f^{(i)}
+\tag{2}
 $$</p>
 <p>$$
 \Delta \mathbf{u}_f^{(i)} = \mathbf{K}_{ff,t}^{-1(i)} \mathbf{r}^{(i)}
@@ -8982,15 +8905,18 @@ $$</p>
 <li>compute residual $\mathbf{r}^{(i)}$
 $$
 \boxed{\mathbf{r}^{(i)} = \mathbf{f}_f - \mathbf{f}_{f,\mathrm{int}}^{(i)}}
+\tag{1}
 $$</li>
 <li>calculate new tangent stiffness matrix $\mathbf{K}_{ff,t}^{(i)}$ at configuration $\mathbf{u}_f^{(i)}$</li>
 <li>solve for correction $\Delta \mathbf{u}_f^{(i)}$
 $$
 \boxed{\Delta \mathbf{u}_f^{(i)} = \mathbf{K}_{ff,t}^{-1(i)} \mathbf{r}^{(i)}}
+\tag{2}
 $$</li>
 <li>update to obtain $\mathbf{u}_f^{(i + 1)}$ for the next iteration
 $$
 \boxed{\mathbf{u}_f^{(i + 1)} = \mathbf{u}_f^{(i)} + \Delta \mathbf{u}_f^{(i)}}
+\tag{3}
 $$</li>
 </ol>
 </div>
@@ -9074,12 +9000,11 @@ $$</p>
 <h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
 <ul>
 <li>introduced the <strong>corotational / Eulerian local coordinate system</strong> for a plane truss member</li>
-<li>defined the member axial deformation and local constitutive law</li>
-<li>expressed the deformed member length and current direction cosines in terms of global nodal displacements</li>
-<li>transformed the local axial force $q$ into the global member end-force vector $\mathbf{f}$</li>
-<li>saw that the member law is locally linear, but globally <strong>geometrically nonlinear</strong></li>
+<li>derived the nonlinear member force relations in terms of the global nodal displacements</li>
+<li>introduced the <strong>member tangent stiffness matrix</strong></li>
+<li>introduced the <strong>Newton-Raphson method</strong> for solving the nonlinear equilibrium equations</li>
 </ul>
-<p>Next: we will use these member relations to begin forming the <strong>geometrically nonlinear load-displacement relations</strong> for entire truss structures.</p>
+<p>Next: we will solve a simple geometric nonlinear truss problem.</p>
 </div>
 </div>
 </div>

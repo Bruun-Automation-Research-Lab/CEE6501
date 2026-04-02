@@ -10,6 +10,8 @@ These need to be implemented consistently across lectures
 
 `###` headings should be lowercase
 
+Use `\mathbf{}` for bold
+
 ---
 
 ## 🔹 1. General Rules
@@ -93,7 +95,7 @@ $$
 \end{bmatrix}
 $$
 
---
+---
 
 ## 🔹 7. Geometric Nonlinearity
 
@@ -112,12 +114,14 @@ $$
 Displacement iteration:
 
 $$
-\mathbf{u}_f^{(i+1)} = \mathbf{u}_f^{(i)} + \Delta\mathbf{u}_f^{(i)}
+\Delta\mathbf{u}_f^{(i)} = \mathbf{K}_{ff}^{(i)-1} \mathbf{r}^{(i)}
 $$
 
 $$
-\Delta\mathbf{u}_f^{(i)} = \mathbf{K}_{ff}^{(i)-1} \mathbf{r}^{(i)}
+\mathbf{u}_f^{(i+1)} = \mathbf{u}_f^{(i)} + \Delta\mathbf{u}_f^{(i)}
 $$
+
+---
 
 ## 🔹 6. Summary Table
 
