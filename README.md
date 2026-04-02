@@ -508,7 +508,7 @@ Use standard submission naming from Week 1.
 
 ---
 
-## 📅 Week 11 — Direct Stiffness Method for Geometric Nonlinearity
+## 📅 Week 11 — Direct Stiffness Method for Geometric Nonlinearity of Trusses
 
 McGuire – Chapter 8 §8.1.1 and 8.1.2
 
@@ -516,26 +516,45 @@ Kassimali – Chapter 10
 
 ### 📖 Lectures
 
-This week includes
+This week begins the nonlinear portion of the course. We introduce the basic ideas of structural nonlinearity, derive
+the member-level relations for geometrically nonlinear planar trusses, and then implement a simple Newton-Raphson solver
+in code.
 
-#### Part 1 —
+#### Part 1 — Introduction to Nonlinearity
 
-A brief
+A conceptual introduction to structural nonlinearity, including the distinction between material and geometric
+nonlinearity, common levels of analysis, and a simple two-member truss example showing how a linearly elastic structure
+can still exhibit a nonlinear load-displacement response due to changing geometry.
 
-- 📄 **Slides (PDF):** [L10_1_Frames3D.pdf](Lectures/L10/L10_1_Frames3D.pdf)
-- 📓 **Notebook:** [L10_1_Frames3D.ipynb](Lectures/L10/L10_1_Frames3D.ipynb)
+- 📄 **Slides (PDF):** [L11_1_IntroNonlinear.pdf](Lectures/L11/L11_1_IntroNonlinear.pdf)
+- 📓 **Notebook:** [L11_1_IntroNonlinear.ipynb](Lectures/L11/L11_1_IntroNonlinear.ipynb)
+
+#### Part 2 — Geometric Nonlinear Planar Truss Analysis
+
+Development of the member-level formulation for geometrically nonlinear planar trusses. We introduce the corotational /
+Eulerian local coordinate system, derive the nonlinear force-displacement relations, form the tangent stiffness matrix,
+and outline the Newton-Raphson solution procedure.
+
+- 📄 **Slides (PDF):** [L11_2_NonlinearTruss.pdf](Lectures/L11/L11_2_NonlinearTruss.pdf)
+- 📓 **Notebook:** [L11_2_NonlinearTruss.ipynb](Lectures/L11/L11_2_NonlinearTruss.ipynb)
+
+#### Part 3 — Coding Geometric Nonlinearity with the DSM
+
+A step-by-step coding walkthrough of a geometrically nonlinear planar truss analysis using the direct stiffness method.
+This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and implementing a basic
+Newton-Raphson iterative solver.
+
+- 📄 **Slides (PDF):** [L11_3_CodingNonlinear.pdf](Lectures/L11/L11_3_CodingNonlinear.pdf)
+- 📓 **Notebook:** [L11_3_CodingNonlinear.ipynb](Lectures/L11/L11_3_CodingNonlinear.ipynb)
+
+### Extra In-Class Code
+
+- [NewtonRaphson_1d.ipynb](Code/L11/NewtonRaphson_1d.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L11/NewtonRaphson_1d.ipynb)
 
 ### 📝 Assignments
 
-Use standard submission naming from Week 1.
-
-#### Assignment Files
-
-- ✍️ **Written Assignment:** [A10_written.md](Assignments/A10_written.md)
-- 💻 **Coding Assignment:**
-
-  [A10_code.ipynb](Assignments/A10_code.ipynb)  
-  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A10_code.ipynb)
+No assignment this week. Use the week to work on the course project deliverable.
 
 ---
 
