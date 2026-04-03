@@ -199,6 +199,34 @@ def print_matrix_scaled(K, scale=1000, decimals=1, col_width=3):
         print(f"{i:02d} | {row_str}")
 
 
+def print_vector_scaled(v, name="u", scale=1, decimals=3, col_width=8):
+    """
+    Pretty-print a vector in scaled form on one line.
+
+    Parameters
+    ----------
+    v : array-like
+        Vector to print
+    name : str
+        Name to display
+    scale : float
+        Scale factor shown out front
+    decimals : int
+        Number of decimal places
+    col_width : int
+        Width of value field
+    """
+    import numpy as np
+
+    v = np.asarray(v, dtype=float).reshape(-1)
+    fmt = f"{{:{col_width}.{decimals}f}}"
+
+    v_scaled = v / scale
+    v_str = " ".join(fmt.format(val) for val in v_scaled)
+
+    print(f"{name} = {scale:.0e} × [{v_str}]")
+
+
 def plot_truss_deformation(nodes, elements, u_global, scale=1.0):
     """
     Plot original (black) and deformed (red) truss geometry.
