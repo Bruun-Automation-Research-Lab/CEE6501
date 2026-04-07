@@ -91,7 +91,7 @@ and solver efficiency for large-scale engineering problems.
 - 📄 **Slides (PDF):** [L2_2_solvers.pdf](Lectures/L2/L2_2_solvers.pdf)
 - 📓 **Notebook:** [L2_2_solvers.ipynb](Lectures/L2/L2_2_solvers.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [L2_OperationCount.ipynb](Code/L2/L2_OperationCount.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L2/L2_OperationCount.ipynb)
@@ -142,7 +142,7 @@ matrix of the structure to solve the unknown joint displacements.
 - 📄 **Slides (PDF):** [L3_2_Trusses.pdf](Lectures/L3/L3_2_Trusses.pdf)
 - 📓 **Notebook:** [L3_2_Trusses.ipynb](Lectures/L3/L3_2_Trusses.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [L3_1_exercise_BLANK.ipynb](Code/L3/L3_1_exercise_BLANK.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_BLANK.ipynb)
@@ -239,7 +239,7 @@ upcoming assignment where this extension will be implemented computationally.
 - 📄 **Slides (PDF):** [L5_1_SpaceTrusses.pdf](Lectures/L5/L5_1_SpaceTrusses.pdf)
 - 📓 **Notebook:** [L5_1_SpaceTrusses.ipynb](Lectures/L5/L5_1_SpaceTrusses.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 N/A
 
@@ -299,7 +299,7 @@ equations.
 - 📄 **Slides (PDF):** [L6_3_FEFs.pdf](Lectures/L6/L6_3_FEFs.pdf)
 - 📓 **Notebook:** [L6_3_FEFs.ipynb](Lectures/L6/L6_3_FEFs.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 N/A
 
@@ -354,7 +354,7 @@ We also summarize and reflect on midterm course feedback, highlighting adjustmen
 - 📄 **Slides (PDF):** [L7_3_Extra.pdf](Lectures/L7/L7_3_Extra.pdf)
 - 📓 **Notebook:** [L7_3_Extra.ipynb](Lectures/L7/L7_3_Extra.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [InClass_LocalFrame.ipynb](Code/L7/InClass_LocalFrame.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L7/InClass_LocalFrame.ipynb)
@@ -399,7 +399,7 @@ restraints can be used to stabilize the formulation when rotational stiffness is
 
 Shorter lecture since CEE graduate student visitation day
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [InClass_Exercise.ipynb](Code/L8/InClass_Exercise.ipynb)
 
@@ -461,7 +461,7 @@ including member loads, releases, support settlements, and temperature / fabrica
 - 📄 **Slides (PDF):** [L9_3_InfoMidterm.pdf](Lectures/L9/L9_3_InfoMidterm.pdf)
 - 📓 **Notebook:** [L9_3_InfoMidterm.ipynb](Lectures/L9/L9_3_InfoMidterm.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [InClass_Exercise.ipynb](Code/L9/InClass_Exercise.ipynb)
 
@@ -492,6 +492,10 @@ upcoming course project, which will be based on implementing it.
 - 📄 **Slides (PDF):** [L10_1_Frames3D.pdf](Lectures/L10/L10_1_Frames3D.pdf)
 - 📓 **Notebook:** [L10_1_Frames3D.ipynb](Lectures/L10/L10_1_Frames3D.ipynb)
 
+### 💻 Extra In-Class Code
+
+N/A
+
 ### 📝 Assignments
 
 Use standard submission naming from Week 1.
@@ -517,8 +521,8 @@ Kassimali – Chapter 10
 ### 📖 Lectures
 
 This week begins the nonlinear portion of the course. We introduce the basic ideas of structural nonlinearity, derive
-the member-level relations for geometrically nonlinear planar trusses, and then implement a simple Newton-Raphson solver
-in code.
+the member-level relations for geometrically nonlinear planar trusses, and explain how to implement a simple
+Newton-Raphson solution method.
 
 #### Part 1 — Introduction to Nonlinearity
 
@@ -538,16 +542,7 @@ and outline the Newton-Raphson solution procedure.
 - 📄 **Slides (PDF):** [L11_2_NonlinearTruss.pdf](Lectures/L11/L11_2_NonlinearTruss.pdf)
 - 📓 **Notebook:** [L11_2_NonlinearTruss.ipynb](Lectures/L11/L11_2_NonlinearTruss.ipynb)
 
-#### Part 3 — Coding Geometric Nonlinearity with the DSM
-
-A step-by-step coding walkthrough of a geometrically nonlinear planar truss analysis using the direct stiffness method.
-This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and implementing a basic
-Newton-Raphson iterative solver.
-
-- 📄 **Slides (PDF):** [L11_3_CodingNonlinear.pdf](Lectures/L11/L11_3_CodingNonlinear.pdf)
-- 📓 **Notebook:** [L11_3_CodingNonlinear.ipynb](Lectures/L11/L11_3_CodingNonlinear.ipynb)
-
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [NewtonRaphson_1d.ipynb](Code/L11/NewtonRaphson_1d.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L11/NewtonRaphson_1d.ipynb)
@@ -555,6 +550,37 @@ Newton-Raphson iterative solver.
 ### 📝 Assignments
 
 No assignment this week. Use the week to work on the course project deliverable.
+
+---
+
+---
+
+## 📅 Week 12 — Force Density Method
+
+Kassimali – Chapter 10, Example 10.2
+
+Journal Papers:
+
+### 📖 Lectures
+
+This week wrap up DSM for nonlinear with a coding implementation
+
+#### Part 1 — Coding Geometric Nonlinearity with the DSM
+
+A step-by-step coding walkthrough of a geometrically nonlinear planar truss analysis using the direct stiffness method.
+This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and implementing a basic
+Newton-Raphson iterative solver.
+
+- 📄 **Slides (PDF):** [L12_1_CodingNonlinear.pdf](Lectures/L12/L12_1_CodingNonlinear.pdf)
+- 📓 **Notebook:** [L12_1_CodingNonlinear.ipynb](Lectures/L12/L12_1_CodingNonlinear.ipynb)
+
+### 💻 Extra In-Class Code
+
+N/A
+
+### 📝 Assignments
+
+N/A
 
 ---
 
