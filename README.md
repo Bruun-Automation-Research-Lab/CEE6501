@@ -613,3 +613,42 @@ To run the full slide export pipeline
 
 - **macOS:** `Cmd + Shift + R`
 - **Windows:** `Ctrl + Alt + R`
+
+---
+
+---
+
+## Troubleshooting
+
+Sometimes, a Jupyter notebook in VS Code may hang when trying to run code with a particular kernel. If this happens,
+restarting VS Code can sometimes lead to the following error when the file reloads:
+
+```text
+InvalidStateError: Failed to register a ServiceWorker: The document is in an invalid state.
+```
+
+### Windows Fix
+
+To resolve this issue on Windows:
+
+1. Close **all** VS Code windows.
+
+2. Open the **Run** dialog with `Win + R`.
+
+3. Paste the following path and press Enter:
+
+   ```text
+   %APPDATA%\Code
+   ```
+
+4. Delete the following folder:
+
+   ```text
+   Service Worker
+   ```
+
+   Or, if needed, delete just:
+
+   ```text
+   Service Worker\CacheStorage
+   ```
