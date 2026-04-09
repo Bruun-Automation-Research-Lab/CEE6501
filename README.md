@@ -555,24 +555,39 @@ No assignment this week. Use the week to work on the course project deliverable.
 
 ---
 
-## 📅 Week 12 — Force Density Method
+## 📅 Week 12 — Coding Geometric Nonlinearity and Introduction to the Force Density Method
 
 Kassimali – Chapter 10, Example 10.2
 
 Journal Papers:
 
+- [Schek_1973.pdf](Lectures/L12/Schek_1973.pdf)
+- [Veenendaal_Block_2011.pdf](Lectures/L12/Veenendaal_Block_2011.pdf)
+- [Veenendaal_Block_2012.pdf](Lectures/L12/Veenendaal_Block_2012.pdf)
+
 ### 📖 Lectures
 
-This week wrap up DSM for nonlinear with a coding implementation
+This week concludes our discussion of geometric nonlinearity in trusses with a coding-based implementation of the
+nonlinear direct stiffness method. We then begin a new topic: the force density method, introduced as a classical linear
+form-finding method for networks of axial members.
 
 #### Part 1 — Coding Geometric Nonlinearity with the DSM
 
 A step-by-step coding walkthrough of a geometrically nonlinear planar truss analysis using the direct stiffness method.
-This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and implementing a basic
-Newton-Raphson iterative solver.
+This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and hard-coding a basic
+step-by-step Newton-Raphson iterative solver.
 
 - 📄 **Slides (PDF):** [L12_1_CodingNonlinear.pdf](Lectures/L12/L12_1_CodingNonlinear.pdf)
 - 📓 **Notebook:** [L12_1_CodingNonlinear.ipynb](Lectures/L12/L12_1_CodingNonlinear.ipynb)
+
+#### Part 2 — Force Density Method
+
+An introduction to the force density method for form finding. We place the method within the broader landscape of
+form-finding approaches, introduce the branch-node matrix formulation, derive the linear equilibrium equations, and work
+through a simple 2D example showing how equilibrium geometry can be obtained directly from prescribed force densities.
+
+- 📄 **Slides (PDF):** [L12_2_ForceDensity.pdf](Lectures/L12/L12_2_ForceDensity.pdf)
+- 📓 **Notebook:** [L12_2_ForceDensity.ipynb](Lectures/L12/L12_2_ForceDensity.ipynb)
 
 ### 💻 Extra In-Class Code
 
@@ -580,7 +595,7 @@ N/A
 
 ### 📝 Assignments
 
-N/A
+TBD
 
 ---
 
@@ -613,6 +628,28 @@ To run the full slide export pipeline
 
 - **macOS:** `Cmd + Shift + R`
 - **Windows:** `Ctrl + Alt + R`
+
+## Jupyter Resources
+
+A few useful resources for teaching and learning with Jupyter notebooks:
+
+- **Teaching and Learning with Jupyter**  
+  A practical online book with examples, ideas, and pedagogical guidance for using Jupyter in education.  
+  https://jupyter4edu.github.io/jupyter-edu-book/catalogue.html#shift-enter-for-the-win
+
+- **Jupyter Quiz**  
+  A lightweight tool for embedding quiz-style questions directly into Jupyter notebooks.  
+  https://github.com/jmshea/jupyterquiz
+
+- **Presenting from Jupyter Notebooks**  
+  A short guide on using Jupyter notebooks as presentation slides.  
+  https://mljar.com/blog/jupyter-notebook-presentation/
+
+To start JupyterLab from the terminal, run:
+
+```bash
+jupyter lab
+```
 
 ---
 
