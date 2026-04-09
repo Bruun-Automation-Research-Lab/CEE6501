@@ -591,7 +591,8 @@ through a simple 2D example showing how equilibrium geometry can be obtained dir
 
 ### 💻 Extra In-Class Code
 
-N/A
+- [FD_solver.ipynb](Code/L12/FD_solver.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L12/FD_solver.ipynb)
 
 ### 📝 Assignments
 

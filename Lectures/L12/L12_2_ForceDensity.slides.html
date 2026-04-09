@@ -9977,6 +9977,24 @@ Branch forces, s = q*l:
 </div>
 </div>
 </div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=74c2e6b0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Incrementing-a-Force-Density-Term">Incrementing a Force Density Term<a class="anchor-link" href="#Incrementing-a-Force-Density-Term">¶</a></h3><p>One drawback of the force density method is that it is not easy to predict the final shape directly from the prescribed force densities.</p>
+<p>So in practice, we often <strong>search the design space</strong> by varying one or more $q_i$ values and recomputing the equilibrium geometry.</p>
+<p>A useful rule of thumb is:</p>
+<ul>
+<li>larger $q_i$ $\rightarrow$ shorter member</li>
+<li>smaller $q_i$ $\rightarrow$ longer member</li>
+</ul>
+<p>More importantly, the final shape depends mainly on the <strong>relative force densities</strong> between members.</p>
+</div>
+</div>
+</div>
 </div></section><section><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1b33732e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -10059,6 +10077,17 @@ Branch forces, s = q*l:
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id=""><a class="anchor-link" href="#">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2347db95">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>See <code>FD_solver.ipynb</code> in the <code>../../Code/L12</code> folder for a full Google Colab-compatible implementation of a standard linear force density solver.</p>
 </div>
 </div>
 </div>
