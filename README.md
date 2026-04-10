@@ -91,7 +91,7 @@ and solver efficiency for large-scale engineering problems.
 - 📄 **Slides (PDF):** [L2_2_solvers.pdf](Lectures/L2/L2_2_solvers.pdf)
 - 📓 **Notebook:** [L2_2_solvers.ipynb](Lectures/L2/L2_2_solvers.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [L2_OperationCount.ipynb](Code/L2/L2_OperationCount.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L2/L2_OperationCount.ipynb)
@@ -142,7 +142,7 @@ matrix of the structure to solve the unknown joint displacements.
 - 📄 **Slides (PDF):** [L3_2_Trusses.pdf](Lectures/L3/L3_2_Trusses.pdf)
 - 📓 **Notebook:** [L3_2_Trusses.ipynb](Lectures/L3/L3_2_Trusses.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [L3_1_exercise_BLANK.ipynb](Code/L3/L3_1_exercise_BLANK.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L3/L3_1_exercise_BLANK.ipynb)
@@ -239,7 +239,7 @@ upcoming assignment where this extension will be implemented computationally.
 - 📄 **Slides (PDF):** [L5_1_SpaceTrusses.pdf](Lectures/L5/L5_1_SpaceTrusses.pdf)
 - 📓 **Notebook:** [L5_1_SpaceTrusses.ipynb](Lectures/L5/L5_1_SpaceTrusses.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 N/A
 
@@ -299,7 +299,7 @@ equations.
 - 📄 **Slides (PDF):** [L6_3_FEFs.pdf](Lectures/L6/L6_3_FEFs.pdf)
 - 📓 **Notebook:** [L6_3_FEFs.ipynb](Lectures/L6/L6_3_FEFs.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 N/A
 
@@ -354,7 +354,7 @@ We also summarize and reflect on midterm course feedback, highlighting adjustmen
 - 📄 **Slides (PDF):** [L7_3_Extra.pdf](Lectures/L7/L7_3_Extra.pdf)
 - 📓 **Notebook:** [L7_3_Extra.ipynb](Lectures/L7/L7_3_Extra.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [InClass_LocalFrame.ipynb](Code/L7/InClass_LocalFrame.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L7/InClass_LocalFrame.ipynb)
@@ -399,7 +399,7 @@ restraints can be used to stabilize the formulation when rotational stiffness is
 
 Shorter lecture since CEE graduate student visitation day
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [InClass_Exercise.ipynb](Code/L8/InClass_Exercise.ipynb)
 
@@ -461,7 +461,7 @@ including member loads, releases, support settlements, and temperature / fabrica
 - 📄 **Slides (PDF):** [L9_3_InfoMidterm.pdf](Lectures/L9/L9_3_InfoMidterm.pdf)
 - 📓 **Notebook:** [L9_3_InfoMidterm.ipynb](Lectures/L9/L9_3_InfoMidterm.ipynb)
 
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [InClass_Exercise.ipynb](Code/L9/InClass_Exercise.ipynb)
 
@@ -492,6 +492,10 @@ upcoming course project, which will be based on implementing it.
 - 📄 **Slides (PDF):** [L10_1_Frames3D.pdf](Lectures/L10/L10_1_Frames3D.pdf)
 - 📓 **Notebook:** [L10_1_Frames3D.ipynb](Lectures/L10/L10_1_Frames3D.ipynb)
 
+### 💻 Extra In-Class Code
+
+N/A
+
 ### 📝 Assignments
 
 Use standard submission naming from Week 1.
@@ -517,8 +521,8 @@ Kassimali – Chapter 10
 ### 📖 Lectures
 
 This week begins the nonlinear portion of the course. We introduce the basic ideas of structural nonlinearity, derive
-the member-level relations for geometrically nonlinear planar trusses, and then implement a simple Newton-Raphson solver
-in code.
+the member-level relations for geometrically nonlinear planar trusses, and explain how to implement a simple
+Newton-Raphson solution method.
 
 #### Part 1 — Introduction to Nonlinearity
 
@@ -538,16 +542,7 @@ and outline the Newton-Raphson solution procedure.
 - 📄 **Slides (PDF):** [L11_2_NonlinearTruss.pdf](Lectures/L11/L11_2_NonlinearTruss.pdf)
 - 📓 **Notebook:** [L11_2_NonlinearTruss.ipynb](Lectures/L11/L11_2_NonlinearTruss.ipynb)
 
-#### Part 3 — Coding Geometric Nonlinearity with the DSM
-
-A step-by-step coding walkthrough of a geometrically nonlinear planar truss analysis using the direct stiffness method.
-This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and implementing a basic
-Newton-Raphson iterative solver.
-
-- 📄 **Slides (PDF):** [L11_3_CodingNonlinear.pdf](Lectures/L11/L11_3_CodingNonlinear.pdf)
-- 📓 **Notebook:** [L11_3_CodingNonlinear.ipynb](Lectures/L11/L11_3_CodingNonlinear.ipynb)
-
-### Extra In-Class Code
+### 💻 Extra In-Class Code
 
 - [NewtonRaphson_1d.ipynb](Code/L11/NewtonRaphson_1d.ipynb)
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L11/NewtonRaphson_1d.ipynb)
@@ -555,6 +550,57 @@ Newton-Raphson iterative solver.
 ### 📝 Assignments
 
 No assignment this week. Use the week to work on the course project deliverable.
+
+---
+
+---
+
+## 📅 Week 12 — Coding Geometric Nonlinearity and Introduction to the Force Density Method
+
+Kassimali – Chapter 10, Example 10.2
+
+Journal Papers:
+
+- [Schek_1973.pdf](Lectures/L12/Schek_1973.pdf)
+- [Veenendaal_Block_2011.pdf](Lectures/L12/Veenendaal_Block_2011.pdf)
+- [Veenendaal_Block_2012.pdf](Lectures/L12/Veenendaal_Block_2012.pdf)
+
+### 📖 Lectures
+
+This week concludes our discussion of geometric nonlinearity in trusses with a coding-based implementation of the
+nonlinear direct stiffness method. We then begin a new topic: the force density method, introduced as a classical linear
+form-finding method for networks of axial members.
+
+#### Part 1 — Coding Geometric Nonlinearity with the DSM
+
+A step-by-step coding walkthrough of a geometrically nonlinear planar truss analysis using the direct stiffness method.
+This includes assembling the tangent stiffness matrix, evaluating the internal resisting force, and hard-coding a basic
+step-by-step Newton-Raphson iterative solver.
+
+- 📄 **Slides (PDF):** [L12_1_CodingNonlinear.pdf](Lectures/L12/L12_1_CodingNonlinear.pdf)
+- 📓 **Notebook:** [L12_1_CodingNonlinear.ipynb](Lectures/L12/L12_1_CodingNonlinear.ipynb)
+
+#### Part 2 — Force Density Method
+
+An introduction to the force density method for form finding. We place the method within the broader landscape of
+form-finding approaches, introduce the branch-node matrix formulation, derive the linear equilibrium equations, and work
+through a simple 2D example showing how equilibrium geometry can be obtained directly from prescribed force densities.
+
+- 📄 **Slides (PDF):** [L12_2_ForceDensity.pdf](Lectures/L12/L12_2_ForceDensity.pdf)
+- 📓 **Notebook:** [L12_2_ForceDensity.ipynb](Lectures/L12/L12_2_ForceDensity.ipynb)
+
+### 💻 Extra In-Class Code
+
+- [FD_solver.ipynb](Code/L12/FD_solver.ipynb)
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Code/L12/FD_solver.ipynb)
+
+### 📝 Assignments
+
+- ✍️ **Written Assignment:** [A12_written.md](Assignments/A12_written.md)
+- 💻 **Coding Assignment:**
+
+  [A12_code.ipynb](Assignments/A12_code.ipynb)  
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A12_code.ipynb)
 
 ---
 
@@ -587,3 +633,64 @@ To run the full slide export pipeline
 
 - **macOS:** `Cmd + Shift + R`
 - **Windows:** `Ctrl + Alt + R`
+
+## Jupyter Resources
+
+A few useful resources for teaching and learning with Jupyter notebooks:
+
+- **Teaching and Learning with Jupyter**  
+  A practical online book with examples, ideas, and pedagogical guidance for using Jupyter in education.  
+  https://jupyter4edu.github.io/jupyter-edu-book/catalogue.html#shift-enter-for-the-win
+
+- **Jupyter Quiz**  
+  A lightweight tool for embedding quiz-style questions directly into Jupyter notebooks.  
+  https://github.com/jmshea/jupyterquiz
+
+- **Presenting from Jupyter Notebooks**  
+  A short guide on using Jupyter notebooks as presentation slides.  
+  https://mljar.com/blog/jupyter-notebook-presentation/
+
+To start JupyterLab from the terminal, run:
+
+```bash
+jupyter lab
+```
+
+---
+
+---
+
+## Troubleshooting
+
+Sometimes, a Jupyter notebook in VS Code may hang when trying to run code with a particular kernel. If this happens,
+restarting VS Code can sometimes lead to the following error when the file reloads:
+
+```text
+InvalidStateError: Failed to register a ServiceWorker: The document is in an invalid state.
+```
+
+### Windows Fix
+
+To resolve this issue on Windows:
+
+1. Close **all** VS Code windows.
+
+2. Open the **Run** dialog with `Win + R`.
+
+3. Paste the following path and press Enter:
+
+   ```text
+   %APPDATA%\Code
+   ```
+
+4. Delete the following folder:
+
+   ```text
+   Service Worker
+   ```
+
+   Or, if needed, delete just:
+
+   ```text
+   Service Worker\CacheStorage
+   ```
