@@ -596,7 +596,11 @@ through a simple 2D example showing how equilibrium geometry can be obtained dir
 
 ### 📝 Assignments
 
-TBD
+- ✍️ **Written Assignment:** [A12_written.md](Assignments/A12_written.md)
+- 💻 **Coding Assignment:**
+
+  [A12_code.ipynb](Assignments/A12_code.ipynb)  
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A12_code.ipynb)
 
 ---
 
