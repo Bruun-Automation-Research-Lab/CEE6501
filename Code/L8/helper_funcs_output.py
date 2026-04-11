@@ -216,8 +216,6 @@ def print_vector_scaled(v, name="u", scale=1, decimals=3, col_width=8):
     col_width : int
         Width of value field
     """
-    import numpy as np
-
     v = np.asarray(v, dtype=float).reshape(-1)
     fmt = f"{{:{col_width}.{decimals}f}}"
 
