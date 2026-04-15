@@ -655,7 +655,7 @@ below for students who would like to explore them further.
 
 Examples shown in class were generated using the following code repository:
 
-- [matrix-form-finding](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)
+- [matrix-form-finding](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)
 
 ### 📝 Assignments
 
