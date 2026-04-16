@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>CEE6501 — Lecture 12.2 — Force Density Method slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>L13_2_FDM_Nonlinear slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7435,18 +7435,18 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec0_title_slide">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="CEE6501-%E2%80%94-Lecture-13.1">CEE6501 — Lecture 13.1<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-13.1">¶</a></h1><h2 id="Force-Density-Method-(Linear-Examples)">Force Density Method (Linear Examples)<a class="anchor-link" href="#Force-Density-Method-(Linear-Examples)">¶</a></h2>
+<h1 id="CEE6501-%E2%80%94-Lecture-13.2">CEE6501 — Lecture 13.2<a class="anchor-link" href="#CEE6501-%E2%80%94-Lecture-13.2">¶</a></h1><h2 id="Force-Density-Method-with-Constraints">Force Density Method with Constraints<a class="anchor-link" href="#Force-Density-Method-with-Constraints">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec0_learning_objectives">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_obj">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7454,13 +7454,18 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>explain</li>
+<li>explain how the linear force density method fits inside the unified equilibrium update expression</li>
+<li>interpret the stiffness term in force density as a simplified geometric stiffness term</li>
+<li>show why the linear force density method becomes a direct solve when $\mathbf{q}$ is prescribed</li>
+<li>explain why additional constraints make the problem nonlinear</li>
+<li>outline Schek's linearization of constraint equations in terms of the force densities</li>
+<li>describe a simple iterative implementation for member force constraints</li>
 </ul>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec0_agenda">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_agenda">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7473,138 +7478,1198 @@ main {
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec1_part_title">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_part1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-1---Review-of-Force-Density-(Linear)">Part 1 - Review of Force Density (Linear)<a class="anchor-link" href="#Part-1---Review-of-Force-Density-(Linear)">¶</a></h2>
+<h2 id="Part-1---Force-Density-in-the-Unified-Framework">Part 1 - Force Density in the Unified Framework<a class="anchor-link" href="#Part-1---Force-Density-in-the-Unified-Framework">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5b8297f6">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_unified">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Define</p>
+<h3 id="Reminder-of-the-Unified-Framework">Reminder of the Unified Framework<a class="anchor-link" href="#Reminder-of-the-Unified-Framework">¶</a></h3><p>From the previous lecture, we wrote a common equilibrium update in the form</p>
 <p>$$
-\mathbf{D} = \mathbf{C}^{T}\mathbf{Q}\mathbf{C},
-\qquad
-\mathbf{D}_f = \mathbf{C}^{T}\mathbf{Q}\mathbf{C}_f
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\left(\mathbf{C}^{T}\mathbf{K}\mathbf{C}\right)^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}_f\,\mathbf{x}_f
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}\,\mathbf{x}_i
+\right)
 $$</p>
-<p>Doing this for all 3 directions, the force density equations become</p>
+<p>Conceptually, this is always the same structure:</p>
 <p>$$
-\mathbf{D}\mathbf{x} = \mathbf{p}_x - \mathbf{D}_f\mathbf{x}_f
-\tag{4-1}
+\text{new coordinates}
+=
+\text{current coordinates}
++
+\text{correction from the current residual}
 $$</p>
-<p>$$
-\mathbf{D}\mathbf{y} = \mathbf{p}_y - \mathbf{D}_f\mathbf{y}_f
-\tag{4-2}
-$$</p>
-<p>$$
-\mathbf{D}\mathbf{z} = \mathbf{p}_z - \mathbf{D}_f\mathbf{z}_f
-\tag{4-3}
-$$</p>
-<p>These are <strong>linear equations in the unknown coordinates</strong>.</p>
+<p>The different form-finding methods mainly differ in how the internal branch quantities are defined.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec4_why">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_terms">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="The-Key-Advantage:-A-Linear-Formulation">The Key Advantage: A Linear Formulation<a class="anchor-link" href="#The-Key-Advantage:-A-Linear-Formulation">¶</a></h3><p>For prescribed:</p>
-<ul>
-<li>connectivity</li>
-<li>support coordinates</li>
-<li>nodal loads</li>
-<li>force densities</li>
+<h3 id="Defining-the-Terms">Defining the Terms<a class="anchor-link" href="#Defining-the-Terms">¶</a></h3><ul>
+<li>$\mathbf{x}_i$ = current free-node coordinates</li>
+<li>$\mathbf{x}_f$ = fixed-node coordinates (these are fixed and don't change by definition)</li>
+<li>$\mathbf{x}_{i+1}$ = updated free-node coordinates</li>
+<li>$\mathbf{C}$ = free-node branch connectivity matrix</li>
+<li>$\mathbf{C}_f$ = fixed-node branch connectivity matrix</li>
+<li>$\mathbf{p}$ = applied nodal load vector in the coordinate direction being solved</li>
+<li>$\mathbf{L}$ = diagonal matrix of member lengths</li>
+<li>$\mathbf{F}$ = diagonal matrix of member forces</li>
+<li>$\mathbf{K}$ = branch-level stiffness-like quantity used in the update</li>
 </ul>
-<p>the unknown free-node coordinates follow from a <strong>single linear solve</strong>.</p>
-<p>That was the original appeal of the force density method.</p>
-<p>In a planar case, once we solve</p>
+<p>The residual term is</p>
 <p>$$
-\mathbf{x} = \mathbf{D}^{-1}\left(\mathbf{p}_x - \mathbf{D}_f\mathbf{x}_f\right)
-\tag{5-1}
+\mathbf{r}_i
+=
+\mathbf{p}
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}_f\,\mathbf{x}_f
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}\,\mathbf{x}_i
 $$</p>
-<p>$$
-\mathbf{y} = \mathbf{D}^{-1}\left(\mathbf{p}_y - \mathbf{D}_f\mathbf{y}_f\right)
-\tag{5-2}
-$$</p>
-<p>and for 3D we add in</p>
-<p>$$
-\mathbf{z} = \mathbf{D}^{-1}\left(\mathbf{p}_z - \mathbf{D}_f\mathbf{z}_f\right)
-\tag{5-3}
-$$</p>
+<p>It measures how far the current coordinate state is from equilibrium.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f0c48c39">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_force_density_sub">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Once $\mathbf{x}$, $\mathbf{y}$, and $\mathbf{z}$ are solved, the new equilibrium geometry is fully determined.</p>
-<p>From there, we can:</p>
-<ol>
-<li>reconstruct the updated nodal geometry</li>
-<li>compute the corresponding branch lengths</li>
-<li>recover the branch forces from</li>
-</ol>
+<h3 id="Substitution-used-in-Force-Density">Substitution used in Force Density<a class="anchor-link" href="#Substitution-used-in-Force-Density">¶</a></h3><p>In Schek's force density method, the quantity</p>
 <p>$$
-\mathbf{s} = \mathbf{L}\mathbf{q}
+\mathbf{L}^{-1}\mathbf{F}
 $$</p>
-<p>This is why the force density method is often described as a <strong>one-step method</strong>: once the force densities $\mathbf{q}$ are prescribed, the equilibrium geometry follows from a linear solve.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42b42581">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Solution-Procedure">Solution Procedure<a class="anchor-link" href="#Solution-Procedure">¶</a></h3><p>For a simple planar example with two free nodes, the workflow is:</p>
-<ol>
-<li>choose the connectivity and build $\mathbf{C}$ and $\mathbf{C}_f$</li>
-<li>prescribe the force densities and build $\mathbf{Q}$ (user chooses)</li>
-<li>compute
-$$
+<p>is exactly the diagonal matrix of force densities:</p>
+<p>$$
+\mathbf{Q} = \mathbf{L}^{-1}\mathbf{F}
+$$</p>
+<p>So the unified expression becomes</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\left(\mathbf{C}^{T}\mathbf{K}\mathbf{C}\right)^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{C}^{T}\mathbf{Q}\mathbf{C}_f\,\mathbf{x}_f
+-
+\mathbf{C}^{T}\mathbf{Q}\mathbf{C}\,\mathbf{x}_i
+\right)
+$$</p>
+<p>Schek then defines</p>
+<p>$$
 \mathbf{D} = \mathbf{C}^{T}\mathbf{Q}\mathbf{C}
-$$
-and
-$$
+\qquad \text{and} \qquad
 \mathbf{D}_f = \mathbf{C}^{T}\mathbf{Q}\mathbf{C}_f
-$$</li>
-<li>solve separately for the unknown $x$- and $y$-coordinates</li>
-<li>recover branch lengths and then branch forces</li>
+$$</p>
+<p>which gives</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\left(\mathbf{C}^{T}\mathbf{K}\mathbf{C}\right)^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{D}_f\,\mathbf{x}_f
+-
+\mathbf{D}\,\mathbf{x}_i
+\right)
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_stiffness_question">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Quick-Aside:-Where-Does-the-Stiffness-Term-Come-From?">Quick Aside: Where Does the Stiffness Term Come From?<a class="anchor-link" href="#Quick-Aside:-Where-Does-the-Stiffness-Term-Come-From?">¶</a></h3><p>In Schek's original force density derivation, a conventional stiffness matrix never appears explicitly.<br/>
+But within the unified framework, some stiffness-like quantity must still be sitting behind the method.</p>
+<p>So this raises an important question:</p>
+<p><strong>If the unified framework uses</strong> $\mathbf{C}^T \mathbf{K} \mathbf{C}$, <strong>what is</strong> $\mathbf{K}$ <strong>for force density?</strong></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6c31efee">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Recall from Lecture 11 that, for geometrically nonlinear truss analysis, the tangent stiffness had two parts:</p>
+<p>$$
+\mathbf{K}_t = \mathbf{K}_e + \mathbf{K}_g
+$$</p>
+<p>where:</p>
+<ul>
+<li>$\mathbf{K}_e$ is the elastic stiffness term</li>
+<li>$\mathbf{K}_g$ is the geometric stiffness term</li>
+</ul>
+<p>$$
+\mathbf{K}_t
+=
+\frac{EA}{L}
+\left[
+\begin{smallmatrix}
+c_x^2 &amp; c_xc_y &amp; -c_x^2 &amp; -c_xc_y\\
+c_xc_y &amp; c_y^2 &amp; -c_xc_y &amp; -c_y^2\\
+-c_x^2 &amp; -c_xc_y &amp; c_x^2 &amp; c_xc_y\\
+-c_xc_y &amp; -c_y^2 &amp; c_xc_y &amp; c_y^2
+\end{smallmatrix}
+\right]
++
+\frac{f}{L}
+\left[
+\begin{smallmatrix}
+c_y^2 &amp; -c_xc_y &amp; -c_y^2 &amp; c_xc_y\\
+-c_xc_y &amp; c_x^2 &amp; c_xc_y &amp; -c_x^2\\
+-c_y^2 &amp; c_xc_y &amp; c_y^2 &amp; -c_xc_y\\
+c_xc_y &amp; -c_x^2 &amp; -c_xc_y &amp; c_x^2
+\end{smallmatrix}
+\right]
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_lumped_stiffness">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="From-Element-Level-Stiffness-to-Lumped-Nodal-Stiffness">From Element-Level Stiffness to Lumped Nodal Stiffness<a class="anchor-link" href="#From-Element-Level-Stiffness-to-Lumped-Nodal-Stiffness">¶</a></h3><p>Instead of assembling full element stiffness matrices, we shift to a <strong>lumped nodal stiffness</strong> view.</p>
+<p>You may have seen this idea in structural dynamics, where <strong>mass is lumped at nodes</strong> to simplify the equations of motion.</p>
+<p>Here, we do something similar with stiffness.</p>
+<ul>
+<li>each member contributes stiffness directly at the nodes</li>
+<li>full DOF coupling terms are no longer assembled</li>
+<li>the formulation becomes much simpler and more computationally efficient</li>
+</ul>
+<p>This is the idea behind <strong>dynamic relaxation</strong>.</p>
+<p>We still think of stiffness as having two parts, but now these are treated in a reduced scalar sense, rather than as full element matrices.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0e554886">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Quick-Intro-Dybamic-Relaxation">Quick Intro Dybamic Relaxation<a class="anchor-link" href="#Quick-Intro-Dybamic-Relaxation">¶</a></h3><p>Instead of a full element matrix, stiffness is approximated as a <strong>diagonal matrix</strong>:</p>
+<p>$$
+\mathbf{K}_{\text{DR}} \;\approx\;
+\begin{bmatrix}
+k_1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; k_2 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; k_3 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; k_4
+\end{bmatrix}
+$$</p>
+<p>Each diagonal term is the <strong>sum of contributions from connected elements</strong> at each node:</p>
+<p>$$
+k_i \;=\; \sum_{e \in i}
+\left(
+\frac{EA}{L} \;+\; \frac{f}{L}
+\right)_e
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_geometric_only">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Force-Density-Takes-the-Simplification-One-Step-Further">Force Density Takes the Simplification One Step Further<a class="anchor-link" href="#Force-Density-Takes-the-Simplification-One-Step-Further">¶</a></h3><p>In the force density method, we simplify further by <strong>dropping the elastic term entirely</strong> and retaining only the geometric contribution:</p>
+<p>This remaining geometric stiffness is then <strong>lumped at the nodes</strong> and written in scalar form as</p>
+<p>$$
+\mathbf{K}_{\text{FD}} \;\approx\;
+\begin{bmatrix}
+k_1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; k_2 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; k_3 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; k_4
+\end{bmatrix}
+$$</p>
+<p>Each diagonal term is the <strong>sum of contributions from connected elements</strong>:</p>
+<p>$$
+k_i \;=\; \sum_{e \in i}
+\left(
+\frac{f}{L}
+\right)_e
+$$</p>
+<p>$$
+k_i = \frac{\text{force}}{\text{length}}
+$$</p>
+<p>This scalar quantity is exactly the <strong>force density</strong>, $q$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e93afb42">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="For-the-Force-Density-Method,-$k-=-q$">For the Force Density Method, $k = q$<a class="anchor-link" href="#For-the-Force-Density-Method,-$k-=-q$">¶</a></h3><p>So within the unified framework, the force density stiffness matrix becomes</p>
+<p>$$
+\mathbf{K}_{\text{FD}} = \mathbf{C}^T \mathbf{K} \mathbf{C}
+$$</p>
+<p>Here, the operation $\mathbf{C}^T (\text{diagonal matrix}) \mathbf{C}$ plays the same role as before: it collects and sums the member contributions meeting at each node.</p>
+<p>Since the member stiffness-like term is now just the <strong>force density</strong>, we obtain</p>
+<p>$$
+\mathbf{C}^T \mathbf{K} \mathbf{C}
+=
+\mathbf{C}^T \mathbf{Q} \mathbf{C}
+=
+\mathbf{D}
+$$</p>
+<p>So although Schek did not derive the force density method from a stiffness matrix perspective, the unified interpretation shows that it can be understood as a <strong>simplified, geometric-only, lumped stiffness formulation</strong>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_k_equals_d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Continue-Substitution-used-in-Force-Density">Continue Substitution used in Force Density<a class="anchor-link" href="#Continue-Substitution-used-in-Force-Density">¶</a></h3><p>If the branch stiffness-like term is just the force density, then</p>
+<p>$$
+\mathbf{C}^{T}\mathbf{K}\mathbf{C} = \mathbf{C}^{T}\mathbf{Q}\mathbf{C} = \mathbf{D}
+$$</p>
+<p>and the unified expression becomes</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\mathbf{D}^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{D}_f\,\mathbf{x}_f
+-
+\mathbf{D}\,\mathbf{x}_i
+\right)
+$$</p>
+<p>Now distribute $\mathbf{D}^{-1}$:</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\mathbf{D}^{-1}\mathbf{p}
+-
+\mathbf{D}^{-1}\mathbf{D}_f\,\mathbf{x}_f
+-
+\mathbf{D}^{-1}\mathbf{D}\,\mathbf{x}_i
+$$</p>
+<p>Since $\mathbf{D}^{-1}\mathbf{D} = \mathbf{I}$,</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\mathbf{D}^{-1}\mathbf{p}
+-
+\mathbf{D}^{-1}\mathbf{D}_f\,\mathbf{x}_f
+-
+\mathbf{x}_i
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2503af38">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>So the $\mathbf{x}_i$ terms cancel, leaving</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{D}^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{D}_f\,\mathbf{x}_f
+\right)
+$$</p>
+<p>This is exactly the standard <strong>linear force density equation</strong> originally derived by Schek, and matches the form we derived in last week's lecture.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_takeaway_linear">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Main-Takeaway">Main Takeaway<a class="anchor-link" href="#Main-Takeaway">¶</a></h3><p>When $\mathbf{q}$ is prescribed and remains constant, it does <strong>not</strong> depend on the current geometry (i.e., it is not a function of $F$ or $L$).</p>
+<p>As a result:</p>
+<ul>
+<li>the matrices $\mathbf{D}$ and $\mathbf{D}_f$ are constant</li>
+<li>they do <strong>not</strong> change as the nodal coordinates $(x, y, z)$ update</li>
+</ul>
+<p>Because of this, the problem does <strong>not</strong> require iteration.</p>
+<p>The force density method reduces to a <strong>single-step linear solve</strong> for the nodal coordinates:</p>
+<p>$$
+\mathbf{x} = \mathbf{D}^{-1}\left(\mathbf{p} - \mathbf{D}_f\,\mathbf{x}_f\right)
+$$</p>
+<p>The same equation is then solved independently for the $x$, $y$, and $z$ directions.</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_part2_title">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-2---Nonlinear-Force-Density-Method">Part 2 - Nonlinear Force Density Method<a class="anchor-link" href="#Part-2---Nonlinear-Force-Density-Method">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_constraints_intro">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="From-Prescribed-Force-Densities-to-Constrained-Form-Finding">From Prescribed Force Densities to Constrained Form Finding<a class="anchor-link" href="#From-Prescribed-Force-Densities-to-Constrained-Form-Finding">¶</a></h3><p>The linear force density method works because the force densities $\mathbf{q}$ are <strong>given</strong>.</p>
+<p>Once $\mathbf{q}$ is prescribed:</p>
+<ul>
+<li>$\mathbf{D}$ and $\mathbf{D}_f$ are constant</li>
+<li>the equilibrium equations are linear</li>
+<li>nodal coordinates are solved in a <strong>single step</strong></li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=12cb00c3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>But in many design problems, we do <strong>not</strong> want to prescribe $\mathbf{q}$ directly.</p>
+<p>Instead, we impose constraints such as:</p>
+<ul>
+<li>target member forces</li>
+<li>target member lengths</li>
+<li>geometric conditions (distances, symmetry)</li>
+</ul>
+<p>Now:</p>
+<ul>
+<li>$\mathbf{q} \in \mathbb{R}^m$ becomes <strong>unknown</strong></li>
+<li>and must satisfy additional equations</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_constraint_def">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Definition-Of-The-Constraint-Function">Definition Of The Constraint Function<a class="anchor-link" href="#Definition-Of-The-Constraint-Function">¶</a></h3><p>We define a vector of constraint functions:</p>
+<p>$$
+\mathbf{g}(\mathbf{x}, \mathbf{y}, \mathbf{z}, \mathbf{q}) \in \mathbb{R}^r
+$$</p>
+<p>where:</p>
+<ul>
+<li>$\mathbf{g}$ = vector of constraint residuals</li>
+<li>$r$ = number of constraints</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a2bc4391">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Each individual constraint is written as</p>
+<p>$$
+g_k(\mathbf{x}, \mathbf{y}, \mathbf{z}, \mathbf{q}) = 0
+$$</p>
+<p>where $g_k$ measures the difference between the <strong>target constraint value</strong> and the <strong>current value</strong></p>
+<p>For example, $g = L_{\text{actual}} - L_{\text{target}}$</p>
+<p>Interpretation</p>
+<ul>
+<li>$g_k = 0$ → constraint is satisfied</li>
+<li>$g_k \neq 0$ → constraint is not satisfied</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_nonlin_source">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Where-the-Nonlinearity-Comes-From">Where the Nonlinearity Comes From<a class="anchor-link" href="#Where-the-Nonlinearity-Comes-From">¶</a></h3><p>The nodal coordinates depend on the force densities:</p>
+<p>$$
+\mathbf{x} = \mathbf{x}(\mathbf{q}), \quad
+\mathbf{y} = \mathbf{y}(\mathbf{q}), \quad
+\mathbf{z} = \mathbf{z}(\mathbf{q})
+$$</p>
+<p>Substitute into the constraint function:</p>
+<p>$$
+\mathbf{g}^*(\mathbf{q}) = \mathbf{g}(\mathbf{x}(\mathbf{q}), \mathbf{y}(\mathbf{q}), \mathbf{z}(\mathbf{q}), \mathbf{q})
+$$</p>
+<p>Constraints depend on $\mathbf{q}$ both directly and through geometry = Nonlinear problem in $\mathbf{q}$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_example_force">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Example-Constraint-%E2%80%94-Target-Member-Force">Example Constraint — Target Member Force<a class="anchor-link" href="#Example-Constraint-%E2%80%94-Target-Member-Force">¶</a></h3><p>Prescribe:</p>
+<p>$$
+F_i = F_i^{\text{target}}
+$$</p>
+<p>Using force density:</p>
+<p>$$
+F_i = q_i L_i
+$$</p>
+<p>Constraint function:</p>
+<p>$$
+g_i(\mathbf{q}) = q_i L_i(\mathbf{q}) - F_i^{\text{target}} = 0
+$$</p>
+<p>Nonlinear because $L_i$ depends on $\mathbf{q}$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_example_length">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Example-Constraint-%E2%80%94-Target-Member-Length">Example Constraint — Target Member Length<a class="anchor-link" href="#Example-Constraint-%E2%80%94-Target-Member-Length">¶</a></h3><p>Prescribe:</p>
+<p>$$
+L_i = L_i^{\text{target}}
+$$</p>
+<p>Constraint function:</p>
+<p>$$
+g_i(\mathbf{q}) = L_i(\mathbf{q}) - L_i^{\text{target}} = 0
+$$</p>
+<p>Again nonlinear because geometry depends on $\mathbf{q}$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1e2f077f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>These additional equations, which are generally nonlinear, will not in general be satisfied by the initial force density vector $\mathbf{q}^{(0)}$, where $\mathbf{q}^{(0)}$ corresponds to the shape obtained from the initial linear force density form-finding step.</p>
+<p>The goal is therefore to find an updated force density vector of the form</p>
+<p>$$
+\mathbf{q}^{(1)} = \mathbf{q}^{(0)} + \Delta \mathbf{q}
+$$</p>
+<p>such that</p>
+<p>$$
+\mathbf{g}^{*}(\mathbf{q}^{(1)}) = \mathbf{0}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_linearization_intro">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Linearizing-About-the-Current-State">Linearizing About the Current State<a class="anchor-link" href="#Linearizing-About-the-Current-State">¶</a></h3><p>Because the constraint equations are nonlinear, we do <strong>not</strong> solve</p>
+<p>$$
+\mathbf{g}^{*}(\mathbf{q}^{(1)}) = \mathbf{0}
+$$</p>
+<p>directly.</p>
+<p>Instead, we start from the current estimate $\mathbf{q}^{(0)}$ and solve for an increment $\Delta \mathbf{q}$.</p>
+<p>Using a first-order linearization about $\mathbf{q}^{(0)}$, we write</p>
+<p>$$
+\mathbf{g}^*(\mathbf{q}^{(0)}) +
+\frac{\partial \mathbf{g}^*(\mathbf{q}^{(0)})}{\partial \mathbf{q}} \, \Delta \mathbf{q}
+= \mathbf{0}
+$$</p>
+<p>So, rather than solving the full nonlinear constraint equations at once, we solve a <strong>local linear approximation</strong> for the correction $\Delta \mathbf{q}$.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=18d71adc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Writing-the-Linearized-System">Writing the Linearized System<a class="anchor-link" href="#Writing-the-Linearized-System">¶</a></h3><p>For simplicity, Schek defines</p>
+<p>$$
+\mathbf{G}^t =
+\frac{\partial \mathbf{g}^*(\mathbf{q}^{(0)})}{\partial \mathbf{q}}
+\in \mathbb{R}^{r \times m}
+$$</p>
+<p>$$
+\mathbf{r} =
+-\mathbf{g}^*(\mathbf{q}^{(0)})
+\in \mathbb{R}^{r \times 1}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$m$ = number of members, or unknown force densities</li>
+<li>$r$ = number of constraint equations</li>
+</ul>
+<p>The linearized system can then be written as</p>
+<p>$$
+\mathbf{G}^t \, \Delta \mathbf{q} = \mathbf{r}
+$$</p>
+<p>This system is solved for the force density correction $\Delta \mathbf{q}$.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b3928c39">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="The-Jacobian-Matrix,-$%5Cmathbf%7BG%7D%5Et$">The Jacobian Matrix, $\mathbf{G}^t$<a class="anchor-link" href="#The-Jacobian-Matrix,-$%5Cmathbf%7BG%7D%5Et$">¶</a></h3><p>Here, the superscript $t$ does <strong>not</strong> mean transpose.</p>
+<p>It is simply Schek's notation for the <strong>tangent</strong>, or linearized, constraint matrix.</p>
+<p>$$
+\mathbf{G}^t =
+\frac{\partial \mathbf{g}^*(\mathbf{q}^{(0)})}{\partial \mathbf{q}}
+\in \mathbb{R}^{r \times m}
+$$</p>
+<p>Each entry of $\mathbf{G}^t$ is a partial derivative:</p>
+<p>$$
+G^t_{kj} = \frac{\partial g_k^*}{\partial q_j}
+$$</p>
+<p>So:</p>
+<ul>
+<li>each <strong>row</strong> corresponds to one constraint equation</li>
+<li>each <strong>column</strong> corresponds to one force density variable</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b6a1531d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>For example, the Jacobian has the form</p>
+<p>$$
+\mathbf{G}^t
+=
+\begin{bmatrix}
+\frac{\partial g_1^*}{\partial q_1} &amp; \frac{\partial g_1^*}{\partial q_2} &amp; \cdots &amp; \frac{\partial g_1^*}{\partial q_m} \\
+\frac{\partial g_2^*}{\partial q_1} &amp; \frac{\partial g_2^*}{\partial q_2} &amp; \cdots &amp; \frac{\partial g_2^*}{\partial q_m} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial g_r^*}{\partial q_1} &amp; \frac{\partial g_r^*}{\partial q_2} &amp; \cdots &amp; \frac{\partial g_r^*}{\partial q_m}
+\end{bmatrix}
+$$</p>
+<p>This matrix tells us how sensitive each constraint is to changes in each force density.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b88d3a6c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Recall-Geometrically-Nonlinear-Analysis">Recall Geometrically Nonlinear Analysis<a class="anchor-link" href="#Recall-Geometrically-Nonlinear-Analysis">¶</a></h3><p>This linearization step is directly analogous to the <strong>Newton–Raphson method</strong> used for geometrically nonlinear analysis Recall from Lecture 11–2, we wrote the update as:</p>
+<p>$$
+\mathbf{K}_{ff,t}^{(i)} \, \Delta \mathbf{u}_f^{(i)} = \mathbf{r}^{(i)}
+$$</p>
+<p>$$
+\Delta \mathbf{u}_f^{(i)} = \mathbf{K}_{ff,t}^{-1(i)} \, \mathbf{r}^{(i)}
+$$</p>
+<p>where the <strong>tangent stiffness matrix</strong> is defined as</p>
+<p>$$
+\mathbf{K}_t = \left[\frac{\partial f_i}{\partial u_j}\right]
+\qquad i,j = 1,2,3,4
+$$</p>
+<p>where:</p>
+<ul>
+<li>$\mathbf{K}_t$ = linearization of internal forces at the current state</li>
+<li>$\mathbf{r}$ = imbalance (residual) at the current state</li>
+<li>$\Delta \mathbf{u}$ = correction to the displacement</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dbdb9fb1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Analogy-to-Force-Density-Constraints">Analogy to Force Density Constraints<a class="anchor-link" href="#Analogy-to-Force-Density-Constraints">¶</a></h3><ul>
+<li><p>$\mathbf{G}^t = \dfrac{\partial \mathbf{g}^*}{\partial \mathbf{q}}$<br/>
+→ tangent matrix of the constraints</p>
+</li>
+<li><p>$\mathbf{r} = -\mathbf{g}^*(\mathbf{q}^{(0)})$<br/>
+→ constraint residual</p>
+</li>
+<li><p>$\Delta \mathbf{q}$<br/>
+→ correction to the force densities</p>
+</li>
+</ul>
+<p>We are solving a nonlinear problem by:</p>
+<ul>
+<li>linearizing about the current point</li>
+<li>solving a <strong>local linear system</strong></li>
+<li>updating the unknowns</li>
+<li>repeating until convergence</li>
+</ul>
+<p>Same setup as geometric nonlinear analysis, just with <strong>force densities instead of displacements</strong></p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9974735b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Once linearlized you solve for the error correct term and then can calculate updated force densities</p>
+<p>Update:</p>
+<p>$$
+\mathbf{q}^{(i+1)} = \mathbf{q}^{(i)} + \Delta \mathbf{q}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_underdetermined">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Underdetermined-System">Underdetermined System<a class="anchor-link" href="#Underdetermined-System">¶</a></h3><p>In most practical cases, the number of additional constraints is smaller than the number of members.</p>
+<p>Here:</p>
+<ul>
+<li>$m$ = number of members, or equivalently the number of unknown force densities</li>
+<li>$r$ = number of additional constraints</li>
+</ul>
+<p>so typically,</p>
+<p>$$
+r &lt; m
+$$</p>
+<p>This means there are fewer equations than unknowns.</p>
+<p>As a result, the linearized system does <strong>not</strong> have a unique solution.</p>
+<p>Instead, there are multiple possible solutions for $\Delta \mathbf{q}$.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_least_squares">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Selecting-a-Solution">Selecting a Solution<a class="anchor-link" href="#Selecting-a-Solution">¶</a></h3><p>Since the system is underdetermined, there are infinitely many possible solutions for $\Delta \mathbf{q}$.</p>
+<p>In fact, the solution space has</p>
+<p>$$
+m - r
+$$</p>
+<p>linearly independent directions.</p>
+<p>So we need an additional criterion to select a <strong>unique and meaningful</strong> solution.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0645f807">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Minimum-Norm-Solution">Minimum-Norm Solution<a class="anchor-link" href="#Minimum-Norm-Solution">¶</a></h3><p>Schek chooses the solution that minimizes the total change in the force densities:</p>
+<p>$$
+\Delta \mathbf{q}^T \Delta \mathbf{q} \;\rightarrow\; \min
+$$</p>
+<p>Let</p>
+<p>$$
+\Delta \mathbf{q} =
+\begin{bmatrix}
+\Delta q_1 \\
+\Delta q_2 \\
+\vdots \\
+\Delta q_m
+\end{bmatrix}
+$$</p>
+<p>Then:</p>
+<p>$$
+\Delta \mathbf{q}^T \Delta \mathbf{q}
+=
+\Delta q_1^2 + \Delta q_2^2 + \cdots + \Delta q_m^2
+$$</p>
+<p>So this is simply the <strong>sum of squares</strong> of all changes in the force densities:</p>
+<p>$$
+\Delta \mathbf{q}^T \Delta \mathbf{q} = \|\Delta \mathbf{q}\|^2
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=489b2e8e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Interpretation">Interpretation<a class="anchor-link" href="#Interpretation">¶</a></h3><p>This selects the update that is <strong>closest to the current force density state</strong>.</p>
+<p>So, among all possible solutions, we choose the one that:</p>
+<ul>
+<li>makes the <strong>smallest overall change</strong> in $\mathbf{q}$</li>
+<li>gives a <strong>smooth and stable update</strong></li>
+<li>avoids unnecessarily large changes in individual members</li>
+</ul>
+<p>Implementing this  is covered in more detail in Section 3.1 of the Schek paper</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_algorithm_summary">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Iterative-Procedure">Iterative Procedure<a class="anchor-link" href="#Iterative-Procedure">¶</a></h3><p>At each iteration:</p>
+<ol>
+<li><p>solve the equilibrium problem for the current force densities to obtain the geometry<br/>
+$$
+\mathbf{x}(\mathbf{q}), \; \mathbf{y}(\mathbf{q}), \; \mathbf{z}(\mathbf{q})
+$$</p>
+</li>
+<li><p>evaluate the constraint residuals<br/>
+$$
+\mathbf{g}^*(\mathbf{q})
+$$</p>
+</li>
+<li><p>form the linearized constraint matrix<br/>
+$$
+\mathbf{G}^t
+$$</p>
+</li>
+<li><p>solve for the force density correction<br/>
+$$
+\mathbf{G}^t \Delta \mathbf{q} = \mathbf{r}
+$$</p>
+</li>
+<li><p>update the force densities<br/>
+$$
+\mathbf{q}^{(i+1)} = \mathbf{q}^{(i)} + \Delta \mathbf{q}
+$$</p>
+</li>
+<li><p>check convergence and repeat if needed</p>
+</li>
 </ol>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6ffce784">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=jacobian_rep_title">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-2---Code-Implementation">Part 2 - Code Implementation<a class="anchor-link" href="#Part-2---Code-Implementation">¶</a></h2>
+<h2 id="Part-3---Deriving-the-Constraints-Jacobian-Matrix">Part 3 - Deriving the Constraints Jacobian Matrix<a class="anchor-link" href="#Part-3---Deriving-the-Constraints-Jacobian-Matrix">¶</a></h2>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=92a44464">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=jacobian_rep_goal">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="The-Goal">The Goal<a class="anchor-link" href="#The-Goal">¶</a></h3><p>We want to solve the linearized constraint system</p>
+<p>$$
+\mathbf{G}^t \, \Delta \mathbf{q} = \mathbf{r}
+$$</p>
+<p>So the key question becomes:</p>
+<p><strong>How do we actually compute</strong> $\mathbf{G}^t$?</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1e843752">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Recall that</p>
+<p>$$
+\mathbf{G}^t = \frac{\partial \mathbf{g}^*}{\partial \mathbf{q}}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$\mathbf{q}$ = vector of force densities</li>
+<li>$\mathbf{g}^*(\mathbf{q})$ = vector of constraint residuals after the coordinates have been written as functions of $\mathbf{q}$</li>
+</ul>
+<p>The difficulty is that the constraints depend on $\mathbf{q}$ in two ways:</p>
+<ul>
+<li><strong>directly</strong> through $\mathbf{q}$ itself</li>
+<li><strong>indirectly</strong> through the coordinates $\mathbf{x}(\mathbf{q})$, $\mathbf{y}(\mathbf{q})$, and $\mathbf{z}(\mathbf{q})$</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=jacobian_chain_rule">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Using-the-Chain-Rule">Using the Chain Rule<a class="anchor-link" href="#Using-the-Chain-Rule">¶</a></h3><p>Schek writes the Jacobian of the constraint equations using the chain rule:</p>
+<p>$$
+\mathbf{G}^t
+=
+\frac{\partial \mathbf{g}^*}{\partial \mathbf{q}}
+=
+\frac{\partial \mathbf{g}}{\partial \mathbf{x}} \frac{\partial \mathbf{x}}{\partial \mathbf{q}}
++
+\frac{\partial \mathbf{g}}{\partial \mathbf{y}} \frac{\partial \mathbf{y}}{\partial \mathbf{q}}
++
+\frac{\partial \mathbf{g}}{\partial \mathbf{z}} \frac{\partial \mathbf{z}}{\partial \mathbf{q}}
++
+\frac{\partial \mathbf{g}}{\partial \mathbf{q}}
+$$</p>
+<p>This equation says:</p>
+<ul>
+<li>first measure how the constraints change with the coordinates</li>
+<li>then measure how the coordinates change with the force densities</li>
+<li>and also include any direct dependence of the constraints on $\mathbf{q}$</li>
+</ul>
+<p>So the main bottleneck is computing</p>
+<p>$$
+\frac{\partial \mathbf{x}}{\partial \mathbf{q}},
+\qquad
+\frac{\partial \mathbf{y}}{\partial \mathbf{q}},
+\qquad
+\frac{\partial \mathbf{z}}{\partial \mathbf{q}}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=jacobian_why_implicit">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Additional-Content-Provided">Additional Content Provided<a class="anchor-link" href="#Additional-Content-Provided">¶</a></h3><p>See the extra notes for more detail on the Jacobian derivation and implementation.</p>
+<p>This material also shows how to formulate constraint equations for several common cases:</p>
+<ol>
+<li>node distance constraints (strained length)</li>
+<li>member length constraints (unstrained length)</li>
+<li>member force constraints</li>
+<li>mixed constraint cases</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_part5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-4---Simple-Implementation-for-Member-Force-Constraints">Part 4 - Simple Implementation for Member Force Constraints<a class="anchor-link" href="#Part-4---Simple-Implementation-for-Member-Force-Constraints">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_practical_shift">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="A-Simpler-Implementation-Path">A Simpler Implementation Path<a class="anchor-link" href="#A-Simpler-Implementation-Path">¶</a></h3><p>Rather than implementing the full constrained solver from Schek immediately, a very practical first step is to impose <strong>member force targets</strong> directly.</p>
+<p>This can be done using the unified formulation:</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\left(\mathbf{C}^{T}\mathbf{K}\mathbf{C}\right)^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}_f\,\mathbf{x}_f
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}\,\mathbf{x}_i
+\right)
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=15cf75e5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="What-Changes-Compared-to-Linear-Implementation-?">What Changes Compared to Linear Implementation ?<a class="anchor-link" href="#What-Changes-Compared-to-Linear-Implementation-?">¶</a></h3><p>In the standard force density method:</p>
+<ul>
+<li>$\mathbf{Q}$ is <strong>given and constant</strong></li>
+<li>the problem is <strong>linear</strong> → single-step solve</li>
+</ul>
+<p>In the force constrained formulation:</p>
+<ul>
+<li>$\mathbf{F}$ = target member forces (fixed)</li>
+<li>$\mathbf{L}$ = member lengths (depend on nodal positions, current geometry of the structure)</li>
+<li>$\mathbf{Q} = \mathbf{L}^{-1}\mathbf{F}$ = force densities (changing, since lengths are changing)</li>
+</ul>
+<p>$$
+\mathbf{Q}(\mathbf{x}_i) = \mathbf{L}(\mathbf{x}_i)^{-1} \mathbf{F}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=eb43c7db">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Why-This-Becomes-Nonlinear">Why This Becomes Nonlinear<a class="anchor-link" href="#Why-This-Becomes-Nonlinear">¶</a></h3><p>Because:</p>
+<ul>
+<li>lengths, $\mathbf{L}(\mathbf{x}_i)$, depend on the nodal coordinates</li>
+<li>nodal coordinates are what we are solving for</li>
+</ul>
+<p>So:</p>
+<p>$$
+\mathbf{Q}_i = \mathbf{Q}(\mathbf{x}_i)
+$$</p>
+<p>The stiffness matrix now depends on the current geometry:</p>
+<p>$$
+\mathbf{K} = \mathbf{Q}(\mathbf{x}_i) = \mathbf{L}(\mathbf{x}_i)^{-1} \mathbf{F}
+$$</p>
+<p>and therefore</p>
+<p>$$
+(\mathbf{C}^T \mathbf{K} \mathbf{C})^{-1}
+=
+(\mathbf{C}^T \mathbf{Q}(\mathbf{x}_i) \mathbf{C})^{-1}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0ab12f1e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Main-Idea">Main Idea<a class="anchor-link" href="#Main-Idea">¶</a></h3><p>In the linear force density method:</p>
+<ul>
+<li>$\mathbf{Q}$ is prescribed and stays fixed</li>
+<li>there is no direct control over the final member forces</li>
+<li>but the system is <strong>linear</strong></li>
+</ul>
+<p>$$
+\text{fixed } \mathbf{Q}
+\quad \Rightarrow \quad
+\text{linear problem}
+$$</p>
+<p>In the force-controlled version:</p>
+<ul>
+<li>$\mathbf{F}$ is prescribed and stays fixed</li>
+<li>But the force densities are updated from the current geometry</li>
+</ul>
+<p>$$
+\mathbf{Q}(\mathbf{x}_i) = \mathbf{L}(\mathbf{x_i})^{-1}\mathbf{F}
+$$</p>
+<ul>
+<li>so the system matrix changes as the nodal positions change</li>
+<li>iteration is required until the geometry, force densities, and residual all converge</li>
+</ul>
+<p>$$
+\mathbf{Q}(\mathbf{x}_i)
+\quad \Rightarrow \quad
+\text{nonlinear problem}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_algorithm">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Algorithm-Summary">Algorithm Summary<a class="anchor-link" href="#Algorithm-Summary">¶</a></h3><p>The overall algorithm structure does <strong>not</strong> actually change.</p>
+<p>The difference is that, in the linear force density method convergence is reached in a <strong>single step</strong>.</p>
+<p>In the nonlinear force density method the same sequence of steps must be repeated until convergence.</p>
+<p>Main difference:</p>
+<ul>
+<li><strong>linear force density:</strong> $\mathbf{Q}$ is fixed, go through loop 1 time only.</li>
+<li><strong>force-constrained force density:</strong> $\mathbf{Q}$ changes with geometry, more than 1 loop required.</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=31259653">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ol>
+<li><p>choose an initial geometry and form the connectivity matrices, $\mathbf{C}, \mathbf{C}_f$. These depend only on the network topology, so they do <strong>not</strong> change during the iteration.</p>
+</li>
+<li><p>prescribe the target member forces, $\mathbf{F}$</p>
+</li>
+<li><p>compute the initial member lengths from the starting geometry, $\mathbf{L}_i = \mathbf{L}(\mathbf{x}_i)$</p>
+</li>
+<li><p>compute the current force densities from, $\mathbf{Q}_i = \mathbf{L}_i^{-1}\mathbf{F}$</p>
+</li>
+<li><p>assemble the force density matrices<br/>
+$$
+\mathbf{D}_i = \mathbf{C}^{T}\mathbf{Q}_i\mathbf{C}
+\qquad \text{and} \qquad
+\mathbf{D}_{f,i} = \mathbf{C}^{T}\mathbf{Q}_i\mathbf{C}_f
+$$</p>
+</li>
+<li><p>solve the linear force density step for the updated free-node coordinates<br/>
+$$
+\mathbf{x}_{i+1}
+=
+\mathbf{D}_i^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{D}_{f,i}\,\mathbf{x}_f
+\right)
+$$</p>
+</li>
+<li><p>update the nodal positions and recompute the member lengths, $\mathbf{L}_{i+1} = \mathbf{L}(\mathbf{x}_{i+1})$,  from the new geometry</p>
+</li>
+<li><p>check convergence using a chosen criterion (e.g., change in nodal position, change in member length, change in total length, or residual norm)</p>
+</li>
+<li><p>if not converged, repeat steps 4 through 8</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_convergence">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Convergence-Criterion">Convergence Criterion<a class="anchor-link" href="#Convergence-Criterion">¶</a></h3><p>A simple convergence measure is the relative change in total member length (as a proxy for force density):</p>
+<p>$$
+\text{error}
+=
+\frac{\left|L_{\mathrm{tot}}^{(i+1)} - L_{\mathrm{tot}}^{(i)}\right|}{L_{\mathrm{tot}}^{(i)}}
+$$</p>
+<p>but other convergence measures are possible as well.</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f7306401">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-5---Force-Density-Examples-with-Force-Constraints">Part 5 - Force Density Examples with Force Constraints<a class="anchor-link" href="#Part-5---Force-Density-Examples-with-Force-Constraints">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e6c2919">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7615,45 +8680,45 @@ $$</li>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9677eb22">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8fee4583">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Running-Code">Running Code<a class="anchor-link" href="#Running-Code">¶</a></h3><p>Run from the <code>./formfinder/main.py</code> file</p>
+<p>Input files specified in <code>./formfinder/structures</code> folder</p>
 <p>Text data saved to <code>./debug</code> folder</p>
 <p>Output plots and daya saved to Text data saved to <code>./output</code> folder</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6215f6a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c0d428dc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Running-from-the-main.py-File">Running from the <code>main.py</code> File<a class="anchor-link" href="#Running-from-the-main.py-File">¶</a></h3><p>To run the linear force density solver, open <code>main.py</code> and set:</p>
+<h3 id="Running-from-the-main.py-File">Running from the <code>main.py</code> File<a class="anchor-link" href="#Running-from-the-main.py-File">¶</a></h3><p>To run the iterative force density solver, open <code>main.py</code> and set:</p>
 <ul>
-<li><code>solver=solvers[1]</code> for <code>FD_linear</code></li>
+<li><code>solver=solvers[2]</code> for <code>FD_nonlinear</code></li>
 <li><code>structure=structs[...]</code> to whichever example you want to run</li>
 </ul>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=57ebd37b">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3bbc6693">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="font-size: 0.6em;">
 <div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">solvers</span> <span class="o">=</span> <span class="p">{</span>
         <span class="mi">1</span><span class="p">:</span> <span class="s2">"FD_linear"</span><span class="p">,</span>
-        <span class="mi">2</span><span class="p">:</span> <span class="s2">"FD_iter"</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="s2">"FD_nonlinear"</span><span class="p">,</span>
         <span class="mi">3</span><span class="p">:</span> <span class="s2">"SM"</span><span class="p">,</span>
         <span class="mi">4</span><span class="p">:</span> <span class="s2">"DR_imp"</span><span class="p">,</span>
         <span class="mi">5</span><span class="p">:</span> <span class="s2">"DR_leap"</span><span class="p">,</span>
@@ -7668,465 +8733,33 @@ $$</li>
         <span class="mi">7</span><span class="p">:</span> <span class="s2">"Star"</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">run</span> <span class="o">=</span> <span class="n">FormFinder</span><span class="p">(</span>
-        <span class="n">solver</span><span class="o">=</span><span class="n">solvers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="n">structs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_save</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">solver</span><span class="o">=</span><span class="n">solvers</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="n">structs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_save</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
     <span class="n">run</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div></div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=daead8b8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Input-File-Structure">Input File Structure<a class="anchor-link" href="#Input-File-Structure">¶</a></h3><p>Input files specified in <code>./formfinder/structures</code> folder</p>
-<p>Define as a function you can import</p>
-<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Code1.png" style="width:50%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bdd001e9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f6fbaa54">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Code2.png" style="width:50%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=942cb17f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Why-Define-as-Function?">Why Define as Function?<a class="anchor-link" href="#Why-Define-as-Function?">¶</a></h3><p>Allows you to create more complex definition, rather than hard-coding all information</p>
-<p>For example, defining nodal coordinates in the <code>CEE6501_PointLoad.py</code> structure</p>
-<div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_struct</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-    <span class="c1"># --------------------------------------------------------------------</span>
-    <span class="c1"># Initialize dictionaries</span>
-    <span class="c1"># --------------------------------------------------------------------</span>
-    <span class="n">nodes</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="c1"># --------------------------------------------------------------------</span>
-    <span class="c1"># Node coordinates</span>
-    <span class="c1"># rows x cols rectangular grid in the XY plane with uniform spacing.</span>
-    <span class="c1"># All nodes start with z = 0.0.</span>
-    <span class="c1"># Node numbering proceeds row by row:</span>
-    <span class="c1"># left to right, then bottom to top.</span>
-    <span class="c1"># --------------------------------------------------------------------</span>
-    <span class="n">node_id</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
-            <span class="n">nodes</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">*</span> <span class="n">spacing</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spacing</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-            <span class="n">node_id</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=72a1aa20">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Run-Flags">Run Flags<a class="anchor-link" href="#Run-Flags">¶</a></h3><div class="highlight"><pre><span></span><span class="n">run</span> <span class="o">=</span> <span class="n">FormFinder</span><span class="p">(</span>
-    <span class="n">solver</span><span class="o">=</span><span class="n">solvers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">structure</span><span class="o">=</span><span class="n">structs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_save</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-</pre></div>
-<ul>
-<li><p><code>debug=True</code><br/>
-writes a detailed text log of key variables and results throughout the analysis and iterations to the <code>./debug</code> folder.<br/>
-Useful for understanding solver behavior, but can slow the run significantly for larger structures.</p>
-</li>
-<li><p><code>plot_save=True</code><br/>
-saves the generated plots to the <code>./output</code> folder.s</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec5_part_title">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3---Simple-2D-Example-(Schek-Paper)">Part 3 - Simple 2D Example (Schek Paper)<a class="anchor-link" href="#Part-3---Simple-2D-Example-(Schek-Paper)">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2ca774e7">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Description-of-Structure">Description of Structure<a class="anchor-link" href="#Description-of-Structure">¶</a></h3><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1.png" style="width:70%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=13fce9fc">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Geometry-Setup-(Output-in-Debug)">Geometry Setup (Output in Debug)<a class="anchor-link" href="#Geometry-Setup-(Output-in-Debug)">¶</a></h3><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c1_geometry.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ccb246a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Geometry-Setup-(Branch-Node-Matrices)">Geometry Setup (Branch-Node Matrices)<a class="anchor-link" href="#Geometry-Setup-(Branch-Node-Matrices)">¶</a></h3><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c1_geometry_branchnode.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=75a5e9c7">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-1-%E2%80%94-Uniform-Force-Density">Option 1 — Uniform Force Density<a class="anchor-link" href="#Option-1-%E2%80%94-Uniform-Force-Density">¶</a></h3><p>Assume the same force density for every member: $q_i = 1$</p>
-<p>So the force density vector becomes</p>
+<h3 id="Structure-1-%E2%80%94-Schek-Structure-With-An-Extra-Node">Structure 1 — Schek Structure With An Extra Node<a class="anchor-link" href="#Structure-1-%E2%80%94-Schek-Structure-With-An-Extra-Node">¶</a></h3><p>Starting from the planar Schek structure, add one additional node out of plane in the $z$-direction and connect it to the existing structure with three new members.</p>
+<p>Set the target internal member forces to</p>
 <p>$$
-\mathbf{q}
-=
-[1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1]^T
-$$</p>
-<p>Using this, we form the matrices</p>
-<p>$$
-\mathbf{D} = \mathbf{C}^{T}\mathbf{Q}\mathbf{C}
-\qquad
-\mathbf{D}_f = \mathbf{C}^{T}\mathbf{Q}\mathbf{C}_f
-$$</p>
-<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_D_Df.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6775261a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c1_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d7d284f0">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Final-Node-Positions-and-Branch-Forces-&amp;-Lengths">Final Node Positions and Branch Forces &amp; Lengths<a class="anchor-link" href="#Final-Node-Positions-and-Branch-Forces-&amp;-Lengths">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c1_final.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c4e8a8a9">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-2-%E2%80%94-Scaled-Force-Density">Option 2 — Scaled Force Density<a class="anchor-link" href="#Option-2-%E2%80%94-Scaled-Force-Density">¶</a></h3><p>Scale all force densities for all members uniformly: $q_i = 5$</p>
-<p>So the force density vector becomes</p>
-<p>$$
-\mathbf{q}
-=
-[5,\ 5,\ 5,\ 5,\ 5,\ 5,\ 5,\ 5,\ 5,\ 5,\ 5,\ 5]^T
-$$</p>
-<p>This gives the same <em>form</em> as Option 1.</p>
-<p><strong>Key idea:</strong><br/>
-Only the <em>relative</em> values of $q$ matter — not their absolute magnitude.</p>
-<p>Scaling all $q$ by a constant changes the force level, but not the geometry.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c9b267ad">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c2_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e2d2703b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Final-Node-Positions-and-Branch-Forces-&amp;-Lengths">Final Node Positions and Branch Forces &amp; Lengths<a class="anchor-link" href="#Final-Node-Positions-and-Branch-Forces-&amp;-Lengths">¶</a></h4><p>Same as in the $q=1$ case!</p>
-<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c2_final.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=676d968b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-3-%E2%80%94-Non-Uniform-Force-Density">Option 3 — Non-Uniform Force Density<a class="anchor-link" href="#Option-3-%E2%80%94-Non-Uniform-Force-Density">¶</a></h3><p>Assign different force density pattern to selected members:</p>
-<p>$$
-q_i =
-\begin{cases}
-4 &amp; \text{for members } 3 \text{ and } 4 \\
-1 &amp; \text{otherwise}
-\end{cases}
-$$</p>
-<p>This changes the <em>relative</em> force densities.</p>
-<p><strong>Key idea:</strong><br/>
-The structure adapts its geometry based on relative $q$ values — members with higher $q$ tend to become shorter and stiffer in the final form.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b7d48901">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c3_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bdc9e4ae">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Animation-(Only-Visible-in-Jupyter-Notebook)">Animation (Only Visible in Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-in-Jupyter-Notebook)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct1_c3_animation.gif" style="width:90%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4582c482">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-4-%E2%80%94-Other-Force-Density-Pattern">Option 4 — Other Force Density Pattern<a class="anchor-link" href="#Option-4-%E2%80%94-Other-Force-Density-Pattern">¶</a></h3><p>Try assigning your own force density pattern. What sort of net structure do you get?</p>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5bdf1896">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-4---More-Complex-2D-Net">Part 4 - More Complex 2D Net<a class="anchor-link" href="#Part-4---More-Complex-2D-Net">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8ecf5038">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Description-of-Structure">Description of Structure<a class="anchor-link" href="#Description-of-Structure">¶</a></h3><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct2_c1.png" style="width:95%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=67128065">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-1-%E2%80%94-Uniform-Force-Density">Option 1 — Uniform Force Density<a class="anchor-link" href="#Option-1-%E2%80%94-Uniform-Force-Density">¶</a></h3><p>Assume the same force density for every member: $q_i = 1$</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b4419a8c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct2_c1_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=512dc95c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-2-%E2%80%94-Edge-Dominated-Force-Density">Option 2 — Edge-Dominated Force Density<a class="anchor-link" href="#Option-2-%E2%80%94-Edge-Dominated-Force-Density">¶</a></h3><p>Assign larger force densities to the edge members than to the interior members:</p>
-<p>$$
-q_{\mathrm{edge}} = 5\,q_{\mathrm{interior}}
-$$</p>
-<p>So the ratio is</p>
-<p>$$
-q_{\mathrm{edge}} : q_{\mathrm{interior}} = 5:1
-$$</p>
-<p>Remember that only the relative values matter, what do you think making the edges stiffer than the interior will do?</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=716c3641">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct2_c2_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9b449468">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-3-%E2%80%94-Interior-Dominated-Force-Density">Option 3 — Interior-Dominated Force Density<a class="anchor-link" href="#Option-3-%E2%80%94-Interior-Dominated-Force-Density">¶</a></h3><p>Assign larger force densities to the edge members than to the interior members:</p>
-<p>$$
-q_{\mathrm{interior}} = 5\,q_{\mathrm{edge}}
-$$</p>
-<p>So the ratio is</p>
-<p>$$
-q_{\mathrm{interior}} : q_{\mathrm{edge}} = 5:1
-$$</p>
-<p>Remember that only the relative values matter, what do you think making the interior stiffer than the edge will do?</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bf69d245">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct2_c3_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bb635ace">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-5---Extend-Force-Density-to-3D">Part 5 - Extend Force Density to 3D<a class="anchor-link" href="#Part-5---Extend-Force-Density-to-3D">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1fe26b7b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Extension-to-3D">Extension to 3D<a class="anchor-link" href="#Extension-to-3D">¶</a></h3><p>For 3D form finding, we solve for the out-of-plane coordinates:</p>
-<p>$$
-\mathbf{z} = \mathbf{D}^{-1}\left(\mathbf{p}_z - \mathbf{D}_f \mathbf{z}_f\right)
-$$</p>
-<p>This is directly analogous to the $x$ and $y$ equations.</p>
-<p><strong>Key idea:</strong><br/>
-The same matrix $\mathbf{D}$ and $\mathbf{D_f}$ are used — we simply solve an additional system for the $z$-direction.</p>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ab67e96f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-1-%E2%80%94-Schek-Structure-with-an-Extra-Node">Option 1 — Schek Structure with an Extra Node<a class="anchor-link" href="#Option-1-%E2%80%94-Schek-Structure-with-an-Extra-Node">¶</a></h3><p>Add one extra node out of plane in the $z$-direction, connected to the structure by three additional members.</p>
-<p>$$
-\mathbf{q}
-=
-[1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1]^T
-$$</p>
-<p>$$
-\mathbf{q}
+\mathbf{f}
 =
 [3,\ 3,\ 3,\ 3,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1,\ 1]^T
 $$</p>
+<p>That is, the first four members are assigned a target force of $3$, and all remaining members are assigned a target force of $1$.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6b566acf">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8ddff071">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8139,275 +8772,679 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a87eafe4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=904ada47">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct3_results.png" style="width:80%; height:auto;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Struct3_result.png" style="width:80%; height:auto;"/>
 </figure>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=65ab9a03">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2671d248">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-2-%E2%80%94-Veenendaal-Validation-Structure">Option 2 — Veenendaal Validation Structure<a class="anchor-link" href="#Option-2-%E2%80%94-Veenendaal-Validation-Structure">¶</a></h3><p>A hyperbolic paraboloid cable-net with fixed boundaries is used as a validation example to compare all three form-finding methods:</p>
-<ul>
-<li>stiffness matrix method</li>
-<li>dynamic relaxation (with damping)</li>
-<li>force density method</li>
-</ul>
-<p>The internal $3 \times 3$ mesh has 27 total DOFs.</p>
-<p>All analyses start from an initially flat configuration.</p>
-<p><strong>Assumptions:</strong> $Q = 1$</p>
-<p><strong>Post-processing:</strong> Forces are normalized for comparison:</p>
-<p>$$
-f_{\mathrm{norm}} = \frac{f}{F_{\mathrm{avg}}}
-$$</p>
+<h4 id="Animation-(Only-Visible-In-Jupyter-Notebook)">Animation (Only Visible In Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-In-Jupyter-Notebook)">¶</a></h4><div style="display:flex; justify-content:center; gap:20px; align-items:flex-start;">
+<figure style="margin:0; text-align:center; width:45%; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_Struct3_animation.gif" style="width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0; text-align:center; width:45%; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_struct3_iterations.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5f231c32">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=78a66ac1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct5_Veenendaal.png" style="width:99%; height:auto;"/>
+<h4 id="Final-Node-Positions-and-Branch-Forces-&amp;-Lengths">Final Node Positions and Branch Forces &amp; Lengths<a class="anchor-link" href="#Final-Node-Positions-and-Branch-Forces-&amp;-Lengths">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_Struct3_final.png" style="width:99%; height:auto;"/>
 </figure>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8d843fbd">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=98e11a69">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Structure-2-%E2%80%94-Veenendaal-Validation-Structure">Structure 2 — Veenendaal Validation Structure<a class="anchor-link" href="#Structure-2-%E2%80%94-Veenendaal-Validation-Structure">¶</a></h3><p>A hyperbolic paraboloid cable net with fixed boundary nodes is used as a validation example to compare all three form-finding methods.</p>
+<p>For this case, the target internal member force is taken as uniform in every member: $f = 1$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=780aa003">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct5_results.png" style="width:99%; height:auto;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Struct5_results.png" style="width:99%; height:auto;"/>
 </figure>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=88bb50c9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=92f0fb83">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Animation-(Only-Visible-In-Jupyter-Notebook)">Animation (Only Visible In Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-In-Jupyter-Notebook)">¶</a></h4><div style="display:flex; justify-content:center; gap:20px; align-items:flex-start;">
+<figure style="margin:0; text-align:center; width:45%; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_Struct5_animation.gif" style="width:100%; height:auto;"/>
+</figure>
+<figure style="margin:0; text-align:center; width:45%; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_struct5_iterations.png" style="width:100%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=443bc7c7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Comparison-with-Constant-Force-Density-Solution">Comparison with Constant Force-Density Solution<a class="anchor-link" href="#Comparison-with-Constant-Force-Density-Solution">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_Struct5_compare.png" style="width:80%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3169bd8e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Structure-2-%E2%80%94-Pauletti-Validation-Structure">Structure 2 — Pauletti Validation Structure<a class="anchor-link" href="#Structure-2-%E2%80%94-Pauletti-Validation-Structure">¶</a></h3><p>A prescribed <strong>force state</strong> is not guaranteed to produce a nontrivial equilibrium shape in the standard force density method.</p>
+<p>Unlike prescribed <strong>force densities</strong>, prescribed member forces can overconstrain the problem, since the required force densities depend on the unknown final lengths. As a result, the solution may fail to converge, or may converge to a trivial or degenerate configuration.</p>
+<p>For the Pauletti validation structure, this issue appears when enforcing a highly constrained target force ratio, for example: $f_{\mathrm{outer}} : f_{\mathrm{inner}} = 5:1$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=06c60f1b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Results-(Start--%3E-Final)">Results (Start -&gt; Final)<a class="anchor-link" href="#Results-(Start--%3E-Final)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_Struct6_results.png" style="width:99%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3325fb76">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="Animation-(Only-Visible-in-Jupyter-Notebook)">Animation (Only Visible in Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-in-Jupyter-Notebook)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct5_animation.gif" style="width:80%; height:auto;"/>
+<img alt="No description has been provided for this image" src="assets/L2_Struct6_animation.gif" style="width:80%; height:auto;"/>
 </figure>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7b531b99">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=49c40bc2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-3-%E2%80%94-Pauletti-Validation-Structure">Option 3 — Pauletti Validation Structure<a class="anchor-link" href="#Option-3-%E2%80%94-Pauletti-Validation-Structure">¶</a></h3><p>Validation example from:</p>
-<p>Pauletti &amp; Fernandes (2020) — <em>An outline of the natural force density method and its extension to quadrilateral elements</em><br/>
-(see L13 folder for the paper)</p>
-<p>A dense cable net with pinned supports at opposite corner nodes.<br/>
-The geometry is extended to 3D by offsetting the corners in the $z$-direction.</p>
-<p>This setup is similar to the 2D "Complex Net", but introduces out-of-plane form finding.</p>
-<p><strong>Study parameter:</strong></p>
+<h3 id="What-If-We-Don%E2%80%99t-Want-To-Prescribe-Every-Force?">What If We Don’t Want To Prescribe Every Force?<a class="anchor-link" href="#What-If-We-Don%E2%80%99t-Want-To-Prescribe-Every-Force?">¶</a></h3><p>The previous example shows that prescribing a full <strong>force state</strong> can lead to trivial or non-convergent solutions.</p>
+<p>A practical workaround is to <strong>mix formulations</strong>:</p>
 <ul>
-<li>Ratio of outer to inner force densities:</li>
+<li>prescribe forces in a subset of members</li>
+<li>prescribe force densities in the rest</li>
 </ul>
-<p>$$
-q_{\mathrm{outer}} : q_{\mathrm{inner}} = 1:1,\ 5:1,\ 30:1
-$$</p>
+<p>This relaxes the problem and can restore convergence.</p>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f87c7676">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e0937ab">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Description-of-Structure">Description of Structure<a class="anchor-link" href="#Description-of-Structure">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct6.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=754e505e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Results-from-Pauletti-Paper">Results from Pauletti Paper<a class="anchor-link" href="#Results-from-Pauletti-Paper">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct6_Pauletti_results.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4e81ebd3">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Result-from-1:1-Case">Result from 1:1 Case<a class="anchor-link" href="#Result-from-1:1-Case">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct6_results1.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb4d3b5e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Result-from-5:1-Case">Result from 5:1 Case<a class="anchor-link" href="#Result-from-5:1-Case">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct6_results2.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8b4925c9">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Result-from-30:1-Case">Result from 30:1 Case<a class="anchor-link" href="#Result-from-30:1-Case">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct6_results3.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d97c5aea">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-6---Adding-Applied-Loads">Part 6 - Adding Applied Loads<a class="anchor-link" href="#Part-6---Adding-Applied-Loads">¶</a></h2>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=64356915">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="CEE6501-Point-Load-Example">CEE6501 Point Load Example<a class="anchor-link" href="#CEE6501-Point-Load-Example">¶</a></h3><p>So far, we have only considered form-finding problems in which the internal force state is prescribed through the force density values. You can think of this as a specified prestress or pretension in the network.</p>
-<p>We can also include external applied loads, so the structure must now find a geometry that satisfies equilibrium under both:</p>
+<h3 id="Limitation-of-Force-Density">Limitation of Force Density<a class="anchor-link" href="#Limitation-of-Force-Density">¶</a></h3><p>The force density method requires prescribing an internal force state:</p>
 <ul>
-<li>the prescribed internal force density state, and</li>
-<li>the external nodal loads</li>
+<li>either $\mathbf{q}$ (force densities)</li>
+<li>or $\mathbf{f}$ (member forces)</li>
 </ul>
-<p><strong>Question:</strong><br/>
-What shape does the net take under these combined conditions?</p>
-<p>In this example, we prescribe a uniform force density, $q_i = 1$, in all members, and also apply downward point loads at selected nodes.</p>
+<p>This is both its strength and its limitation.</p>
+<ul>
+<li>In the standard <strong>linear</strong> force density method, prescribing $\mathbf{q}$ leads directly to an equilibrium shape</li>
+<li>But not every prescribed <strong>force state</strong> is compatible with a valid nontrivial equilibrium</li>
+<li>In those cases, the solution may fail to converge, or may converge to a trivial or degenerate configuration</li>
+</ul>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1ee3ee57">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=45d447ff">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Single-Point-Load-(2.0,-0.0,--10.0)-at-node-17">Single Point Load (2.0, 0.0, -10.0) at node 17<a class="anchor-link" href="#Single-Point-Load-(2.0,-0.0,--10.0)-at-node-17">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct7_start1.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c0c2e303">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Result-from-Single-Point-Case">Result from Single Point Case<a class="anchor-link" href="#Result-from-Single-Point-Case">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct7_result1.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=55551660">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Two-Point-Loads-(2.0,-0.0,--10.0)-at-node-17-and-53">Two Point Loads (2.0, 0.0, -10.0) at node 17 and 53<a class="anchor-link" href="#Two-Point-Loads-(2.0,-0.0,--10.0)-at-node-17-and-53">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct7_start2.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d6fe5171">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Result-from-Double-Point-Case">Result from Double Point Case<a class="anchor-link" href="#Result-from-Double-Point-Case">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct7_result2.png" style="width:99%; height:auto;"/>
-</figure>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8753af0a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="Animation-(Only-Visible-in-Jupyter-Notebook)">Animation (Only Visible in Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-in-Jupyter-Notebook)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L1_Struct7_animation.gif" style="width:80%; height:auto;"/>
-</figure>
+<h3 id="Natural-Question">Natural Question<a class="anchor-link" href="#Natural-Question">¶</a></h3><p>What if we do not want to prescribe the internal force state in advance?</p>
+<ul>
+<li>no target member forces</li>
+<li>no target force densities</li>
+<li>just let the structure find an equilibrium shape</li>
+</ul>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=sec10_wrap_up">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=700219de">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
+<h2 id="Part-6-%E2%80%94-Stiffness-Matrix-(SM)-And-Dynamic-Relaxation-(DR)-Methods">Part 6 — Stiffness Matrix (SM) And Dynamic Relaxation (DR) Methods<a class="anchor-link" href="#Part-6-%E2%80%94-Stiffness-Matrix-(SM)-And-Dynamic-Relaxation-(DR)-Methods">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=intro_sm_dr">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Motivation">Motivation<a class="anchor-link" href="#Motivation">¶</a></h3><p>If we do not want to prescribe the internal force state at all, and instead want it to develop as part of the solution. This can be done with:</p>
 <ul>
-<li></li>
+<li>Stiffness Matrix (SM) methods</li>
+<li>Dynamic Relaxation (DR)</li>
 </ul>
-<p>Main takeaway: Once the connectivity, supports, loads, and force densities are prescribed, the force density method finds the equilibrium geometry through a linear solve.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=unified_form">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Unified-Form">Unified Form<a class="anchor-link" href="#Unified-Form">¶</a></h3><p>Both SM and DR can be interpreted within the same general framework:</p>
+<p>$$
+\mathbf{x}_{i+1}
+=
+\mathbf{x}_i
++
+\left(\mathbf{C}^{T}\mathbf{K}\mathbf{C}\right)^{-1}
+\left(
+\mathbf{p}
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}_f\,\mathbf{x}_f
+-
+\mathbf{C}^{T}\mathbf{L}^{-1}\mathbf{F}\mathbf{C}\,\mathbf{x}_i
+\right)
+$$</p>
+<p>The overall structure of the update is the same, but the meaning of $\mathbf{K}$ and $\mathbf{F}$ changes from method to method.</p>
+<p>The key difference is:</p>
+<ul>
+<li><strong>FD</strong> prescribes the internal force state</li>
+<li><strong>SM</strong> and <strong>DR</strong> compute the internal force state from deformation and equilibrium</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=stiffness_explanation">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Stiffness-Matrix,-$%5Cmathbf%7BK%7D$,-For-Each-Method">Stiffness Matrix, $\mathbf{K}$, For Each Method<a class="anchor-link" href="#Stiffness-Matrix,-$%5Cmathbf%7BK%7D$,-For-Each-Method">¶</a></h3><p>The three methods mainly differ in how they represent stiffness.</p>
+<ul>
+<li><p><strong>Force Density (FD)</strong></p>
+<ul>
+<li>keeps only the geometric contribution</li>
+<li>each member contributes a scalar force-density term</li>
+<li>these are summed at the node through the $\mathbf{C}^T (\cdot) \mathbf{C}$ operation</li>
+</ul>
+<p>$$
+k_i = \sum_{e \in i} \left(\frac{f}{L}\right)
+= \sum_{e \in i} q_e
+$$</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=63d61f34">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li><p><strong>Dynamic Relaxation (DR)</strong></p>
+<ul>
+<li>uses a lumped nodal stiffness</li>
+<li>keeps both elastic and geometric contributions</li>
+<li>these are summed at the node through the $\mathbf{C}^T (\cdot) \mathbf{C}$ operation</li>
+</ul>
+<p>$$
+k_i = \sum_{e \in i} \left( \frac{EA}{L} + \frac{f}{L} \right)_e
+$$</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ec4504f9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li><p><strong>Stiffness Matrix (SM)</strong></p>
+<ul>
+<li>keeps a full nodal stiffness contribution</li>
+<li>each member is represented with a <strong>$3 \times 3$ matrix</strong> nodal stiffness matrix</li>
+<li>these are summed at the node through the $\mathbf{C}^T (\cdot) \mathbf{C}$ operation</li>
+</ul>
+<p>$$
+\mathbf{K}_i = \sum_{e \in i} \left(\mathbf{K}_e^{(e)} + \mathbf{K}_e^{(g)}\right)
+$$</p>
+</li>
+</ul>
+<p>So compared to FD and DR, SM does not reduce stiffness to a single scalar at the node. It still works from a nodal point of view, but now the $x$, $y$, and $z$ directions at each node remain coupled.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=96086126">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Element-Stiffness-Matrix-(3-%C3%97-3-Form)">Element Stiffness Matrix (3 × 3 Form)<a class="anchor-link" href="#Element-Stiffness-Matrix-(3-%C3%97-3-Form)">¶</a></h3><p>For the stiffness matrix method, the stiffness contribution at a node is written as the sum of an elastic and a geometric part:</p>
+<p>$$
+\mathbf{K}_e = \mathbf{K}_e^{(e)} + \mathbf{K}_e^{(g)}
+$$</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=36fc1a0b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Elastic stiffness:</p>
+<p>$$
+\mathbf{K}_e^{(e)}
+=
+\frac{EA}{L_0}
+\mathbf{G}^T \mathbf{G}
+$$</p>
+<p>Geometric stiffness:</p>
+<p>$$
+\mathbf{K}_e^{(g)}
+=
+\frac{F}{L}
+\left(
+\mathbf{I}_3 - \mathbf{G}^T \mathbf{G}
+\right)
+$$</p>
+<p>where:</p>
+<ul>
+<li>$\mathbf{G} = [c_x \; c_y \; c_z]$ = direction cosine vector</li>
+<li>$\mathbf{I}_3$ = $3 \times 3$ identity matrix</li>
+<li>$EA$ = axial stiffness</li>
+<li>$L_0$ = initial length</li>
+<li>$L$ = current length</li>
+<li>$F$ = current axial force</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=97ad2ce9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Interpretation">Interpretation<a class="anchor-link" href="#Interpretation">¶</a></h3><ul>
+<li>$\mathbf{G}^T \mathbf{G}$ projects stiffness in the member direction</li>
+<li>$\mathbf{I}_3 - \mathbf{G}^T \mathbf{G}$ gives the geometric contribution associated with the current force state</li>
+<li>the elastic term captures material resistance to stretching</li>
+<li>the geometric term captures how the current axial force changes the effective stiffness</li>
+</ul>
+<p>This is closely related to the geometrically nonlinear truss formulation from earlier in the course.</p>
+<p>The key difference is that here we are looking from the perspective of the node, as a <strong>$3 \times 3$ matrix</strong>, rather than the full element-level start-node/end-node coupling, written as a $6 \times 6$ matrix.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=force_explanation">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Force-Term,-$F$,-For-Each-Method">Force Term, $F$, For Each Method<a class="anchor-link" href="#Force-Term,-$F$,-For-Each-Method">¶</a></h3><ul>
+<li><p><strong>Force Density (FD)</strong>, force follows directly from prescribed force density:</p>
+<p>$$
+f = qL
+$$</p>
+</li>
+<li><p><strong>Dynamic Relaxation (DR)</strong> and <strong>Stiffness Matrix (SM)</strong>, force is not prescribed directly, instead it develops from the current deformation of the member:</p>
+<p>$$
+f = \frac{EA}{L_0}(L - L_0) + F_0
+$$</p>
+</li>
+</ul>
+<p>where:</p>
+<ul>
+<li>$L$ = current member length</li>
+<li>$L_0$ = initial or unstressed length</li>
+<li>$F_0$ = initial force, such as prestress or pretension</li>
+</ul>
+<p>So in SM and DR, the internal forces evolve during the solution as the geometry changes.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=comparison_table">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Comparison-of-FD,-DR,-And-SM">Comparison of FD, DR, And SM<a class="anchor-link" href="#Comparison-of-FD,-DR,-And-SM">¶</a></h3><table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th><strong>Force Density (FD)</strong></th>
+<th><strong>Dynamic Relaxation (DR)</strong></th>
+<th><strong>Stiffness Matrix (SM)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main Idea</strong></td>
+<td>prescribe force densities and solve for shape</td>
+<td>iteratively relax to equilibrium</td>
+<td>solve equilibrium through stiffness equations</td>
+</tr>
+<tr>
+<td><strong>What Is Prescribed</strong></td>
+<td>$\mathbf{q}$</td>
+<td>geometry, $EA$, loads, supports</td>
+<td>geometry, $EA$, loads, supports</td>
+</tr>
+<tr>
+<td><strong>Internal Force State</strong></td>
+<td>prescribed indirectly through $\mathbf{q}$</td>
+<td>develops during iteration</td>
+<td>develops during iteration</td>
+</tr>
+<tr>
+<td><strong>Stiffness Representation</strong></td>
+<td>lumped geometric only</td>
+<td>lumped elastic + geometric</td>
+<td>full elastic + geometric</td>
+</tr>
+<tr>
+<td><strong>Member Stiffness Form</strong></td>
+<td>scalar</td>
+<td>scalar</td>
+<td>$3 \times 3$ matrix</td>
+</tr>
+<tr>
+<td><strong>K-Matrix Size</strong></td>
+<td>$m \times m$</td>
+<td>$m \times m$</td>
+<td>$3m \times 3m$</td>
+</tr>
+<tr>
+<td><strong>Coordinate Coupling</strong></td>
+<td>none</td>
+<td>none</td>
+<td>full coupling of $x,y,z$</td>
+</tr>
+<tr>
+<td><strong>Coordinates Solved</strong></td>
+<td>$x$, $y$, $z$ separately</td>
+<td>$x$, $y$, $z$ separately</td>
+<td>all together in one vector</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=implementation_notes">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="General-Implementation-Notes">General Implementation Notes<a class="anchor-link" href="#General-Implementation-Notes">¶</a></h3><p>To keep the structure of the methods parallel, it helps to think of all three in terms of:</p>
+<ol>
+<li>define stiffness-like quantity</li>
+<li>define internal force term</li>
+<li>assemble equilibrium system</li>
+<li>solve for updated geometry</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7e29a43f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Force Density (FD)</strong></p>
+<ul>
+<li>input: prescribed $\mathbf{q}$</li>
+<li>build diagonal matrix $\mathbf{Q}$ of size $m \times m$</li>
+<li>form: $\mathbf{D} $ and $\mathbf{D}_f $</li>
+<li>solve $x$, $y$, and $z$ separately</li>
+<li>very efficient because the problem is linear once $\mathbf{q}$ is known</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=86cd1647">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Dynamic Relaxation (DR)</strong></p>
+<ul>
+<li>input: geometry, stiffness, loads, damping</li>
+<li>compute lumped scalar nodal stiffness terms</li>
+<li>global stiffness-like matrix is diagonal, $m \times m$</li>
+<li>solve $x$, $y$, and $z$ separately by explicit iteration in pseudo-time</li>
+<li>update coordinates repeatedly until residual forces approach zero</li>
+<li>damping is typically needed to avoid persistent oscillation and help convergence</li>
+</ul>
+<p><strong>Stiffness Matrix (SM)</strong></p>
+<ul>
+<li>input: geometry, stiffness, loads</li>
+<li>compute full $3 \times 3$ nodal contributions from each member</li>
+<li>assemble a global matrix of size $3m \times 3m$</li>
+<li>solve all DOFs simultaneously using a stacked displacement vector
+$$
+\mathbf{u} = [x_1, y_1, z_1, x_2, y_2, z_2, \dots]^T
+$$</li>
+<li>update coordinates repeatedly until residual forces approach zero</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f54416ef">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Part-7---Example-of-DR-and-SM">Part 7 - Example of DR and SM<a class="anchor-link" href="#Part-7---Example-of-DR-and-SM">¶</a></h2>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bf78d698">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Pauletti-Validation-Structure">Pauletti Validation Structure<a class="anchor-link" href="#Pauletti-Validation-Structure">¶</a></h3><p>For this example, the structure is initialized with a <strong>5:1 preload ratio</strong> between the outer and inner members.</p>
+<p>We do <strong>not</strong> impose any additional geometric or force constraints.</p>
+<p>The goal is simply to let the method run and observe the equilibrium shape that emerges from this initial force distribution.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3a167958">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Final-Structure">Final Structure<a class="anchor-link" href="#Final-Structure">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_DR_final.png" style="width:99%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=94c21017">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Animation-(Only-Visible-in-Jupyter-Notebook)">Animation (Only Visible in Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-in-Jupyter-Notebook)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_DR_animation.gif" style="width:80%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=71bb84fc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Kinetic-Energy-Measured-Through-Iterations">Kinetic Energy Measured Through Iterations<a class="anchor-link" href="#Kinetic-Energy-Measured-Through-Iterations">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_DR_converge.png" style="width:99%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b9251b28">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Pauletti-Validation-Structure,-30:1-preload-ratio">Pauletti Validation Structure, 30:1 preload ratio<a class="anchor-link" href="#Pauletti-Validation-Structure,-30:1-preload-ratio">¶</a></h3><h4 id="Final-Structure">Final Structure<a class="anchor-link" href="#Final-Structure">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_DR_final.png" style="width:99%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a69424a9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Animation-(Only-Visible-in-Jupyter-Notebook)">Animation (Only Visible in Jupyter Notebook)<a class="anchor-link" href="#Animation-(Only-Visible-in-Jupyter-Notebook)">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
+<img alt="No description has been provided for this image" src="assets/L2_DR_2_animation.gif" style="width:80%; height:auto;"/>
+</figure>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2fa1cbdc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Testing-Computational-Efficiency">Testing Computational Efficiency<a class="anchor-link" href="#Testing-Computational-Efficiency">¶</a></h3><p>One of the main motivations for <strong>Dynamic Relaxation (DR)</strong> is computational efficiency.</p>
+<p>Because DR uses a <strong>lumped nodal stiffness</strong> formulation, the system is much simpler to evaluate than the fully coupled <strong>Stiffness Matrix (SM)</strong> formulation.</p>
+<p>To compare the two methods, the Pauletti validation structure was increased to a <strong>25 × 25 grid</strong>, with equal inner and outer force ratio:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_struct</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ratio_outer_to_inner</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</pre></div>
+<p>Results:</p>
+<ul>
+<li><strong>SM</strong>: 15 iterations, 12.85 s total time</li>
+<li><strong>DR</strong>: 6 iterations, 1.91 s total time</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fd_l13_close">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="summary">summary<a class="anchor-link" href="#summary">¶</a></h3><ul>
+<li>the linear force density method is a special case of the unified update framework</li>
+<li>its stiffness term can be interpreted as a simplified geometric stiffness</li>
+<li>when $\mathbf{q}$ is prescribed, the problem reduces to a direct linear solve</li>
+<li>when additional constraints are imposed, the force densities become unknowns and the problem becomes nonlinear</li>
+<li>Schek handles this by linearizing the constraint equations in terms of $\Delta \mathbf{q}$</li>
+<li>in practice, a simple iterative update based on $\mathbf{Q} = \mathbf{L}^{-1}\mathbf{F}$ is a useful first implementation</li>
+</ul>
 </div>
 </div>
 </div>
