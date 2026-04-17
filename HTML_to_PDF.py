@@ -128,7 +128,7 @@ async def html_to_pdf(html_path: str, pdf_path: str):
                 if (!page.querySelector('.pdf-header-center')) {
                   const header = document.createElement('div');
                   header.className = 'pdf-header-center';
-                  header.textContent = 'Lecture 12: 04/10';
+                  header.textContent = 'Lecture 13: 04/17';
                   page.appendChild(header);
                 }
 

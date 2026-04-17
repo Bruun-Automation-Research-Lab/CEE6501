@@ -606,6 +606,61 @@ through a simple 2D example showing how equilibrium geometry can be obtained dir
 
 ---
 
+## 📅 Week 13 — Force Density Method with Constraints
+
+Journal Papers
+
+- [Schek_1973.pdf](Lectures/L12/Schek_1973.pdf)
+- [Veenendaal_Block_2011.pdf](Lectures/L12/Veenendaal_Block_2011.pdf)
+- [Veenendaal_Block_2012.pdf](Lectures/L12/Veenendaal_Block_2012.pdf)
+
+### 📖 Lectures
+
+This week continues our discussion of the Force Density Method (FDM), moving from standard linear examples to
+constrained formulations that introduce nonlinearity. We will first work through several example problems using the
+classical linear FDM, then examine how prescribing member forces changes the problem and leads to an iterative solution
+process. We will conclude by placing these ideas within a broader unified framework for structural form finding, and
+briefly introduce the other major methods that are implemented in the course code.
+
+#### Part 1 — FDM Linear Examples
+
+We begin with several example problems using the classical linear Force Density Method. The goal is to reinforce how the
+method is set up, how force-density values influence the resulting geometry, and how boundary conditions and prescribed
+parameters affect the final form.
+
+- 📄 **Slides (PDF):** [L13_1_FDM_Examples.pdf](Lectures/L13/L13_1_Examples.pdf)
+- 📓 **Notebook:** [L13_1_FDM_Examples.ipynb](Lectures/L13/L13_1_Examples.ipynb)
+
+#### Part 2 — Nonlinear force density method
+
+This lecture explains why the Force Density Method becomes nonlinear once additional constraints are introduced. The
+lecture then shows a simple practical implementation where target member forces are fixed and the force densities are
+updated from the current member lengths at each iteration. It also introduces the Dynamic Relaxation (DR) and Stiffness
+Matrix (SM) methods within a unified framework for structural form finding.
+
+- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
+- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
+
+- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
+- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
+
+- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
+- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
+
+### 💻 Extra In-Class Code
+
+Examples shown in class were generated using the following code repository:
+
+- [matrix-form-finding](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)
+
+### 📝 Assignments
+
+N/A
+
+---
+
+---
+
 ## Creating Slides from Notebook
 
 ### command to convert notebook to presentation with hidden code
