@@ -7454,12 +7454,13 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>explain how the linear force density method fits inside the unified equilibrium update expression</li>
-<li>interpret the stiffness term in force density as a simplified geometric stiffness term</li>
-<li>show why the linear force density method becomes a direct solve when $\mathbf{q}$ is prescribed</li>
-<li>explain why additional constraints make the problem nonlinear</li>
-<li>outline Schek's linearization of constraint equations in terms of the force densities</li>
-<li>describe a simple iterative implementation for member force constraints</li>
+<li>explain how the force density method fits within the unified equilibrium update framework</li>
+<li>interpret the force density formulation as a simplified, geometric-only stiffness representation</li>
+<li>show why the linear force density method reduces to a direct solve when $\mathbf{q}$ is prescribed</li>
+<li>explain why introducing constraints leads to a nonlinear problem</li>
+<li>formulate constraint equations in terms of force densities</li>
+<li>outline and implement an iterative solution procedure for constrained form finding</li>
+<li>compare force density with stiffness matrix (SM) and dynamic relaxation (DR) methods</li>
 </ul>
 </div>
 </div>
@@ -7472,7 +7473,13 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ul>
-<li>Part 1 -</li>
+<li>Part 1 — Force density in the unified framework</li>
+<li>Part 2 — Nonlinear force density and constraints</li>
+<li>Part 3 — Deriving the constraint Jacobian</li>
+<li>Part 4 — Practical implementation for force constraints</li>
+<li>Part 5 — Example problems with force constraints</li>
+<li>Part 6 — Introduction to SM and DR methods</li>
+<li>Part 7 — Comparison and computational efficiency</li>
 </ul>
 </div>
 </div>
@@ -7615,8 +7622,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Quick-Aside:-Where-Does-the-Stiffness-Term-Come-From?">Quick Aside: Where Does the Stiffness Term Come From?<a class="anchor-link" href="#Quick-Aside:-Where-Does-the-Stiffness-Term-Come-From?">¶</a></h3><p>In Schek's original force density derivation, a conventional stiffness matrix never appears explicitly.<br/>
-But within the unified framework, some stiffness-like quantity must still be sitting behind the method.</p>
+<h3 id="Quick-Aside:-Where-Does-the-Stiffness-Term-Come-From?">Quick Aside: Where Does the Stiffness Term Come From?<a class="anchor-link" href="#Quick-Aside:-Where-Does-the-Stiffness-Term-Come-From?">¶</a></h3><p>In Schek's force density derivation, a conventional stiffness matrix never appears explicitly.</p>
+<p>But within the unified framework, we see the $\mathbf{K}$ term, so some stiffness-like quantity must still be sitting behind the method.</p>
 <p>So this raises an important question:</p>
 <p><strong>If the unified framework uses</strong> $\mathbf{C}^T \mathbf{K} \mathbf{C}$, <strong>what is</strong> $\mathbf{K}$ <strong>for force density?</strong></p>
 </div>
@@ -7671,7 +7678,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="From-Element-Level-Stiffness-to-Lumped-Nodal-Stiffness">From Element-Level Stiffness to Lumped Nodal Stiffness<a class="anchor-link" href="#From-Element-Level-Stiffness-to-Lumped-Nodal-Stiffness">¶</a></h3><p>Instead of assembling full element stiffness matrices, we shift to a <strong>lumped nodal stiffness</strong> view.</p>
+<h3 id="From-Element-Level-Stiffness-to-Lumped-Nodal-Stiffness">From Element-Level Stiffness to Lumped Nodal Stiffness<a class="anchor-link" href="#From-Element-Level-Stiffness-to-Lumped-Nodal-Stiffness">¶</a></h3><p>Instead of full element stiffness matrices, we shift to a <strong>lumped nodal stiffness</strong> view.</p>
 <p>You may have seen this idea in structural dynamics, where <strong>mass is lumped at nodes</strong> to simplify the equations of motion.</p>
 <p>Here, we do something similar with stiffness.</p>
 <ul>
@@ -7680,7 +7687,6 @@ $$</p>
 <li>the formulation becomes much simpler and more computationally efficient</li>
 </ul>
 <p>This is the idea behind <strong>dynamic relaxation</strong>.</p>
-<p>We still think of stiffness as having two parts, but now these are treated in a reduced scalar sense, rather than as full element matrices.</p>
 </div>
 </div>
 </div>
@@ -7691,7 +7697,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Quick-Intro-Dybamic-Relaxation">Quick Intro Dybamic Relaxation<a class="anchor-link" href="#Quick-Intro-Dybamic-Relaxation">¶</a></h3><p>Instead of a full element matrix, stiffness is approximated as a <strong>diagonal matrix</strong>:</p>
+<h3 id="Quick-Intro-Dynamic-Relaxation">Quick Intro Dynamic Relaxation<a class="anchor-link" href="#Quick-Intro-Dynamic-Relaxation">¶</a></h3><p>We still think of stiffness as having two parts, but now these are treated in a reduced scalar sense, rather than as full element matrices.</p>
+<p>Instead of a full element matrix, stiffness is approximated as a <strong>diagonal matrix</strong>:</p>
 <p>$$
 \mathbf{K}_{\text{DR}} \;\approx\;
 \begin{bmatrix}
@@ -7718,8 +7725,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Force-Density-Takes-the-Simplification-One-Step-Further">Force Density Takes the Simplification One Step Further<a class="anchor-link" href="#Force-Density-Takes-the-Simplification-One-Step-Further">¶</a></h3><p>In the force density method, we simplify further by <strong>dropping the elastic term entirely</strong> and retaining only the geometric contribution:</p>
-<p>This remaining geometric stiffness is then <strong>lumped at the nodes</strong> and written in scalar form as</p>
+<h3 id="Force-Density-Takes-the-Simplification-One-Step-Further">Force Density Takes the Simplification One Step Further<a class="anchor-link" href="#Force-Density-Takes-the-Simplification-One-Step-Further">¶</a></h3><p><strong>dropping the elastic term entirely</strong> and retaining only the geometric contribution.</p>
+<p>This geometric stiffness is then <strong>lumped at the nodes</strong> and written in scalar form as:</p>
 <p>$$
 \mathbf{K}_{\text{FD}} \;\approx\;
 \begin{bmatrix}
@@ -7763,7 +7770,7 @@ $$</p>
 =
 \mathbf{D}
 $$</p>
-<p>So although Schek did not derive the force density method from a stiffness matrix perspective, the unified interpretation shows that it can be understood as a <strong>simplified, geometric-only, lumped stiffness formulation</strong>.</p>
+<p>So although Schek did not derive the force density method from a stiffness matrix perspective, the unified interpretation shows that the force density method can be understood as using a <strong>simplified, geometric-only, lumped stiffness formulation</strong>.</p>
 </div>
 </div>
 </div>
@@ -8013,7 +8020,7 @@ $$</p>
 <p>$$
 g_i(\mathbf{q}) = L_i(\mathbf{q}) - L_i^{\text{target}} = 0
 $$</p>
-<p>Again nonlinear because geometry depends on $\mathbf{q}$</p>
+<p>Again nonlinear because length depends on $\mathbf{q}$</p>
 </div>
 </div>
 </div>
@@ -8024,7 +8031,8 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>These additional equations, which are generally nonlinear, will not in general be satisfied by the initial force density vector $\mathbf{q}^{(0)}$, where $\mathbf{q}^{(0)}$ corresponds to the shape obtained from the initial linear force density form-finding step.</p>
+<p>These additional equations, which are generally nonlinear, will not in general be satisfied by the initial force density vector $\mathbf{q}^{(0)}$</p>
+<p>where $\mathbf{q}^{(0)}$ corresponds to the shape obtained from the initial linear force density form-finding step.</p>
 <p>The goal is therefore to find an updated force density vector of the form</p>
 <p>$$
 \mathbf{q}^{(1)} = \mathbf{q}^{(0)} + \Delta \mathbf{q}
@@ -8207,6 +8215,7 @@ $$</p>
 <p>$$
 \mathbf{q}^{(i+1)} = \mathbf{q}^{(i)} + \Delta \mathbf{q}
 $$</p>
+<p>Update $\mathbf{G}^t$ based on $\mathbf{q}^{(i+1)}$</p>
 </div>
 </div>
 </div>
@@ -8217,7 +8226,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Underdetermined-System">Underdetermined System<a class="anchor-link" href="#Underdetermined-System">¶</a></h3><p>In most practical cases, the number of additional constraints is smaller than the number of members.</p>
+<h3 id="Underdetermined-System">Underdetermined System<a class="anchor-link" href="#Underdetermined-System">¶</a></h3><p>In most practical and solvable cases, the number of additional constraints is smaller than the number of members.</p>
 <p>Here:</p>
 <ul>
 <li>$m$ = number of members, or equivalently the number of unknown force densities</li>
@@ -8309,22 +8318,15 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Iterative-Procedure">Iterative Procedure<a class="anchor-link" href="#Iterative-Procedure">¶</a></h3><p>At each iteration:</p>
-<ol>
+<h3 id="Iterative-Procedure">Iterative Procedure<a class="anchor-link" href="#Iterative-Procedure">¶</a></h3><ol>
 <li><p>solve the equilibrium problem for the current force densities to obtain the geometry<br/>
 $$
 \mathbf{x}(\mathbf{q}), \; \mathbf{y}(\mathbf{q}), \; \mathbf{z}(\mathbf{q})
 $$</p>
 </li>
-<li><p>evaluate the constraint residuals<br/>
-$$
-\mathbf{g}^*(\mathbf{q})
-$$</p>
+<li><p>evaluate the constraint residuals, $\mathbf{g}^*(\mathbf{q})$</p>
 </li>
-<li><p>form the linearized constraint matrix<br/>
-$$
-\mathbf{G}^t
-$$</p>
+<li><p>form the linearized constraint matrix, $\mathbf{G}^t$</p>
 </li>
 <li><p>solve for the force density correction<br/>
 $$
@@ -8879,7 +8881,8 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Structure-2-%E2%80%94-Pauletti-Validation-Structure">Structure 2 — Pauletti Validation Structure<a class="anchor-link" href="#Structure-2-%E2%80%94-Pauletti-Validation-Structure">¶</a></h3><p>A prescribed <strong>force state</strong> is not guaranteed to produce a nontrivial equilibrium shape in the standard force density method.</p>
-<p>Unlike prescribed <strong>force densities</strong>, prescribed member forces can overconstrain the problem, since the required force densities depend on the unknown final lengths. As a result, the solution may fail to converge, or may converge to a trivial or degenerate configuration.</p>
+<p>Unlike prescribed <strong>force densities</strong>, prescribed member forces can overconstrain the problem, since the required force densities depend on the unknown final lengths.</p>
+<p>As a result, the solution may fail to converge, or may converge to a trivial or degenerate configuration.</p>
 <p>For the Pauletti validation structure, this issue appears when enforcing a highly constrained target force ratio, for example: $f_{\mathrm{outer}} : f_{\mathrm{inner}} = 5:1$</p>
 </div>
 </div>
@@ -9392,7 +9395,7 @@ $$</li>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Pauletti-Validation-Structure,-30:1-preload-ratio">Pauletti Validation Structure, 30:1 preload ratio<a class="anchor-link" href="#Pauletti-Validation-Structure,-30:1-preload-ratio">¶</a></h3><h4 id="Final-Structure">Final Structure<a class="anchor-link" href="#Final-Structure">¶</a></h4><figure style="margin:0; text-align:center; display:flex; flex-direction:column;">
-<img alt="No description has been provided for this image" src="assets/L2_DR_final.png" style="width:99%; height:auto;"/>
+<img alt="No description has been provided for this image" src="assets/L2_DR_2_final.png" style="width:99%; height:auto;"/>
 </figure>
 </div>
 </div>
@@ -9437,14 +9440,18 @@ $$</li>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="summary">summary<a class="anchor-link" href="#summary">¶</a></h3><ul>
-<li>the linear force density method is a special case of the unified update framework</li>
-<li>its stiffness term can be interpreted as a simplified geometric stiffness</li>
-<li>when $\mathbf{q}$ is prescribed, the problem reduces to a direct linear solve</li>
-<li>when additional constraints are imposed, the force densities become unknowns and the problem becomes nonlinear</li>
-<li>Schek handles this by linearizing the constraint equations in terms of $\Delta \mathbf{q}$</li>
-<li>in practice, a simple iterative update based on $\mathbf{Q} = \mathbf{L}^{-1}\mathbf{F}$ is a useful first implementation</li>
+<h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
+<ul>
+<li>connected the force density method to the unified equilibrium update formulation</li>
+<li>interpreted force density as a geometric-only, lumped stiffness model</li>
+<li>showed that prescribing $\mathbf{q}$ leads to a linear, one-step solution</li>
+<li>introduced constraints, making force densities unknown and the problem nonlinear</li>
+<li>used linearization (Jacobian) to solve for updates in $\mathbf{q}$</li>
+<li>implemented a simple iterative scheme using $\mathbf{Q} = \mathbf{L}^{-1}\mathbf{F}$</li>
+<li>compared FD with SM and DR methods in terms of formulation and efficiency</li>
 </ul>
+<p><strong>Main takeaway:</strong><br/>
+Force density is powerful because it simplifies the problem, when you add constraints, you move into nonlinear, iterative form finding where SM and DR methods are other methods you can use.</p>
 </div>
 </div>
 </div>

@@ -7454,7 +7454,12 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li>explain</li>
+<li>recall the force density formulation and its linear structure</li>
+<li>explain why the force density method leads to a linear system of equations</li>
+<li>implement the force density method in code for 2D and 3D problems</li>
+<li>interpret how different force density patterns influence structural form</li>
+<li>apply the method to simple and complex cable-net structures</li>
+<li>extend the formulation to include out-of-plane behavior and applied loads</li>
 </ul>
 </div>
 </div>
@@ -7467,7 +7472,12 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ul>
-<li>Part 1 -</li>
+<li>Part 1 — Review of force density method (linear formulation)</li>
+<li>Part 2 — Code implementation and workflow</li>
+<li>Part 3 — Schek 2D structure examples</li>
+<li>Part 4 — Complex 2D cable-net structures</li>
+<li>Part 5 — Extension to 3D form finding</li>
+<li>Part 6 — Adding applied loads to the system</li>
 </ul>
 </div>
 </div>
@@ -7653,7 +7663,7 @@ $$</li>
 <div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">solvers</span> <span class="o">=</span> <span class="p">{</span>
         <span class="mi">1</span><span class="p">:</span> <span class="s2">"FD_linear"</span><span class="p">,</span>
-        <span class="mi">2</span><span class="p">:</span> <span class="s2">"FD_iter"</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="s2">"FD_nonlinear"</span><span class="p">,</span>
         <span class="mi">3</span><span class="p">:</span> <span class="s2">"SM"</span><span class="p">,</span>
         <span class="mi">4</span><span class="p">:</span> <span class="s2">"DR_imp"</span><span class="p">,</span>
         <span class="mi">5</span><span class="p">:</span> <span class="s2">"DR_leap"</span><span class="p">,</span>
@@ -7763,7 +7773,7 @@ saves the generated plots to the <code>./output</code> folder.s</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-3---Simple-2D-Example-(Schek-Paper)">Part 3 - Simple 2D Example (Schek Paper)<a class="anchor-link" href="#Part-3---Simple-2D-Example-(Schek-Paper)">¶</a></h2>
+<h2 id="Part-3---Schek-Paper-2D-Structure">Part 3 - Schek Paper 2D Structure<a class="anchor-link" href="#Part-3---Schek-Paper-2D-Structure">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7971,7 +7981,7 @@ The structure adapts its geometry based on relative $q$ values — members with 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Part-4---More-Complex-2D-Net">Part 4 - More Complex 2D Net<a class="anchor-link" href="#Part-4---More-Complex-2D-Net">¶</a></h2>
+<h2 id="Part-4---CEE6501-Complex-2D-Structure">Part 4 - CEE6501 Complex 2D Structure<a class="anchor-link" href="#Part-4---CEE6501-Complex-2D-Structure">¶</a></h2>
 </div>
 </div>
 </div>
@@ -8111,7 +8121,7 @@ The same matrix $\mathbf{D}$ and $\mathbf{D_f}$ are used — we simply solve an 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-1-%E2%80%94-Schek-Structure-with-an-Extra-Node">Option 1 — Schek Structure with an Extra Node<a class="anchor-link" href="#Option-1-%E2%80%94-Schek-Structure-with-an-Extra-Node">¶</a></h3><p>Add one extra node out of plane in the $z$-direction, connected to the structure by three additional members.</p>
+<h3 id="Structure-1-%E2%80%94-Schek-Structure-with-an-Extra-Node">Structure 1 — Schek Structure with an Extra Node<a class="anchor-link" href="#Structure-1-%E2%80%94-Schek-Structure-with-an-Extra-Node">¶</a></h3><p>Add one extra node out of plane in the $z$-direction, connected to the structure by three additional members.</p>
 <p>$$
 \mathbf{q}
 =
@@ -8158,7 +8168,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-2-%E2%80%94-Veenendaal-Validation-Structure">Option 2 — Veenendaal Validation Structure<a class="anchor-link" href="#Option-2-%E2%80%94-Veenendaal-Validation-Structure">¶</a></h3><p>A hyperbolic paraboloid cable-net with fixed boundaries is used as a validation example to compare all three form-finding methods:</p>
+<h3 id="Structure-2-%E2%80%94-Veenendaal-Validation-Structure">Structure 2 — Veenendaal Validation Structure<a class="anchor-link" href="#Structure-2-%E2%80%94-Veenendaal-Validation-Structure">¶</a></h3><p>A hyperbolic paraboloid cable-net with fixed boundaries is used as a validation example to compare all three form-finding methods:</p>
 <ul>
 <li>stiffness matrix method</li>
 <li>dynamic relaxation (with damping)</li>
@@ -8220,7 +8230,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Option-3-%E2%80%94-Pauletti-Validation-Structure">Option 3 — Pauletti Validation Structure<a class="anchor-link" href="#Option-3-%E2%80%94-Pauletti-Validation-Structure">¶</a></h3><p>Validation example from:</p>
+<h3 id="Structure-3-%E2%80%94-Pauletti-Validation-Structure">Structure 3 — Pauletti Validation Structure<a class="anchor-link" href="#Structure-3-%E2%80%94-Pauletti-Validation-Structure">¶</a></h3><p>Validation example from:</p>
 <p>Pauletti &amp; Fernandes (2020) — <em>An outline of the natural force density method and its extension to quadrilateral elements</em><br/>
 (see L13 folder for the paper)</p>
 <p>A dense cable net with pinned supports at opposite corner nodes.<br/>
@@ -8319,7 +8329,7 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="CEE6501-Point-Load-Example">CEE6501 Point Load Example<a class="anchor-link" href="#CEE6501-Point-Load-Example">¶</a></h3><p>So far, we have only considered form-finding problems in which the internal force state is prescribed through the force density values. You can think of this as a specified prestress or pretension in the network.</p>
+<h3 id="Structure-1---CEE6501-Point-Loaded-Structure">Structure 1 - CEE6501 Point Loaded Structure<a class="anchor-link" href="#Structure-1---CEE6501-Point-Loaded-Structure">¶</a></h3><p>So far, we have only considered form-finding problems in which the internal force state is prescribed through the force density values. You can think of this as a specified prestress or pretension in the network.</p>
 <p>We can also include external applied loads, so the structure must now find a geometry that satisfies equilibrium under both:</p>
 <ul>
 <li>the prescribed internal force density state, and</li>
@@ -8405,9 +8415,15 @@ What shape does the net take under these combined conditions?</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Wrap-Up">Wrap-Up<a class="anchor-link" href="#Wrap-Up">¶</a></h2><p>In this lecture, we:</p>
 <ul>
-<li></li>
+<li>reviewed the linear force density formulation</li>
+<li>saw how equilibrium geometry is obtained through a single linear solve</li>
+<li>implemented the method in code and explored different structures</li>
+<li>studied how relative force densities control the resulting form</li>
+<li>extended the method to 3D and to cases with applied loads</li>
 </ul>
-<p>Main takeaway: Once the connectivity, supports, loads, and force densities are prescribed, the force density method finds the equilibrium geometry through a linear solve.</p>
+<p><strong>Main takeaway:</strong><br/>
+Once connectivity, supports, loads, and force densities are prescribed, the equilibrium geometry follows directly from a linear system.</p>
+<h3 id="Next-Lecture">Next Lecture<a class="anchor-link" href="#Next-Lecture">¶</a></h3><p>Force Density Method (Nonlinear + Constraints) and comparison to other form-finding methods (SM and DR)</p>
 </div>
 </div>
 </div>
