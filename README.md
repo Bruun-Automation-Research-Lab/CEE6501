@@ -631,25 +631,24 @@ parameters affect the final form.
 - 📄 **Slides (PDF):** [L13_1_FDM_Examples.pdf](Lectures/L13/L13_1_Examples.pdf)
 - 📓 **Notebook:** [L13_1_FDM_Examples.ipynb](Lectures/L13/L13_1_Examples.ipynb)
 
-#### Part 2 — FDM with Constraints
+#### Part 2 — Nonlinear force density method
 
-Next, we extend the Force Density Method to include force constraints by prescribing the force in selected members. Once
-member forces are imposed directly, the problem is no longer purely linear, and the form-finding process becomes
-nonlinear and iterative. This lecture focuses on how these force constraints modify the formulation and how they can be
-used to better control the structural response and resulting geometry.
+This lecture explains why the Force Density Method becomes nonlinear once additional constraints are introduced. In the
+standard linear formulation, force densities are prescribed directly, so the equilibrium geometry follows from a single
+linear solve. When constraints are imposed, the force densities become unknowns that depend on the evolving geometry,
+making the problem nonlinear and iterative. The lecture then shows a simple practical implementation where target member
+forces are fixed and the force densities are updated from the current member lengths at each iteration. It also
+introduces the Dynamic Relaxation (DR) and Stiffness Matrix (SM) methods within a unified framework for structural form
+finding.
 
-- 📄 **Slides (PDF):** [L13_2_FDM_Constraints.pdf](Lectures/L13/L13_2_FDM_Constraints.pdf)
-- 📓 **Notebook:** [L13_2_FDM_Constraints.ipynb](Lectures/L13/L13_2_FDM_Constraints.ipynb)
+- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
+- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
 
-#### Part 3 — Unified Method for Structural Form Finding
+- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
+- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
 
-In the final part of this lecture, we summarize the different FDM formulations using a unified perspective on structural
-form finding. We then briefly introduce two additional approaches: the Dynamic Relaxation Method and the Stiffness
-Matrix Method. These methods are not covered in detail here, but they are implemented in the code repository linked
-below for students who would like to explore them further.
-
-- 📄 **Slides (PDF):** [L13_3_UnifiedMethod.pdf](Lectures/L13/L13_3_UnifiedMethod.pdf)
-- 📓 **Notebook:** [L13_3_UnifiedMethod.ipynb](Lectures/L13/L13_3_UnifiedMethod.ipynb)
+- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
+- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
 
 ### 💻 Extra In-Class Code
 
