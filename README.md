@@ -633,13 +633,10 @@ parameters affect the final form.
 
 #### Part 2 — Nonlinear force density method
 
-This lecture explains why the Force Density Method becomes nonlinear once additional constraints are introduced. In the
-standard linear formulation, force densities are prescribed directly, so the equilibrium geometry follows from a single
-linear solve. When constraints are imposed, the force densities become unknowns that depend on the evolving geometry,
-making the problem nonlinear and iterative. The lecture then shows a simple practical implementation where target member
-forces are fixed and the force densities are updated from the current member lengths at each iteration. It also
-introduces the Dynamic Relaxation (DR) and Stiffness Matrix (SM) methods within a unified framework for structural form
-finding.
+This lecture explains why the Force Density Method becomes nonlinear once additional constraints are introduced. The
+lecture then shows a simple practical implementation where target member forces are fixed and the force densities are
+updated from the current member lengths at each iteration. It also introduces the Dynamic Relaxation (DR) and Stiffness
+Matrix (SM) methods within a unified framework for structural form finding.
 
 - 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
 - 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
