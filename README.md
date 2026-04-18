@@ -507,12 +507,16 @@ Use standard submission naming from Week 1.
 
   [A10_code.ipynb](Assignments/A10_code.ipynb)  
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A10_code.ipynb)
-
 ---
 
 ---
 
-## 📅 Week 11 — Direct Stiffness Method for Geometric Nonlinearity of Trusses
+## 📅 Week 11 — Spring Break
+---
+
+---
+
+## 📅 Week 12 — Direct Stiffness Method for Geometric Nonlinearity of Trusses
 
 McGuire – Chapter 8 §8.1.1 and 8.1.2
 
@@ -555,7 +559,7 @@ No assignment this week. Use the week to work on the course project deliverable.
 
 ---
 
-## 📅 Week 12 — Coding Geometric Nonlinearity and Introduction to the Force Density Method
+## 📅 Week 13 — Coding Geometric Nonlinearity and Introduction to the Force Density Method
 
 Kassimali – Chapter 10, Example 10.2
 
@@ -606,7 +610,7 @@ through a simple 2D example showing how equilibrium geometry can be obtained dir
 
 ---
 
-## 📅 Week 13 — Force Density Method with Constraints
+## 📅 Week 14 — Force Density Method with Constraints
 
 Journal Papers
 
@@ -656,6 +660,11 @@ Examples shown in class were generated using the following code repository:
 ### 📝 Assignments
 
 N/A
+
+---
+
+---
+## 📅 Week 15 — In-Class Final Presentations
 
 ---
 
