@@ -507,11 +507,13 @@ Use standard submission naming from Week 1.
 
   [A10_code.ipynb](Assignments/A10_code.ipynb)  
   [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bruun-Automation-Research-Lab/CEE6501/blob/main/Assignments/A10_code.ipynb)
+
 ---
 
 ---
 
 ## 📅 Week 11 — Spring Break
+
 ---
 
 ---
@@ -632,8 +634,8 @@ We begin with several example problems using the classical linear Force Density 
 method is set up, how force-density values influence the resulting geometry, and how boundary conditions and prescribed
 parameters affect the final form.
 
-- 📄 **Slides (PDF):** [L13_1_FDM_Examples.pdf](Lectures/L13/L13_1_Examples.pdf)
-- 📓 **Notebook:** [L13_1_FDM_Examples.ipynb](Lectures/L13/L13_1_Examples.ipynb)
+- 📄 **Slides (PDF):** [L13_1_FDM_Examples.pdf](Lectures/L13/L13_1_FDM_Examples.pdf)
+- 📓 **Notebook:** [L13_1_FDM_Examples.ipynb](Lectures/L13/L13_1_FDM_Examples.ipynb)
 
 #### Part 2 — Nonlinear force density method
 
@@ -645,17 +647,11 @@ Matrix (SM) methods within a unified framework for structural form finding.
 - 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
 - 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
 
-- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
-- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
-
-- 📄 **Slides (PDF):** [L13_2_FDM_Nonlinear.pdf](Lectures/L13/L13_2_FDM_Nonlinear.pdf)
-- 📓 **Notebook:** [L13_2_FDM_Nonlinear.ipynb](Lectures/L13/L13_2_FDM_Nonlinear.ipynb)
-
 ### 💻 Extra In-Class Code
 
 Examples shown in class were generated using the following code repository:
 
-- [matrix-form-finding](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)
+- [https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding](https://github.com/Bruun-Automation-Research-Lab/matrix-form-finding)
 
 ### 📝 Assignments
 
@@ -664,6 +660,7 @@ N/A
 ---
 
 ---
+
 ## 📅 Week 15 — In-Class Final Presentations
 
 ---
@@ -704,15 +701,15 @@ A few useful resources for teaching and learning with Jupyter notebooks:
 
 - **Teaching and Learning with Jupyter**  
   A practical online book with examples, ideas, and pedagogical guidance for using Jupyter in education.  
-  https://jupyter4edu.github.io/jupyter-edu-book/catalogue.html#shift-enter-for-the-win
+  [https://jupyter4edu.github.io/jupyter-edu-book/catalogue.html#shift-enter-for-the-win](https://jupyter4edu.github.io/jupyter-edu-book/catalogue.html#shift-enter-for-the-win)
 
 - **Jupyter Quiz**  
   A lightweight tool for embedding quiz-style questions directly into Jupyter notebooks.  
-  https://github.com/jmshea/jupyterquiz
+  [https://github.com/jmshea/jupyterquiz](https://github.com/jmshea/jupyterquiz)
 
 - **Presenting from Jupyter Notebooks**  
   A short guide on using Jupyter notebooks as presentation slides.  
-  https://mljar.com/blog/jupyter-notebook-presentation/
+  [https://mljar.com/blog/jupyter-notebook-presentation/](https://mljar.com/blog/jupyter-notebook-presentation/)
 
 To start JupyterLab from the terminal, run:
 
