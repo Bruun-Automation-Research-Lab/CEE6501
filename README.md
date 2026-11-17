@@ -514,11 +514,11 @@ Use standard submission naming from Week 1.
 
 ## 📅 Week 11 — Spring Break
 
----
+No Class
 
 ---
 
-## 📅 Week 12 — Direct Stiffness Method for Geometric Nonlinearity of Trusses
+## 📅 Week 11 — Direct Stiffness Method for Geometric Nonlinearity of Trusses
 
 McGuire – Chapter 8 §8.1.1 and 8.1.2
 
@@ -561,7 +561,7 @@ No assignment this week. Use the week to work on the course project deliverable.
 
 ---
 
-## 📅 Week 13 — Coding Geometric Nonlinearity and Introduction to the Force Density Method
+## 📅 Week 12 — Coding Geometric Nonlinearity and Introduction to the Force Density Method
 
 Kassimali – Chapter 10, Example 10.2
 
@@ -612,7 +612,7 @@ through a simple 2D example showing how equilibrium geometry can be obtained dir
 
 ---
 
-## 📅 Week 14 — Force Density Method with Constraints
+## 📅 Week 13 — Force Density Method with Constraints
 
 Journal Papers
 
@@ -661,7 +661,7 @@ N/A
 
 ---
 
-## 📅 Week 15 — In-Class Final Presentations
+## 📅 Week 14 — In-Class Final Presentations
 
 ---
 
